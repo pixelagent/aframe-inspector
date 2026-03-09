@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { faClipboard, faPlus, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import { InputWidget } from '../widgets';
+import CreatableSelect from 'react-select/creatable';
 import DEFAULT_COMPONENTS from './DefaultComponents';
 import PropertyRow from './PropertyRow';
 import Collapsible from '../Collapsible';
@@ -168,8 +169,13 @@ class ClassManager extends React.Component {
       availableClasses: this.getAllSceneClasses(),
       selectedClass: '',
       entityId: props.entity.id,
-      newClassName: ''
+      selectedClassValue: this.getClassSelectValue(props.entity)
     };
+  }
+
+  getClassSelectValue(entity) {
+    const classes = this.getClasses(entity);
+    return classes.map(c => ({ value: c, label: c }));
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -192,7 +198,8 @@ class ClassManager extends React.Component {
         classes: currentClassesArray,
         availableClasses: availableClasses,
         selectedClass: '',
-        entityId: props.entity.id
+        entityId: props.entity.id,
+        selectedClassValue: currentClassesArray.map(c => ({ value: c, label: c }))
       };
     }
 
@@ -307,12 +314,46 @@ class ClassManager extends React.Component {
     this.setState({ selectedClass: '' });
   };
 
+  getClassOptions() {
+    const { classes, availableClasses } = this.state;
+    // Combine assigned classes with available classes, removing duplicates
+    const allClasses = [...new Set([...classes, ...availableClasses])];
+    return allClasses.map(c => ({ value: c, label: c }));
+  }
+
+  handleClassChange = (selectedOptions) => {
+    if (!selectedOptions) {
+      selectedOptions = [];
+    }
+    const newClasses = selectedOptions.map(opt => opt.value);
+    this.updateEntityClasses(newClasses);
+    this.setState({ classes: newClasses, selectedClassValue: selectedOptions });
+  };
+
   handleAddExistingClass = (className) => {
     const { classes } = this.state;
     if (!classes.includes(className)) {
       const newClasses = [...classes, className];
       this.updateEntityClasses(newClasses);
       this.setState({ classes: newClasses });
+    }
+  };
+
+  getAvailableClassOptions() {
+    const { classes, availableClasses } = this.state;
+    // Filter out classes that are already assigned to this entity
+    return availableClasses
+      .filter(c => !classes.includes(c))
+      .map(c => ({ value: c, label: c }));
+  }
+
+  handleAvailableClassChange = (selectedOption) => {
+    this.setState({ selectedAvailableClass: selectedOption });
+
+    if (selectedOption) {
+      this.handleAddExistingClass(selectedOption.value);
+      // Reset selection after adding
+      this.setState({ selectedAvailableClass: null });
     }
   };
 
@@ -342,65 +383,24 @@ class ClassManager extends React.Component {
   };
 
   render() {
-    const { classes, availableClasses, newClassName } = this.state;
+    const { classes, selectedClassValue } = this.state;
 
     return (
-      <div className="class-manager-list">
-        <div className="class-items">
-          {classes.length === 0 && (
-            <div className="class-empty">No classes assigned</div>
-          )}
-          {classes.map((className) => (
-            <div key={className} className="class-item">
-              <span className="class-name">{className}</span>
-              <button
-                className="class-delete-btn"
-                onClick={() => this.handleDeleteClass(className)}
-                title="Delete class"
-              >
-                <AwesomeIcon icon={faTimes} />
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="class-add">
-          <input
-            type="text"
-            className="class-add-input"
-            placeholder="Add class..."
-            value={newClassName}
-            onChange={(e) => this.setState({ newClassName: e.target.value })}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') this.handleAddClass();
-            }}
+      <div className="class-manager-combined">
+        <div className="class-select-wrapper">
+          <CreatableSelect
+            id="classSelect"
+            classNamePrefix="select"
+            isMulti
+            isClearable={false}
+            isSearchable={true}
+            placeholder="Select or create classes..."
+            noOptionsMessage={() => 'Type to create a new class'}
+            onChange={this.handleClassChange}
+            value={selectedClassValue}
+            options={this.getClassOptions()}
           />
-          <button
-            className="class-add-button"
-            onClick={this.handleAddClass}
-            title="Add class"
-          >
-            <AwesomeIcon icon={faPlus} />
-          </button>
         </div>
-        {availableClasses.length > 0 && (
-          <div className="class-available">
-            <div className="class-available-label">Available classes in scene:</div>
-            <div className="class-available-items">
-              {availableClasses
-                .filter(c => !classes.includes(c))
-                .map((className) => (
-                  <button
-                    key={className}
-                    className="class-available-item"
-                    onClick={() => this.handleAddExistingClass(className)}
-                    title="Add to entity"
-                  >
-                    + {className}
-                  </button>
-                ))}
-            </div>
-          </div>
-        )}
       </div>
     );
   }

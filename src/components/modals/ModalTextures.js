@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faSearch, faImage, faCode, faCube } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faImage, faCode, faCube, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import Events from '../../lib/Events';
 import Modal from './Modal';
@@ -308,19 +308,88 @@ export default class ModalTextures extends React.Component {
     return count;
   }
 
+  // Helper function to get model name from src
+  getModelName(src) {
+    if (!src) return 'Unknown';
+    // If it's an asset reference like #one, extract the name
+    if (src.startsWith('#')) {
+      return src.substring(1);
+    }
+    // If it's a URL, extract filename without extension
+    const match = src.match(/\/([^/]+)\.(glb|gltf|obj|fbx)$/i);
+    if (match) {
+      return match[1];
+    }
+    return src;
+  }
+
+  // Download a model file
+  downloadModel = async (model) => {
+    let url = model.src;
+    
+    // If it's an asset reference, try to get the actual URL from the asset
+    if (url.startsWith('#')) {
+      const assetId = url.substring(1);
+      const scene = AFRAME.INSPECTOR.sceneEl;
+      const asset = scene.querySelector(`a-assets > #${assetId}`);
+      if (asset) {
+        const srcAttr = asset.getAttribute('src');
+        if (srcAttr) {
+          url = srcAttr;
+        }
+      }
+    }
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch model');
+      
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = this.getModelName(url) + '.' + (url.split('.').pop() || 'glb');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error downloading model:', error);
+      alert('Could not download model. The URL may be invalid or cross-origin restrictions apply.');
+    }
+  };
+
   renderModelsTab() {
-    // Get all models (gltf-model, models, models-array) from the scene
-    const models = new Map(); // Use Map to avoid duplicates
+    // Get all models (gltf-model, models, models-array, modal-array) from the scene
+    const models = [];
     const scene = AFRAME.INSPECTOR.sceneEl;
     if (scene) {
       // Find all elements with model-related attributes
       scene.querySelectorAll('*').forEach((el) => {
+        // Check for modal-array component (custom component with models named one, two, three, four)
+        const modalArray = el.getAttribute('modal-array');
+        if (modalArray && modalArray.models) {
+          modalArray.models.forEach((modelData, idx) => {
+            const name = modelData.name || modelData.src || `model-${idx + 1}`;
+            const src = modelData.src || '';
+            if (src && !models.find(m => m.src === src && m.name === name)) {
+              models.push({ 
+                type: 'modal-array', 
+                src: src, 
+                name: name,
+                element: el.tagName 
+              });
+            }
+          });
+        }
+
         // Check for gltf-model
         const gltfModel = el.getAttribute('gltf-model');
         if (gltfModel) {
           const modelSrc = typeof gltfModel === 'string' ? gltfModel : gltfModel.src;
-          if (modelSrc && !models.has(modelSrc)) {
-            models.set(modelSrc, { type: 'gltf-model', src: modelSrc, element: el.tagName });
+          if (modelSrc && !models.find(m => m.src === modelSrc)) {
+            models.push({ type: 'gltf-model', src: modelSrc, name: this.getModelName(modelSrc), element: el.tagName });
           }
         }
 
@@ -328,8 +397,8 @@ export default class ModalTextures extends React.Component {
         const model = el.getAttribute('model');
         if (model) {
           const modelSrc = typeof model === 'string' ? model : model.src;
-          if (modelSrc && !models.has(modelSrc)) {
-            models.set(modelSrc, { type: 'model', src: modelSrc, element: el.tagName });
+          if (modelSrc && !models.find(m => m.src === modelSrc)) {
+            models.push({ type: 'model', src: modelSrc, name: this.getModelName(modelSrc), element: el.tagName });
           }
         }
 
@@ -338,8 +407,8 @@ export default class ModalTextures extends React.Component {
         if (modelsAttr && Array.isArray(modelsAttr)) {
           modelsAttr.forEach((m) => {
             const src = m.src || m;
-            if (src && !models.has(src)) {
-              models.set(src, { type: 'models', src: src, element: el.tagName });
+            if (src && !models.find(m => m.src === src)) {
+              models.push({ type: 'models', src: src, name: this.getModelName(src), element: el.tagName });
             }
           });
         }
@@ -350,12 +419,12 @@ export default class ModalTextures extends React.Component {
           const src = modelsArray.src;
           if (Array.isArray(src)) {
             src.forEach((s) => {
-              if (s && !models.has(s)) {
-                models.set(s, { type: 'models-array', src: s, element: el.tagName });
+              if (s && !models.find(m => m.src === s)) {
+                models.push({ type: 'models-array', src: s, name: this.getModelName(s), element: el.tagName });
               }
             });
-          } else if (src && !models.has(src)) {
-            models.set(src, { type: 'models-array', src: src, element: el.tagName });
+          } else if (src && !models.find(m => m.src === src)) {
+            models.push({ type: 'models-array', src: src, name: this.getModelName(src), element: el.tagName });
           }
         }
       });
@@ -363,16 +432,14 @@ export default class ModalTextures extends React.Component {
       // Also check a-assets for model assets
       const assets = scene.querySelectorAll('a-assets > [id]');
       assets.forEach((asset) => {
-        // Check for gltf-model assets
         if (asset.hasAttribute('gltf-model') || asset.getAttribute('src')?.endsWith('.glb') || asset.getAttribute('src')?.endsWith('.gltf')) {
           const src = '#' + asset.id;
-          if (!models.has(src)) {
-            models.set(src, { type: 'asset', src: src, element: 'a-asset' });
+          if (!models.find(m => m.src === src)) {
+            models.push({ type: 'asset', src: src, name: asset.id, element: 'a-asset' });
           }
         }
       });
     }
-    const modelList = Array.from(models.values());
 
     return (
       <div className="models-tab">
@@ -381,19 +448,27 @@ export default class ModalTextures extends React.Component {
           <p>These models are used by elements in your scene.</p>
         </div>
         <div className="models-list">
-          {modelList.length === 0 ? (
+          {models.length === 0 ? (
             <p className="no-models">No models found in the scene.</p>
           ) : (
             <ul>
-              {modelList.map((model, index) => (
+              {models.map((model, index) => (
                 <li key={index} className="model-item">
                   <div className="model-icon">
                     <AwesomeIcon icon={faCube} />
                   </div>
                   <div className="model-info">
+                    <span className="model-name">{model.name}</span>
                     <span className="model-src">{model.src}</span>
                     <span className="model-type">{model.type} ({model.element})</span>
                   </div>
+                  <button 
+                    className="model-download" 
+                    onClick={() => this.downloadModel(model)}
+                    title="Download model"
+                  >
+                    <AwesomeIcon icon={faDownload} />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -484,7 +559,7 @@ export default class ModalTextures extends React.Component {
       >
         {this.renderTabs()}
         <div className="settings-content">
-          {this.state.activeTab === 'textures' ? (
+          {this.state.activeTab === 'textures' && (
             <>
               <button onClick={this.toggleNewDialog}>{addNewAssetButton}</button>
               <div className={this.state.addNewDialogOpened ? '' : 'hide'}>
@@ -612,12 +687,9 @@ export default class ModalTextures extends React.Component {
                 </ul>
               </div>
             </>
-          ) : (
-            this.renderClassesTab()
           )}
-          {this.state.activeTab === 'models' && (
-            this.renderModelsTab()
-          )}
+          {this.state.activeTab === 'classes' && this.renderClassesTab()}
+          {this.state.activeTab === 'models' && this.renderModelsTab()}
         </div>
       </Modal>
     );

@@ -60,33 +60,7 @@ export const componentHelp = {
     overview: 'The geometry component defines the shape of an object. Common primitives include box, sphere, cylinder, plane, and torus. Use the "primitive" property to quickly switch between basic shapes.'
   },
 
-  // Common transform component help text
-  position: {
-    beginner: ['x', 'y', 'z'],
-    descriptions: {
-      x: 'Horizontal position (left/right)',
-      y: 'Vertical position (up/down)',
-      z: 'Depth position (forward/backward)'
-    }
-  },
 
-  rotation: {
-    beginner: ['x', 'y', 'z'],
-    descriptions: {
-      x: 'Rotation around horizontal axis (pitch)',
-      y: 'Rotation around vertical axis (yaw)',
-      z: 'Rotation around depth axis (roll)'
-    }
-  },
-
-  scale: {
-    beginner: ['x', 'y', 'z'],
-    descriptions: {
-      x: 'Horizontal scale (1 = normal, 2 = double width)',
-      y: 'Vertical scale (1 = normal, 2 = double height)',
-      z: 'Depth scale (1 = normal, 2 = double depth)'
-    }
-  },
 
   // WASD Controls
   'wasd-controls': {
@@ -150,33 +124,9 @@ export const componentHelp = {
     overview: 'The cursor component enables interaction with objects in the scene. It casts a ray from the camera to detect objects. Use fuse for gaze-based interaction (hover to click) or set rayOrigin to mouse for click-based interaction. The cursor visual can be customized with geometry and material properties.'
   },
 
-  // Layer
-  layer: {
-    beginner: ['id', 'order'],
-    descriptions: {
-      id: 'Unique identifier for the layer',
-      order: 'Render order (higher = on top)',
-      parent: 'Parent layer ID for nesting',
-      transparent: 'Layer has transparent objects',
-      depthTest: 'Objects in layer test against each other',
-      renderOrder: 'Manual render order override'
-    }
-  },
 
-  // Laser Controls
-  'laser-controls': {
-    beginner: ['hand', 'raycaster'],
-    descriptions: {
-      hand: 'Which hand (left or right)',
-      raycaster: 'Configuration for the laser beam',
-      model: 'Show controller model',
-      rayOrigin: 'Where laser ray starts',
-      far: 'Maximum distance of laser',
-      interval: 'Time between raycast updates',
-      lineColor: 'Color of laser beam',
-      lineOpacity: 'Transparency of laser beam'
-    }
-  },
+
+
 
   // Link
   link: {
@@ -293,26 +243,7 @@ export const componentHelp = {
     }
   },
 
-  // Text
-  text: {
-    beginner: ['value', 'color', 'align'],
-    descriptions: {
-      value: 'The text content to display',
-      color: 'Color of the text',
-      align: 'Text alignment (left, center, right)',
-      width: 'Maximum width before wrapping',
-      wrapCount: 'Characters per line',
-      lineHeight: 'Space between lines',
-      font: 'Font family (roboto, aileronsemibold, etc.)',
-      fontImage: 'Bitmap font texture',
-      shader: 'Text rendering style',
-      side: 'Which side to render on (double = both sides)',
-      anchor: 'Alignment point (center, left, right, align)',
-      baseline: 'Vertical alignment (center, top, bottom)',
-      transparent: 'Allow transparency in text',
-      opacity: 'Text transparency'
-    }
-  },
+
 
   // Video
   video: {
@@ -384,16 +315,7 @@ export const componentHelp = {
     }
   },
 
-  // Hand Controls
-  'hand-controls': {
-    beginner: ['hand', 'handModelStyle'],
-    descriptions: {
-      hand: 'Which hand (left, right, or both)',
-      handModelStyle: 'Visual style (lowPoly, highPoly, etc.)',
-      color: 'Hand color override',
-      visible: 'Show or hide hand model'
-    }
-  },
+
 
   // Touch Controls
   'touch-controls': {
@@ -405,27 +327,9 @@ export const componentHelp = {
     }
   },
 
-  // Oculus Touch Controls
-  'oculus-touch-controls': {
-    beginner: ['hand'],
-    descriptions: {
-      hand: 'Which hand (left or right)',
-      model: 'Show controller model',
-      visible: 'Show or hide controller'
-    }
-  },
 
-  // Vive Controls
-  'vive-controls': {
-    beginner: ['hand'],
-    descriptions: {
-      hand: 'Which hand (left or right)',
-      model: 'Show controller model',
-      visible: 'Show or hide controller',
-      buttonColor: 'Button color',
-      buttonHighlightColor: 'Button color when pressed'
-    }
-  },
+
+
 
   // WebVR Controller
   'webvr-controller': {
@@ -475,37 +379,9 @@ export const componentHelp = {
     }
   },
 
-  // Sphere Collider
-  'sphere-collider': {
-    beginner: ['objects'],
-    descriptions: {
-      objects: 'Selector for objects to collide with',
-      radius: 'Collision sphere radius',
-      center: 'Center offset of sphere',
-      debug: 'Show collision spheres'
-    }
-  },
 
-  // ORB Collider
-  'orb-collider': {
-    beginner: ['objects'],
-    descriptions: {
-      objects: 'Selector for objects to collide with',
-      radius: 'Collision radius',
-      debug: 'Show collision visualization'
-    }
-  },
 
-  // kinematic-body
-  'kinematic-body': {
-    beginner: [],
-    descriptions: {
-      mass: 'Body mass',
-      radius: 'Body radius for collisions',
-      linearDamping: 'Movement damping',
-      angularDamping: 'Rotation damping'
-    }
-  },
+
 
   // Text geometry
   'text-geometry': {
@@ -534,14 +410,7 @@ export const componentHelp = {
     }
   },
 
-  // Shadow
-  shadow: {
-    beginner: ['cast', 'receive'],
-    descriptions: {
-      cast: 'Object casts shadows',
-      receive: 'Object receives shadows'
-    }
-  },
+
 
   // Sky
   sky: {
@@ -1042,17 +911,7 @@ export const componentHelp = {
     overview: 'The meta-touch-controls component provides support for Meta Touch controllers (Quest 2/Pro). It includes hand tracking, controller tracking, and haptic feedback for immersive VR experiences.'
   },
 
-  // ORB Collider
-  'orb-collider': {
-    beginner: ['objects', 'radius'],
-    descriptions: {
-      objects: 'Selector for objects to collide with',
-      radius: 'Collision sphere radius',
-      debug: 'Show collision visualization',
-      interval: 'Collision check interval'
-    },
-    overview: 'The orb-collider component detects collisions using spherical boundaries. Use when you need simple spherical collision detection for objects like spheres or balls.'
-  },
+
 
   // Vive Focus Controls
   'vive-focus-controls': {
@@ -1193,6 +1052,157 @@ export const componentHelp = {
       visible: 'Show or hide the entity'
     },
     overview: 'The visible component controls whether an entity and its children are rendered. When set to false, the entity is hidden but still exists in the scene.'
+  },
+
+  // Logitech MX Ink Controls
+  'logitechmx-ink-controls': {
+    beginner: ['hand', 'ink'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      ink: 'Enable ink/drawing functionality',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      strokeWidth: 'Width of ink strokes',
+      strokeColor: 'Color of ink strokes',
+      haptic: 'Enable haptic feedback'
+    },
+    overview: 'The logitechmx-ink-controls component provides support for Logitech MX Ink 3D stylus controllers. It enables precise drawing and writing in VR with pressure sensitivity support.'
+  },
+
+  // ORB Collider (Object-Ray-Box Collider)
+  'orb-collider': {
+    beginner: ['objects', 'radius'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      radius: 'Collision sphere radius',
+      debug: 'Show collision visualization',
+      interval: 'Collision check interval',
+      collideOnce: 'Only trigger collision once'
+    },
+    overview: 'The orb-collider component detects collisions using spherical boundaries. Use when you need simple spherical collision detection for objects like spheres or balls.'
+  },
+
+  // OBJ Model
+  'obj-model': {
+    beginner: ['src'],
+    descriptions: {
+      src: 'URL to the OBJ model file',
+      mtl: 'URL to the Material file (MTL)',
+      color: 'Model color override',
+      material: 'Material properties'
+    },
+    overview: 'The obj-model component loads and displays 3D models in OBJ format. OBJ is a legacy 3D format that pairs with MTL material files for textures. Use for loading models from older 3D software.'
+  },
+
+  // Oculus Go Controls
+  'oculus-go-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      haptic: 'Enable haptic feedback',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed'
+    },
+    overview: 'The oculus-go-controls component provides support for Oculus Go controllers. It enables touchpad interaction and button tracking for Oculus Go VR experiences.'
+  },
+
+
+
+  // Mixin
+  mixin: {
+    beginner: [],
+    descriptions: {
+      // Mixins are composite configurations
+    },
+    overview: 'The mixin component allows you to define reusable sets of component properties. Instead of adding the same components and values to multiple entities, create a mixin once and reference it by name. Mixins are defined in the scene and applied using the mixin property.'
+  },
+
+  // Class
+  class: {
+    beginner: ['name'],
+    descriptions: {
+      name: 'CSS class name(s) for styling and querying',
+      components: 'Components attached to entities with this class'
+    },
+    overview: 'The class component assigns CSS-like classes to entities for styling and querying. Use classes to group entities together and apply behaviors or styles to all entities in that class.'
+  },
+
+  // Required
+  required: {
+    beginner: [],
+    descriptions: {
+      components: 'List of required components'
+    },
+    overview: 'The required component specifies which components are required for an entity. It is used by component authors to declare dependencies and ensure entities have the necessary components to function correctly.'
+  },
+
+  // Parent
+  parent: {
+    beginner: [],
+    descriptions: {
+      // Parent is used for nesting entities
+    },
+    overview: 'The parent component establishes parent-child relationships between entities. Child entities inherit transformations from their parent and are positioned relative to it.'
+  },
+
+  // Event Set
+  'event-set': {
+    beginner: ['_event', '_set'],
+    descriptions: {
+      _event: 'Event to listen for',
+      _set: 'Property to set when event fires',
+      _target: 'Target element to modify',
+      _delay: 'Delay before setting property (ms)'
+    },
+    overview: 'The event-set component allows you to set property values in response to events without writing JavaScript. When the specified event fires, it sets the defined properties on the entity.'
+  },
+
+  // State
+  state: {
+    beginner: ['state'],
+    descriptions: {
+      state: 'State name to set',
+      on: 'Event to trigger state change',
+      off: 'Event to remove state',
+      target: 'Target entity for state'
+    },
+    overview: 'The state component manages entity state for use with event-set or other state-based systems. States can be triggered by events and used to conditionally show/hide or modify entities.'
+  },
+
+  // Kinematic Body (aframe-extras)
+  'kinematic-body': {
+    beginner: [],
+    descriptions: {
+      mass: 'Body mass',
+      radius: 'Body radius for collisions',
+      linearDamping: 'Movement damping',
+      angularDamping: 'Rotation damping',
+      height: 'Body height',
+      width: 'Body width',
+      depth: 'Body depth',
+      shape: 'Collision shape (box, sphere)'
+    },
+    overview: 'The kinematic-body component provides a physics body that can be moved by user input but is not affected by other physics objects. Used for player controllers in aframe-extras.'
+  },
+
+  // Vehicle (aframe-extras)
+  vehicle: {
+    beginner: [],
+    descriptions: {
+      autoWheel: 'Auto-create wheel entities',
+      chassis: 'Chassis entity selector',
+      wheels: 'Wheel entity selectors',
+      radius: 'Wheel radius',
+      suspensionStiffness: 'Suspension stiffness',
+      suspensionDamping: 'Suspension damping',
+      maxSuspensionTravel: 'Max suspension travel',
+      frictionSlip: 'Wheel friction',
+      rollInfluence: 'Roll influence on corners'
+    },
+    overview: 'The vehicle component provides vehicle physics with wheels and suspension. Use with aframe-extras for realistic car simulation with proper wheel physics and handling.'
   }
 };
 
