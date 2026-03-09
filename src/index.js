@@ -199,6 +199,33 @@ Inspector.prototype = {
       });
     });
 
+    // Handle creating new a-scene elements
+    Events.on('scenecreate', (definition) => {
+      const scene = document.createElement('a-scene');
+
+      // Check if this is the first scene or additional scenes
+      const existingScenes = document.querySelectorAll('a-scene');
+      if (existingScenes.length === 0) {
+        // First scene - use standard setup
+        scene.setAttribute('embedded', '');
+        scene.innerHTML = `
+          <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+          <a-sky color="#ECECEC"></a-sky>
+        `;
+      } else {
+        // Additional scenes - create as nested/secondary scene
+        scene.setAttribute('embedded', '');
+        scene.setAttribute('data-multiple', 'true');
+        scene.innerHTML = `
+          <a-entity camera look-controls position="0 1.6 0"></a-entity>
+          <a-sky color="#333333"></a-sky>
+        `;
+      }
+
+      document.body.appendChild(scene);
+      console.log('Created new a-scene (total: ' + (existingScenes.length + 1) + ')');
+    });
+
     // Handle adding behaviors/components to selected entity
     Events.on('addbehavior', (data) => {
       const selectedEntity = this.selectedEntity;

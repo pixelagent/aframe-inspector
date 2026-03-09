@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faClipboard, faTrashAlt, faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faTrashAlt, faAngleDown, faAngleRight, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import PropertyRow from './PropertyRow';
 import Collapsible from '../Collapsible';
 import copy from 'clipboard-copy';
 import { getComponentClipboardRepresentation } from '../../lib/entity';
 import { shouldShowProperty } from '../../lib/utils';
-import { isBeginnerComponent, isBeginnerProperty } from '../../lib/componentHelp';
+import { isBeginnerComponent, isBeginnerProperty, getComponentOverview } from '../../lib/componentHelp';
+import ComponentHelpModal from '../modals/ComponentHelpModal';
 import Events from '../../lib/Events';
 
 const isSingleProperty = AFRAME.schema.isSingleProperty;
@@ -28,7 +29,8 @@ export default class Component extends React.Component {
     this.state = {
       entity: this.props.entity,
       name: this.props.name,
-      showAdvanced: false
+      showAdvanced: false,
+      showHelpModal: false
     };
   }
 
@@ -151,41 +153,64 @@ export default class Component extends React.Component {
 
   render() {
     const componentName = this.props.name;
+    const baseName = componentName.split('__')[0];
+    const componentOverview = getComponentOverview(baseName);
+    const { showHelpModal } = this.state;
 
     return (
-      <Collapsible collapsed={this.props.isCollapsed}>
-        <div className="componentHeader collapsible-header">
-          <span className="componentTitle" title={componentName}>
-            <span>{componentName}</span>
-          </span>
-          <div className="componentHeaderActions">
-            <a
-              title="Copy to clipboard"
-              className="button"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                copy(
-                  getComponentClipboardRepresentation(
-                    this.state.entity,
-                    componentName.toLowerCase()
-                  )
-                );
-              }}
-            >
-              <AwesomeIcon icon={faClipboard} />
-            </a>
-            <a
-              title="Remove component"
-              className="button"
-              onClick={this.removeComponent}
-            >
-              <AwesomeIcon icon={faTrashAlt} />
-            </a>
+      <>
+        <Collapsible collapsed={this.props.isCollapsed}>
+          <div className="componentHeader collapsible-header">
+            <span className="componentTitle" title={componentName}>
+              <span>{componentName}</span>
+            </span>
+            <div className="componentHeaderActions">
+              {componentOverview && (
+                <a
+                  title="Click for help"
+                  className="button componentHelpButton"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    this.setState({ showHelpModal: true });
+                  }}
+                >
+                  <AwesomeIcon icon={faQuestionCircle} />
+                </a>
+              )}
+              <a
+                title="Copy to clipboard"
+                className="button"
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  copy(
+                    getComponentClipboardRepresentation(
+                      this.state.entity,
+                      componentName.toLowerCase()
+                    )
+                  );
+                }}
+              >
+                <AwesomeIcon icon={faClipboard} />
+              </a>
+              <a
+                title="Remove component"
+                className="button"
+                onClick={this.removeComponent}
+              >
+                <AwesomeIcon icon={faTrashAlt} />
+              </a>
+            </div>
           </div>
-        </div>
-        <div className="collapsible-content">{this.renderPropertyRows()}</div>
-      </Collapsible>
+          <div className="collapsible-content">{this.renderPropertyRows()}</div>
+        </Collapsible>
+        <ComponentHelpModal
+          isOpen={showHelpModal}
+          componentName={baseName}
+          onClose={() => this.setState({ showHelpModal: false })}
+        />
+      </>
     );
   }
 }

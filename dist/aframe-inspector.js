@@ -17944,7 +17944,7 @@ body.aframe-inspector-opened {
   flex-direction: column;
   overflow: visible;
   padding-top: 60px;
-  width: 230px;
+  width: 260px;
   min-width: 180px;
   max-width: 400px;
   resize: horizontal;
@@ -17959,13 +17959,55 @@ body.aframe-inspector-opened {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 8px;
   cursor: ew-resize;
+  background: transparent;
   background: transparent;
   transition: background 0.2s;
 }
+#aframeInspector #scenegraph::after:hover {
+  background: var(--color-primary);
+  opacity: 0.5;
+}
 #aframeInspector #scenegraph:hover::after {
   background: var(--color-primary);
+}
+#aframeInspector #scenegraph .resize-handle {
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 40px;
+  background: var(--color-base-100);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border: 1px solid var(--color-base-300);
+}
+#aframeInspector #scenegraph .resize-handle svg {
+  font-size: 10px;
+  color: var(--color-base-content);
+  opacity: 0.5;
+}
+#aframeInspector #scenegraph .resize-handle:hover,
+#aframeInspector #scenegraph .resize-handle.active {
+  opacity: 1;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+#aframeInspector #scenegraph .resize-handle:hover svg,
+#aframeInspector #scenegraph .resize-handle.active svg {
+  color: var(--color-primary-content);
+  opacity: 1;
+}
+#aframeInspector #scenegraph:hover .resize-handle {
+  opacity: 0.7;
 }
 #aframeInspector #scenegraph .entity {
   align-items: center;
@@ -17979,6 +18021,7 @@ body.aframe-inspector-opened {
   padding: 3px;
   white-space: nowrap;
   width: 100%;
+  flex-wrap: wrap;
 }
 #aframeInspector #scenegraph .entity:hover {
   background: var(--color-accent-hover);
@@ -18017,7 +18060,55 @@ body.aframe-inspector-opened {
 #aframeInspector #scenegraph .entityActions {
   display: none;
 }
-#aframeInspector #scenegraph .entityActions .button {
+#aframeInspector #scenegraph .entityActionsFloating {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--color-base-100);
+  border-radius: 4px;
+  margin-left: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 100;
+  min-width: 120px;
+}
+#aframeInspector #scenegraph .entityActionsFloating .button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-base-content);
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+#aframeInspector #scenegraph .entityActionsFloating .button .action-label {
+  font-size: 10px;
+  font-weight: 500;
+}
+#aframeInspector #scenegraph .entityActionsFloating .button:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector #scenegraph .entityActionsFloating .button svg {
+  font-size: 12px;
+}
+#aframeInspector #scenegraph .entityActionsFloating .entityReparent {
+  cursor: grab;
+}
+#aframeInspector #scenegraph .entityActionsFloating .entityMoveUp,
+#aframeInspector #scenegraph .entityActionsFloating .entityMoveDown {
+  cursor: pointer;
+}
+#aframeInspector #scenegraph .entityActionsFloating .entityMoveUp:hover,
+#aframeInspector #scenegraph .entityActionsFloating .entityMoveDown:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector #scenegraph .entityActionsFloating .button {
   color: var(--color-base-content);
   font-size: 12px;
   margin-left: 6px;
@@ -19312,6 +19403,272 @@ body.aframe-inspector-opened {
   font-size: 18px;
   width: 20px;
 }
+#aframeInspector .showMoreContainer {
+  padding: 8px 0;
+  text-align: center;
+  border-top: 1px solid var(--color-base-300);
+  margin-top: 4px;
+}
+#aframeInspector .showMoreButton {
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-300);
+  border-radius: 4px;
+  color: var(--color-base-content);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto;
+  transition: all 0.2s;
+}
+#aframeInspector .showMoreButton:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector .propertyHint {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  background: var(--color-base-100);
+  border-radius: 50%;
+  font-size: 10px;
+  margin-left: 4px;
+  color: var(--color-primary);
+  cursor: help;
+}
+#aframeInspector .propertyHint:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector .componentHelpButton {
+  padding: 2px 6px;
+  margin-right: 4px;
+  font-size: 12px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+  background: transparent;
+  border: none;
+}
+#aframeInspector .componentHelpButton:hover {
+  color: #fff;
+}
+#aframeInspector .component-help-modal {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 10px;
+}
+#aframeInspector .component-help-modal .help-overview {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--color-base-300);
+}
+#aframeInspector .component-help-modal .help-overview h4 {
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+#aframeInspector .component-help-modal .help-overview p {
+  color: var(--color-base-content);
+  font-size: 13px;
+  line-height: 1.5;
+}
+#aframeInspector .component-help-modal .help-properties,
+#aframeInspector .component-help-modal .help-all-properties {
+  margin-bottom: 20px;
+}
+#aframeInspector .component-help-modal .help-properties h4,
+#aframeInspector .component-help-modal .help-all-properties h4 {
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+#aframeInspector .component-help-modal .help-properties .help-tip,
+#aframeInspector .component-help-modal .help-all-properties .help-tip {
+  color: var(--color-base-content);
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+#aframeInspector .component-help-modal .help-properties ul,
+#aframeInspector .component-help-modal .help-all-properties ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#aframeInspector .component-help-modal .help-properties .help-property,
+#aframeInspector .component-help-modal .help-all-properties .help-property {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  background: var(--color-base-300);
+  border-radius: 4px;
+}
+#aframeInspector .component-help-modal .help-properties .help-property .property-name,
+#aframeInspector .component-help-modal .help-all-properties .help-property .property-name {
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', monospace;
+  margin-bottom: 4px;
+}
+#aframeInspector .component-help-modal .help-properties .help-property .property-desc,
+#aframeInspector .component-help-modal .help-all-properties .help-property .property-desc {
+  color: var(--color-base-content);
+  font-size: 11px;
+  line-height: 1.4;
+}
+#aframeInspector .component-help-modal .help-all-properties h4 {
+  margin-top: 15px;
+}
+#aframeInspector .component-help-modal .help-no-beginner {
+  padding: 15px;
+  background: var(--color-base-300);
+  border-radius: 4px;
+}
+#aframeInspector .component-help-modal .help-no-beginner p {
+  color: var(--color-base-content);
+  font-size: 12px;
+  margin: 0;
+}
+#aframeInspector .class-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 165px;
+}
+#aframeInspector .class-manager-dropdown {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+#aframeInspector .class-manager-dropdown .class-select {
+  flex: 1;
+  background: var(--color-base-300);
+  border: 1px solid var(--color-base-300);
+  border-radius: 4px;
+  color: var(--color-primary);
+  font-size: 13px;
+  padding: 4px 8px;
+  min-height: 26px;
+  cursor: pointer;
+  width: 100%;
+}
+#aframeInspector .class-manager-dropdown .class-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+#aframeInspector .class-manager-dropdown .class-add-button {
+  background: var(--color-base-300);
+  border: 1px solid var(--color-base-300);
+  border-radius: 4px;
+  color: var(--color-base-content);
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 26px;
+  transition: all 0.2s;
+}
+#aframeInspector .class-manager-dropdown .class-add-button:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector .class-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+#aframeInspector .class-tag {
+  align-items: center;
+  background: var(--color-base-300);
+  border-radius: 4px;
+  display: flex;
+  gap: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+#aframeInspector .class-tag-name {
+  color: var(--color-primary);
+  cursor: pointer;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#aframeInspector .class-tag-name:hover {
+  text-decoration: underline;
+}
+#aframeInspector .class-tag-input {
+  background: var(--color-base-100);
+  border: 1px solid var(--color-primary);
+  border-radius: 2px;
+  color: var(--color-base-content);
+  font-size: 12px;
+  padding: 2px 4px;
+  width: 80px;
+}
+#aframeInspector .class-tag-input:focus {
+  outline: none;
+}
+#aframeInspector .class-tag-delete {
+  background: transparent;
+  border: none;
+  color: var(--color-base-content);
+  cursor: pointer;
+  font-size: 10px;
+  opacity: 0.6;
+  padding: 0;
+}
+#aframeInspector .class-tag-delete:hover {
+  color: var(--color-error);
+  opacity: 1;
+}
+#aframeInspector .class-add {
+  display: flex;
+  gap: 4px;
+}
+#aframeInspector .class-add-input {
+  background: var(--color-base-300);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--color-base-content);
+  font-size: 12px;
+  padding: 4px 8px;
+  width: 120px;
+}
+#aframeInspector .class-add-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+#aframeInspector .class-add-button {
+  align-items: center;
+  background: var(--color-base-300);
+  border: none;
+  border-radius: 4px;
+  color: var(--color-base-content);
+  cursor: pointer;
+  display: flex;
+  font-size: 12px;
+  padding: 4px 8px;
+}
+#aframeInspector .class-add-button:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+}
 #aframeInspector svg:not(:root).svg-inline--fa,
 #aframeInspector svg:not(:host).svg-inline--fa {
   box-sizing: content-box;
@@ -20072,7 +20429,7 @@ body.aframe-inspector-opened {
     opacity: 1;
   }
 }
-`, "",{"version":3,"sources":["webpack://./src/style/lib.styl","webpack://./src/style/index.styl","webpack://./src/style/scenegraph.styl","webpack://./src/style/components.styl","webpack://./src/style/entity.styl","webpack://./src/style/help.styl","webpack://./src/style/select.styl","webpack://./src/style/textureModal.styl","webpack://./src/style/viewport.styl","webpack://./src/style/widgets.styl"],"names":[],"mappings":"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","sourcesContent":["/* CSS rules from the original FontAwesomeIcon component */\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  box-sizing: content-box;\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n","@import './lib';\n\nbody.aframe-inspector-opened,\n.toggle-edit,\n.sponsor-btn\n  font-family var(--font-normal)\n\nbody.aframe-inspector-opened\n  background var(--color-base-200)\n  color var(--color-base-content)\n  font-size 12px\n  margin 0\n  overflow hidden\n\n/* :where(:root) has zero specificity compared to :root, so any user defined :root will override the below rule */\n:where(:root) {\n  color-scheme: dark;\n\n  --color-base-100: #333;\n  --color-base-200: #242424;\n  --color-base-300: #1d1d1d;\n  --color-base-content: #c3c3c3;\n  --color-primary: #1faaf2;\n  --color-primary-content: #fff;\n  --color-secondary: #92374d;\n  --color-secondary-content: #fafafa;\n  --color-accent: #155373;\n  --color-accent-content: #fff;\n  --color-neutral: #333;\n  --color-neutral-content: #aaa;\n  --color-info: #2cb7ff;\n  --color-info-content: #fff;\n  --color-success: #8b8;\n  --color-success-content: #000;\n  --color-warning: #d66853;\n  --color-warning-content: #000;\n  --color-error: #92374d;\n  --color-error-content: #000;\n  --font-normal: system-ui, BlinkMacSystemFont, -apple-system, \"Segoe UI\", Helvetica, Arial, sans-serif;\n  --font-monospace: Consolas, \"Andale Mono\", Monaco, \"Lucida Console\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Bitstream Vera Sans Mono\", \"Courier New\", monospace;\n}\n\n#aframeInspector\n  --color-base-lighter: unquote(\"color-mix(in oklab, var(--color-base-100) 90%, white 10%)\");\n  --color-primary-hover: unquote(\"color-mix(in oklab, var(--color-primary) 90%, black 10%)\");\n  --color-secondary-hover: unquote(\"color-mix(in oklab, var(--color-secondary) 90%, black 10%)\");\n  --color-accent-hover: unquote(\"color-mix(in oklab, var(--color-accent) 70%, black 30%)\");\n  --color-neutral-hover: unquote(\"color-mix(in oklab, var(--color-neutral) 90%, black 10%)\");\n  --color-property-defined: light-dark(\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, black 90%)\"),   /* darker for light theme */\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, white 90%)\")    /* lighter for dark theme */\n  )\n\n  @import './scenegraph';\n  @import './components';\n  @import './entity';\n  @import './help';\n  @import './select';\n  @import './textureModal';\n  @import './viewport';\n  @import './widgets';\n\n  .select__control,\n  code,\n  pre,\n  input,\n  textarea,\n  select\n    font-size 13px\n\n  code,\n  pre,\n  textarea\n    font-family var(--font-monospace)\n\n  hr\n    border 0\n    border-top 1px solid var(--color-base-content)\n\n  a\n    cursor pointer\n\n  button\n    position relative\n\n  textarea\n    overflow-wrap normal\n    tab-size 4\n    white-space pre\n\n  textarea,\n  input\n    outline none /* osx */\n\n  .gltfIcon svg\n    box-sizing content-box\n    display inline\n    height 20px\n    position relative\n    top 4px\n    vertical-align baseline\n    width 30px\n\n  #scenegraph,\n  #rightPanel\n    z-index 9998\n\n  #sidebar,\n  #scenegraph,\n  .panel\n      cursor default\n      user-select none\n\n  .toggle-edit\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    font-size 13px\n    left 3px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 100px\n    z-index 999999999\n\n  .toggle-edit:hover\n    background-color var(--color-secondary-hover)\n\n  .try-editor-btn\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    display flex\n    font-size 16px\n    gap 5px\n    justify-content center\n    line-height 24px\n    margin 0\n    padding 6px 10px\n    text-align center\n    text-decoration none\n    width 200px\n\n  .try-editor-btn:hover\n    background-color var(--color-secondary-hover)\n    color var(--color-secondary-content)\n\n  .sponsor-btn\n    background-color var(--color-neutral)\n    box-sizing content-box\n    color var(--color-neutral-content)\n    display flex\n    font-size 13px\n    gap 5px\n    justify-content center\n    left 127px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 80px\n    z-index 999999999\n\n    svg\n      color rgb(219, 97, 162)\n      fill currentColor\n\n  .sponsor-btn:hover\n    background-color var(--color-neutral-hover)\n    color var(--color-neutral-content)\n\n  input\n    background-color transparent\n    border 1px solid var(--color-base-200)\n    color var(--color-base-content)\n\n  input,\n  .texture canvas\n    transition 0.1s background-color ease-in-out, 0.1s border-color ease-in-out, 0.1s color ease-in-out\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    border-radius 0\n    min-height 14px\n    outline none\n\n  input[type=\"checkbox\"]\n    appearance none\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 0\n    cursor pointer\n    height 18px\n    margin 0\n    position relative\n    width 18px\n\n    &:checked\n        background var(--color-primary)\n        border 1px solid var(--color-base-300)\n\n        &::after\n            border solid white\n            border-width 0 2px 2px 0\n            content ''\n            height 9px\n            left 5px\n            position absolute\n            top 1px\n            transform rotate(45deg)\n            width 4px\n\n  input[type=\"checkbox\"]:focus\n    box-shadow none\n\n  input.number\n    background-color transparent !important\n    border 0\n    color var(--color-primary) !important\n    cursor col-resize\n    font-size 13px\n    padding 2px\n\n  input.string:focus,\n  input.number:focus\n    border 1px solid var(--color-primary)\n\n  input.error\n    border 1px solid var(--color-error)\n\n  #sidebar\n    background var(--color-base-200)\n    width 331px\n\n  input,\n  textarea,\n  select\n    background var(--color-base-300)\n    border 1px solid transparent\n    color var(--color-base-content)\n\n  select\n    background var(--color-base-lighter)\n\n  input[type=\"color\"]\n    background-color var(--color-base-100)\n    border 1px solid var(--color-base-300)\n    cursor pointer\n    height 26px\n    padding 0\n    width 50px\n\n  /* Note these vendor-prefixed selectors cannot be grouped! */\n  input[type=\"color\"]::-webkit-color-swatch\n    border 0  /* To remove the gray border. */\n\n  input[type=\"color\"]::-webkit-color-swatch-wrapper\n    border-radius 0  /* So it appears as rectangle instead of an ovale in Safari */\n    padding 0  /* To remove the inner padding. */\n\n  input[type=\"color\"]::-moz-color-swatch\n    border 0\n\n  input[type=\"color\"]::-moz-focus-inner\n    border 0  /* To remove the inner border (specific to Firefox). */\n    padding 0\n\n  .hidden\n    visibility hidden\n\n  a.button\n    color var(--color-base-content)\n    font-size 16px\n    line-height 1em\n    text-decoration none\n\n    &:hover\n      color var(--color-primary)\n\n  @keyframes animateopacity\n    from { opacity: 0 }\n    to { opacity: 1 }\n\n  .hide\n    display none\n\n  .a-canvas.state-dragging\n    cursor grabbing\n\n  #rightPanel\n    align-items stretch\n    display flex\n    justify-content flex-end\n\n  #inspectorContainer\n    display flex\n    height 100%\n    justify-content space-between\n    left 0\n    pointer-events none\n    position fixed\n    top 0\n    width 100%\n    z-index 999999\n\n  #scenegraph,\n  #viewportBar,\n  #rightPanel\n    pointer-events all\n\n  .aframe-inspector-opened a-scene .a-canvas\n    background-color #191919\n    z-index 9998\n\n  .toggle-sidebar\n    align-items center\n    display flex\n    height 100%\n    position absolute\n    z-index 9998\n\n    a\n      background-color var(--color-base-200)\n      color var(--color-base-content)\n      padding 5px\n      z-index 9998\n\n    a.hover\n      background-color var(--color-primary)\n      color var(--color-primary-content)\n\n  .toggle-sidebar.left\n    left 0\n    top 0\n\n  .toggle-sidebar.right\n    right 0\n    top 0\n","@import './lib';\n\n#toolbar\n  background-color var(--color-base-300)\n  border-bottom 1px solid var(--color-base-100)\n  padding 4px 8px\n  position relative\n  z-index 9999\n  display flex\n  flex-wrap wrap\n  gap 4px\n\n  .toolbarActions\n    align-items center\n    display flex\n    justify-content flex-start\n    gap 4px\n    padding 4px 0\n    flex-wrap wrap\n\n    a.disabled\n      color #666\n      cursor default\n\n    .button\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover:not(.disabled)\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      &:active\n        transform scale(0.95)\n\n      &.disabled\n        opacity 0.5\n        cursor not-allowed\n\n    .gltfIcon\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      svg\n        width 18px\n        height 18px\n\n#scenegraph\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-300)\n  display flex\n  flex-direction column\n  overflow visible\n  padding-top 60px\n  width 230px\n  min-width 180px\n  max-width 400px\n  resize horizontal\n  overflow-x auto\n  position relative\n  z-index 9999\n  pointer-events all\n\n  &::after\n    content: ''\n    position absolute\n    right 0\n    top 0\n    bottom 0\n    width 4px\n    cursor ew-resize\n    background transparent\n    transition background 0.2s\n\n  &:hover::after\n    background var(--color-primary)\n\n  .entity\n    align-items center\n    background var(--color-base-200)\n    box-sizing border-box\n    cursor pointer\n    display flex\n    gap 6px\n    justify-content space-between\n    line-height 1em\n    padding 3px\n    white-space nowrap\n    width 100%\n\n    &:hover\n      background var(--color-accent-hover)\n      color var(--color-accent-content)\n\n    &.active\n      background-color var(--color-accent)\n      color var(--color-accent-content)\n\n      .entityActions\n        align-items center\n        display flex\n        padding-right 2px\n\n        a.button:hover\n          color var(--color-primary)\n\n    &.novisible\n      &.active\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n      &:not(.active)\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n  .component:hover\n    color var(--color-primary)\n\n  .entityIcons\n    margin-left 2px\n\n  .entityActions\n    display none\n\n    .button\n      color var(--color-base-content)\n      font-size 12px\n      margin-left 6px\n\n  .id\n    color var(--color-base-content)\n\n  .option.active .id\n    color var(--color-base-content)\n\n  .collapsespace\n    color var(--color-base-content)\n    display inline-block\n    text-align center\n    width 14px\n\n  .fa-eye\n    color var(--color-base-content)\n\n  .search\n    display flex\n    font-size 16px\n    padding 5px\n    position relative\n\n    input\n      background var(--color-base-300)\n      border-radius 0\n      box-sizing border-box\n      color var(--color-primary)\n      padding 5px 10px\n      width 100%\n\n    >svg\n      color var(--color-base-content)\n\n    >svg, a.button\n      position absolute\n      right 14px\n      top 10px\n\n  .outliner\n    background var(--color-base-200)\n    color var(--color-base-content)\n    cursor default\n    flex 1 1 auto\n    font-size 13px\n    height calc(100% - 98px)\n    line-height normal\n    outline none\n    overflow-y auto\n    padding 0\n    width 100%\n\n.theme-selector\n  position relative\n\n  .theme-dropdown\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 4px\n    box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)\n    max-height 300px\n    overflow-y auto\n    position fixed\n    top 50px\n    left 10px\n    width 140px\n    z-index 10000\n\n    .theme-option\n      color var(--color-base-content)\n      cursor pointer\n      padding 8px 12px\n\n      &:hover\n        background var(--color-accent-hover)\n        color var(--color-accent-content)\n\n      &.selected\n        background var(--color-accent)\n        color var(--color-accent-content)\n\n// Add Entity Button with Primitive Menu\n.addEntityContainer\n  position relative\n  display flex\n\n.addEntityContainer .button\n  border-radius 4px 0 0 4px\n\n.addEntityContainer .primitiveToggle\n  border-left none\n  border-radius 0 4px 4px 0\n  padding-left 4px\n\n.primitiveMenu\n  position fixed\n  top auto\n  left 235px\n  bottom auto\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 6px\n  padding 6px 0\n  z-index 10001\n  min-width 240px\n  max-height 400px\n  overflow-y auto\n  box-shadow 0 8px 24px rgba(0, 0, 0, 0.4)\n\n.primitiveMenuHeader\n  padding 10px 14px 8px\n  font-size 11px\n  color var(--color-primary)\n  border-bottom 1px solid var(--color-base-300)\n  font-weight 600\n  text-transform uppercase\n  letter-spacing 0.5px\n\n.primitiveMenuItem\n  display flex\n  align-items center\n  gap 10px\n  padding 10px 14px\n  cursor pointer\n  transition background 0.15s, color 0.15s\n  color var(--color-base-content)\n  border-left 3px solid transparent\n\n.primitiveMenuItem:hover\n  background var(--color-base-300)\n  border-left-color var(--color-primary)\n\n.primitiveMenuItem.selected\n  background var(--color-primary)\n  color var(--color-primary-content)\n  border-left-color var(--color-primary)\n\n.primitiveIcon\n  width 24px\n  text-align center\n  font-size 1rem\n\n.primitiveLabel\n  flex 1\n  font-size 13px\n  font-weight 500\n\n.primitiveTag\n  font-size 10px\n  color var(--color-base-content)\n  font-family var(--font-monospace)\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n  opacity  0.8\n\n.primitiveMenuItem.selected .primitiveTag\n  color inherit\n  background rgba(255,255,255,0.2)\n  opacity  1\n\n// Grouped primitive menu styles\n.primitiveGroup\n  margin-bottom 6px\n\n  &:last-child\n    margin-bottom 0\n\n.primitiveGroupHeader\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 14px 6px\n  font-size 10px\n  color var(--color-primary)\n  font-weight 700\n  text-transform uppercase\n  letter-spacing 0.8px\n\n  .icon\n    font-size 11px\n    width 14px\n    text-align center\n\n.primitiveGroup .primitiveMenuItem\n  padding-left 20px\n\n  // Entity actions for move up/down and reparent\n  .entityReparent\n    cursor grab\n\n  .entityMoveUp, .entityMoveDown\n    cursor pointer\n    opacity 0.5\n    transition opacity 0.2s\n\n  .entityMoveUp:hover, .entityMoveDown:hover\n    opacity 1\n\n// Reparent Modal Styles\n.reparent-modal-overlay\n  position fixed\n  top 0\n  left 0\n  right 0\n  bottom 0\n  background rgba(0, 0, 0, 0.7)\n  z-index 10000\n  display flex\n  align-items center\n  justify-content center\n\n.reparent-modal\n  background var(--color-base-200)\n  border 1px solid var(--border-color)\n  border-radius 8px\n  width 350px\n  max-height 80vh\n  display flex\n  flex-direction column\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  overflow hidden\n\n.reparent-modal-header\n  display flex\n  justify-content space-between\n  align-items center\n  padding 16px\n  border-bottom 1px solid var(--border-color)\n  flex-shrink 0\n\n  h3\n    margin 0\n    font-size 1rem\n    color var(--color-base-content)\n    display flex\n    align-items center\n    gap 8px\n\n  .close-btn\n    background none\n    border none\n    color var(--text-secondary)\n    font-size 1.5rem\n    cursor pointer\n    padding 0\n    line-height 1\n\n    &:hover\n      color var(--color-base-content)\n\n.reparent-modal-content\n  padding 16px\n  overflow-y auto\n  flex 1\n  display flex\n  flex-direction column\n\n  p\n    margin 0 0 12px 0\n    font-size 0.85rem\n    color var(--text-secondary)\n\n.reparent-list\n  display flex\n  flex-direction column\n  gap 4px\n  max-height 300px\n  overflow-y auto\n  flex 1\n\n.reparent-option\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 12px\n  border-radius 4px\n  cursor pointer\n  transition background 0.2s\n  color var(--color-base-content)\n\n  &:hover\n    background var(--color-base-300)\n\n  &.selected\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n    .reparent-name\n      color var(--color-primary-content)\n\n.reparent-icon\n  font-size 0.9rem\n  width 24px\n  text-align center\n\n.reparent-name\n  flex 1\n  font-size 0.85rem\n\n.reparent-tag\n  font-size 0.65rem\n  color var(--text-secondary)\n  font-family monospace\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n\n// Modal action buttons\n.reparent-modal-actions\n  display flex\n  justify-content flex-end\n  gap 10px\n  margin-top 16px\n  padding-top 16px\n  border-top 1px solid var(--border-color)\n\n  .btn-cancel\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--color-base-content)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    transition all 0.2s\n\n    &:hover\n      background var(--color-base-100)\n\n  .btn-apply\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--text-secondary)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    font-weight 600\n    transition all 0.2s\n    opacity 0.5\n    pointer-events none\n\n    &.active\n      background var(--color-primary)\n      border-color var(--color-primary)\n      color var(--color-primary-content)\n      opacity 1\n      pointer-events auto\n\n      &:hover\n        filter brightness(1.1)\n\n// Mixins Manager\n.mixins-manager\n  position relative\n\n.mixins-toggle\n  display flex\n  align-items center\n  justify-content center\n  gap 8px\n  height 36px\n  padding 0 14px\n  border-radius 6px\n  background var(--color-base-200)\n  color var(--color-base-content)\n  border 1px solid var(--color-base-100)\n  font-size 13px\n  font-weight 500\n  transition all 0.2s ease\n  cursor pointer\n  white-space nowrap\n\n  &:hover\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n  &:active\n    transform scale(0.95)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Mixins Panel (over canvas)\n.mixins-panel\n  position fixed\n  top 50%\n  left 50%\n  transform translate(-50%, -50%)\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 300px\n  max-width 400px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 10000\n  display flex\n  flex-direction column\n\n  .mixins-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .mixins-list\n    flex 1\n    overflow-y auto\n    max-height calc(60vh - 60px)\n\n  .no-mixins\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .mixin-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n\n    &:hover\n      background var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .mixin-info\n      display flex\n      flex-direction column\n      gap 3px\n      flex 1\n      min-width 0\n\n      .mixin-id\n        font-size 14px\n        font-weight 600\n        color var(--color-base-content)\n\n      .mixin-usage\n        font-size 11px\n        color var(--color-primary)\n\n      .mixin-components\n        font-size 10px\n        color var(--color-base-content)\n        opacity 0.7\n        max-width 200px\n        overflow hidden\n        text-overflow ellipsis\n        white-space nowrap\n\n    .mixin-actions\n      display flex\n      gap 6px\n      margin-left 10px\n\n      .mixin-edit,\n      .mixin-delete\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        color var(--color-base-content)\n        cursor pointer\n        padding 6px 8px\n        font-size 11px\n        border-radius 4px\n        transition all 0.2s\n\n        &:hover\n          background var(--color-primary)\n          border-color var(--color-primary)\n          color var(--color-primary-content)\n\n      .mixin-delete:hover\n        background var(--color-error)\n        border-color var(--color-error)\n\n// Mixin Modal\n.mixin-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.mixin-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 80vh\n  max-width 500px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  position relative\n  margin auto\n\n  .mixin-modal-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 15px 20px\n    border-bottom 1px solid var(--color-base-300)\n\n    h3\n      margin 0\n      font-size 16px\n      color var(--color-base-content)\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .mixin-modal-content\n    padding 20px\n    max-height 50vh\n    overflow-y auto\n\n    .form-group\n      margin-bottom 15px\n\n      &:last-child\n        margin-bottom 0\n\n      label\n        display block\n        font-size 12px\n        font-weight 600\n        color var(--color-base-content)\n        margin-bottom 8px\n        text-transform uppercase\n\n      input[type=\"text\"]\n        width 100%\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        border-radius 4px\n        color var(--color-base-content)\n        padding 8px 10px\n        font-size 13px\n        box-sizing border-box\n\n        &:focus\n          border-color var(--color-primary)\n          outline none\n\n      .component-inputs\n        display flex\n        flex-direction column\n        gap 8px\n\n      .component-input\n        display flex\n        align-items center\n        gap 10px\n\n        .component-name\n          min-width 80px\n          font-size 12px\n          color var(--color-primary)\n          font-weight 500\n\n        input\n          flex 1\n\n    .mixin-help-text\n      background var(--color-base-100)\n      border 1px solid var(--color-base-300)\n      border-radius 4px\n      padding 12px 14px\n      margin-bottom 15px\n      font-size 12px\n      color var(--color-base-content)\n      line-height 1.5\n\n      p\n        margin 0 0 6px 0\n\n        &:last-child\n          margin-bottom 0\n\n  .mixin-modal-footer\n    display flex\n    justify-content flex-end\n    gap 10px\n    padding 15px 20px\n    border-top 1px solid var(--color-base-300)\n\n    .btn\n      padding 8px 16px\n      border-radius 4px\n      font-size 13px\n      cursor pointer\n      transition all 0.2s\n\n    .btn:not(.primary)\n      background var(--color-base-300)\n      border 1px solid var(--color-base-300)\n      color var(--color-base-content)\n\n      &:hover\n        background var(--color-base-100)\n\n    .btn.primary\n      background var(--color-primary)\n      border 1px solid var(--color-primary)\n      color var(--color-primary-content)\n\n      &:hover\n        filter brightness(1.1)\n","@import './lib';\n\n.components\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  height 100%\n  overflow auto\n  position fixed\n  width 331px\n\n.collapsible-header\n  align-items center\n  display flex\n  justify-content space-between\n\n  .entityPrint\n    color var(--color-base-content)\n\n.collapsible-content\n  padding 5px 0\n\n.componentTitle span\n  color var(--color-base-content)\n  font-weight 600\n  max-width 200px\n  overflow hidden\n  text-overflow ellipsis\n  text-transform uppercase\n  vertical-align bottom !important\n  white-space nowrap\n\n.componentHeaderActions\n  align-items center\n  display flex\n  gap 10px\n\n.collapsible .static\n  background var(--color-base-100)\n  border-bottom 2px solid var(--color-base-200)\n  box-sizing content-box\n  cursor pointer\n  font-size 13px\n  height 16px\n  margin 0\n  padding 8px 10px 12px\n  vertical-align bottom\n\n  &:hover\n    background var(--color-base-lighter)\n\n.collapsible .static .collapse-button\n  border 6px solid transparent\n  float left\n  height 0\n  margin-left 2px\n  margin-right 10px\n  width 0\n\n.collapsible.collapsed .static .collapse-button\n  border-left-color var(--color-base-content)\n  margin-top 4px\n\n.collapsible:not(.collapsed) .static .collapse-button\n  border-top-color var(--color-base-content)\n  margin-top 7px\n\n.propertyRow\n  align-items center\n  display flex\n  font-size 13px\n  min-height 30px\n  padding 2px 15px\n\n  .text\n    cursor default\n    display inline-block\n    overflow hidden\n    padding-right 10px\n    text-overflow ellipsis\n    vertical-align middle\n    width 118px\n\n  input.number\n    width 40px\n\n  .vec2 input.number,\n  .vec3 input.number\n    width 40px\n\n  .vec4 input.number\n    width 34px\n\n  .vec2, .vec3, .vec4\n    display inline\n\n  .map_value\n    margin 0 0 0 5px\n    width 68px\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    background var(--color-base-300)\n    color var(--color-primary)\n    min-height 26px\n    padding 1px 5px\n\n    &:last-child\n      padding-right 0\n\n  input.string\n    box-sizing border-box\n    padding-left 8px\n    width 165px\n\n  input[type=\"text\"]:focus,\n  input.string:focus\n    box-shadow none\n\n  .color-widget *\n    vertical-align middle\n\n  .color_value\n    letter-spacing 1px\n    margin 0 0 0 5px\n    width 68px\n\n.propertyRowDefined .text\n  color var(--color-property-defined)\n  font-weight 600\n\n#addComponentContainer\n  align-items center\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  display flex\n  flex-direction column\n  justify-content center\n  padding 20px 10px\n\n  #addComponent\n    text-align left\n    width 200px\n\n    .select__control\n      background var(--color-base-300)\n      color var(--color-primary)\n      height 35px\n\n  #addComponentHeader\n    font-size 15px\n    margin 0 0 10px\n\n  input[type=\"text\"]:focus\n    box-shadow none\n\n.component-title\n  align-items center\n  display flex\n\n#componentEntityHeader\n  .collapsible-header\n    bottom 5px\n    position relative\n\n  a.button\n    margin-left 10px\n\n  .collapse-button\n    display none\n\n  .static\n    height 13px\n\n  .entityPrint\n    font-size 15px\n    padding-left 5px\n\n  .entityName\n    max-width 160px\n\n#mixinSelect\n  width 160px\n\n.propertyRow .texture\n  display flex\n\n  input\n    margin-left 0\n    width 120px\n\n/* Behaviors Panel Styles */\n.behaviors-panel\n  background-color var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  padding 10px\n\n  .panel-header\n    align-items center\n    display flex\n    justify-content space-between\n    margin-bottom 10px\n\n    .panel-header-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 14px\n      font-weight 600\n      gap 8px\n\n  .behaviors-list\n    .no-behaviors\n      text-align center\n      padding 20px 10px\n      color var(--color-base-content)\n      opacity 0.7\n\n      p\n        margin 0 0 15px\n\n    .entity-behavior\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 8px 12px\n\n      .behavior-info\n        align-items center\n        display flex\n        gap 10px\n\n        .behavior-name\n          color var(--color-base-content)\n          font-size 13px\n\n      .behavior-remove\n        background transparent\n        border none\n        color var(--color-base-content)\n        cursor pointer\n        font-size 14px\n        padding 4px\n        opacity 0.6\n\n        &:hover\n          color var(--color-error)\n          opacity 1\n\n/* Entity Behavior - Enhanced */\n.entity-behavior\n  align-items center\n  background var(--color-base-300)\n  border-radius 4px\n  display flex\n  justify-content space-between\n  margin-bottom 8px\n  padding 10px 12px\n\n  .behavior-info\n    align-items center\n    display flex\n    gap 12px\n\n    .behavior-details\n      display flex\n      flex-direction column\n      gap 2px\n\n      .behavior-name\n        color var(--color-base-content)\n        font-size 13px\n        font-weight 500\n\n      .behavior-event\n        color var(--color-primary)\n        font-size 11px\n\n  .behavior-actions\n    align-items center\n    display flex\n    gap 4px\n\n    .behavior-edit,\n    .behavior-remove\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 12px\n      padding 6px\n      opacity 0.6\n      transition all 0.2s\n\n      &:hover\n        color var(--color-primary)\n        opacity 1\n\n    .behavior-remove:hover\n      color var(--color-error)\n\n/* Entity Behavior Selected */\n.entity-behavior:hover\n  background var(--color-base-lighter)\n\n/* Behavior Modal */\n.modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  left 50%\n  max-height 80vh\n  max-width 600px\n  min-width 400px\n  overflow hidden\n  position fixed\n  top 50%\n  transform translate(-50%, -50%)\n  width 90%\n\n  .modal-title\n    align-items center\n    background var(--color-base-100)\n    color var(--color-base-content)\n    display flex\n    font-size 16px\n    font-weight 600\n    gap 10px\n    padding 15px 20px\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      margin-left auto\n      opacity 0.7\n\n      &:hover\n        opacity 1\n\n  .behavior-categories\n    max-height 400px\n    overflow-y auto\n    padding 15px\n\n    .behavior-category\n      margin-bottom 20px\n\n      &:last-child\n        margin-bottom 0\n\n      .category-title\n        color var(--color-primary)\n        font-size 12px\n        font-weight 600\n        margin-bottom 10px\n        text-transform uppercase\n\n      .category-behaviors\n        display flex\n        flex-wrap wrap\n        gap 8px\n\n        .behavior-option\n          align-items center\n          background var(--color-base-300)\n          border 1px solid transparent\n          border-radius 4px\n          color var(--color-base-content)\n          cursor pointer\n          display flex\n          gap 8px\n          padding 8px 12px\n          font-size 13px\n          transition all 0.2s\n\n          &:hover\n            background var(--color-base-lighter)\n            border-color var(--color-primary)\n\n          &.selected\n            background var(--color-primary)\n            color var(--color-primary-content)\n\n  .behavior-params\n    background var(--color-base-300)\n    border-top 1px solid var(--color-base-100)\n    padding 15px 20px\n\n    .params-title\n      color var(--color-base-content)\n      font-size 14px\n      font-weight 600\n      margin-bottom 15px\n\n    .params-form\n      .param-input\n        margin-bottom 15px\n\n        &:last-child\n          margin-bottom 0\n\n        label\n          color var(--color-base-content)\n          display block\n          font-size 12px\n          margin-bottom 5px\n\n        input[type=\"text\"],\n        input[type=\"number\"],\n        textarea,\n        select\n          background var(--color-base-100)\n          border 1px solid var(--color-base-300)\n          border-radius 4px\n          color var(--color-base-content)\n          padding 8px 10px\n          width 100%\n          box-sizing border-box\n\n          &:focus\n            border-color var(--color-primary)\n            outline none\n\n        textarea\n          min-height 60px\n          resize vertical\n\n        &.checkbox\n          align-items center\n          display flex\n\n          label\n            align-items center\n            cursor pointer\n            display flex\n            gap 8px\n            margin-bottom 0\n\n  .modal-actions\n    align-items center\n    border-top 1px solid var(--color-base-100)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n/* Icon sizes for behaviors */\n.behaviors-panel .panel-header .icon,\n.behavior-option .icon,\n.entity-behavior .icon\n  font-size 14px\n  width 16px\n\n/* Behavior Modal - Centered */\n.behavior-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 85vh\n  max-width 550px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  display flex\n  flex-direction column\n\n  .behavior-modal-header\n    align-items center\n    background var(--color-base-100)\n    border-bottom 1px solid var(--color-base-300)\n    display flex\n    justify-content space-between\n    padding 15px 20px\n\n    .behavior-modal-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 16px\n      font-weight 600\n      gap 10px\n\n    .behavior-modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 28px\n      line-height 1\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .behavior-modal-content\n    flex 1\n    overflow-y auto\n    padding 15px\n\n  .behavior-modal-footer\n    align-items center\n    border-top 1px solid var(--color-base-300)\n    display flex\n    gap 10px\n    justify-content space-between\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n// Help button\n.help-btn\n  align-items center\n  background var(--color-base-300)\n  border none\n  border-radius 4px\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  font-size 13px\n  gap 6px\n  padding 8px 12px\n  transition all 0.2s\n\n  &:hover\n    background var(--color-base-lighter)\n    color var(--color-primary)\n\n  &.active\n    background var(--color-primary)\n    color white\n\n// Help section\n.behavior-help\n  background var(--color-base-100)\n  border-radius 6px\n  max-height 350px\n  overflow-y auto\n  padding 15px\n\n  .help-section\n    margin-bottom 15px\n\n    &:last-child\n      margin-bottom 0\n\n    h4\n      color var(--color-primary)\n      font-size 13px\n      font-weight 600\n      letter-spacing 0.5px\n      margin-bottom 8px\n      text-transform uppercase\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      line-height 1.5\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    li\n      border-bottom 1px solid var(--color-base-300)\n      color var(--color-base-content)\n      font-size 12px\n      line-height 1.4\n      padding 6px 0\n\n      &:last-child\n        border-bottom none\n\n    pre\n      background var(--color-base-400)\n      border-radius 4px\n      color var(--color-base-content)\n      font-family 'Monaco', 'Menlo', 'Ubuntu Mono', monospace\n      font-size 11px\n      line-height 1.4\n      overflow-x auto\n      padding 12px\n      white-space pre-wrap\n      word-break break-all\n\n.footer-actions\n  display flex\n  gap 10px\n  margin-left auto\n\n.modal-title .icon\n  font-size 18px\n  width 20px\n","@import './lib';\n\n.entityPrint\n  font-family var(--font-normal)\n  line-height 1.15em\n\n.entityName\n  display inline-block\n  overflow hidden\n  position relative\n  text-overflow ellipsis\n  top 3px\n  white-space nowrap\n\n[data-entity-name-type=\"id\"]\n  color var(--color-error)\n\n[data-entity-name-type=\"class\"]\n  color var(--color-success)\n\n[data-entity-name-type=\"mixin\"]\n  color var(--color-warning)\n",".help-lists\n  display flex\n  justify-content space-around\n\n.help-list\n  list-style none\n  margin 0\n  padding 0 0 10px\n  width 350px\n\n.help-list li\n  margin-right 40px\n\n.help-key-unit\n  line-height 1.8\n  margin-right 2em\n  padding 5px 0\n\n.help-key\n  bottom 2px\n  margin-right 4px\n  min-width 60px\n  position relative\n\n.help-key span\n  background-color var(--color-neutral)\n  background-repeat repeat-x\n  border 1px solid var(--color-neutral-content)\n  border-radius 3px\n  box-shadow 0 0 5px #000\n  color var(--color-neutral-content)\n  display inline-block\n  font-size 12px\n  padding 0 8px\n  text-align center\n\n.help-key-def\n  color var(--color-base-content)\n  display inline-block\n  margin-left 1em\n","@import './lib';\n\n.select__control\n  border 0\n  border-radius 0\n  cursor pointer\n  min-height 26px\n\n.select__indicator\n  color var(--color-base-content)\n  height 26px\n\n.select__indicator-separator\n  display none\n\n.select__input\n  min-height auto !important\n\n.select__control,\n.select__menu\n  background var(--color-base-300)\n\n.select__option\n  cursor pointer\n  padding 5px 10px\n\n.select__placeholder,\n.select__menu\n  color var(--color-base-content)\n\n.select__single-value\n  color var(--color-primary)\n\n.select__control--is-focused\n  box-shadow none !important\n\n.select__label\n  font-size 11px\n\n.select__option--is-focused\n  background var(--color-accent-hover)\n  color var(--color-accent-content)\n\n.select__option--is-selected\n  background var(--color-accent)\n  color var(--color-accent-content)\n\n.select__value-container\n  height 26px\n  position static\n\n  &.select__value-container--is-multi\n    height auto\n    padding 6px\n\n.select__dropdown-indicator\n  padding 3px 8px\n\n.select__multi-value\n  background var(--color-base-200)\n  color var(--color-primary)\n\n.select__multi-value__label\n  color var(--color-primary)\n\n.select__multi-value__remove:hover\n  background var(--color-base-200)\n  color var(--color-base-content)\n",".modal\n  animation animateopacity 0.2s ease-out\n  background-color rgba(0, 0, 0, 0.6)\n  display flex\n  height 100%\n  left 0\n  overflow auto\n  position fixed\n  top 0\n  width 100%\n  z-index 9999999999\n\n.modal h3\n  font-size 18px\n  font-weight 600\n  margin 0.6em 0\n\n#textureModal .modal-content\n  height calc(100% - 50px)\n  width calc(100% - 50px)\n\n.modal-content\n  background-color var(--color-base-200)\n  box-shadow 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5)\n  margin auto\n  overflow hidden\n  padding 0\n\n.close\n  color var(--color-base-content)\n  float right\n  font-size 28px\n  font-weight bold\n\n.close:hover,\n.close:focus\n  color var(--color-primary)\n  cursor pointer\n  text-decoration none\n\n.modal-header\n  color var(--color-base-content)\n  padding 2px 16px\n\n.modal-body\n  color var(--color-base-content)\n  overflow auto\n  padding 16px\n\n.modal-footer\n  color var(--color-base-content)\n  padding 2px 16px\n\n/* Gallery */\n.gallery\n  background var(--color-base-200)\n  display flex\n  flex-wrap wrap\n  margin 15px auto 0\n  max-height calc(100vh - 370px)\n  overflow auto\n  padding 15px 3px 3px\n\n.newimage .gallery\n  padding 16px\n\n.gallery li\n  border-radius 2px\n  box-shadow 0 0 6px rgba(0, 0, 0, 0.6)\n  cursor pointer\n  margin 8px\n  overflow hidden\n  width 155px\n\n.gallery li.selected,\n.gallery li:hover\n  box-shadow 0 0 0 2px var(--color-primary)\n\n.gallery li .detail\n  background-color var(--color-base-100)\n  margin 0\n  min-height 60px\n  padding 3px 10px\n\n.preview\n  padding 10px\n  width 150px\n\n.preview input\n  display block\n  margin 8px 0\n  width 144px\n\n.preview .iderror\n  background unquote(\"color-mix(in oklab, var(--color-error) 8%, var(--color-base-300))\")\n  color var(--color-error)\n  font-weight 600\n  margin-bottom 8px\n  padding 3px 5px\n  text-align center\n  width 148px\n\n.preview button\n  width 155px\n\n.preview .detail .title\n  color var(--color-base-content)\n  display inline-block\n  max-width 155px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.gallery li.selected .detail,\n.gallery li:hover .detail\n  background-color var(--color-base-lighter)\n\n.gallery li .detail span\n  color var(--color-base-content)\n  display block\n  margin-top 4px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n  width 140px\n\n.gallery li.selected .detail span,\n.gallery li:hover .detail span\n  color var(--color-base-content)\n\n.gallery li .detail span.title\n  color var(--color-property-defined)\n  font-weight 600\n\n.modal button\n  appearance none\n  background-color var(--color-primary)\n  border none\n  border-radius 0\n  box-shadow none\n  color var(--color-primary-content)\n  cursor pointer\n  display inline-block\n  font-size 12px\n  line-height 1.8\n  margin 0 10px 0 0\n  padding 5px 10px\n\n.modal button:focus\n  outline none\n\n.modal button:hover,\n.modal button.hover\n  background-color var(--color-primary-hover)\n\n.modal button:active,\n.modal button.active\n  background-color var(--color-primary-hover)\n\n.modal button:disabled\n  background-color #666\n  color #fff\n  cursor default\n\n.newimage\n  background-color var(--color-base-100)\n  color var(--color-base-content)\n  display flex\n  font-size 13px\n  justify-content space-between\n  margin-top 10px\n  overflow auto\n  padding 10px\n\n.newimage input\n  color var(--color-primary)\n  padding 3px 5px\n\n.texture canvas + input\n  margin-left 5px\n\n.texture svg\n  padding-right 5px\n\n.uploader-normal-button .hidden\n  display none\n\n.assets.search\n  margin-top 10px\n  position relative\n  width 200px\n\n.assets.search input\n  box-sizing border-box\n  padding-right 20px\n  width 100%\n\n.assets.search svg\n  position absolute\n  right 5px\n  top 5px\n\n.new_asset_options\n  margin 10px\n\n.new_asset_options > ul\n  margin-left 10px\n  padding 5px\n\n.new_asset_options > ul > li\n  padding 10px 0\n\n.new_asset_options .imageUrl\n  margin-left 5px\n  width 350px\n\n.texture canvas\n  border 1px solid var(--color-base-100)\n  cursor pointer\n","@import './lib';\n\n#viewportBar\n  align-items center\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  display flex\n  flex-grow 2\n  font-size 15px\n  height 32px\n  justify-content space-between\n  padding 0 5px\n\n.toolbarButtons\n  align-items center\n  display flex\n  gap 6px\n\n  a.button\n    & svg\n      padding 8px\n\n    &:not(.active) svg:hover\n      background-color var(--color-base-lighter)\n\n  .active svg\n    background-color var(--color-primary)\n    color var(--color-primary-content)\n\n  .active:hover svg\n    color var(--color-primary-content) !important\n\n.local-transform\n  align-items center\n  display flex\n  gap 5px\n  padding 0 10px\n\n.local-transform label\n  color var(--color-base-content)\n\n#cameraSelect\n  cursor pointer\n  width 120px\n\n  .select__dropdown-indicator\n    padding-left 3px\n    padding-right 3px\n\n#cameraToolbar\n  align-items center\n  display flex\n\n  .select__control\n    background none\n\n  .select__single-value\n    color var(--color-base-content)\n\n    &:hover\n      color var(--color-primary)\n\n#viewportHud\n  display none\n\n  @media (min-width: 1025px)\n    display block\n","@import './lib';\n\n.select-widget\n  display inline-block\n  width 157px"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/style/lib.styl","webpack://./src/style/index.styl","webpack://./src/style/scenegraph.styl","webpack://./src/style/components.styl","webpack://./src/style/entity.styl","webpack://./src/style/help.styl","webpack://./src/style/select.styl","webpack://./src/style/textureModal.styl","webpack://./src/style/viewport.styl","webpack://./src/style/widgets.styl"],"names":[],"mappings":"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","sourcesContent":["/* CSS rules from the original FontAwesomeIcon component */\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  box-sizing: content-box;\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n","@import './lib';\n\nbody.aframe-inspector-opened,\n.toggle-edit,\n.sponsor-btn\n  font-family var(--font-normal)\n\nbody.aframe-inspector-opened\n  background var(--color-base-200)\n  color var(--color-base-content)\n  font-size 12px\n  margin 0\n  overflow hidden\n\n/* :where(:root) has zero specificity compared to :root, so any user defined :root will override the below rule */\n:where(:root) {\n  color-scheme: dark;\n\n  --color-base-100: #333;\n  --color-base-200: #242424;\n  --color-base-300: #1d1d1d;\n  --color-base-content: #c3c3c3;\n  --color-primary: #1faaf2;\n  --color-primary-content: #fff;\n  --color-secondary: #92374d;\n  --color-secondary-content: #fafafa;\n  --color-accent: #155373;\n  --color-accent-content: #fff;\n  --color-neutral: #333;\n  --color-neutral-content: #aaa;\n  --color-info: #2cb7ff;\n  --color-info-content: #fff;\n  --color-success: #8b8;\n  --color-success-content: #000;\n  --color-warning: #d66853;\n  --color-warning-content: #000;\n  --color-error: #92374d;\n  --color-error-content: #000;\n  --font-normal: system-ui, BlinkMacSystemFont, -apple-system, \"Segoe UI\", Helvetica, Arial, sans-serif;\n  --font-monospace: Consolas, \"Andale Mono\", Monaco, \"Lucida Console\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Bitstream Vera Sans Mono\", \"Courier New\", monospace;\n}\n\n#aframeInspector\n  --color-base-lighter: unquote(\"color-mix(in oklab, var(--color-base-100) 90%, white 10%)\");\n  --color-primary-hover: unquote(\"color-mix(in oklab, var(--color-primary) 90%, black 10%)\");\n  --color-secondary-hover: unquote(\"color-mix(in oklab, var(--color-secondary) 90%, black 10%)\");\n  --color-accent-hover: unquote(\"color-mix(in oklab, var(--color-accent) 70%, black 30%)\");\n  --color-neutral-hover: unquote(\"color-mix(in oklab, var(--color-neutral) 90%, black 10%)\");\n  --color-property-defined: light-dark(\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, black 90%)\"),   /* darker for light theme */\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, white 90%)\")    /* lighter for dark theme */\n  )\n\n  @import './scenegraph';\n  @import './components';\n  @import './entity';\n  @import './help';\n  @import './select';\n  @import './textureModal';\n  @import './viewport';\n  @import './widgets';\n\n  .select__control,\n  code,\n  pre,\n  input,\n  textarea,\n  select\n    font-size 13px\n\n  code,\n  pre,\n  textarea\n    font-family var(--font-monospace)\n\n  hr\n    border 0\n    border-top 1px solid var(--color-base-content)\n\n  a\n    cursor pointer\n\n  button\n    position relative\n\n  textarea\n    overflow-wrap normal\n    tab-size 4\n    white-space pre\n\n  textarea,\n  input\n    outline none /* osx */\n\n  .gltfIcon svg\n    box-sizing content-box\n    display inline\n    height 20px\n    position relative\n    top 4px\n    vertical-align baseline\n    width 30px\n\n  #scenegraph,\n  #rightPanel\n    z-index 9998\n\n  #sidebar,\n  #scenegraph,\n  .panel\n      cursor default\n      user-select none\n\n  .toggle-edit\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    font-size 13px\n    left 3px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 100px\n    z-index 999999999\n\n  .toggle-edit:hover\n    background-color var(--color-secondary-hover)\n\n  .try-editor-btn\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    display flex\n    font-size 16px\n    gap 5px\n    justify-content center\n    line-height 24px\n    margin 0\n    padding 6px 10px\n    text-align center\n    text-decoration none\n    width 200px\n\n  .try-editor-btn:hover\n    background-color var(--color-secondary-hover)\n    color var(--color-secondary-content)\n\n  .sponsor-btn\n    background-color var(--color-neutral)\n    box-sizing content-box\n    color var(--color-neutral-content)\n    display flex\n    font-size 13px\n    gap 5px\n    justify-content center\n    left 127px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 80px\n    z-index 999999999\n\n    svg\n      color rgb(219, 97, 162)\n      fill currentColor\n\n  .sponsor-btn:hover\n    background-color var(--color-neutral-hover)\n    color var(--color-neutral-content)\n\n  input\n    background-color transparent\n    border 1px solid var(--color-base-200)\n    color var(--color-base-content)\n\n  input,\n  .texture canvas\n    transition 0.1s background-color ease-in-out, 0.1s border-color ease-in-out, 0.1s color ease-in-out\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    border-radius 0\n    min-height 14px\n    outline none\n\n  input[type=\"checkbox\"]\n    appearance none\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 0\n    cursor pointer\n    height 18px\n    margin 0\n    position relative\n    width 18px\n\n    &:checked\n        background var(--color-primary)\n        border 1px solid var(--color-base-300)\n\n        &::after\n            border solid white\n            border-width 0 2px 2px 0\n            content ''\n            height 9px\n            left 5px\n            position absolute\n            top 1px\n            transform rotate(45deg)\n            width 4px\n\n  input[type=\"checkbox\"]:focus\n    box-shadow none\n\n  input.number\n    background-color transparent !important\n    border 0\n    color var(--color-primary) !important\n    cursor col-resize\n    font-size 13px\n    padding 2px\n\n  input.string:focus,\n  input.number:focus\n    border 1px solid var(--color-primary)\n\n  input.error\n    border 1px solid var(--color-error)\n\n  #sidebar\n    background var(--color-base-200)\n    width 331px\n\n  input,\n  textarea,\n  select\n    background var(--color-base-300)\n    border 1px solid transparent\n    color var(--color-base-content)\n\n  select\n    background var(--color-base-lighter)\n\n  input[type=\"color\"]\n    background-color var(--color-base-100)\n    border 1px solid var(--color-base-300)\n    cursor pointer\n    height 26px\n    padding 0\n    width 50px\n\n  /* Note these vendor-prefixed selectors cannot be grouped! */\n  input[type=\"color\"]::-webkit-color-swatch\n    border 0  /* To remove the gray border. */\n\n  input[type=\"color\"]::-webkit-color-swatch-wrapper\n    border-radius 0  /* So it appears as rectangle instead of an ovale in Safari */\n    padding 0  /* To remove the inner padding. */\n\n  input[type=\"color\"]::-moz-color-swatch\n    border 0\n\n  input[type=\"color\"]::-moz-focus-inner\n    border 0  /* To remove the inner border (specific to Firefox). */\n    padding 0\n\n  .hidden\n    visibility hidden\n\n  a.button\n    color var(--color-base-content)\n    font-size 16px\n    line-height 1em\n    text-decoration none\n\n    &:hover\n      color var(--color-primary)\n\n  @keyframes animateopacity\n    from { opacity: 0 }\n    to { opacity: 1 }\n\n  .hide\n    display none\n\n  .a-canvas.state-dragging\n    cursor grabbing\n\n  #rightPanel\n    align-items stretch\n    display flex\n    justify-content flex-end\n\n  #inspectorContainer\n    display flex\n    height 100%\n    justify-content space-between\n    left 0\n    pointer-events none\n    position fixed\n    top 0\n    width 100%\n    z-index 999999\n\n  #scenegraph,\n  #viewportBar,\n  #rightPanel\n    pointer-events all\n\n  .aframe-inspector-opened a-scene .a-canvas\n    background-color #191919\n    z-index 9998\n\n  .toggle-sidebar\n    align-items center\n    display flex\n    height 100%\n    position absolute\n    z-index 9998\n\n    a\n      background-color var(--color-base-200)\n      color var(--color-base-content)\n      padding 5px\n      z-index 9998\n\n    a.hover\n      background-color var(--color-primary)\n      color var(--color-primary-content)\n\n  .toggle-sidebar.left\n    left 0\n    top 0\n\n  .toggle-sidebar.right\n    right 0\n    top 0\n","@import './lib';\n\n#toolbar\n  background-color var(--color-base-300)\n  border-bottom 1px solid var(--color-base-100)\n  padding 4px 8px\n  position relative\n  z-index 9999\n  display flex\n  flex-wrap wrap\n  gap 4px\n\n  .toolbarActions\n    align-items center\n    display flex\n    justify-content flex-start\n    gap 4px\n    padding 4px 0\n    flex-wrap wrap\n\n    a.disabled\n      color #666\n      cursor default\n\n    .button\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover:not(.disabled)\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      &:active\n        transform scale(0.95)\n\n      &.disabled\n        opacity 0.5\n        cursor not-allowed\n\n    .gltfIcon\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      svg\n        width 18px\n        height 18px\n\n#scenegraph\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-300)\n  display flex\n  flex-direction column\n  overflow visible\n  padding-top 60px\n  width 260px\n  min-width 180px\n  max-width 400px\n  resize horizontal\n  overflow-x auto\n  position relative\n  z-index 9999\n  pointer-events all\n\n  &::after\n    content: ''\n    position absolute\n    right 0\n    top 0\n    bottom 0\n    width 8px\n    cursor ew-resize\n    background transparent\n    \n    &:hover\n      background var(--color-primary)\n      opacity 0.5\n    background transparent\n    transition background 0.2s\n\n  &:hover::after\n    background var(--color-primary)\n\n  // Custom resize handle\n  .resize-handle\n    position absolute\n    right -8px\n    top 50%\n    transform translateY(-50%)\n    width 16px\n    height 40px\n    background var(--color-base-100)\n    border-radius 8px\n    display flex\n    align-items center\n    justify-content center\n    cursor ew-resize\n    z-index 100\n    opacity 0\n    transition opacity 0.2s\n    border 1px solid var(--color-base-300)\n\n    svg\n      font-size 10px\n      color var(--color-base-content)\n      opacity 0.5\n\n    &:hover, &.active\n      opacity 1\n      background var(--color-primary)\n      border-color var(--color-primary)\n\n      svg\n        color var(--color-primary-content)\n        opacity 1\n\n  &:hover .resize-handle\n    opacity 0.7\n\n  .entity\n    align-items center\n    background var(--color-base-200)\n    box-sizing border-box\n    cursor pointer\n    display flex\n    gap 6px\n    justify-content space-between\n    line-height 1em\n    padding 3px\n    white-space nowrap\n    width 100%\n    flex-wrap wrap\n\n    &:hover\n      background var(--color-accent-hover)\n      color var(--color-accent-content)\n\n    &.active\n      background-color var(--color-accent)\n      color var(--color-accent-content)\n\n      .entityActions\n        align-items center\n        display flex\n        padding-right 2px\n\n        a.button:hover\n          color var(--color-primary)\n\n    &.novisible\n      &.active\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n      &:not(.active)\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n  .component:hover\n    color var(--color-primary)\n\n  .entityIcons\n    margin-left 2px\n\n  .entityActions\n    display none\n\n  // Floating action menu for selected entity\n  .entityActionsFloating\n    display flex\n    flex-direction column\n    align-items stretch\n    gap 4px\n    padding 4px 8px\n    background var(--color-base-100)\n    border-radius 4px\n    margin-left 8px\n    flex-shrink 0\n    box-shadow 0 2px 8px rgba(0, 0, 0, 0.3)\n    z-index 100\n    min-width 120px\n\n    .button\n      display flex\n      align-items center\n      gap 4px\n      color var(--color-base-content)\n      font-size 11px\n      padding 4px 6px\n      border-radius 3px\n      transition all 0.15s ease\n      white-space nowrap\n\n      .action-label\n        font-size 10px\n        font-weight 500\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n\n      svg\n        font-size 12px\n\n    .entityReparent\n      cursor grab\n\n    .entityMoveUp, .entityMoveDown\n      cursor pointer\n\n    .entityMoveUp:hover, .entityMoveDown:hover\n      background var(--color-primary)\n      color var(--color-primary-content)\n\n    .button\n      color var(--color-base-content)\n      font-size 12px\n      margin-left 6px\n\n  .id\n    color var(--color-base-content)\n\n  .option.active .id\n    color var(--color-base-content)\n\n  .collapsespace\n    color var(--color-base-content)\n    display inline-block\n    text-align center\n    width 14px\n\n  .fa-eye\n    color var(--color-base-content)\n\n  .search\n    display flex\n    font-size 16px\n    padding 5px\n    position relative\n\n    input\n      background var(--color-base-300)\n      border-radius 0\n      box-sizing border-box\n      color var(--color-primary)\n      padding 5px 10px\n      width 100%\n\n    >svg\n      color var(--color-base-content)\n\n    >svg, a.button\n      position absolute\n      right 14px\n      top 10px\n\n  .outliner\n    background var(--color-base-200)\n    color var(--color-base-content)\n    cursor default\n    flex 1 1 auto\n    font-size 13px\n    height calc(100% - 98px)\n    line-height normal\n    outline none\n    overflow-y auto\n    padding 0\n    width 100%\n\n.theme-selector\n  position relative\n\n  .theme-dropdown\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 4px\n    box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)\n    max-height 300px\n    overflow-y auto\n    position fixed\n    top 50px\n    left 10px\n    width 140px\n    z-index 10000\n\n    .theme-option\n      color var(--color-base-content)\n      cursor pointer\n      padding 8px 12px\n\n      &:hover\n        background var(--color-accent-hover)\n        color var(--color-accent-content)\n\n      &.selected\n        background var(--color-accent)\n        color var(--color-accent-content)\n\n// Add Entity Button with Primitive Menu\n.addEntityContainer\n  position relative\n  display flex\n\n.addEntityContainer .button\n  border-radius 4px 0 0 4px\n\n.addEntityContainer .primitiveToggle\n  border-left none\n  border-radius 0 4px 4px 0\n  padding-left 4px\n\n.primitiveMenu\n  position fixed\n  top auto\n  left 235px\n  bottom auto\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 6px\n  padding 6px 0\n  z-index 10001\n  min-width 240px\n  max-height 400px\n  overflow-y auto\n  box-shadow 0 8px 24px rgba(0, 0, 0, 0.4)\n\n.primitiveMenuHeader\n  padding 10px 14px 8px\n  font-size 11px\n  color var(--color-primary)\n  border-bottom 1px solid var(--color-base-300)\n  font-weight 600\n  text-transform uppercase\n  letter-spacing 0.5px\n\n.primitiveMenuItem\n  display flex\n  align-items center\n  gap 10px\n  padding 10px 14px\n  cursor pointer\n  transition background 0.15s, color 0.15s\n  color var(--color-base-content)\n  border-left 3px solid transparent\n\n.primitiveMenuItem:hover\n  background var(--color-base-300)\n  border-left-color var(--color-primary)\n\n.primitiveMenuItem.selected\n  background var(--color-primary)\n  color var(--color-primary-content)\n  border-left-color var(--color-primary)\n\n.primitiveIcon\n  width 24px\n  text-align center\n  font-size 1rem\n\n.primitiveLabel\n  flex 1\n  font-size 13px\n  font-weight 500\n\n.primitiveTag\n  font-size 10px\n  color var(--color-base-content)\n  font-family var(--font-monospace)\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n  opacity  0.8\n\n.primitiveMenuItem.selected .primitiveTag\n  color inherit\n  background rgba(255,255,255,0.2)\n  opacity  1\n\n// Grouped primitive menu styles\n.primitiveGroup\n  margin-bottom 6px\n\n  &:last-child\n    margin-bottom 0\n\n.primitiveGroupHeader\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 14px 6px\n  font-size 10px\n  color var(--color-primary)\n  font-weight 700\n  text-transform uppercase\n  letter-spacing 0.8px\n\n  .icon\n    font-size 11px\n    width 14px\n    text-align center\n\n.primitiveGroup .primitiveMenuItem\n  padding-left 20px\n\n  // Entity actions for move up/down and reparent\n  .entityReparent\n    cursor grab\n\n  .entityMoveUp, .entityMoveDown\n    cursor pointer\n    opacity 0.5\n    transition opacity 0.2s\n\n  .entityMoveUp:hover, .entityMoveDown:hover\n    opacity 1\n\n// Reparent Modal Styles\n.reparent-modal-overlay\n  position fixed\n  top 0\n  left 0\n  right 0\n  bottom 0\n  background rgba(0, 0, 0, 0.7)\n  z-index 10000\n  display flex\n  align-items center\n  justify-content center\n\n.reparent-modal\n  background var(--color-base-200)\n  border 1px solid var(--border-color)\n  border-radius 8px\n  width 350px\n  max-height 80vh\n  display flex\n  flex-direction column\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  overflow hidden\n\n.reparent-modal-header\n  display flex\n  justify-content space-between\n  align-items center\n  padding 16px\n  border-bottom 1px solid var(--border-color)\n  flex-shrink 0\n\n  h3\n    margin 0\n    font-size 1rem\n    color var(--color-base-content)\n    display flex\n    align-items center\n    gap 8px\n\n  .close-btn\n    background none\n    border none\n    color var(--text-secondary)\n    font-size 1.5rem\n    cursor pointer\n    padding 0\n    line-height 1\n\n    &:hover\n      color var(--color-base-content)\n\n.reparent-modal-content\n  padding 16px\n  overflow-y auto\n  flex 1\n  display flex\n  flex-direction column\n\n  p\n    margin 0 0 12px 0\n    font-size 0.85rem\n    color var(--text-secondary)\n\n.reparent-list\n  display flex\n  flex-direction column\n  gap 4px\n  max-height 300px\n  overflow-y auto\n  flex 1\n\n.reparent-option\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 12px\n  border-radius 4px\n  cursor pointer\n  transition background 0.2s\n  color var(--color-base-content)\n\n  &:hover\n    background var(--color-base-300)\n\n  &.selected\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n    .reparent-name\n      color var(--color-primary-content)\n\n.reparent-icon\n  font-size 0.9rem\n  width 24px\n  text-align center\n\n.reparent-name\n  flex 1\n  font-size 0.85rem\n\n.reparent-tag\n  font-size 0.65rem\n  color var(--text-secondary)\n  font-family monospace\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n\n// Modal action buttons\n.reparent-modal-actions\n  display flex\n  justify-content flex-end\n  gap 10px\n  margin-top 16px\n  padding-top 16px\n  border-top 1px solid var(--border-color)\n\n  .btn-cancel\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--color-base-content)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    transition all 0.2s\n\n    &:hover\n      background var(--color-base-100)\n\n  .btn-apply\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--text-secondary)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    font-weight 600\n    transition all 0.2s\n    opacity 0.5\n    pointer-events none\n\n    &.active\n      background var(--color-primary)\n      border-color var(--color-primary)\n      color var(--color-primary-content)\n      opacity 1\n      pointer-events auto\n\n      &:hover\n        filter brightness(1.1)\n\n// Mixins Manager\n.mixins-manager\n  position relative\n\n.mixins-toggle\n  display flex\n  align-items center\n  justify-content center\n  gap 8px\n  height 36px\n  padding 0 14px\n  border-radius 6px\n  background var(--color-base-200)\n  color var(--color-base-content)\n  border 1px solid var(--color-base-100)\n  font-size 13px\n  font-weight 500\n  transition all 0.2s ease\n  cursor pointer\n  white-space nowrap\n\n  &:hover\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n  &:active\n    transform scale(0.95)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Mixins Panel (over canvas)\n.mixins-panel\n  position fixed\n  top 50%\n  left 50%\n  transform translate(-50%, -50%)\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 300px\n  max-width 400px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 10000\n  display flex\n  flex-direction column\n\n  .mixins-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .mixins-list\n    flex 1\n    overflow-y auto\n    max-height calc(60vh - 60px)\n\n  .no-mixins\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .mixin-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n\n    &:hover\n      background var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .mixin-info\n      display flex\n      flex-direction column\n      gap 3px\n      flex 1\n      min-width 0\n\n      .mixin-id\n        font-size 14px\n        font-weight 600\n        color var(--color-base-content)\n\n      .mixin-usage\n        font-size 11px\n        color var(--color-primary)\n\n      .mixin-components\n        font-size 10px\n        color var(--color-base-content)\n        opacity 0.7\n        max-width 200px\n        overflow hidden\n        text-overflow ellipsis\n        white-space nowrap\n\n    .mixin-actions\n      display flex\n      gap 6px\n      margin-left 10px\n\n      .mixin-edit,\n      .mixin-delete\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        color var(--color-base-content)\n        cursor pointer\n        padding 6px 8px\n        font-size 11px\n        border-radius 4px\n        transition all 0.2s\n\n        &:hover\n          background var(--color-primary)\n          border-color var(--color-primary)\n          color var(--color-primary-content)\n\n      .mixin-delete:hover\n        background var(--color-error)\n        border-color var(--color-error)\n\n// Mixin Modal\n.mixin-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.mixin-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 80vh\n  max-width 500px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  position relative\n  margin auto\n\n  .mixin-modal-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 15px 20px\n    border-bottom 1px solid var(--color-base-300)\n\n    h3\n      margin 0\n      font-size 16px\n      color var(--color-base-content)\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .mixin-modal-content\n    padding 20px\n    max-height 50vh\n    overflow-y auto\n\n    .form-group\n      margin-bottom 15px\n\n      &:last-child\n        margin-bottom 0\n\n      label\n        display block\n        font-size 12px\n        font-weight 600\n        color var(--color-base-content)\n        margin-bottom 8px\n        text-transform uppercase\n\n      input[type=\"text\"]\n        width 100%\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        border-radius 4px\n        color var(--color-base-content)\n        padding 8px 10px\n        font-size 13px\n        box-sizing border-box\n\n        &:focus\n          border-color var(--color-primary)\n          outline none\n\n      .component-inputs\n        display flex\n        flex-direction column\n        gap 8px\n\n      .component-input\n        display flex\n        align-items center\n        gap 10px\n\n        .component-name\n          min-width 80px\n          font-size 12px\n          color var(--color-primary)\n          font-weight 500\n\n        input\n          flex 1\n\n    .mixin-help-text\n      background var(--color-base-100)\n      border 1px solid var(--color-base-300)\n      border-radius 4px\n      padding 12px 14px\n      margin-bottom 15px\n      font-size 12px\n      color var(--color-base-content)\n      line-height 1.5\n\n      p\n        margin 0 0 6px 0\n\n        &:last-child\n          margin-bottom 0\n\n  .mixin-modal-footer\n    display flex\n    justify-content flex-end\n    gap 10px\n    padding 15px 20px\n    border-top 1px solid var(--color-base-300)\n\n    .btn\n      padding 8px 16px\n      border-radius 4px\n      font-size 13px\n      cursor pointer\n      transition all 0.2s\n\n    .btn:not(.primary)\n      background var(--color-base-300)\n      border 1px solid var(--color-base-300)\n      color var(--color-base-content)\n\n      &:hover\n        background var(--color-base-100)\n\n    .btn.primary\n      background var(--color-primary)\n      border 1px solid var(--color-primary)\n      color var(--color-primary-content)\n\n      &:hover\n        filter brightness(1.1)\n","@import './lib';\n\n.components\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  height 100%\n  overflow auto\n  position fixed\n  width 331px\n\n.collapsible-header\n  align-items center\n  display flex\n  justify-content space-between\n\n  .entityPrint\n    color var(--color-base-content)\n\n.collapsible-content\n  padding 5px 0\n\n.componentTitle span\n  color var(--color-base-content)\n  font-weight 600\n  max-width 200px\n  overflow hidden\n  text-overflow ellipsis\n  text-transform uppercase\n  vertical-align bottom !important\n  white-space nowrap\n\n.componentHeaderActions\n  align-items center\n  display flex\n  gap 10px\n\n.collapsible .static\n  background var(--color-base-100)\n  border-bottom 2px solid var(--color-base-200)\n  box-sizing content-box\n  cursor pointer\n  font-size 13px\n  height 16px\n  margin 0\n  padding 8px 10px 12px\n  vertical-align bottom\n\n  &:hover\n    background var(--color-base-lighter)\n\n.collapsible .static .collapse-button\n  border 6px solid transparent\n  float left\n  height 0\n  margin-left 2px\n  margin-right 10px\n  width 0\n\n.collapsible.collapsed .static .collapse-button\n  border-left-color var(--color-base-content)\n  margin-top 4px\n\n.collapsible:not(.collapsed) .static .collapse-button\n  border-top-color var(--color-base-content)\n  margin-top 7px\n\n.propertyRow\n  align-items center\n  display flex\n  font-size 13px\n  min-height 30px\n  padding 2px 15px\n\n  .text\n    cursor default\n    display inline-block\n    overflow hidden\n    padding-right 10px\n    text-overflow ellipsis\n    vertical-align middle\n    width 118px\n\n  input.number\n    width 40px\n\n  .vec2 input.number,\n  .vec3 input.number\n    width 40px\n\n  .vec4 input.number\n    width 34px\n\n  .vec2, .vec3, .vec4\n    display inline\n\n  .map_value\n    margin 0 0 0 5px\n    width 68px\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    background var(--color-base-300)\n    color var(--color-primary)\n    min-height 26px\n    padding 1px 5px\n\n    &:last-child\n      padding-right 0\n\n  input.string\n    box-sizing border-box\n    padding-left 8px\n    width 165px\n\n  input[type=\"text\"]:focus,\n  input.string:focus\n    box-shadow none\n\n  .color-widget *\n    vertical-align middle\n\n  .color_value\n    letter-spacing 1px\n    margin 0 0 0 5px\n    width 68px\n\n.propertyRowDefined .text\n  color var(--color-property-defined)\n  font-weight 600\n\n#addComponentContainer\n  align-items center\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  display flex\n  flex-direction column\n  justify-content center\n  padding 20px 10px\n\n  #addComponent\n    text-align left\n    width 200px\n\n    .select__control\n      background var(--color-base-300)\n      color var(--color-primary)\n      height 35px\n\n  #addComponentHeader\n    font-size 15px\n    margin 0 0 10px\n\n  input[type=\"text\"]:focus\n    box-shadow none\n\n.component-title\n  align-items center\n  display flex\n\n#componentEntityHeader\n  .collapsible-header\n    bottom 5px\n    position relative\n\n  a.button\n    margin-left 10px\n\n  .collapse-button\n    display none\n\n  .static\n    height 13px\n\n  .entityPrint\n    font-size 15px\n    padding-left 5px\n\n  .entityName\n    max-width 160px\n\n#mixinSelect\n  width 160px\n\n.propertyRow .texture\n  display flex\n\n  input\n    margin-left 0\n    width 120px\n\n/* Behaviors Panel Styles */\n.behaviors-panel\n  background-color var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  padding 10px\n\n  .panel-header\n    align-items center\n    display flex\n    justify-content space-between\n    margin-bottom 10px\n\n    .panel-header-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 14px\n      font-weight 600\n      gap 8px\n\n  .behaviors-list\n    .no-behaviors\n      text-align center\n      padding 20px 10px\n      color var(--color-base-content)\n      opacity 0.7\n\n      p\n        margin 0 0 15px\n\n    .entity-behavior\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 8px 12px\n\n      .behavior-info\n        align-items center\n        display flex\n        gap 10px\n\n        .behavior-name\n          color var(--color-base-content)\n          font-size 13px\n\n      .behavior-remove\n        background transparent\n        border none\n        color var(--color-base-content)\n        cursor pointer\n        font-size 14px\n        padding 4px\n        opacity 0.6\n\n        &:hover\n          color var(--color-error)\n          opacity 1\n\n/* Entity Behavior - Enhanced */\n.entity-behavior\n  align-items center\n  background var(--color-base-300)\n  border-radius 4px\n  display flex\n  justify-content space-between\n  margin-bottom 8px\n  padding 10px 12px\n\n  .behavior-info\n    align-items center\n    display flex\n    gap 12px\n\n    .behavior-details\n      display flex\n      flex-direction column\n      gap 2px\n\n      .behavior-name\n        color var(--color-base-content)\n        font-size 13px\n        font-weight 500\n\n      .behavior-event\n        color var(--color-primary)\n        font-size 11px\n\n  .behavior-actions\n    align-items center\n    display flex\n    gap 4px\n\n    .behavior-edit,\n    .behavior-remove\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 12px\n      padding 6px\n      opacity 0.6\n      transition all 0.2s\n\n      &:hover\n        color var(--color-primary)\n        opacity 1\n\n    .behavior-remove:hover\n      color var(--color-error)\n\n/* Entity Behavior Selected */\n.entity-behavior:hover\n  background var(--color-base-lighter)\n\n/* Behavior Modal */\n.modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  left 50%\n  max-height 80vh\n  max-width 600px\n  min-width 400px\n  overflow hidden\n  position fixed\n  top 50%\n  transform translate(-50%, -50%)\n  width 90%\n\n  .modal-title\n    align-items center\n    background var(--color-base-100)\n    color var(--color-base-content)\n    display flex\n    font-size 16px\n    font-weight 600\n    gap 10px\n    padding 15px 20px\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      margin-left auto\n      opacity 0.7\n\n      &:hover\n        opacity 1\n\n  .behavior-categories\n    max-height 400px\n    overflow-y auto\n    padding 15px\n\n    .behavior-category\n      margin-bottom 20px\n\n      &:last-child\n        margin-bottom 0\n\n      .category-title\n        color var(--color-primary)\n        font-size 12px\n        font-weight 600\n        margin-bottom 10px\n        text-transform uppercase\n\n      .category-behaviors\n        display flex\n        flex-wrap wrap\n        gap 8px\n\n        .behavior-option\n          align-items center\n          background var(--color-base-300)\n          border 1px solid transparent\n          border-radius 4px\n          color var(--color-base-content)\n          cursor pointer\n          display flex\n          gap 8px\n          padding 8px 12px\n          font-size 13px\n          transition all 0.2s\n\n          &:hover\n            background var(--color-base-lighter)\n            border-color var(--color-primary)\n\n          &.selected\n            background var(--color-primary)\n            color var(--color-primary-content)\n\n  .behavior-params\n    background var(--color-base-300)\n    border-top 1px solid var(--color-base-100)\n    padding 15px 20px\n\n    .params-title\n      color var(--color-base-content)\n      font-size 14px\n      font-weight 600\n      margin-bottom 15px\n\n    .params-form\n      .param-input\n        margin-bottom 15px\n\n        &:last-child\n          margin-bottom 0\n\n        label\n          color var(--color-base-content)\n          display block\n          font-size 12px\n          margin-bottom 5px\n\n        input[type=\"text\"],\n        input[type=\"number\"],\n        textarea,\n        select\n          background var(--color-base-100)\n          border 1px solid var(--color-base-300)\n          border-radius 4px\n          color var(--color-base-content)\n          padding 8px 10px\n          width 100%\n          box-sizing border-box\n\n          &:focus\n            border-color var(--color-primary)\n            outline none\n\n        textarea\n          min-height 60px\n          resize vertical\n\n        &.checkbox\n          align-items center\n          display flex\n\n          label\n            align-items center\n            cursor pointer\n            display flex\n            gap 8px\n            margin-bottom 0\n\n  .modal-actions\n    align-items center\n    border-top 1px solid var(--color-base-100)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n/* Icon sizes for behaviors */\n.behaviors-panel .panel-header .icon,\n.behavior-option .icon,\n.entity-behavior .icon\n  font-size 14px\n  width 16px\n\n/* Behavior Modal - Centered */\n.behavior-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 85vh\n  max-width 550px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  display flex\n  flex-direction column\n\n  .behavior-modal-header\n    align-items center\n    background var(--color-base-100)\n    border-bottom 1px solid var(--color-base-300)\n    display flex\n    justify-content space-between\n    padding 15px 20px\n\n    .behavior-modal-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 16px\n      font-weight 600\n      gap 10px\n\n    .behavior-modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 28px\n      line-height 1\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .behavior-modal-content\n    flex 1\n    overflow-y auto\n    padding 15px\n\n  .behavior-modal-footer\n    align-items center\n    border-top 1px solid var(--color-base-300)\n    display flex\n    gap 10px\n    justify-content space-between\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n// Help button\n.help-btn\n  align-items center\n  background var(--color-base-300)\n  border none\n  border-radius 4px\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  font-size 13px\n  gap 6px\n  padding 8px 12px\n  transition all 0.2s\n\n  &:hover\n    background var(--color-base-lighter)\n    color var(--color-primary)\n\n  &.active\n    background var(--color-primary)\n    color white\n\n// Help section\n.behavior-help\n  background var(--color-base-100)\n  border-radius 6px\n  max-height 350px\n  overflow-y auto\n  padding 15px\n\n  .help-section\n    margin-bottom 15px\n\n    &:last-child\n      margin-bottom 0\n\n    h4\n      color var(--color-primary)\n      font-size 13px\n      font-weight 600\n      letter-spacing 0.5px\n      margin-bottom 8px\n      text-transform uppercase\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      line-height 1.5\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    li\n      border-bottom 1px solid var(--color-base-300)\n      color var(--color-base-content)\n      font-size 12px\n      line-height 1.4\n      padding 6px 0\n\n      &:last-child\n        border-bottom none\n\n    pre\n      background var(--color-base-400)\n      border-radius 4px\n      color var(--color-base-content)\n      font-family 'Monaco', 'Menlo', 'Ubuntu Mono', monospace\n      font-size 11px\n      line-height 1.4\n      overflow-x auto\n      padding 12px\n      white-space pre-wrap\n      word-break break-all\n\n.footer-actions\n  display flex\n  gap 10px\n  margin-left auto\n\n.modal-title .icon\n  font-size 18px\n  width 20px\n\n// Show More button for beginner mode\n.showMoreContainer\n  padding: 8px 0\n  text-align: center\n  border-top: 1px solid var(--color-base-300)\n  margin-top: 4px\n\n.showMoreButton\n  background: var(--color-base-100)\n  border: 1px solid var(--color-base-300)\n  border-radius: 4px\n  color: var(--color-base-content)\n  cursor: pointer\n  font-size: 12px\n  padding: 6px 12px\n  display: flex\n  align-items: center\n  justify-content: center\n  gap: 6px\n  margin: 0 auto\n  transition: all 0.2s\n\n  &:hover\n    background: var(--color-primary)\n    border-color: var(--color-primary)\n    color: var(--color-primary-content)\n\n// Property hint indicator\n.propertyHint\n  display: inline-block\n  width: 14px\n  height: 14px\n  line-height: 14px\n  text-align: center\n  background: var(--color-base-100)\n  border-radius: 50%\n  font-size: 10px\n  margin-left: 4px\n  color: var(--color-primary)\n  cursor: help\n\n  &:hover\n    background: var(--color-primary)\n    color: var(--color-primary-content)\n\n// Component help button in header\n.componentHelpButton\n  padding: 2px 6px\n  margin-right: 4px\n  font-size: 12px\n  color: #aaa\n  cursor: pointer\n  transition: color 0.2s\n  background: transparent\n  border: none\n\n  &:hover\n    color: #fff\n\n// Component Help Modal\n.component-help-modal\n  max-height: 70vh\n  overflow-y: auto\n  padding: 10px\n\n  .help-overview\n    margin-bottom: 20px\n    padding-bottom: 15px\n    border-bottom: 1px solid var(--color-base-300)\n\n    h4\n      color: var(--color-primary)\n      font-size: 14px\n      font-weight: 600\n      margin-bottom: 10px\n\n    p\n      color: var(--color-base-content)\n      font-size: 13px\n      line-height: 1.5\n\n  .help-properties,\n  .help-all-properties\n    margin-bottom: 20px\n\n    h4\n      color: var(--color-primary)\n      font-size: 13px\n      font-weight: 600\n      margin-bottom: 8px\n\n    .help-tip\n      color: var(--color-base-content)\n      font-size: 12px\n      font-style: italic\n      opacity: 0.8\n      margin-bottom: 12px\n\n    ul\n      list-style: none\n      margin: 0\n      padding: 0\n\n    .help-property\n      display: flex\n      flex-direction: column\n      padding: 8px 10px\n      margin-bottom: 6px\n      background: var(--color-base-300)\n      border-radius: 4px\n\n      .property-name\n        color: var(--color-primary)\n        font-size: 12px\n        font-weight: 600\n        font-family: 'Monaco', 'Menlo', monospace\n        margin-bottom: 4px\n\n      .property-desc\n        color: var(--color-base-content)\n        font-size: 11px\n        line-height: 1.4\n\n  .help-all-properties\n    h4\n      margin-top: 15px\n\n  .help-no-beginner\n    padding: 15px\n    background: var(--color-base-300)\n    border-radius: 4px\n\n    p\n      color: var(--color-base-content)\n      font-size: 12px\n      margin: 0\n\n// Class Manager Styles\n.class-manager\n  display: flex\n  flex-direction: column\n  gap: 8px\n  width: 165px\n\n.class-manager-dropdown\n  display: flex\n  gap: 6px\n  align-items: center\n\n  .class-select\n    flex: 1\n    background: var(--color-base-300)\n    border: 1px solid var(--color-base-300)\n    border-radius: 4px\n    color: var(--color-primary)\n    font-size: 13px\n    padding: 4px 8px\n    min-height: 26px\n    cursor: pointer\n    width: 100%\n\n    &:focus\n      outline: none\n      border-color: var(--color-primary)\n\n  .class-add-button\n    background: var(--color-base-300)\n    border: 1px solid var(--color-base-300)\n    border-radius: 4px\n    color: var(--color-base-content)\n    cursor: pointer\n    padding: 4px 8px\n    display: flex\n    align-items: center\n    justify-content: center\n    min-width: 28px\n    min-height: 26px\n    transition: all 0.2s\n\n    &:hover\n      background: var(--color-primary)\n      border-color: var(--color-primary)\n      color: var(--color-primary-content)\n\n.class-tags\n  display: flex\n  flex-wrap: wrap\n  gap: 4px\n\n.class-tag\n  align-items: center\n  background: var(--color-base-300)\n  border-radius: 4px\n  display: flex\n  gap: 4px\n  padding: 2px 6px\n  font-size: 12px\n\n.class-tag-name\n  color: var(--color-primary)\n  cursor: pointer\n  max-width: 100px\n  overflow: hidden\n  text-overflow: ellipsis\n  white-space: nowrap\n\n  &:hover\n    text-decoration: underline\n\n.class-tag-input\n  background: var(--color-base-100)\n  border: 1px solid var(--color-primary)\n  border-radius: 2px\n  color: var(--color-base-content)\n  font-size: 12px\n  padding: 2px 4px\n  width: 80px\n\n  &:focus\n    outline: none\n\n.class-tag-delete\n  background: transparent\n  border: none\n  color: var(--color-base-content)\n  cursor: pointer\n  font-size: 10px\n  opacity: 0.6\n  padding: 0\n\n  &:hover\n    color: var(--color-error)\n    opacity: 1\n\n.class-add\n  display: flex\n  gap: 4px\n\n.class-add-input\n  background: var(--color-base-300)\n  border: 1px solid transparent\n  border-radius: 4px\n  color: var(--color-base-content)\n  font-size: 12px\n  padding: 4px 8px\n  width: 120px\n\n  &:focus\n    border-color: var(--color-primary)\n    outline: none\n\n.class-add-button\n  align-items: center\n  background: var(--color-base-300)\n  border: none\n  border-radius: 4px\n  color: var(--color-base-content)\n  cursor: pointer\n  display: flex\n  font-size: 12px\n  padding: 4px 8px\n\n  &:hover\n    background: var(--color-primary)\n    color: var(--color-primary-content)\n","@import './lib';\n\n.entityPrint\n  font-family var(--font-normal)\n  line-height 1.15em\n\n.entityName\n  display inline-block\n  overflow hidden\n  position relative\n  text-overflow ellipsis\n  top 3px\n  white-space nowrap\n\n[data-entity-name-type=\"id\"]\n  color var(--color-error)\n\n[data-entity-name-type=\"class\"]\n  color var(--color-success)\n\n[data-entity-name-type=\"mixin\"]\n  color var(--color-warning)\n",".help-lists\n  display flex\n  justify-content space-around\n\n.help-list\n  list-style none\n  margin 0\n  padding 0 0 10px\n  width 350px\n\n.help-list li\n  margin-right 40px\n\n.help-key-unit\n  line-height 1.8\n  margin-right 2em\n  padding 5px 0\n\n.help-key\n  bottom 2px\n  margin-right 4px\n  min-width 60px\n  position relative\n\n.help-key span\n  background-color var(--color-neutral)\n  background-repeat repeat-x\n  border 1px solid var(--color-neutral-content)\n  border-radius 3px\n  box-shadow 0 0 5px #000\n  color var(--color-neutral-content)\n  display inline-block\n  font-size 12px\n  padding 0 8px\n  text-align center\n\n.help-key-def\n  color var(--color-base-content)\n  display inline-block\n  margin-left 1em\n","@import './lib';\n\n.select__control\n  border 0\n  border-radius 0\n  cursor pointer\n  min-height 26px\n\n.select__indicator\n  color var(--color-base-content)\n  height 26px\n\n.select__indicator-separator\n  display none\n\n.select__input\n  min-height auto !important\n\n.select__control,\n.select__menu\n  background var(--color-base-300)\n\n.select__option\n  cursor pointer\n  padding 5px 10px\n\n.select__placeholder,\n.select__menu\n  color var(--color-base-content)\n\n.select__single-value\n  color var(--color-primary)\n\n.select__control--is-focused\n  box-shadow none !important\n\n.select__label\n  font-size 11px\n\n.select__option--is-focused\n  background var(--color-accent-hover)\n  color var(--color-accent-content)\n\n.select__option--is-selected\n  background var(--color-accent)\n  color var(--color-accent-content)\n\n.select__value-container\n  height 26px\n  position static\n\n  &.select__value-container--is-multi\n    height auto\n    padding 6px\n\n.select__dropdown-indicator\n  padding 3px 8px\n\n.select__multi-value\n  background var(--color-base-200)\n  color var(--color-primary)\n\n.select__multi-value__label\n  color var(--color-primary)\n\n.select__multi-value__remove:hover\n  background var(--color-base-200)\n  color var(--color-base-content)\n",".modal\n  animation animateopacity 0.2s ease-out\n  background-color rgba(0, 0, 0, 0.6)\n  display flex\n  height 100%\n  left 0\n  overflow auto\n  position fixed\n  top 0\n  width 100%\n  z-index 9999999999\n\n.modal h3\n  font-size 18px\n  font-weight 600\n  margin 0.6em 0\n\n#textureModal .modal-content\n  height calc(100% - 50px)\n  width calc(100% - 50px)\n\n.modal-content\n  background-color var(--color-base-200)\n  box-shadow 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5)\n  margin auto\n  overflow hidden\n  padding 0\n\n.close\n  color var(--color-base-content)\n  float right\n  font-size 28px\n  font-weight bold\n\n.close:hover,\n.close:focus\n  color var(--color-primary)\n  cursor pointer\n  text-decoration none\n\n.modal-header\n  color var(--color-base-content)\n  padding 2px 16px\n\n.modal-body\n  color var(--color-base-content)\n  overflow auto\n  padding 16px\n\n.modal-footer\n  color var(--color-base-content)\n  padding 2px 16px\n\n/* Gallery */\n.gallery\n  background var(--color-base-200)\n  display flex\n  flex-wrap wrap\n  margin 15px auto 0\n  max-height calc(100vh - 370px)\n  overflow auto\n  padding 15px 3px 3px\n\n.newimage .gallery\n  padding 16px\n\n.gallery li\n  border-radius 2px\n  box-shadow 0 0 6px rgba(0, 0, 0, 0.6)\n  cursor pointer\n  margin 8px\n  overflow hidden\n  width 155px\n\n.gallery li.selected,\n.gallery li:hover\n  box-shadow 0 0 0 2px var(--color-primary)\n\n.gallery li .detail\n  background-color var(--color-base-100)\n  margin 0\n  min-height 60px\n  padding 3px 10px\n\n.preview\n  padding 10px\n  width 150px\n\n.preview input\n  display block\n  margin 8px 0\n  width 144px\n\n.preview .iderror\n  background unquote(\"color-mix(in oklab, var(--color-error) 8%, var(--color-base-300))\")\n  color var(--color-error)\n  font-weight 600\n  margin-bottom 8px\n  padding 3px 5px\n  text-align center\n  width 148px\n\n.preview button\n  width 155px\n\n.preview .detail .title\n  color var(--color-base-content)\n  display inline-block\n  max-width 155px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.gallery li.selected .detail,\n.gallery li:hover .detail\n  background-color var(--color-base-lighter)\n\n.gallery li .detail span\n  color var(--color-base-content)\n  display block\n  margin-top 4px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n  width 140px\n\n.gallery li.selected .detail span,\n.gallery li:hover .detail span\n  color var(--color-base-content)\n\n.gallery li .detail span.title\n  color var(--color-property-defined)\n  font-weight 600\n\n.modal button\n  appearance none\n  background-color var(--color-primary)\n  border none\n  border-radius 0\n  box-shadow none\n  color var(--color-primary-content)\n  cursor pointer\n  display inline-block\n  font-size 12px\n  line-height 1.8\n  margin 0 10px 0 0\n  padding 5px 10px\n\n.modal button:focus\n  outline none\n\n.modal button:hover,\n.modal button.hover\n  background-color var(--color-primary-hover)\n\n.modal button:active,\n.modal button.active\n  background-color var(--color-primary-hover)\n\n.modal button:disabled\n  background-color #666\n  color #fff\n  cursor default\n\n.newimage\n  background-color var(--color-base-100)\n  color var(--color-base-content)\n  display flex\n  font-size 13px\n  justify-content space-between\n  margin-top 10px\n  overflow auto\n  padding 10px\n\n.newimage input\n  color var(--color-primary)\n  padding 3px 5px\n\n.texture canvas + input\n  margin-left 5px\n\n.texture svg\n  padding-right 5px\n\n.uploader-normal-button .hidden\n  display none\n\n.assets.search\n  margin-top 10px\n  position relative\n  width 200px\n\n.assets.search input\n  box-sizing border-box\n  padding-right 20px\n  width 100%\n\n.assets.search svg\n  position absolute\n  right 5px\n  top 5px\n\n.new_asset_options\n  margin 10px\n\n.new_asset_options > ul\n  margin-left 10px\n  padding 5px\n\n.new_asset_options > ul > li\n  padding 10px 0\n\n.new_asset_options .imageUrl\n  margin-left 5px\n  width 350px\n\n.texture canvas\n  border 1px solid var(--color-base-100)\n  cursor pointer\n","@import './lib';\n\n#viewportBar\n  align-items center\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  display flex\n  flex-grow 2\n  font-size 15px\n  height 32px\n  justify-content space-between\n  padding 0 5px\n\n.toolbarButtons\n  align-items center\n  display flex\n  gap 6px\n\n  a.button\n    & svg\n      padding 8px\n\n    &:not(.active) svg:hover\n      background-color var(--color-base-lighter)\n\n  .active svg\n    background-color var(--color-primary)\n    color var(--color-primary-content)\n\n  .active:hover svg\n    color var(--color-primary-content) !important\n\n.local-transform\n  align-items center\n  display flex\n  gap 5px\n  padding 0 10px\n\n.local-transform label\n  color var(--color-base-content)\n\n#cameraSelect\n  cursor pointer\n  width 120px\n\n  .select__dropdown-indicator\n    padding-left 3px\n    padding-right 3px\n\n#cameraToolbar\n  align-items center\n  display flex\n\n  .select__control\n    background none\n\n  .select__single-value\n    color var(--color-base-content)\n\n    &:hover\n      color var(--color-primary)\n\n#viewportHud\n  display none\n\n  @media (min-width: 1025px)\n    display block\n","@import './lib';\n\n.select-widget\n  display inline-block\n  width 157px"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66845,6 +67202,8 @@ class Main extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
       isModalSponsorOpen: false,
       isModalTexturesOpen: false,
       sceneEl: AFRAME.scenes[0],
+      scenes: this.getAllScenes(),
+      activeSceneIndex: 0,
       visible: {
         scenegraph: true,
         attributes: true
@@ -66884,6 +67243,33 @@ class Main extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
       }
     });
   }
+
+  // Get all scenes from the document
+  getAllScenes() {
+    const scenes = document.querySelectorAll('a-scene');
+    return Array.from(scenes);
+  }
+
+  // Update scenes list and switch to new scene
+  refreshScenes = () => {
+    const scenes = this.getAllScenes();
+    this.setState({
+      scenes: scenes,
+      sceneEl: scenes[this.state.activeSceneIndex] || scenes[0],
+      activeSceneIndex: this.state.activeSceneIndex < scenes.length ? this.state.activeSceneIndex : 0
+    });
+  };
+
+  // Switch to a different scene tab
+  switchToScene = index => {
+    const scenes = this.getAllScenes();
+    if (index >= 0 && index < scenes.length) {
+      this.setState({
+        activeSceneIndex: index,
+        sceneEl: scenes[index]
+      });
+    }
+  };
   componentDidMount() {
     _lib_Events__WEBPACK_IMPORTED_MODULE_3__["default"].on('opentexturesmodal', function (selectedTexture, textureOnClose) {
       this.setState({
@@ -66907,6 +67293,9 @@ class Main extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
         isHelpOpen: true
       });
     });
+
+    // Listen for new scene creation to refresh scenes list
+    _lib_Events__WEBPACK_IMPORTED_MODULE_3__["default"].on('scenecreate', this.refreshScenes);
   }
   onCloseHelpModal = value => {
     this.setState({
@@ -67924,12 +68313,160 @@ class CommonComponents extends (react__WEBPACK_IMPORTED_MODULE_0___default().Com
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("label", {
             className: "text",
             children: "class"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("span", {
-            children: entity.getAttribute('class')
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(ClassManager, {
+            entity: entity
           })]
         }), this.renderCommonAttributes(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_Mixins__WEBPACK_IMPORTED_MODULE_8__["default"], {
           entity: entity
         })]
+      })]
+    });
+  }
+}
+
+/**
+ * ClassManager - Component to manage CSS classes for an entity
+ * Allows adding, editing, and deleting CSS classes via dropdown and prompt
+ */
+class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
+  static propTypes = {
+    entity: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().object).isRequired
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      classes: this.getClasses(props.entity),
+      selectedClass: '',
+      entityId: props.entity.id
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    // Handle null entity or null id
+    if (!props.entity || props.entity.id === undefined) {
+      return null;
+    }
+    // Sync classes when entity changes
+    if (props.entity.id !== state.entityId) {
+      return {
+        classes: props.entity.getAttribute('class') ? props.entity.getAttribute('class').split(/\s+/).filter(c => c.length > 0) : [],
+        selectedClass: '',
+        entityId: props.entity.id
+      };
+    }
+    return null;
+  }
+  componentDidMount() {
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityupdate', this.onEntityUpdate);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityclone', this.onEntityUpdate);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityselected', this.onEntitySelected);
+  }
+  componentWillUnmount() {
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityupdate', this.onEntityUpdate);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityclone', this.onEntityUpdate);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityselected', this.onEntitySelected);
+  }
+  onEntitySelected = entity => {
+    // Refresh classes when a new entity is selected
+    if (entity === this.props.entity) {
+      this.setState({
+        classes: this.getClasses(this.props.entity),
+        selectedClass: ''
+      });
+    }
+  };
+  onEntityUpdate = detail => {
+    if (detail.entity !== this.props.entity) {
+      return;
+    }
+    // Update when class attribute changes
+    if (detail.component === 'class' || detail.property === 'class') {
+      this.setState({
+        classes: this.getClasses(this.props.entity)
+      });
+    }
+  };
+  getClasses(entity) {
+    const classAttr = entity.getAttribute('class');
+    if (!classAttr) return [];
+    return classAttr.split(/\s+/).filter(c => c.length > 0);
+  }
+  updateEntityClasses(classes) {
+    const classString = classes.join(' ');
+    this.props.entity.setAttribute('class', classString);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].emit('entityupdate', {
+      entity: this.props.entity,
+      component: 'class',
+      property: '',
+      value: classString
+    });
+  }
+  handleSelectChange = event => {
+    const selectedClass = event.target.value;
+    this.setState({
+      selectedClass
+    });
+
+    // If a class is selected, remove it (toggle behavior)
+    if (selectedClass && this.state.classes.includes(selectedClass)) {
+      this.handleDeleteClass(selectedClass);
+    }
+    // Reset selection
+    this.setState({
+      selectedClass: ''
+    });
+  };
+  handleAddClass = () => {
+    // Use browser prompt to get new class name
+    const newClassName = window.prompt('Enter new class name:');
+    if (newClassName && newClassName.trim()) {
+      const trimmedName = newClassName.trim();
+      const {
+        classes
+      } = this.state;
+      if (!classes.includes(trimmedName)) {
+        const newClasses = [...classes, trimmedName];
+        this.updateEntityClasses(newClasses);
+        this.setState({
+          classes: newClasses
+        });
+      }
+    }
+  };
+  handleDeleteClass = classToDelete => {
+    const {
+      classes
+    } = this.state;
+    const newClasses = classes.filter(c => c !== classToDelete);
+    this.updateEntityClasses(newClasses);
+    this.setState({
+      classes: newClasses
+    });
+  };
+  render() {
+    const {
+      classes,
+      selectedClass
+    } = this.state;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+      className: "class-manager-dropdown",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("select", {
+        className: "class-select",
+        value: selectedClass,
+        onChange: this.handleSelectChange,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("option", {
+          value: "",
+          children: classes.length > 0 ? `Select class (${classes.length})` : 'No classes'
+        }), classes.map(className => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("option", {
+          value: className,
+          children: className
+        }, className))]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
+        className: "class-add-button",
+        onClick: this.handleAddClass,
+        title: "Add new class",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlus
+        })
       })]
     });
   }
@@ -67960,8 +68497,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var clipboard_copy__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(clipboard_copy__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _lib_entity__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/entity */ "./src/lib/entity.js");
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib/utils */ "./src/lib/utils.js");
-/* harmony import */ var _lib_Events__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib/Events */ "./src/lib/Events.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _lib_componentHelp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib/componentHelp */ "./src/lib/componentHelp.js");
+/* harmony import */ var _modals_ComponentHelpModal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../modals/ComponentHelpModal */ "./src/components/modals/ComponentHelpModal.js");
+/* harmony import */ var _lib_Events__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../lib/Events */ "./src/lib/Events.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
 
 
 
@@ -67989,7 +68530,9 @@ class Component extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component)
     super(props);
     this.state = {
       entity: this.props.entity,
-      name: this.props.name
+      name: this.props.name,
+      showAdvanced: false,
+      showHelpModal: false
     };
   }
   onEntityUpdate = detail => {
@@ -68001,10 +68544,10 @@ class Component extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component)
     }
   };
   componentDidMount() {
-    _lib_Events__WEBPACK_IMPORTED_MODULE_9__["default"].on('entityupdate', this.onEntityUpdate);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityupdate', this.onEntityUpdate);
   }
   componentWillUnmount() {
-    _lib_Events__WEBPACK_IMPORTED_MODULE_9__["default"].off('entityupdate', this.onEntityUpdate);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityupdate', this.onEntityUpdate);
   }
   static getDerivedStateFromProps(props, state) {
     if (state.entity !== props.entity) {
@@ -68024,7 +68567,7 @@ class Component extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component)
     event.stopPropagation();
     if (confirm('Do you really want to remove component `' + componentName + '`?')) {
       this.props.entity.removeAttribute(componentName);
-      _lib_Events__WEBPACK_IMPORTED_MODULE_9__["default"].emit('componentremove', {
+      _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].emit('componentremove', {
         entity: this.props.entity,
         component: componentName
       });
@@ -68036,64 +68579,125 @@ class Component extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component)
    */
   renderPropertyRows = () => {
     const componentData = this.props.component;
+    const componentName = this.props.name;
+    const baseName = componentName.split('__')[0];
+    const isBeginnerMode = (0,_lib_componentHelp__WEBPACK_IMPORTED_MODULE_9__.isBeginnerComponent)(baseName);
+    const {
+      showAdvanced
+    } = this.state;
     if (isSingleProperty(componentData.schema)) {
-      const componentName = this.props.name;
-      const schema = AFRAME.components[componentName.split('__')[0]].schema;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_PropertyRow__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_PropertyRow__WEBPACK_IMPORTED_MODULE_4__["default"], {
         name: componentName,
-        schema: schema,
+        schema: AFRAME.components[baseName].schema,
         data: componentData.data,
         componentname: componentName,
         isSingle: true,
         entity: this.props.entity
       }, componentName);
     }
-    return Object.keys(componentData.schema).sort().filter(propertyName => (0,_lib_utils__WEBPACK_IMPORTED_MODULE_8__.shouldShowProperty)(propertyName, componentData)).map(propertyName => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_PropertyRow__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    const propertyNames = Object.keys(componentData.schema).sort().filter(propertyName => (0,_lib_utils__WEBPACK_IMPORTED_MODULE_8__.shouldShowProperty)(propertyName, componentData));
+
+    // Separate beginner and advanced properties
+    const beginnerProps = [];
+    const advancedProps = [];
+    propertyNames.forEach(propertyName => {
+      if (isBeginnerMode && !showAdvanced) {
+        if ((0,_lib_componentHelp__WEBPACK_IMPORTED_MODULE_9__.isBeginnerProperty)(componentName, propertyName)) {
+          beginnerProps.push(propertyName);
+        } else {
+          advancedProps.push(propertyName);
+        }
+      } else {
+        // Show all properties
+        beginnerProps.push(propertyName);
+      }
+    });
+    const renderRow = propertyName => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_PropertyRow__WEBPACK_IMPORTED_MODULE_4__["default"], {
       name: propertyName,
       schema: componentData.schema[propertyName],
       data: componentData.data[propertyName],
       componentname: this.props.name,
       isSingle: false,
       entity: this.props.entity
-    }, propertyName));
+    }, propertyName);
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
+      children: [beginnerProps.map(renderRow), isBeginnerMode && advancedProps.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+        className: "showMoreContainer",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("button", {
+          className: "showMoreButton",
+          onClick: () => this.setState({
+            showAdvanced: !showAdvanced
+          }),
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+            icon: showAdvanced ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faAngleRight : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faAngleDown
+          }), showAdvanced ? 'Show Less' : `Show More (${advancedProps.length} advanced)`]
+        })
+      }), showAdvanced && advancedProps.map(renderRow)]
+    });
   };
   render() {
     const componentName = this.props.name;
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_Collapsible__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      collapsed: this.props.isCollapsed,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
-        className: "componentHeader collapsible-header",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
-          className: "componentTitle",
-          title: componentName,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
-            children: componentName
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
-          className: "componentHeaderActions",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("a", {
-            title: "Copy to clipboard",
-            className: "button",
-            onClick: event => {
-              event.preventDefault();
-              event.stopPropagation();
-              clipboard_copy__WEBPACK_IMPORTED_MODULE_6___default()((0,_lib_entity__WEBPACK_IMPORTED_MODULE_7__.getComponentClipboardRepresentation)(this.state.entity, componentName.toLowerCase()));
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
-              icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faClipboard
+    const baseName = componentName.split('__')[0];
+    const componentOverview = (0,_lib_componentHelp__WEBPACK_IMPORTED_MODULE_9__.getComponentOverview)(baseName);
+    const {
+      showHelpModal
+    } = this.state;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_Collapsible__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        collapsed: this.props.isCollapsed,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+          className: "componentHeader collapsible-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
+            className: "componentTitle",
+            title: componentName,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
+              children: componentName
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("a", {
-            title: "Remove component",
-            className: "button",
-            onClick: this.removeComponent,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
-              icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTrashAlt
-            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+            className: "componentHeaderActions",
+            children: [componentOverview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("a", {
+              title: "Click for help",
+              className: "button componentHelpButton",
+              onClick: event => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.setState({
+                  showHelpModal: true
+                });
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+                icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faQuestionCircle
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("a", {
+              title: "Copy to clipboard",
+              className: "button",
+              onClick: event => {
+                event.preventDefault();
+                event.stopPropagation();
+                clipboard_copy__WEBPACK_IMPORTED_MODULE_6___default()((0,_lib_entity__WEBPACK_IMPORTED_MODULE_7__.getComponentClipboardRepresentation)(this.state.entity, componentName.toLowerCase()));
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+                icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faClipboard
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("a", {
+              title: "Remove component",
+              className: "button",
+              onClick: this.removeComponent,
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+                icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTrashAlt
+              })
+            })]
           })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+          className: "collapsible-content",
+          children: this.renderPropertyRows()
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
-        className: "collapsible-content",
-        children: this.renderPropertyRows()
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_modals_ComponentHelpModal__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        isOpen: showHelpModal,
+        componentName: baseName,
+        onClose: () => this.setState({
+          showHelpModal: false
+        })
       })]
     });
   }
@@ -68325,8 +68929,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _widgets_Vec2Widget__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../widgets/Vec2Widget */ "./src/components/widgets/Vec2Widget.js");
 /* harmony import */ var _lib_entity__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../lib/entity */ "./src/lib/entity.js");
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../lib/utils */ "./src/lib/utils.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _lib_componentHelp__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../lib/componentHelp */ "./src/lib/componentHelp.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* eslint-disable no-prototype-builtins */
+
 
 
 
@@ -68406,28 +69012,28 @@ class PropertyRow extends (react__WEBPACK_IMPORTED_MODULE_0___default().Componen
       max: props.schema.hasOwnProperty('max') ? props.schema.max : Infinity
     };
     if (props.schema.oneOf && props.schema.oneOf.length > 0) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_SelectWidget__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_SelectWidget__WEBPACK_IMPORTED_MODULE_7__["default"], {
         ...widgetProps,
         options: props.schema.oneOf,
         isMulti: props.schema.type === 'array'
       });
     }
     if (type === 'map') {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_TextureWidget__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_TextureWidget__WEBPACK_IMPORTED_MODULE_8__["default"], {
         ...widgetProps
       });
     }
     switch (type) {
       case 'number':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_NumberWidget__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_NumberWidget__WEBPACK_IMPORTED_MODULE_6__["default"], {
             ...widgetProps,
             ...numberWidgetProps
           });
         }
       case 'int':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_NumberWidget__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_NumberWidget__WEBPACK_IMPORTED_MODULE_6__["default"], {
             ...widgetProps,
             ...numberWidgetProps,
             precision: 0
@@ -68435,37 +69041,37 @@ class PropertyRow extends (react__WEBPACK_IMPORTED_MODULE_0___default().Componen
         }
       case 'vec2':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_Vec2Widget__WEBPACK_IMPORTED_MODULE_11__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_Vec2Widget__WEBPACK_IMPORTED_MODULE_11__["default"], {
             ...widgetProps
           });
         }
       case 'vec3':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_Vec3Widget__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_Vec3Widget__WEBPACK_IMPORTED_MODULE_10__["default"], {
             ...widgetProps
           });
         }
       case 'vec4':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_Vec4Widget__WEBPACK_IMPORTED_MODULE_9__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_Vec4Widget__WEBPACK_IMPORTED_MODULE_9__["default"], {
             ...widgetProps
           });
         }
       case 'color':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_ColorWidget__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_ColorWidget__WEBPACK_IMPORTED_MODULE_4__["default"], {
             ...widgetProps
           });
         }
       case 'boolean':
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_BooleanWidget__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_BooleanWidget__WEBPACK_IMPORTED_MODULE_3__["default"], {
             ...widgetProps
           });
         }
       default:
         {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_widgets_InputWidget__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_widgets_InputWidget__WEBPACK_IMPORTED_MODULE_5__["default"], {
             ...widgetProps
           });
         }
@@ -68494,17 +69100,24 @@ class PropertyRow extends (react__WEBPACK_IMPORTED_MODULE_0___default().Componen
     const props = this.props;
     const value = props.schema.type === 'selector' ? props.entity.getDOMAttribute(props.componentname)?.[props.name] : JSON.stringify(props.data);
     const title = props.name + '\n - type: ' + props.schema.type + '\n - value: ' + value;
+
+    // Get helpful description for beginner-friendly components
+    const description = (0,_lib_componentHelp__WEBPACK_IMPORTED_MODULE_14__.getPropertyDescription)(props.componentname, props.name);
+    const tooltipTitle = description ? `${props.name}: ${description}` : title;
     const className = (0,clsx__WEBPACK_IMPORTED_MODULE_2__["default"])({
       propertyRow: true,
       propertyRowDefined: this.isPropertyDefined()
     });
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
       className: className,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("label", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("label", {
         htmlFor: this.id,
         className: "text",
-        title: title,
-        children: props.name
+        title: tooltipTitle,
+        children: [props.name, description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("span", {
+          className: "propertyHint",
+          children: "?"
+        })]
       }), this.getWidget()]
     });
   }
@@ -68573,6 +69186,130 @@ class Sidebar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
     } else {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {});
     }
+  }
+}
+
+/***/ }),
+
+/***/ "./src/components/modals/ComponentHelpModal.js":
+/*!*****************************************************!*\
+  !*** ./src/components/modals/ComponentHelpModal.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ComponentHelpModal)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Modal */ "./src/components/modals/Modal.js");
+/* harmony import */ var _lib_componentHelp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/componentHelp */ "./src/lib/componentHelp.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+class ComponentHelpModal extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
+  static propTypes = {
+    isOpen: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+    onClose: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().func),
+    componentName: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string)
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: this.props.isOpen,
+      componentName: this.props.componentName
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (state.isOpen !== props.isOpen || state.componentName !== props.componentName) {
+      return {
+        isOpen: props.isOpen,
+        componentName: props.componentName
+      };
+    }
+    return null;
+  }
+  onClose = () => {
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
+  };
+  render() {
+    const {
+      componentName
+    } = this.state;
+    const help = componentName ? (0,_lib_componentHelp__WEBPACK_IMPORTED_MODULE_3__.getComponentFullHelp)(componentName) : null;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      title: help ? `Help: ${help.title}` : 'Component Help',
+      isOpen: this.state.isOpen,
+      onClose: this.onClose,
+      children: help ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "component-help-modal",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "help-overview",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h4", {
+            children: "Overview"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            children: help.overview
+          })]
+        }), help.beginnerProperties && help.beginnerProperties.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "help-properties",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h4", {
+            children: "Beginner Properties"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            className: "help-tip",
+            children: "These are the essential properties shown by default. Click \"More\" to see all properties."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
+            children: help.beginnerProperties.map(prop => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
+              className: "help-property",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "property-name",
+                children: prop
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "property-desc",
+                children: help.descriptions[prop] || 'No description available'
+              })]
+            }, prop))
+          })]
+        }), help.descriptions && Object.keys(help.descriptions).length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "help-all-properties",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h4", {
+            children: "All Properties"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
+            children: Object.entries(help.descriptions).map(([prop, desc]) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
+              className: "help-property",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "property-name",
+                children: prop
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "property-desc",
+                children: desc
+              })]
+            }, prop))
+          })]
+        }), !help.beginnerProperties || help.beginnerProperties.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "help-no-beginner",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            children: "This component has no specific beginner properties configured. All available properties are shown by default."
+          })
+        }) : null]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "component-help-modal",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          children: "No help available for this component."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          className: "help-tip",
+          children: "Click the help icon (?) next to a component in the sidebar to see its documentation."
+        })]
+      })
+    });
   }
 }
 
@@ -69391,54 +70128,70 @@ class Entity extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
     const entity = this.props.entity;
     const tagName = entity.tagName.toLowerCase();
     const isScene = tagName === 'a-scene';
+    const isSelected = this.props.isSelected;
 
     // Clone and remove buttons if not a-scene.
-    const cloneButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+    const cloneButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
       onClick: () => (0,_lib_entity__WEBPACK_IMPORTED_MODULE_5__.cloneEntity)(entity),
       title: "Clone entity",
       className: "button",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faClone
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+        className: "action-label",
+        children: "Clone"
+      })]
     });
-    const removeButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+    const removeButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
       onClick: event => {
         event.stopPropagation();
         (0,_lib_entity__WEBPACK_IMPORTED_MODULE_5__.removeEntity)(entity);
       },
       title: "Remove entity",
       className: "button",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTrashAlt
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+        className: "action-label",
+        children: "Delete"
+      })]
     });
 
     // Move up/down buttons
-    const moveUpButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+    const moveUpButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
       onClick: this.handleMoveUp,
       title: "Move up",
       className: "button entityMoveUp",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faArrowUp
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+        className: "action-label",
+        children: "Up"
+      })]
     });
-    const moveDownButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+    const moveDownButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
       onClick: this.handleMoveDown,
       title: "Move down",
       className: "button entityMoveDown",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faArrowDown
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+        className: "action-label",
+        children: "Down"
+      })]
     });
 
     // Reparent button
-    const reparentButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+    const reparentButton = isScene ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
       onClick: this.handleReparent,
       title: "Change parent",
       className: "button entityReparent",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faCodeBranch
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+        className: "action-label",
+        children: "Parent"
+      })]
     });
 
     // Add spaces depending on depth.
@@ -69474,7 +70227,7 @@ class Entity extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
 
     // Class name.
     const className = (0,clsx__WEBPACK_IMPORTED_MODULE_4__["default"])({
-      active: this.props.isSelected,
+      active: isSelected,
       entity: true,
       novisible: !visible,
       option: true
@@ -69493,8 +70246,8 @@ class Entity extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
           entity: entity,
           onDoubleClick: this.onDoubleClick
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
-        className: "entityActions",
+      }), isSelected && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
+        className: "entityActionsFloating",
         children: [reparentButton, moveUpButton, moveDownButton, cloneButton, removeButton]
       })]
     });
@@ -70058,8 +70811,13 @@ class SceneGraph extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component
       showReparentModal: false,
       reparentEntity: null,
       eligibleParents: [],
-      selectedParent: null
+      selectedParent: null,
+      scenegraphWidth: 230,
+      isResizing: false
     };
+    this.scenegraphRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createRef();
+    this.startX = 0;
+    this.startWidth = 0;
     this.rebuildEntityOptions = lodash_debounce__WEBPACK_IMPORTED_MODULE_4___default()(this.rebuildEntityOptions.bind(this), 0);
     this.updateFilteredEntities = lodash_debounce__WEBPACK_IMPORTED_MODULE_4___default()(this.updateFilteredEntities.bind(this), 100);
   }
@@ -70080,6 +70838,10 @@ class SceneGraph extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component
     _lib_Events__WEBPACK_IMPORTED_MODULE_7__["default"].on('entityreparent', this.handleReparentRequest);
     document.addEventListener('child-attached', this.onChildAttachedDetached);
     document.addEventListener('child-detached', this.onChildAttachedDetached);
+
+    // Add resize handle event listeners
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
   }
   componentWillUnmount() {
     _lib_Events__WEBPACK_IMPORTED_MODULE_7__["default"].off('entityidchange', this.rebuildEntityOptions);
@@ -70087,6 +70849,10 @@ class SceneGraph extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component
     _lib_Events__WEBPACK_IMPORTED_MODULE_7__["default"].off('entityreparent', this.handleReparentRequest);
     document.removeEventListener('child-attached', this.onChildAttachedDetached);
     document.removeEventListener('child-detached', this.onChildAttachedDetached);
+
+    // Remove resize handle event listeners
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
   }
 
   /**
@@ -70325,6 +71091,39 @@ class SceneGraph extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component
     this.closeReparentModal();
   };
 
+  // Handle resize start
+  handleResizeStart = e => {
+    e.preventDefault();
+    this.setState({
+      isResizing: true
+    });
+    this.startX = e.clientX;
+    if (this.scenegraphRef.current) {
+      this.startWidth = this.scenegraphRef.current.offsetWidth;
+    }
+    document.body.style.cursor = 'ew-resize';
+    document.body.style.userSelect = 'none';
+  };
+
+  // Handle mouse move during resize
+  handleMouseMove = e => {
+    if (!this.state.isResizing || !this.scenegraphRef.current) return;
+    const diff = e.clientX - this.startX;
+    const newWidth = Math.max(180, Math.min(600, this.startWidth + diff));
+    this.scenegraphRef.current.style.width = newWidth + 'px';
+  };
+
+  // Handle mouse up to finish resize
+  handleMouseUp = () => {
+    if (this.state.isResizing) {
+      this.setState({
+        isResizing: false
+      });
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  };
+
   // Render reparent modal
   renderReparentModal() {
     if (!this.state.showReparentModal) return null;
@@ -70423,6 +71222,7 @@ class SceneGraph extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
       id: "scenegraph",
       className: "scenegraph",
+      ref: this.scenegraphRef,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
         className: "scenegraph-toolbar",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Toolbar__WEBPACK_IMPORTED_MODULE_6__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
@@ -70443,6 +71243,12 @@ class SceneGraph extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component
         onKeyDown: this.onKeyDown,
         onKeyUp: this.onKeyUp,
         children: this.renderEntities()
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+        className: `resize-handle ${this.state.isResizing ? 'active' : ''}`,
+        onMouseDown: this.handleResizeStart,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faGripVertical
+        })
       }), this.renderReparentModal()]
     });
   }
@@ -70584,8 +71390,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MixinsManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MixinsManager */ "./src/components/scenegraph/MixinsManager.js");
 /* harmony import */ var _lib_Events__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/Events */ "./src/lib/Events.js");
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils */ "./src/lib/utils.js");
-/* harmony import */ var _assets_gltf_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../assets/gltf.svg */ "./assets/gltf.svg");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _lib_history__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/history */ "./src/lib/history.js");
+/* harmony import */ var _assets_gltf_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../assets/gltf.svg */ "./assets/gltf.svg");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -70603,27 +71411,27 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'a-box',
     label: 'Box',
-    icon: '▣'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCube
   }, {
     value: 'a-sphere',
     label: 'Sphere',
-    icon: '●'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCircle
   }, {
     value: 'a-cylinder',
     label: 'Cylinder',
-    icon: '⬭'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faDatabase
   }, {
     value: 'a-plane',
     label: 'Plane',
-    icon: '▭'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSquare
   }, {
     value: 'a-circle',
     label: 'Circle',
-    icon: '◯'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCircle
   }, {
     value: 'a-cone',
     label: 'Cone',
-    icon: '△'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretUp
   }]
 }, {
   name: 'Advanced Shapes',
@@ -70631,19 +71439,19 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'a-dodecahedron',
     label: 'Dodecahedron',
-    icon: '⬡'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faGem
   }, {
     value: 'a-tetrahedron',
     label: 'Tetrahedron',
-    icon: '🔺'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretUp
   }, {
     value: 'a-torus',
     label: 'Torus',
-    icon: '◎'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faRing
   }, {
     value: 'a-torus-knot',
     label: 'Torus Knot',
-    icon: '∞'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faLink
   }]
 }, {
   name: 'Environment',
@@ -70651,11 +71459,11 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'a-sky',
     label: 'Sky',
-    icon: '🌌'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCloud
   }, {
     value: 'a-light',
     label: 'Light',
-    icon: '💡'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faLightbulb
   }]
 }, {
   name: 'Camera & Misc',
@@ -70663,11 +71471,16 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'a-camera',
     label: 'Camera',
-    icon: '📷'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCamera
   }, {
     value: 'a-entity',
     label: 'Empty Entity',
-    icon: '◻'
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSquare
+  }, {
+    value: 'a-scene',
+    label: 'Scene',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faLayerGroup,
+    desc: 'New scene container'
   }]
 }, {
   name: 'Media',
@@ -70675,27 +71488,27 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'a-text',
     label: 'Text',
-    icon: '📝',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faFont,
     desc: 'Display text'
   }, {
     value: 'a-sound',
     label: 'Sound',
-    icon: '🔊',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faVolumeUp,
     desc: 'Audio playback'
   }, {
     value: 'a-video',
     label: 'Video',
-    icon: '🎬',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faVideo,
     desc: 'Video player'
   }, {
     value: 'a-image',
     label: 'Image',
-    icon: '🖼️',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faImage,
     desc: '2D image'
   }, {
     value: 'a-gltf-model',
     label: '3D Model',
-    icon: '🎮',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCube,
     desc: 'GLTF model'
   }]
 }, {
@@ -70704,12 +71517,12 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'a-cursor',
     label: 'Cursor',
-    icon: '🎯',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCrosshairs,
     desc: 'Raycaster/cursor'
   }, {
     value: 'a-camera',
     label: 'Player Camera',
-    icon: '👤',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faUser,
     desc: 'First-person camera'
   }]
 }, {
@@ -70719,62 +71532,62 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'behavior-click-animation',
     label: 'Click to Animate',
-    icon: '▶️',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPlay,
     desc: 'Play animation on click'
   }, {
     value: 'behavior-click-sound',
     label: 'Click to Sound',
-    icon: '🔊',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faVolumeUp,
     desc: 'Play sound on click'
   }, {
     value: 'behavior-click-hide',
     label: 'Click to Hide',
-    icon: '👁️',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faEyeSlash,
     desc: 'Hide on click'
   }, {
     value: 'behavior-click-destroy',
     label: 'Click to Destroy',
-    icon: '💥',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faTrashAlt,
     desc: 'Remove on click'
   }, {
     value: 'behavior-hover-scale',
     label: 'Hover Scale',
-    icon: '🔍',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSearchPlus,
     desc: 'Scale on mouseover'
   }, {
     value: 'behavior-look-at',
     label: 'Look at Camera',
-    icon: '👀',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faEye,
     desc: 'Always face camera'
   }, {
     value: 'behavior-orbit',
     label: 'Orbit Rotate',
-    icon: '🔄',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSync,
     desc: 'Auto-rotate around center'
   }, {
     value: 'behavior-bounce',
     label: 'Bounce',
-    icon: '🏀',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCompressArrowsAlt,
     desc: 'Bouncing animation'
   }, {
     value: 'behavior-float',
     label: 'Float',
-    icon: '🎈',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faArrowUp,
     desc: 'Gentle floating motion'
   }, {
     value: 'behavior-drag-drop',
     label: 'Drag to Move',
-    icon: '✋',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faHandRock,
     desc: 'Drag and drop'
   }, {
     value: 'behavior-spawner',
     label: 'Spawn on Click',
-    icon: '✨',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPlus,
     desc: 'Create new entity on click'
   }, {
     value: 'behavior-pickup',
     label: 'Pickup Collectible',
-    icon: '🪙',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faStar,
     desc: 'Collect on click'
   }]
 }, {
@@ -70784,22 +71597,22 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'wasd-controls',
     label: 'WASD Move',
-    icon: '🚶',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faWalking,
     desc: 'Keyboard movement'
   }, {
     value: 'look-controls',
     label: 'Look Around',
-    icon: '👁️',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faEye,
     desc: 'Mouse look'
   }, {
     value: 'fly-controls',
     label: 'Fly Mode',
-    icon: '🦅',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPaperPlane,
     desc: 'Free-fly camera'
   }, {
     value: 'checkpoint-controls',
     label: 'Checkpoints',
-    icon: '📍',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faMapMarkerAlt,
     desc: 'Teleport between points'
   }]
 }, {
@@ -70809,12 +71622,12 @@ const PRIMITIVE_GROUPS = [{
   items: [{
     value: 'dynamic-body',
     label: 'Dynamic Body',
-    icon: '🏋️',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faWeightHanging,
     desc: 'Moves with gravity'
   }, {
     value: 'static-body',
     label: 'Static Body',
-    icon: '🧱',
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faLayerGroup,
     desc: 'Solid wall/floor'
   }]
 }];
@@ -70854,7 +71667,9 @@ class Toolbar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
     this.state = {
       isPlaying: false,
       showPrimitiveMenu: false,
-      selectedPrimitive: 'a-box'
+      selectedPrimitive: 'a-box',
+      canUndo: false,
+      canRedo: false
     };
 
     // Primitive type with default components
@@ -70965,6 +71780,18 @@ class Toolbar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
       });
       return;
     }
+
+    // Handle a-scene specially - it creates a new scene container
+    if (primitiveType === 'a-scene') {
+      _lib_Events__WEBPACK_IMPORTED_MODULE_5__["default"].emit('scenecreate', {
+        element: 'a-scene'
+      });
+      this.setState({
+        showPrimitiveMenu: false,
+        selectedPrimitive: 'a-entity'
+      });
+      return;
+    }
     const components = this.primitiveDefaults[primitiveType] || {};
     _lib_Events__WEBPACK_IMPORTED_MODULE_5__["default"].emit('entitycreate', {
       element: primitiveType,
@@ -70989,11 +71816,28 @@ class Toolbar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
     document.addEventListener('click', this.handleClickOutside);
     // Close primitive menu on Escape
     document.addEventListener('keydown', this.handleKeyDown);
+    // Listen for history changes
+    _lib_Events__WEBPACK_IMPORTED_MODULE_5__["default"].on('historychange', this.handleHistoryChange);
+    // Initialize history status
+    this.setState((0,_lib_history__WEBPACK_IMPORTED_MODULE_7__.getHistoryStatus)());
   }
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
     document.removeEventListener('keydown', this.handleKeyDown);
+    _lib_Events__WEBPACK_IMPORTED_MODULE_5__["default"].off('historychange', this.handleHistoryChange);
   }
+  handleHistoryChange = status => {
+    this.setState({
+      canUndo: status.canUndo,
+      canRedo: status.canRedo
+    });
+  };
+  handleUndo = () => {
+    (0,_lib_history__WEBPACK_IMPORTED_MODULE_7__.undo)();
+  };
+  handleRedo = () => {
+    (0,_lib_history__WEBPACK_IMPORTED_MODULE_7__.redo)();
+  };
   handleKeyDown = e => {
     // Escape: close primitive menu
     if (e.keyCode === 27) {
@@ -71043,89 +71887,115 @@ class Toolbar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
   openHelpModal = () => {
     _lib_Events__WEBPACK_IMPORTED_MODULE_5__["default"].emit('openhelpmodal');
   };
+  openTexturesModal = () => {
+    _lib_Events__WEBPACK_IMPORTED_MODULE_5__["default"].emit('opentexturesmodal', '', null);
+  };
   render() {
     const watcherTitle = 'Write changes with aframe-watcher.';
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
       id: "toolbar",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
         className: "toolbarActions",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
+          className: `button ${!this.state.canUndo ? 'disabled' : ''}`,
+          title: "Undo (Ctrl+Z)",
+          onClick: this.handleUndo,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faUndo
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
+          className: `button ${!this.state.canRedo ? 'disabled' : ''}`,
+          title: "Redo (Ctrl+Y)",
+          onClick: this.handleRedo,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faRedo
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
           className: "addEntityContainer",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
             className: "button",
             title: "Add a new entity",
             onClick: () => this.addEntity(this.state.selectedPrimitive),
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
               icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPlus
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
             className: "button primitiveToggle",
             title: "Choose primitive type",
             onClick: this.togglePrimitiveMenu,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
               icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretDown
             })
-          }), this.state.showPrimitiveMenu && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+          }), this.state.showPrimitiveMenu && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
             className: "primitiveMenu",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
               className: "primitiveMenuHeader",
               children: "Add Element"
-            }), PRIMITIVE_GROUPS.map(group => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+            }), PRIMITIVE_GROUPS.map(group => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
               className: "primitiveGroup",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
                 className: "primitiveGroupHeader",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
                   icon: group.icon
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
                   children: group.name
                 })]
-              }), group.items.map(type => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
+              }), group.items.map(type => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("a", {
                 className: `primitiveMenuItem ${this.state.selectedPrimitive === type.value ? 'selected' : ''}`,
                 onClick: e => {
                   e.stopPropagation();
                   this.handlePrimitiveSelect(type.value);
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
                   className: "primitiveIcon",
-                  children: type.icon
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+                    icon: type.icon
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
                   className: "primitiveLabel",
                   children: type.label
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
                   className: "primitiveTag",
                   children: type.value
                 })]
               }, type.value))]
             }, group.name))]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
           id: "playPauseScene",
           className: "button",
           title: this.state.isPlaying ? 'Pause scene' : 'Resume scene',
           onClick: this.toggleScenePlaying,
-          children: this.state.isPlaying ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+          children: this.state.isPlaying ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
             icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPause
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
             icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPlay
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
           className: "gltfIcon button",
           title: "Export to GLTF",
           onClick: this.exportSceneToGLTF,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_assets_gltf_svg__WEBPACK_IMPORTED_MODULE_7__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_assets_gltf_svg__WEBPACK_IMPORTED_MODULE_8__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
           className: "button",
           title: watcherTitle,
           onClick: this.writeChanges,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
             icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faFloppyDisk
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_ThemeSelector__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_MixinsManager__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ThemeSelector__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_MixinsManager__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
           className: "button",
           title: "Help",
           onClick: this.openHelpModal,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
             icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faQuestion
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("a", {
+          className: "button",
+          title: "Settings",
+          onClick: this.openTexturesModal,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_2__.AwesomeIcon, {
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faGear
           })
         })]
       })
@@ -72541,9 +73411,9 @@ const BEHAVIOR_HELP = {
 // On restore: el.setAttribute('material', 'src', originalSrc);`
   },
   'popup-message': {
-    description: 'Shows a browser alert dialog with your message.',
-    examples: ['Show welcome message: Message = Welcome to our site!'],
-    generatedCode: `alert('Hello World!');`
+    description: 'Shows a browser dialog with your message. Use alert for notifications, prompt for user input, or confirm for yes/no questions.',
+    examples: ['Alert: Type = alert, Message = Welcome to our site!', 'Prompt: Type = prompt, Message = What is your name?, Default Value = John', 'Confirm: Type = confirm, Message = Are you sure?'],
+    generatedCode: `// Alert\nalert('Hello World!');\n\n// Prompt\nvar name = prompt('What is your name?', 'John');\n\n// Confirm\nvar confirmed = confirm('Are you sure?');`
   },
   'set-status-bar': {
     description: 'Sets the browser status bar text.',
@@ -72551,9 +73421,9 @@ const BEHAVIOR_HELP = {
     generatedCode: `window.status = 'Loading...';`
   },
   'set-text': {
-    description: 'Changes the text content of an element.',
-    examples: ['Change 3D text: Selector = #myText, Text = New Value', 'Update score: Selector = #scoreDisplay, Text = Score: 100'],
-    generatedCode: `document.querySelector('#selector').setAttribute('text', 'value', 'New Text');`
+    description: 'Changes the text content of an element. Use {{variableName}} to insert variables.',
+    examples: ['Static text: Selector = #myText, Text = Hello World', 'With variable: Text = Score: {{score}} (displays value of window.score)', 'Multiple: Text = Player: {{playerName}} Score: {{score}}', 'With Get Random: Use Get Random to set damage, then Set Text to show "Damage: {{damage}}"'],
+    generatedCode: `// Set text with variable interpolation\nvar text = 'Score: ' + (window.score || 0);\ndocument.querySelector('#scoreDisplay').setAttribute('text', 'value', text);`
   },
   'start-animation': {
     description: 'Starts/triggers an animation on the element.',
@@ -72627,6 +73497,66 @@ confirm('Are you sure?');`
     description: 'Triggers a custom event that can start other behaviors (for chaining animations).',
     examples: ['Trigger pulse: Custom Event = custom-pulse, Delay = 0', 'Chain after delay: Custom Event = custom-rotate, Delay = 500'],
     generatedCode: `el.emit('custom-pulse'); // Other behaviors can listen for this event`
+  },
+  'change-variable': {
+    description: 'Changes a numeric variable by adding or subtracting a value. Useful for score, health, or currency systems.',
+    examples: ['Increase score: Variable = score, Change = 10, Operation = add', 'Decrease health: Variable = health, Change = 5, Operation = subtract', 'Reset counter: Variable = counter, Change = 0, Operation = set'],
+    generatedCode: `// Example: Increase score by 10\nwindow.score = (window.score || 0) + 10;\nconsole.log('Score:', window.score);`
+  },
+  'condition': {
+    description: 'Checks a condition (e.g., score > 10) and triggers different events based on whether it is true or false. Use with other behaviors to create game logic.',
+    examples: ['Score check: Variable = score, Operator = >, Value = 10, On True Event = win-game', 'Health check: Variable = health, Operator = <=, Value = 0, On True Event = game-over, On False Event = continue'],
+    generatedCode: `// If score > 10, trigger win-game event\nvar val = window.score || 0;\nif (val > 10) { el.emit('win-game'); }`
+  },
+  'get-random': {
+    description: 'Generates a random number between min and max and stores it in a variable. Use for damage rolls, random rewards, etc.',
+    examples: ['Dice roll: Minimum = 1, Maximum = 6, Store As = diceRoll', 'Damage: Minimum = 5, Maximum = 10, Store As = damage'],
+    generatedCode: `// Generate random number between 1 and 10\nwindow.randomNumber = Math.floor(Math.random() * 10) + 1;\nconsole.log('Random:', window.randomNumber);`
+  },
+  'random-event': {
+    description: 'Triggers an event based on a percentage chance. Useful for random loot, critical hits, or spawns.',
+    examples: ['10% chance: Chance = 10, On Success Event = spawn-enemy', '50% chance: Chance = 50, On Success Event = double-points'],
+    generatedCode: `// 10% chance to trigger event\nif (Math.random() * 100 < 10) {\n  el.emit('random-event');\n}`
+  },
+  'game-save': {
+    description: 'Saves game data to browser localStorage for persistent storage.',
+    examples: ['Save score: Key = gameScore, Value = score', 'Save position: Key = playerPos, Value = #player'],
+    generatedCode: `// Save to localStorage\nlocalStorage.setItem('gameScore', window.score);`
+  },
+  'game-load': {
+    description: 'Loads game data from browser localStorage.',
+    examples: ['Load score: Key = gameScore, Variable = score', 'Load position: Key = playerPos, Target = #player'],
+    generatedCode: `// Load from localStorage\nvar data = JSON.parse(localStorage.getItem('gameData'));\nwindow.score = data ? data.score : 0;`
+  },
+  'distance-check': {
+    description: 'Triggers an event when one entity is within a certain distance of another. Useful for proximity triggers.',
+    examples: ['Player in range: Target1 = #player, Target2 = #treasure, Distance = 3, In Range Event = show-prompt', 'Enemy detection: Target1 = #player, Target2 = #enemy, Distance = 5, In Range Event = alert-enemy'],
+    generatedCode: `// Check if player is within 5 units of treasure\nvar pos1 = player.object3D.getWorldPosition(new THREE.Vector3());\nvar pos2 = treasure.object3D.getWorldPosition(new THREE.Vector3());\nif (pos1.distanceTo(pos2) < 5) { el.emit('in-range'); }`
+  },
+  'random-pick': {
+    description: 'Picks a random item from a list and stores it in a variable. Useful for random loot or choices.',
+    examples: ['Random loot: Items = Sword, Shield, Potion, Gold, Store As = loot', 'Random enemy: Items = goblin, skeleton, orc, Store As = spawnedEnemy'],
+    generatedCode: `// Pick random item from list\nvar items = ['Sword', 'Shield', 'Potion', 'Gold'];\nwindow.loot = items[Math.floor(Math.random() * items.length)];\nconsole.log('Picked:', window.loot);`
+  },
+  'get-distance': {
+    description: 'Calculates the distance between two entities and stores it in a variable.',
+    examples: ['Player to enemy: Target1 = #player, Target2 = #enemy, Store As = distToEnemy', 'Object to target: Target1 = this element, Target2 = #goal, Store As = distanceLeft'],
+    generatedCode: `// Get distance between player and goal\nvar pos1 = player.object3D.getWorldPosition(new THREE.Vector3());\nvar pos2 = goal.object3D.getWorldPosition(new THREE.Vector3());\nwindow.distanceLeft = pos1.distanceTo(pos2);`
+  },
+  'look-at': {
+    description: 'Makes the entity face/look at another entity. Useful for turrets, NPCs, or cameras.',
+    examples: ['Turret aiming: Target = #player, Smooth = unchecked', 'Smooth follow: Target = #player, Smooth = checked, Duration = 500'],
+    generatedCode: `// Make turret face player\nel.object3D.lookAt(target.object3D.position);`
+  },
+  'lerp-position': {
+    description: 'Smoothly interpolates the entity position toward a target. Creates smooth movement effects.',
+    examples: ['Follow player: Target = #player, Speed = 0.1', 'Move to point: Target = #checkpoint, Speed = 0.05, On Complete Event = arrived'],
+    generatedCode: `// Smoothly move toward target\nel.object3D.position.lerp(target.object3D.position, 0.1);`
+  },
+  'format-time': {
+    description: 'Converts a number of seconds into MM:SS format string. Useful for timers.',
+    examples: ['Format timer: Seconds Variable = timer, Output Variable = formattedTime', 'Format elapsed: Seconds Variable = elapsed, Output Variable = displayTime'],
+    generatedCode: `// Convert 95 seconds to 1:35\nvar s = window.timer || 0;\nvar m = Math.floor(s / 60);\nvar sec = Math.floor(s % 60);\nwindow.formattedTime = m + ':' + (sec < 10 ? '0' : '') + sec;`
   }
 };
 class BehaviorsManager {
@@ -73143,7 +74073,7 @@ class BehaviorsManager {
       name: 'Popup Message',
       icon: 'fa-comment',
       category: 'Messages',
-      description: 'Show alert message',
+      description: 'Show alert, prompt, or confirm dialog',
       params: [{
         name: 'event',
         type: 'select',
@@ -73151,12 +74081,34 @@ class BehaviorsManager {
         options: EVENT_TYPES,
         default: 'click'
       }, {
+        name: 'type',
+        type: 'select',
+        label: 'Dialog Type',
+        options: ['alert', 'prompt', 'confirm'],
+        default: 'alert'
+      }, {
         name: 'message',
         type: 'textarea',
         label: 'Message',
         default: 'Hello World!'
+      }, {
+        name: 'defaultValue',
+        type: 'text',
+        label: 'Default Value (for prompt)',
+        default: ''
       }],
-      generate: params => `alert('${params.message.replace(/'/g, "\\'")}');`
+      generate: params => {
+        const type = params.type || 'alert';
+        const message = (params.message || 'Hello World!').replace(/'/g, "\\'");
+        const defaultValue = params.defaultValue || '';
+        if (type === 'prompt') {
+          return `prompt('${message}', '${defaultValue}');`;
+        } else if (type === 'confirm') {
+          return `confirm('${message}');`;
+        } else {
+          return `alert('${message}');`;
+        }
+      }
     },
     'set-status-bar': {
       name: 'Set Status Bar',
@@ -73181,7 +74133,7 @@ class BehaviorsManager {
       name: 'Set Text',
       icon: 'fa-font',
       category: 'Messages',
-      description: 'Replace element text',
+      description: 'Replace element text (use {{variable}} for variables)',
       params: [{
         name: 'event',
         type: 'select',
@@ -73199,7 +74151,18 @@ class BehaviorsManager {
         label: 'New Text',
         default: ''
       }],
-      generate: params => `var el = document.querySelector('${params.selector}'); if (el) { el.setAttribute('text', 'value', '${params.text}'); }`
+      generate: params => {
+        const selector = params.selector || '';
+        const text = params.text || '';
+
+        // Check if text contains variable interpolation {{variable}}
+        if (text.includes('{{')) {
+          // Generate code that interpolates variables at runtime
+          return `var text = '${text.replace(/'/g, "\\'")}'.replace(/\\{\\{(\\w+)\\}\\}/g, function(match, varName) { return window[varName] || ''; });\n` + `var el = document.querySelector('${selector}'); if (el) { el.setAttribute('text', 'value', text); }`;
+        } else {
+          return `var el = document.querySelector('${selector}'); if (el) { el.setAttribute('text', 'value', '${text}'); }`;
+        }
+      }
     },
     // Animation Behaviors
     'start-animation': {
@@ -73825,6 +74788,531 @@ class BehaviorsManager {
         const customEvent = params.customEvent || 'custom-click';
         const delay = params.delay || 0;
         return `var el = ${target}; setTimeout(function() { el.emit('${customEvent}'); }, ${delay});`;
+      }
+    },
+    // Game Behaviors
+    'get-random': {
+      name: 'Get Random Number',
+      icon: 'fa-dice',
+      category: 'Game',
+      description: 'Generate a random number and store in a variable',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'min',
+        type: 'number',
+        label: 'Minimum',
+        default: 1
+      }, {
+        name: 'max',
+        type: 'number',
+        label: 'Maximum',
+        default: 10
+      }, {
+        name: 'variableName',
+        type: 'text',
+        label: 'Store Result As',
+        default: 'randomNumber'
+      }],
+      generate: params => {
+        const min = params.min || 1;
+        const max = params.max || 10;
+        const varName = params.variableName || 'randomNumber';
+        return `window.${varName} = Math.floor(Math.random() * (${max} - ${min} + 1)) + ${min};\nconsole.log('${varName}:', window.${varName});`;
+      }
+    },
+    'condition': {
+      name: 'Check Condition',
+      icon: 'fa-question-circle',
+      category: 'Game',
+      description: 'Check a condition and trigger different events based on true/false',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'variable',
+        type: 'text',
+        label: 'Variable',
+        default: 'score'
+      }, {
+        name: 'operator',
+        type: 'select',
+        label: 'Operator',
+        options: ['==', '!=', '>', '<', '>=', '<='],
+        default: '>'
+      }, {
+        name: 'value',
+        type: 'text',
+        label: 'Value',
+        default: '10'
+      }, {
+        name: 'onTrue',
+        type: 'text',
+        label: 'On True Event',
+        default: 'condition-met'
+      }, {
+        name: 'onFalse',
+        type: 'text',
+        label: 'On False Event',
+        default: ''
+      }],
+      generate: params => {
+        const variable = params.variable || 'score';
+        const operator = params.operator || '>';
+        const value = params.value || '10';
+        const onTrue = params.onTrue || 'condition-met';
+        const onFalse = params.onFalse || '';
+        let code = `var val = window.${variable} || 0;\n`;
+        code += `var compareVal = ${isNaN(value) ? `'${value}'` : value};\n`;
+        code += `var result = false;\n`;
+        switch (operator) {
+          case '==':
+            code += `result = val == compareVal;`;
+            break;
+          case '!=':
+            code += `result = val != compareVal;`;
+            break;
+          case '>':
+            code += `result = val > compareVal;`;
+            break;
+          case '<':
+            code += `result = val < compareVal;`;
+            break;
+          case '>=':
+            code += `result = val >= compareVal;`;
+            break;
+          case '<=':
+            code += `result = val <= compareVal;`;
+            break;
+        }
+        code += `\nif (result) { el.emit('${onTrue}'); }`;
+        if (onFalse) {
+          code += ` else { el.emit('${onFalse}'); }`;
+        }
+        return code;
+      }
+    },
+    'change-variable': {
+      name: 'Change Variable',
+      icon: 'fa-plus-minus',
+      category: 'Game',
+      description: 'Add, subtract, or set a numeric variable',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'variableName',
+        type: 'text',
+        label: 'Variable Name',
+        default: 'score'
+      }, {
+        name: 'amount',
+        type: 'number',
+        label: 'Amount',
+        default: 1
+      }, {
+        name: 'operation',
+        type: 'select',
+        label: 'Operation',
+        options: ['add', 'subtract', 'set', 'multiply', 'divide'],
+        default: 'add'
+      }, {
+        name: 'minValue',
+        type: 'number',
+        label: 'Minimum Value (optional)',
+        default: ''
+      }, {
+        name: 'maxValue',
+        type: 'number',
+        label: 'Maximum Value (optional)',
+        default: ''
+      }],
+      generate: params => {
+        const varName = params.variableName || 'score';
+        const amount = params.amount || 1;
+        const operation = params.operation || 'add';
+        const minVal = params.minValue !== '' ? params.minValue : null;
+        const maxVal = params.maxValue !== '' ? params.maxValue : null;
+        let code = `window.${varName} = window.${varName} || 0;\n`;
+        switch (operation) {
+          case 'add':
+            code += `window.${varName} += ${amount};`;
+            break;
+          case 'subtract':
+            code += `window.${varName} -= ${amount};`;
+            break;
+          case 'set':
+            code += `window.${varName} = ${amount};`;
+            break;
+          case 'multiply':
+            code += `window.${varName} *= ${amount};`;
+            break;
+          case 'divide':
+            code += `window.${varName} = window.${varName} / ${amount};`;
+            break;
+        }
+        if (minVal !== null && maxVal !== null) {
+          code += `\nwindow.${varName} = Math.min(Math.max(window.${varName}, ${minVal}), ${maxVal});`;
+        } else if (minVal !== null) {
+          code += `\nwindow.${varName} = Math.max(window.${varName}, ${minVal});`;
+        } else if (maxVal !== null) {
+          code += `\nwindow.${varName} = Math.min(window.${varName}, ${maxVal});`;
+        }
+        code += `\nconsole.log('${varName}:', window.${varName});`;
+        return code;
+      }
+    },
+    'random-event': {
+      name: 'Random Event',
+      icon: 'fa-dice',
+      category: 'Game',
+      description: 'Trigger an event based on percentage chance',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'chance',
+        type: 'number',
+        label: 'Chance (%)',
+        default: 10
+      }, {
+        name: 'successEvent',
+        type: 'text',
+        label: 'Success Event Name',
+        default: 'random-success'
+      }, {
+        name: 'failEvent',
+        type: 'text',
+        label: 'Fail Event Name (optional)',
+        default: ''
+      }],
+      generate: params => {
+        const chance = params.chance || 10;
+        const successEvent = params.successEvent || 'random-success';
+        const failEvent = params.failEvent || '';
+        let code = `if (Math.random() * 100 < ${chance}) {\n`;
+        code += `  el.emit('${successEvent}');\n`;
+        code += `  console.log('Random event triggered! (${chance}% chance)');\n`;
+        code += `}`;
+        if (failEvent) {
+          code += ` else {\n  el.emit('${failEvent}');\n}`;
+        }
+        return code;
+      }
+    },
+    'game-save': {
+      name: 'Save Game',
+      icon: 'fa-save',
+      category: 'Game',
+      description: 'Save variable to browser localStorage',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'key',
+        type: 'text',
+        label: 'Storage Key',
+        default: 'gameData'
+      }, {
+        name: 'variableName',
+        type: 'text',
+        label: 'Variable to Save',
+        default: 'score'
+      }],
+      generate: params => {
+        const key = params.key || 'gameData';
+        const varName = params.variableName || 'score';
+        return `localStorage.setItem('${key}', JSON.stringify({ ${varName}: window.${varName} }));\nconsole.log('Game saved!');`;
+      }
+    },
+    'game-load': {
+      name: 'Load Game',
+      icon: 'fa-folder-open',
+      category: 'Game',
+      description: 'Load variable from browser localStorage',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'key',
+        type: 'text',
+        label: 'Storage Key',
+        default: 'gameData'
+      }, {
+        name: 'variableName',
+        type: 'text',
+        label: 'Variable to Load',
+        default: 'score'
+      }, {
+        name: 'defaultValue',
+        type: 'number',
+        label: 'Default Value',
+        default: 0
+      }],
+      generate: params => {
+        const key = params.key || 'gameData';
+        const varName = params.variableName || 'score';
+        const defaultValue = params.defaultValue || 0;
+        return `var data = JSON.parse(localStorage.getItem('${key}'));\nwindow.${varName} = data ? data.${varName} : ${defaultValue};\nconsole.log('${varName} loaded:', window.${varName});`;
+      }
+    },
+    'distance-check': {
+      name: 'Distance Check',
+      icon: 'fa-ruler',
+      category: 'Game',
+      description: 'Trigger event when target is within distance of another entity',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'target1',
+        type: 'entity',
+        label: 'First Element',
+        default: ''
+      }, {
+        name: 'target2',
+        type: 'entity',
+        label: 'Second Element',
+        default: ''
+      }, {
+        name: 'distance',
+        type: 'number',
+        label: 'Distance',
+        default: 5
+      }, {
+        name: 'inRangeEvent',
+        type: 'text',
+        label: 'In Range Event',
+        default: 'in-range'
+      }, {
+        name: 'outRangeEvent',
+        type: 'text',
+        label: 'Out of Range Event',
+        default: ''
+      }],
+      generate: params => {
+        const t1 = params.target1 || 'this.el';
+        const t2 = params.target2 || '';
+        const dist = params.distance || 5;
+        const inEvent = params.inRangeEvent || 'in-range';
+        const outEvent = params.outRangeEvent || '';
+        let code = `var el1 = ${t1};\n`;
+        code += `var el2 = document.querySelector('${t2}');\n`;
+        code += `if (!el2) return;\n`;
+        code += `var pos1 = new THREE.Vector3();\n`;
+        code += `var pos2 = new THREE.Vector3();\n`;
+        code += `el1.object3D.getWorldPosition(pos1);\n`;
+        code += `el2.object3D.getWorldPosition(pos2);\n`;
+        code += `var d = pos1.distanceTo(pos2);\n`;
+        code += `if (d < ${dist}) { el1.emit('${inEvent}'); }`;
+        if (outEvent) {
+          code += ` else { el1.emit('${outEvent}'); }`;
+        }
+        return code;
+      }
+    },
+    'random-pick': {
+      name: 'Random Pick',
+      icon: 'fa-random',
+      category: 'Game',
+      description: 'Pick a random item from a list and trigger event',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'items',
+        type: 'textarea',
+        label: 'Items (comma separated)',
+        default: 'item1, item2, item3'
+      }, {
+        name: 'variableName',
+        type: 'text',
+        label: 'Store Result As',
+        default: 'pickedItem'
+      }],
+      generate: params => {
+        const items = params.items || 'item1, item2, item3';
+        const varName = params.variableName || 'pickedItem';
+        const itemArray = items.split(',').map(s => `'${s.trim()}'`).join(', ');
+        return `var items = [${itemArray}];\nwindow.${varName} = items[Math.floor(Math.random() * items.length)];\nconsole.log('Picked:', window.${varName});`;
+      }
+    },
+    'get-distance': {
+      name: 'Get Distance',
+      icon: 'fa-ruler-horizontal',
+      category: 'Game',
+      description: 'Calculate distance between two entities and store in variable',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'target1',
+        type: 'entity',
+        label: 'First Element',
+        default: ''
+      }, {
+        name: 'target2',
+        type: 'entity',
+        label: 'Second Element',
+        default: ''
+      }, {
+        name: 'variableName',
+        type: 'text',
+        label: 'Store Distance As',
+        default: 'distance'
+      }],
+      generate: params => {
+        const t1 = params.target1 || 'this.el';
+        const t2 = params.target2 || '';
+        const varName = params.variableName || 'distance';
+        let code = `var el1 = ${t1};\n`;
+        code += `var el2 = document.querySelector('${t2}');\n`;
+        code += `if (!el2) return;\n`;
+        code += `var pos1 = new THREE.Vector3();\n`;
+        code += `var pos2 = new THREE.Vector3();\n`;
+        code += `el1.object3D.getWorldPosition(pos1);\n`;
+        code += `el2.object3D.getWorldPosition(pos2);\n`;
+        code += `window.${varName} = pos1.distanceTo(pos2);\n`;
+        code += `console.log('Distance:', window.${varName}.toFixed(2));`;
+        return code;
+      }
+    },
+    'look-at': {
+      name: 'Look At',
+      icon: 'fa-eye',
+      category: 'Game',
+      description: 'Make entity face another entity',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'target',
+        type: 'entity',
+        label: 'Target to Face',
+        default: ''
+      }, {
+        name: 'smooth',
+        type: 'checkbox',
+        label: 'Smooth Animation',
+        default: false
+      }, {
+        name: 'duration',
+        type: 'number',
+        label: 'Duration (ms)',
+        default: 500
+      }],
+      generate: params => {
+        const target = params.target || '';
+        const smooth = params.smooth || false;
+        const duration = params.duration || 500;
+        if (smooth) {
+          return `var el = this.el;\nvar target = document.querySelector('${target}');\nif (!target) return;\nel.object3D.lookAt(target.object3D.position);`;
+        } else {
+          return `var el = this.el;\nvar target = document.querySelector('${target}');\nif (!target) return;\nvar targetPos = target.object3D.position;\nvar lookPos = new THREE.Vector3(targetPos.x, el.object3D.position.y, targetPos.z);\nel.object3D.lookAt(lookPos);`;
+        }
+      }
+    },
+    'lerp-position': {
+      name: 'Lerp Position',
+      icon: 'fa-arrows-alt-h',
+      category: 'Game',
+      description: 'Smoothly move entity toward target position',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'target',
+        type: 'entity',
+        label: 'Target Position',
+        default: ''
+      }, {
+        name: 'speed',
+        type: 'number',
+        label: 'Speed (0-1)',
+        default: 0.1
+      }, {
+        name: 'onComplete',
+        type: 'text',
+        label: 'On Complete Event',
+        default: ''
+      }],
+      generate: params => {
+        const target = params.target || '';
+        const speed = params.speed || 0.1;
+        const completeEvent = params.onComplete || '';
+        let code = `var el = this.el;\n`;
+        code += `var target = document.querySelector('${target}');\n`;
+        code += `if (!target) return;\n`;
+        code += `var startPos = el.object3D.position.clone();\n`;
+        code += `var endPos = target.object3D.position.clone();\n`;
+        code += `var alpha = ${speed};\n`;
+        code += `el.object3D.position.lerp(endPos, alpha);\n`;
+        if (completeEvent) {
+          code += `if (startPos.distanceTo(endPos) < 0.1) { el.emit('${completeEvent}'); }`;
+        }
+        return code;
+      }
+    },
+    'format-time': {
+      name: 'Format Time',
+      icon: 'fa-clock',
+      category: 'Game',
+      description: 'Convert seconds to MM:SS format',
+      params: [{
+        name: 'event',
+        type: 'select',
+        label: 'Event',
+        options: EVENT_TYPES,
+        default: 'click'
+      }, {
+        name: 'secondsVariable',
+        type: 'text',
+        label: 'Seconds Variable',
+        default: 'timer'
+      }, {
+        name: 'outputVariable',
+        type: 'text',
+        label: 'Output Variable',
+        default: 'formattedTime'
+      }],
+      generate: params => {
+        const secondsVar = params.secondsVariable || 'timer';
+        const outputVar = params.outputVariable || 'formattedTime';
+        return `var s = window.${secondsVar} || 0;\n` + `var m = Math.floor(s / 60);\n` + `var sec = Math.floor(s % 60);\n` + `window.${outputVar} = m + ':' + (sec < 10 ? '0' : '') + sec;\n` + `console.log('Time:', window.${outputVar});`;
       }
     },
     // Call JavaScript Function
@@ -75435,6 +76923,656 @@ function copyCameraPosition(sourceCamera, targetCamera, controls) {
 
 /***/ }),
 
+/***/ "./src/lib/componentHelp.js":
+/*!**********************************!*\
+  !*** ./src/lib/componentHelp.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   componentHelp: () => (/* binding */ componentHelp),
+/* harmony export */   getComponentFullHelp: () => (/* binding */ getComponentFullHelp),
+/* harmony export */   getComponentOverview: () => (/* binding */ getComponentOverview),
+/* harmony export */   getPropertyDescription: () => (/* binding */ getPropertyDescription),
+/* harmony export */   isBeginnerComponent: () => (/* binding */ isBeginnerComponent),
+/* harmony export */   isBeginnerProperty: () => (/* binding */ isBeginnerProperty)
+/* harmony export */ });
+/**
+ * Beginner-friendly configuration for A-Frame components
+ * Defines which properties to show by default and tooltip descriptions
+ */
+
+const componentHelp = {
+  // Material component help text
+  material: {
+    beginner: ['color', 'opacity', 'src', 'shader'],
+    descriptions: {
+      color: 'The color of the object (e.g., red, #FF0000, rgb(255,0,0))',
+      opacity: 'How transparent the object is (0 = invisible, 1 = fully visible)',
+      src: 'Image texture to use on the object surface',
+      shader: 'How the material is rendered (flat = flat color, standard = realistic lighting)',
+      metalness: 'How metallic the surface looks (0 = non-metal, 1 = fully metallic)',
+      roughness: 'How rough the surface looks (0 = smooth/shiny, 1 = rough/matte)',
+      emissive: 'The color the object emits when exposed to light',
+      emissiveIntensity: 'How strongly the object emits light',
+      wireframe: 'Show the object as a wireframe (useful for debugging)',
+      wireframeLinewidth: 'Thickness of wireframe lines',
+      transparent: 'Enable transparency rendering',
+      depthWrite: 'Write to depth buffer (affects rendering order)',
+      fog: 'Enable fog effect on this material',
+      side: 'Which sides to render (front, back, or both)',
+      normalMap: 'Texture that adds surface detail through fake lighting',
+      normalScale: 'Intensity of the normal map effect',
+      ambientOcclusionMap: 'Texture for ambient shadows in crevices',
+      ambientOcclusionMapIntensity: 'Strength of ambient occlusion',
+      displacementMap: 'Texture that actually moves vertices',
+      displacementScale: 'How much vertices are displaced',
+      envMap: 'Reflection from environment texture',
+      fog: 'Whether material is affected by fog'
+    },
+    overview: 'The material component defines how an object looks - its color, texture, transparency, and how it responds to light. Use shaders like "flat" for simple colors or "standard" for realistic lighting with metalness and roughness.'
+  },
+  // Geometry component help text
+  geometry: {
+    beginner: ['primitive', 'radius', 'radiusTubular', 'segmentsTubular', 'height', 'width', 'depth', 'segmentsHeight', 'segmentsWidth', 'segmentsRadial'],
+    descriptions: {
+      primitive: 'The shape type (box, sphere, cylinder, etc.)',
+      radius: 'The radius of circular shapes (sphere, cylinder top/bottom)',
+      radiusTop: 'Top radius of cylinder (for cone shapes)',
+      radiusBottom: 'Bottom radius of cylinder (for cone shapes)',
+      height: 'Vertical size of the shape',
+      width: 'Horizontal width of the shape',
+      depth: 'Depth (front-to-back) of the shape',
+      radiusTubular: 'Radius of the tube (for torus shapes)',
+      segmentsTubular: 'Number of segments around the tube',
+      segmentsHeight: 'Number of vertical segments (more = smoother)',
+      segmentsWidth: 'Number of horizontal segments (more = smoother)',
+      segmentsRadial: 'Number of radial segments (more = smoother around)',
+      thetaStart: 'Starting angle for partial shapes',
+      thetaLength: 'Length of arc for partial shapes',
+      arc: 'Arc angle for partial torus shapes',
+      openEnded: 'Whether the cylinder has top/bottom caps',
+      buffer: 'Whether to use buffered geometry (recommended)',
+      skipCache: 'Skip geometry caching for dynamic shapes'
+    },
+    overview: 'The geometry component defines the shape of an object. Common primitives include box, sphere, cylinder, plane, and torus. Use the "primitive" property to quickly switch between basic shapes.'
+  },
+  // Common transform component help text
+  position: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Horizontal position (left/right)',
+      y: 'Vertical position (up/down)',
+      z: 'Depth position (forward/backward)'
+    }
+  },
+  rotation: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Rotation around horizontal axis (pitch)',
+      y: 'Rotation around vertical axis (yaw)',
+      z: 'Rotation around depth axis (roll)'
+    }
+  },
+  scale: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Horizontal scale (1 = normal, 2 = double width)',
+      y: 'Vertical scale (1 = normal, 2 = double height)',
+      z: 'Depth scale (1 = normal, 2 = double depth)'
+    }
+  },
+  // WASD Controls
+  'wasd-controls': {
+    beginner: ['acceleration', 'fly', 'wsAxis', 'adAxis'],
+    descriptions: {
+      acceleration: 'How fast you move (higher = faster)',
+      fly: 'Enable flying mode (move up/down with keys)',
+      wsAxis: 'Which axis for forward/backward (y = up/down)',
+      adAxis: 'Which axis for left/right (y = up/down)',
+      easing: 'Movement smoothing',
+      enabled: 'Whether controls are active',
+      flyEnabled: 'Enable flying mode',
+      AdEnabled: 'Enable A/D keys',
+      wsEnabled: 'Enable W/S keys'
+    }
+  },
+  // Look Controls
+  'look-controls': {
+    beginner: ['enabled', 'pointerLockEnabled'],
+    descriptions: {
+      enabled: 'Whether look controls are active',
+      pointerLockEnabled: 'Lock mouse cursor to screen (for immersive experience)',
+      reverseMouseDrag: 'Reverse the mouse drag direction',
+      reverseTouchDrag: 'Reverse touch drag direction',
+      touchEnabled: 'Enable touch controls on mobile',
+      magicWindowTrackingEnabled: 'Enable VR magic window tracking',
+      hmdEnabled: 'Enable head-mounted display tracking'
+    }
+  },
+  // Camera
+  camera: {
+    beginner: ['active', 'fov'],
+    descriptions: {
+      active: 'Make this the active camera (only one can be active)',
+      fov: 'Field of view - how wide the camera sees (in degrees)',
+      near: 'Nearest distance where objects are visible',
+      far: 'Furthest distance where objects are visible',
+      lookAt: 'Target position for camera to look at',
+      aspect: 'Aspect ratio (usually auto-calculated)',
+      zoom: 'Camera zoom level'
+    },
+    overview: 'The camera component defines the viewpoint for the scene. Use multiple cameras to create different views or cut scenes. The active property determines which camera is currently displayed. Field of view (fov) controls how wide or zoomed in the view appears.'
+  },
+  // Cursor
+  cursor: {
+    beginner: ['raycaster', 'fuse', 'timeout'],
+    descriptions: {
+      raycaster: 'Objects the cursor can interact with',
+      fuse: 'Click automatically after hovering (for gaze interaction)',
+      timeout: 'Time to wait before fuse click (in ms)',
+      mouseCursorStylesEnabled: 'Show different cursor on hover',
+      rayOrigin: 'Where the ray starts (mouse = from mouse position)',
+      geometry: 'Shape of the cursor visual',
+      material: 'Material of the cursor visual',
+      far: 'Maximum distance for raycasting',
+      interval: 'Time between raycast checks (ms)'
+    },
+    overview: 'The cursor component enables interaction with objects in the scene. It casts a ray from the camera to detect objects. Use fuse for gaze-based interaction (hover to click) or set rayOrigin to mouse for click-based interaction. The cursor visual can be customized with geometry and material properties.'
+  },
+  // Layer
+  layer: {
+    beginner: ['id', 'order'],
+    descriptions: {
+      id: 'Unique identifier for the layer',
+      order: 'Render order (higher = on top)',
+      parent: 'Parent layer ID for nesting',
+      transparent: 'Layer has transparent objects',
+      depthTest: 'Objects in layer test against each other',
+      renderOrder: 'Manual render order override'
+    }
+  },
+  // Laser Controls
+  'laser-controls': {
+    beginner: ['hand', 'raycaster'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      raycaster: 'Configuration for the laser beam',
+      model: 'Show controller model',
+      rayOrigin: 'Where laser ray starts',
+      far: 'Maximum distance of laser',
+      interval: 'Time between raycast updates',
+      lineColor: 'Color of laser beam',
+      lineOpacity: 'Transparency of laser beam'
+    }
+  },
+  // Link
+  link: {
+    beginner: ['href', 'title'],
+    descriptions: {
+      href: 'URL of the page to navigate to',
+      title: 'Text shown when hovering over link',
+      thumbnail: 'Image preview for the link',
+      peekTime: 'Time to hover before preview (ms)',
+      on: 'Event to trigger navigation',
+      target: 'Where to open link (_self = same tab, _blank = new tab)'
+    },
+    overview: 'The link component creates clickable links to other VR experiences. When clicked, it navigates to the href URL. The thumbnail property shows a preview image, and peekTime controls how long to hover before showing the preview. Links are essential for creating connected VR experiences.'
+  },
+  // Light
+  light: {
+    beginner: ['type', 'color', 'intensity'],
+    descriptions: {
+      type: 'Type of light (ambient, directional, point, spot, hemisphere)',
+      color: 'Color of the light',
+      intensity: 'Brightness of the light (0 = off, 1 = full)',
+      angle: 'Spotlight angle (width of light cone)',
+      penumbra: 'Spotlight edge softness (0 = hard edge)',
+      decay: 'How light fades over distance',
+      distance: 'Maximum distance of light effect',
+      castShadow: 'Light casts shadows',
+      shadowBias: 'Shadow quality adjustment',
+      shadowCameraFar: 'Shadow render distance',
+      shadowCameraSize: 'Shadow map size',
+      target: 'Object the light points at',
+      groundColor: 'Hemisphere light ground color',
+      skyColor: 'Hemisphere light sky color'
+    }
+  },
+  // Model (gltf-model)
+  'gltf-model': {
+    beginner: ['src'],
+    descriptions: {
+      src: 'URL to the 3D model file (.glb or .gltf)',
+      loader: 'Which model loader to use',
+      nanInstantiator: 'Handle invalid geometry',
+      format: 'Model format version (auto-detected)'
+    },
+    overview: 'The gltf-model component loads and displays 3D models in GLTF/GLB format. GLB is the binary version which includes textures. Use this for complex 3D objects like characters, buildings, or detailed meshes.'
+  },
+  // Particle System
+  'particle-system': {
+    beginner: ['preset', 'color', 'particleCount', 'size'],
+    descriptions: {
+      preset: 'Quick preset (dust, snow, rain, etc.)',
+      color: 'Color of particles',
+      particleCount: 'Number of particles to display',
+      size: 'Size of each particle',
+      sizeSpread: 'Random variation in particle size',
+      velocityValue: 'Base speed and direction',
+      velocitySpread: 'Random variation in speed',
+      accelerationValue: 'How particles accelerate',
+      maxAge: 'How long particles live (seconds)',
+      opacity: 'Transparency of particles',
+      blending: 'How particles blend together',
+      texture: 'Image to use for particles',
+      duration: 'How long the system runs (0 = forever)',
+      enabled: 'Enable or disable particles'
+    }
+  },
+  // Physics
+  'static-body': {
+    beginner: [],
+    descriptions: {
+      shape: 'Collision shape (box, sphere, hull, mesh)',
+      mass: 'Mass for dynamic physics (0 = immovable)',
+      linearDamping: 'How quickly velocity slows down',
+      angularDamping: 'How quickly rotation slows down',
+      friction: 'Surface friction',
+      restitution: 'Bounciness (0 = no bounce)',
+      shape: 'Collision geometry type'
+    }
+  },
+  'dynamic-body': {
+    beginner: ['mass'],
+    descriptions: {
+      mass: 'Weight of the object (affected by gravity)',
+      linearDamping: 'Air resistance for movement',
+      angularDamping: 'Air resistance for rotation',
+      friction: 'Surface friction',
+      restitution: 'Bounciness (0 = no bounce)',
+      shape: 'Collision shape (box, sphere, hull, mesh)',
+      velocity: 'Initial velocity',
+      angularVelocity: 'Initial rotation speed'
+    }
+  },
+  // Sound
+  sound: {
+    beginner: ['src', 'autoplay', 'loop'],
+    descriptions: {
+      src: 'URL to audio file',
+      autoplay: 'Play automatically when visible',
+      loop: 'Repeat audio when finished',
+      volume: 'Loudness (0 = silent, 1 = max)',
+      poolSize: 'Number of simultaneous sounds',
+      positional: 'Sound gets quieter with distance',
+      refDistance: 'Distance where sound is full volume',
+      rolloffFactor: 'How fast sound fades',
+      distanceModel: 'How distance affects volume',
+      loop: 'Repeat when finished',
+      on: 'Event that triggers sound'
+    }
+  },
+  // Text
+  text: {
+    beginner: ['value', 'color', 'align'],
+    descriptions: {
+      value: 'The text content to display',
+      color: 'Color of the text',
+      align: 'Text alignment (left, center, right)',
+      width: 'Maximum width before wrapping',
+      wrapCount: 'Characters per line',
+      lineHeight: 'Space between lines',
+      font: 'Font family (roboto, aileronsemibold, etc.)',
+      fontImage: 'Bitmap font texture',
+      shader: 'Text rendering style',
+      side: 'Which side to render on (double = both sides)',
+      anchor: 'Alignment point (center, left, right, align)',
+      baseline: 'Vertical alignment (center, top, bottom)',
+      transparent: 'Allow transparency in text',
+      opacity: 'Text transparency'
+    }
+  },
+  // Video
+  video: {
+    beginner: ['src', 'autoplay', 'loop'],
+    descriptions: {
+      src: 'URL to video file',
+      autoplay: 'Play automatically',
+      loop: 'Repeat when finished',
+      volume: 'Audio volume (0-1)',
+      controls: 'Show video playback controls',
+      muted: 'Start muted',
+      playsinline: 'Play inline on mobile (not fullscreen)',
+      crossorigin: 'CORS settings for video source'
+    }
+  },
+  // Animation
+  animation: {
+    beginner: ['property', 'to', 'dur', 'easing'],
+    descriptions: {
+      property: 'What to animate (position, rotation, scale, color, etc.)',
+      to: 'Target value to animate to',
+      from: 'Starting value (optional, uses current if omitted)',
+      dur: 'Duration in milliseconds',
+      easing: 'Speed curve (linear, easeInQuad, easeOutQuad, etc.)',
+      loop: 'Repeat animation (true or number of times)',
+      dir: 'Direction for loop (normal, reverse, alternate)',
+      delay: 'Wait before starting (ms)',
+      elasticity: 'Bounciness for elastic easing',
+      round: 'Round values to integers',
+      enabled: 'Enable/disable animation',
+      startEvents: 'Event to trigger animation',
+      pauseEvents: 'Event to pause animation',
+      resumeEvents: 'Event to resume animation'
+    },
+    overview: 'The animation component adds movement and transitions to entities. Animate properties like position (movement), rotation (spinning), scale (growing/shrinking), or material properties (color changes). Use easing functions to create natural-looking motion with acceleration and deceleration.'
+  },
+  // Draw (drawing component)
+  draw: {
+    beginner: ['color', 'size'],
+    descriptions: {
+      color: 'Color of the drawing stroke',
+      size: 'Size/thickness of the stroke',
+      enabled: 'Enable or disable drawing',
+      on: 'Event to trigger drawing',
+      points: 'Array of points for the drawing path'
+    },
+    overview: 'The draw component allows users to create freehand drawings in VR. Users can draw lines and shapes in 3D space by pointing and clicking. Customize the stroke color and size for different drawing effects.'
+  },
+  // Smiley (emoji/face component)
+  smiley: {
+    beginner: ['type', 'color'],
+    descriptions: {
+      type: 'Type of face (happy, sad, angry, etc.)',
+      color: 'Color of the face',
+      size: 'Size of the smiley face',
+      expression: 'Expression to display'
+    },
+    overview: 'The smiley component displays emoji faces in the scene. Use it to add emotional feedback, decorations, or interactive elements. Choose from various expressions to convey different emotions.'
+  },
+  // Script
+  script: {
+    beginner: [],
+    descriptions: {
+      // Dynamic scripts depend on the script component registered
+    }
+  },
+  // Hand Controls
+  'hand-controls': {
+    beginner: ['hand', 'handModelStyle'],
+    descriptions: {
+      hand: 'Which hand (left, right, or both)',
+      handModelStyle: 'Visual style (lowPoly, highPoly, etc.)',
+      color: 'Hand color override',
+      visible: 'Show or hide hand model'
+    }
+  },
+  // Touch Controls
+  'touch-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show touch controller model',
+      visible: 'Show or hide controller'
+    }
+  },
+  // Oculus Touch Controls
+  'oculus-touch-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller'
+    }
+  },
+  // Vive Controls
+  'vive-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed'
+    }
+  },
+  // WebVR Controller
+  'webvr-controller': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller'
+    }
+  },
+  // Orbit Controls (for camera movement)
+  'orbit-controls': {
+    beginner: ['target', 'minDistance', 'maxDistance'],
+    descriptions: {
+      target: 'Position to orbit around',
+      minDistance: 'Closest zoom distance',
+      maxDistance: 'Furthest zoom distance',
+      minPolarAngle: 'Lowest vertical angle',
+      maxPolarAngle: 'Highest vertical angle',
+      enableDamping: 'Smooth camera movement',
+      dampingFactor: 'Smoothing amount',
+      rotateSpeed: 'Rotation speed',
+      zoomSpeed: 'Zoom speed',
+      enabled: 'Enable or disable controls'
+    }
+  },
+  // Collider
+  collider: {
+    beginner: ['objects'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      radius: 'Collision radius',
+      shape: 'Collision shape (box, sphere)',
+      debug: 'Show collision wireframes'
+    }
+  },
+  // AABB Collider
+  'aabb-collider': {
+    beginner: ['objects'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      interval: 'Collision check interval',
+      debug: 'Show collision boxes'
+    }
+  },
+  // Sphere Collider
+  'sphere-collider': {
+    beginner: ['objects'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      radius: 'Collision sphere radius',
+      center: 'Center offset of sphere',
+      debug: 'Show collision spheres'
+    }
+  },
+  // ORB Collider
+  'orb-collider': {
+    beginner: ['objects'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      radius: 'Collision radius',
+      debug: 'Show collision visualization'
+    }
+  },
+  // kinematic-body
+  'kinematic-body': {
+    beginner: [],
+    descriptions: {
+      mass: 'Body mass',
+      radius: 'Body radius for collisions',
+      linearDamping: 'Movement damping',
+      angularDamping: 'Rotation damping'
+    }
+  },
+  // Text geometry
+  'text-geometry': {
+    beginner: ['text', 'font'],
+    descriptions: {
+      text: 'Text content to display',
+      font: 'Font to use (URL to typeface.json)',
+      size: 'Text size',
+      height: 'Text depth/thickness',
+      curveSegments: 'Smoothness of curves',
+      bevelEnabled: 'Add bevel/edging to text',
+      bevelThickness: 'Bevel depth',
+      bevelSize: 'Bevel width',
+      bevelOffset: 'Bevel offset',
+      bevelSegments: 'Bevel smoothness'
+    }
+  },
+  // Background
+  background: {
+    beginner: ['color'],
+    descriptions: {
+      color: 'Background color',
+      src: 'Background image URL',
+      transparent: 'Transparent background'
+    }
+  },
+  // Shadow
+  shadow: {
+    beginner: ['cast', 'receive'],
+    descriptions: {
+      cast: 'Object casts shadows',
+      receive: 'Object receives shadows'
+    }
+  },
+  // Sky
+  sky: {
+    beginner: ['color', 'src'],
+    descriptions: {
+      color: 'Sky color',
+      src: 'Skybox image URL (equirectangular)',
+      radius: 'Sky sphere radius',
+      phiStart: 'Horizontal rotation start',
+      phiLength: 'Horizontal rotation length',
+      thetaStart: 'Vertical rotation start',
+      thetaLength: 'Vertical rotation length'
+    }
+  },
+  // Stars
+  stars: {
+    beginner: ['count', 'color'],
+    descriptions: {
+      count: 'Number of stars',
+      color: 'Star color',
+      radius: 'Distance of stars from center'
+    }
+  },
+  // Ocean
+  ocean: {
+    beginner: ['color', 'width', 'depth'],
+    descriptions: {
+      color: 'Water color',
+      width: 'Ocean width',
+      depth: 'Ocean depth',
+      opacity: 'Water transparency',
+      speed: 'Wave animation speed',
+      distortionScale: 'Wave distortion amount'
+    }
+  },
+  // Environment
+  environment: {
+    beginner: ['preset', 'skyType'],
+    descriptions: {
+      preset: 'Quick environment preset (forest, city, studio, etc.)',
+      skyType: 'Type of sky (atmosphere, gradient, cubemap)',
+      skyColor: 'Sky color',
+      horizonColor: 'Color at horizon',
+      ground: 'Ground type (none, canyon, hills, etc.)',
+      groundColor: 'Ground color',
+      fog: 'Enable fog',
+      fogDensity: 'Fog thickness',
+      lighting: 'Lighting type',
+      shadow: 'Enable shadows'
+    },
+    overview: 'The environment component quickly creates immersive 3D environments with sky, ground, fog, and lighting. Choose from presets like forest, city, studio, or sunset for instant atmosphere. Customize individual elements like sky color, ground type, and fog density for unique environments.'
+  },
+  // Voice
+  voice: {
+    beginner: [],
+    descriptions: {}
+  },
+  // models (for model-loader or multiple models)
+  models: {
+    beginner: ['src'],
+    descriptions: {
+      src: 'Array of URLs to 3D model files (.glb, .gltf, .obj)',
+      loaded: 'Shows which models have finished loading',
+      progress: 'Loading progress (0-1) for each model',
+      enableCache: 'Cache loaded models in memory',
+      skipCache: 'Ignore cached models and reload'
+    },
+    overview: 'The models component loads multiple 3D models at once. Useful for loading scenes or collections of objects. Each model can be a GLB, GLTF, or OBJ file. The src property accepts an array of URLs.'
+  }
+};
+
+/**
+ * Get an overview/help text for a component
+ */
+function getComponentOverview(componentName) {
+  const baseName = componentName.split('__')[0];
+  return componentHelp[baseName]?.overview;
+}
+
+/**
+ * Get full help content for a component (for the help modal)
+ */
+function getComponentFullHelp(componentName) {
+  const baseName = componentName.split('__')[0];
+  const help = componentHelp[baseName];
+  if (!help) return null;
+  return {
+    title: baseName,
+    overview: help.overview || `The ${baseName} component adds functionality to entities in your scene.`,
+    beginnerProperties: help.beginner || [],
+    descriptions: help.descriptions || {}
+  };
+}
+
+/**
+ * Check if a component should show beginner mode
+ */
+
+/**
+ * Check if a component should show beginner mode
+ */
+function isBeginnerComponent(componentName) {
+  const baseName = componentName.split('__')[0];
+  const component = componentHelp[baseName];
+  // Show beginner mode only if component has descriptions
+  return component && component.descriptions && Object.keys(component.descriptions).length > 0;
+}
+
+/**
+ * Check if a property is a beginner property
+ */
+function isBeginnerProperty(componentName, propertyName) {
+  const baseName = componentName.split('__')[0];
+  const component = componentHelp[baseName];
+  if (!component || !component.beginner) return true; // Show all if not configured
+  if (component.beginner.length === 0) return true; // Show all if no beginner properties defined
+  return component.beginner.includes(propertyName);
+}
+
+/**
+ * Get tooltip description for a property
+ */
+function getPropertyDescription(componentName, propertyName) {
+  const baseName = componentName.split('__')[0];
+  return componentHelp[baseName]?.descriptions?.[propertyName];
+}
+
+/***/ }),
+
 /***/ "./src/lib/config.js":
 /*!***************************!*\
   !*** ./src/lib/config.js ***!
@@ -75529,6 +77667,9 @@ function removeEntity(entity, force = false) {
       var closest = findClosestEntity(entity);
       entity.parentNode.removeChild(entity);
       AFRAME.INSPECTOR.selectEntity(closest);
+      _Events__WEBPACK_IMPORTED_MODULE_0__["default"].emit('entitydelete', {
+        entity
+      });
     }
   }
 }
@@ -76116,7 +78257,7 @@ function reparentEntity(entity, newParent) {
 
   // Apply world rotation
   const newLocalRotation = new THREE.Quaternion();
-  newLocalRotation.copy(worldRotation).multiply(inverseParentMatrix.getQuaternion(new THREE.Quaternion()));
+  newLocalRotation.copy(worldRotation).multiply(new THREE.Quaternion().setFromRotationMatrix(inverseParentMatrix));
   const euler = new THREE.Euler().setFromQuaternion(newLocalRotation);
   entity.setAttribute('rotation', {
     x: THREE.MathUtils.radToDeg(euler.x),
@@ -76165,10 +78306,62 @@ function getEligibleParents(excludeEntity) {
 
     // Only include entities (not primitives that can't have children in the usual sense)
     if (element.isEntity && element.tagName !== 'A-SKY') {
+      const tagName = element.tagName.toLowerCase();
+      const entityId = element.id;
+      const entityClass = element.getAttribute('class');
+
+      // Try to get a descriptive name from various sources
+      let displayName = tagName;
+      if (entityId) {
+        // If has ID, show both type and ID
+        displayName = `${tagName} (${entityId})`;
+      } else if (entityClass) {
+        // If no ID but has class, include class name for identification
+        const classList = entityClass.split(' ').filter(c => c && !c.includes('aframe-inspector'));
+        if (classList.length > 0) {
+          // Also try to get geometry or other identifiable component
+          const geometry = element.getAttribute('geometry');
+          const material = element.getAttribute('material');
+          const gltfModel = element.getAttribute('gltf-model');
+          if (geometry?.primitive) {
+            displayName = `${geometry.primitive} (${classList[0]})`;
+          } else if (gltfModel?.src) {
+            // Extract filename from URL
+            const urlParts = gltfModel.src.split('/');
+            const filename = urlParts[urlParts.length - 1].split('.')[0];
+            displayName = `${filename} (${classList[0]})`;
+          } else if (material?.color) {
+            displayName = `${tagName} ${material.color} (${classList[0]})`;
+          } else {
+            displayName = `${tagName} (${classList[0]})`;
+          }
+        }
+      } else {
+        // No ID or class - try to identify by geometry/components
+        const geometry = element.getAttribute('geometry');
+        const material = element.getAttribute('material');
+        const gltfModel = element.getAttribute('gltf-model');
+        const text = element.getAttribute('text');
+        if (geometry?.primitive) {
+          displayName = geometry.primitive;
+        } else if (gltfModel?.src) {
+          const urlParts = gltfModel.src.split('/');
+          const filename = urlParts[urlParts.length - 1].split('.')[0];
+          displayName = filename;
+        } else if (text?.value) {
+          // Show first 20 chars of text content
+          const textPreview = text.value.substring(0, 20) + (text.value.length > 20 ? '...' : '');
+          displayName = `text: "${textPreview}"`;
+        } else if (material?.color) {
+          displayName = `${tagName} ${material.color}`;
+        }
+      }
       eligible.push({
         element: element,
         depth: depth,
-        name: element.id || element.tagName.toLowerCase()
+        name: displayName,
+        tagName: tagName,
+        entityId: entityId
       });
     }
 
@@ -76192,11 +78385,221 @@ function getEligibleParents(excludeEntity) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   canRedo: () => (/* binding */ canRedo),
+/* harmony export */   canUndo: () => (/* binding */ canUndo),
+/* harmony export */   clearHistory: () => (/* binding */ clearHistory),
+/* harmony export */   getHistoryStatus: () => (/* binding */ getHistoryStatus),
+/* harmony export */   pushHistory: () => (/* binding */ pushHistory),
+/* harmony export */   redo: () => (/* binding */ redo),
+/* harmony export */   undo: () => (/* binding */ undo),
 /* harmony export */   updates: () => (/* binding */ updates)
 /* harmony export */ });
 /* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Events */ "./src/lib/Events.js");
 
 const updates = {};
+const MAX_HISTORY = 16;
+
+// History stacks
+const undoStack = [];
+const redoStack = [];
+
+/**
+ * Capture the current scene state as a serialized HTML string
+ */
+function captureSceneState() {
+  const scene = AFRAME.scenes[0];
+  if (!scene) return null;
+
+  // Clone the scene and filter out inspector elements
+  const clone = scene.cloneNode(true);
+
+  // Remove inspector-injected elements
+  const inspectorElements = clone.querySelectorAll('[data-aframe-inspector], [data-is-inspector]');
+  inspectorElements.forEach(el => el.remove());
+  return clone.innerHTML;
+}
+
+/**
+ * Apply a captured state to the scene
+ */
+function applySceneState(html) {
+  const scene = AFRAME.scenes[0];
+  if (!scene || !html) return false;
+  try {
+    // Get the currently selected entity to restore selection after
+    const selectedEntity = AFRAME.INSPECTOR.selectedEntity;
+    const selectedId = selectedEntity?.id;
+
+    // Parse the HTML and replace the scene content
+    // We need to be careful not to destroy the scene object
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    // Remove all non-inspector children from scene
+    const toRemove = [];
+    scene.childNodes.forEach(child => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        if (!child.dataset?.isInspector && !child.isInspector) {
+          toRemove.push(child);
+        }
+      }
+    });
+
+    // Add the new children
+    while (temp.firstChild) {
+      const child = temp.firstChild;
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        // Skip inspector elements
+        if (!child.dataset?.isInspector && !child.hasAttribute('aframe-injected')) {
+          scene.appendChild(child);
+        }
+      }
+      temp.removeChild(child);
+    }
+
+    // Try to restore selection
+    if (selectedId) {
+      const newSelected = document.getElementById(selectedId);
+      if (newSelected && newSelected.isEntity) {
+        AFRAME.INSPECTOR.selectEntity(newSelected);
+      }
+    }
+    return true;
+  } catch (err) {
+    console.error('Failed to apply scene state:', err);
+    return false;
+  }
+}
+
+/**
+ * Push current state to history stack (call before making changes)
+ */
+function pushHistory(actionType = 'change') {
+  const state = captureSceneState();
+  if (!state) return;
+
+  // Clear redo stack when new action is performed
+  redoStack.length = 0;
+
+  // Add to undo stack
+  undoStack.push({
+    type: actionType,
+    state: state,
+    timestamp: Date.now()
+  });
+
+  // Limit stack size
+  while (undoStack.length > MAX_HISTORY) {
+    undoStack.shift();
+  }
+
+  // Emit event for UI updates
+  _Events__WEBPACK_IMPORTED_MODULE_0__["default"].emit('historychange', {
+    canUndo: undoStack.length > 0,
+    canRedo: redoStack.length > 0
+  });
+}
+
+/**
+ * Undo the last action
+ */
+function undo() {
+  if (undoStack.length === 0) return false;
+
+  // Save current state to redo stack
+  const currentState = captureSceneState();
+  if (currentState) {
+    redoStack.push({
+      type: 'redo',
+      state: currentState,
+      timestamp: Date.now()
+    });
+  }
+
+  // Pop from undo stack and apply
+  const historyEntry = undoStack.pop();
+  const success = applySceneState(historyEntry.state);
+
+  // Emit event for UI updates
+  _Events__WEBPACK_IMPORTED_MODULE_0__["default"].emit('historychange', {
+    canUndo: undoStack.length > 0,
+    canRedo: redoStack.length > 0
+  });
+  return success;
+}
+
+/**
+ * Redo the last undone action
+ */
+function redo() {
+  if (redoStack.length === 0) return false;
+
+  // Save current state to undo stack
+  const currentState = captureSceneState();
+  if (currentState) {
+    undoStack.push({
+      type: 'redo-undo',
+      state: currentState,
+      timestamp: Date.now()
+    });
+  }
+
+  // Pop from redo stack and apply
+  const historyEntry = redoStack.pop();
+  const success = applySceneState(historyEntry.state);
+
+  // Emit event for UI updates
+  _Events__WEBPACK_IMPORTED_MODULE_0__["default"].emit('historychange', {
+    canUndo: undoStack.length > 0,
+    canRedo: redoStack.length > 0
+  });
+  return success;
+}
+
+/**
+ * Check if undo is available
+ */
+function canUndo() {
+  return undoStack.length > 0;
+}
+
+/**
+ * Check if redo is available
+ */
+function canRedo() {
+  return redoStack.length > 0;
+}
+
+/**
+ * Get history status
+ */
+function getHistoryStatus() {
+  return {
+    canUndo: undoStack.length > 0,
+    canRedo: redoStack.length > 0,
+    undoCount: undoStack.length,
+    redoCount: redoStack.length
+  };
+}
+
+/**
+ * Clear all history
+ */
+function clearHistory() {
+  undoStack.length = 0;
+  redoStack.length = 0;
+  _Events__WEBPACK_IMPORTED_MODULE_0__["default"].emit('historychange', {
+    canUndo: false,
+    canRedo: false
+  });
+}
+
+// Listen for entity changes and auto-capture history
+_Events__WEBPACK_IMPORTED_MODULE_0__["default"].on('entitycreate', () => pushHistory('create'));
+_Events__WEBPACK_IMPORTED_MODULE_0__["default"].on('entitydelete', () => pushHistory('delete'));
+_Events__WEBPACK_IMPORTED_MODULE_0__["default"].on('entitymove', () => pushHistory('move'));
+_Events__WEBPACK_IMPORTED_MODULE_0__["default"].on('entityreparented', () => pushHistory('reparent'));
+_Events__WEBPACK_IMPORTED_MODULE_0__["default"].on('componentchange', () => pushHistory('component'));
 
 /**
  * Store change to export.
@@ -76356,6 +78759,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Events */ "./src/lib/Events.js");
 /* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./entity */ "./src/lib/entity.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./src/lib/utils.js");
+/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./history */ "./src/lib/history.js");
+
 
 
 
@@ -76464,6 +78869,17 @@ const Shortcuts = {
       return;
     }
     if (event.ctrlKey && os !== 'macos' || event.metaKey && os === 'macos') {
+      // z: undo (Ctrl+Z / Cmd+Z)
+      if (event.keyCode === 90 && !event.shiftKey) {
+        event.preventDefault();
+        (0,_history__WEBPACK_IMPORTED_MODULE_3__.undo)();
+      }
+
+      // y: redo (Ctrl+Y / Cmd+Y) or Ctrl+Shift+Z / Cmd+Shift+Z
+      if (event.keyCode === 89 || event.keyCode === 90 && event.shiftKey) {
+        event.preventDefault();
+        (0,_history__WEBPACK_IMPORTED_MODULE_3__.redo)();
+      }
       if (AFRAME.INSPECTOR.selectedEntity && document.activeElement.tagName !== 'INPUT') {
         // c: copy selected entity
         if (event.keyCode === 67) {
@@ -77337,6 +79753,32 @@ Inspector.prototype = {
         entity.pause();
         this.selectEntity(entity);
       });
+    });
+
+    // Handle creating new a-scene elements
+    _lib_Events__WEBPACK_IMPORTED_MODULE_1__["default"].on('scenecreate', definition => {
+      const scene = document.createElement('a-scene');
+
+      // Check if this is the first scene or additional scenes
+      const existingScenes = document.querySelectorAll('a-scene');
+      if (existingScenes.length === 0) {
+        // First scene - use standard setup
+        scene.setAttribute('embedded', '');
+        scene.innerHTML = `
+          <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+          <a-sky color="#ECECEC"></a-sky>
+        `;
+      } else {
+        // Additional scenes - create as nested/secondary scene
+        scene.setAttribute('embedded', '');
+        scene.setAttribute('data-multiple', 'true');
+        scene.innerHTML = `
+          <a-entity camera look-controls position="0 1.6 0"></a-entity>
+          <a-sky color="#333333"></a-sky>
+        `;
+      }
+      document.body.appendChild(scene);
+      console.log('Created new a-scene (total: ' + (existingScenes.length + 1) + ')');
     });
 
     // Handle adding behaviors/components to selected entity

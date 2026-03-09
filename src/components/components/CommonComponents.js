@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faPlus, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import { InputWidget } from '../widgets';
 import DEFAULT_COMPONENTS from './DefaultComponents';
@@ -141,12 +141,167 @@ export default class CommonComponents extends React.Component {
           </div>
           <div className="propertyRow">
             <label className="text">class</label>
-            <span>{entity.getAttribute('class')}</span>
+            <ClassManager entity={entity} />
           </div>
           {this.renderCommonAttributes()}
           <Mixins entity={entity} />
         </div>
       </Collapsible>
+    );
+  }
+}
+
+/**
+ * ClassManager - Component to manage CSS classes for an entity
+ * Allows adding, editing, and deleting CSS classes via dropdown and prompt
+ */
+class ClassManager extends React.Component {
+  static propTypes = {
+    entity: PropTypes.object.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      classes: this.getClasses(props.entity),
+      selectedClass: '',
+      entityId: props.entity.id
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    // Handle null entity
+    if (!props.entity) {
+      return null;
+    }
+
+    // Always sync classes from the entity to ensure we have the latest state
+    // This handles cases where the class attribute was modified externally
+    const currentClasses = props.entity.getAttribute('class') || '';
+    const currentClassesArray = currentClasses.split(/\s+/).filter(c => c.length > 0);
+    const storedClassesStr = state.classes.join(' ');
+
+    // Sync if classes are different
+    if (storedClassesStr !== currentClasses) {
+      return {
+        classes: currentClassesArray,
+        selectedClass: '',
+        entityId: props.entity.id
+      };
+    }
+
+    return null;
+  }
+
+  componentDidMount() {
+    Events.on('entityupdate', this.onEntityUpdate);
+    Events.on('entityclone', this.onEntityUpdate);
+    Events.on('entityselected', this.onEntitySelected);
+  }
+
+  componentWillUnmount() {
+    Events.off('entityupdate', this.onEntityUpdate);
+    Events.off('entityclone', this.onEntityUpdate);
+    Events.off('entityselected', this.onEntitySelected);
+  }
+
+  onEntitySelected = (entity) => {
+    // Refresh classes when a new entity is selected
+    if (entity === this.props.entity) {
+      this.setState({
+        classes: this.getClasses(this.props.entity),
+        selectedClass: ''
+      });
+    }
+  };
+
+  onEntityUpdate = (detail) => {
+    if (detail.entity !== this.props.entity) {
+      return;
+    }
+    // Update when class attribute changes
+    if (detail.component === 'class' || detail.property === 'class') {
+      this.setState({ classes: this.getClasses(this.props.entity) });
+    }
+  };
+
+  getClasses(entity) {
+    const classAttr = entity.getAttribute('class');
+    if (!classAttr) return [];
+    return classAttr.split(/\s+/).filter(c => c.length > 0);
+  }
+
+  updateEntityClasses(classes) {
+    const classString = classes.join(' ');
+    this.props.entity.setAttribute('class', classString);
+    Events.emit('entityupdate', {
+      entity: this.props.entity,
+      component: 'class',
+      property: '',
+      value: classString
+    });
+  }
+
+  handleSelectChange = (event) => {
+    const selectedClass = event.target.value;
+    this.setState({ selectedClass });
+
+    // If a class is selected, remove it (toggle behavior)
+    if (selectedClass && this.state.classes.includes(selectedClass)) {
+      this.handleDeleteClass(selectedClass);
+    }
+    // Reset selection
+    this.setState({ selectedClass: '' });
+  };
+
+  handleAddClass = () => {
+    // Use browser prompt to get new class name
+    const newClassName = window.prompt('Enter new class name:');
+
+    if (newClassName && newClassName.trim()) {
+      const trimmedName = newClassName.trim();
+      const { classes } = this.state;
+
+      if (!classes.includes(trimmedName)) {
+        const newClasses = [...classes, trimmedName];
+        this.updateEntityClasses(newClasses);
+        this.setState({ classes: newClasses });
+      }
+    }
+  };
+
+  handleDeleteClass = (classToDelete) => {
+    const { classes } = this.state;
+    const newClasses = classes.filter(c => c !== classToDelete);
+    this.updateEntityClasses(newClasses);
+    this.setState({ classes: newClasses });
+  };
+
+  render() {
+    const { classes, selectedClass } = this.state;
+
+    return (
+      <div className="class-manager-dropdown">
+        <select
+          className="class-select"
+          value={selectedClass}
+          onChange={this.handleSelectChange}
+        >
+          <option value="">{classes.length > 0 ? `Select class (${classes.length})` : 'No classes'}</option>
+          {classes.map((className) => (
+            <option key={className} value={className}>
+              {className}
+            </option>
+          ))}
+        </select>
+        <button
+          className="class-add-button"
+          onClick={this.handleAddClass}
+          title="Add new class"
+        >
+          <AwesomeIcon icon={faPlus} />
+        </button>
+      </div>
     );
   }
 }

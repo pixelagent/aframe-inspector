@@ -730,10 +730,66 @@ export function getEligibleParents(excludeEntity) {
 
     // Only include entities (not primitives that can't have children in the usual sense)
     if (element.isEntity && element.tagName !== 'A-SKY') {
+      const tagName = element.tagName.toLowerCase();
+      const entityId = element.id;
+      const entityClass = element.getAttribute('class');
+      
+      // Try to get a descriptive name from various sources
+      let displayName = tagName;
+      
+      if (entityId) {
+        // If has ID, show both type and ID
+        displayName = `${tagName} (${entityId})`;
+      } else if (entityClass) {
+        // If no ID but has class, include class name for identification
+        const classList = entityClass.split(' ').filter(c => c && !c.includes('aframe-inspector'));
+        if (classList.length > 0) {
+          // Also try to get geometry or other identifiable component
+          const geometry = element.getAttribute('geometry');
+          const material = element.getAttribute('material');
+          const gltfModel = element.getAttribute('gltf-model');
+          
+          if (geometry?.primitive) {
+            displayName = `${geometry.primitive} (${classList[0]})`;
+          } else if (gltfModel?.src) {
+            // Extract filename from URL
+            const urlParts = gltfModel.src.split('/');
+            const filename = urlParts[urlParts.length - 1].split('.')[0];
+            displayName = `${filename} (${classList[0]})`;
+          } else if (material?.color) {
+            displayName = `${tagName} ${material.color} (${classList[0]})`;
+          } else {
+            displayName = `${tagName} (${classList[0]})`;
+          }
+        }
+      } else {
+        // No ID or class - try to identify by geometry/components
+        const geometry = element.getAttribute('geometry');
+        const material = element.getAttribute('material');
+        const gltfModel = element.getAttribute('gltf-model');
+        const text = element.getAttribute('text');
+        
+        if (geometry?.primitive) {
+          displayName = geometry.primitive;
+        } else if (gltfModel?.src) {
+          const urlParts = gltfModel.src.split('/');
+          const filename = urlParts[urlParts.length - 1].split('.')[0];
+          displayName = filename;
+        } else if (text?.value) {
+          // Show first 20 chars of text content
+          const textPreview = text.value.substring(0, 20) + (text.value.length > 20 ? '...' : '');
+          displayName = `text: "${textPreview}"`;
+        } else if (material?.color) {
+          displayName = `${tagName} ${material.color}`;
+        }
+      }
+      
       eligible.push({
         element: element,
         depth: depth,
-        name: element.id || element.tagName.toLowerCase()
+        name: displayName,
+        tagName: tagName,
+        entityId: entityId
       });
     }
 

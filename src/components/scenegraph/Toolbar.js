@@ -37,7 +37,41 @@ import {
   faWalking,
   faRunning,
   faCouch,
-  faUndo
+  faUndo,
+  faGear,
+  faSquare,
+  faCircle,
+  faDatabase,
+  faCaretUp,
+  faGem,
+  faRing,
+  faLink,
+  faCloud,
+  faVolumeUp,
+  faUser,
+  faPlane,
+  faVectorSquare,
+  faFilm,
+  faCompressArrowsAlt,
+  faHandRock,
+  faRandom,
+  faBicycle,
+  faSearchPlus,
+  faSearch,
+  faArrowsAlt,
+  faUndoAlt,
+  faPlayAlt,
+  faStepForward,
+  faEyeSlash,
+  faTrashAlt,
+  faCompress,
+  faArrowsAltV,
+  faBomb,
+  faSync,
+  faArrowUp,
+  faPaperPlane,
+  faMapMarkerAlt,
+  faLayerBroken
 } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import ThemeSelector from './ThemeSelector';
@@ -53,57 +87,58 @@ const PRIMITIVE_GROUPS = [
     name: 'Basic Shapes',
     icon: faBox,
     items: [
-      { value: 'a-box', label: 'Box', icon: '▣' },
-      { value: 'a-sphere', label: 'Sphere', icon: '●' },
-      { value: 'a-cylinder', label: 'Cylinder', icon: '⬭' },
-      { value: 'a-plane', label: 'Plane', icon: '▭' },
-      { value: 'a-circle', label: 'Circle', icon: '◯' },
-      { value: 'a-cone', label: 'Cone', icon: '△' },
+      { value: 'a-box', label: 'Box', icon: faCube },
+      { value: 'a-sphere', label: 'Sphere', icon: faCircle },
+      { value: 'a-cylinder', label: 'Cylinder', icon: faDatabase },
+      { value: 'a-plane', label: 'Plane', icon: faSquare },
+      { value: 'a-circle', label: 'Circle', icon: faCircle },
+      { value: 'a-cone', label: 'Cone', icon: faCaretUp },
     ]
   },
   {
     name: 'Advanced Shapes',
     icon: faCube,
     items: [
-      { value: 'a-dodecahedron', label: 'Dodecahedron', icon: '⬡' },
-      { value: 'a-tetrahedron', label: 'Tetrahedron', icon: '🔺' },
-      { value: 'a-torus', label: 'Torus', icon: '◎' },
-      { value: 'a-torus-knot', label: 'Torus Knot', icon: '∞' },
+      { value: 'a-dodecahedron', label: 'Dodecahedron', icon: faGem },
+      { value: 'a-tetrahedron', label: 'Tetrahedron', icon: faCaretUp },
+      { value: 'a-torus', label: 'Torus', icon: faRing },
+      { value: 'a-torus-knot', label: 'Torus Knot', icon: faLink },
     ]
   },
   {
     name: 'Environment',
     icon: faGlobe,
     items: [
-      { value: 'a-sky', label: 'Sky', icon: '🌌' },
-      { value: 'a-light', label: 'Light', icon: '💡' },
+      { value: 'a-sky', label: 'Sky', icon: faCloud },
+      { value: 'a-light', label: 'Light', icon: faLightbulb },
     ]
   },
   {
     name: 'Camera & Misc',
     icon: faCamera,
     items: [
-      { value: 'a-camera', label: 'Camera', icon: '📷' },
-      { value: 'a-entity', label: 'Empty Entity', icon: '◻' },
+      { value: 'a-camera', label: 'Camera', icon: faCamera },
+      { value: 'a-entity', label: 'Empty Entity', icon: faSquare },
+      { value: 'a-scene', label: 'Scene', icon: faLayerGroup, desc: 'New scene container' },
     ]
   },
   {
     name: 'Media',
     icon: faPlayCircle,
     items: [
-      { value: 'a-text', label: 'Text', icon: '📝', desc: 'Display text' },
-      { value: 'a-sound', label: 'Sound', icon: '🔊', desc: 'Audio playback' },
-      { value: 'a-video', label: 'Video', icon: '🎬', desc: 'Video player' },
-      { value: 'a-image', label: 'Image', icon: '🖼️', desc: '2D image' },
-      { value: 'a-gltf-model', label: '3D Model', icon: '🎮', desc: 'GLTF model' },
+      { value: 'a-text', label: 'Text', icon: faFont, desc: 'Display text' },
+      { value: 'a-sound', label: 'Sound', icon: faVolumeUp, desc: 'Audio playback' },
+      { value: 'a-video', label: 'Video', icon: faVideo, desc: 'Video player' },
+      { value: 'a-image', label: 'Image', icon: faImage, desc: '2D image' },
+      { value: 'a-gltf-model', label: '3D Model', icon: faCube, desc: 'GLTF model' },
     ]
   },
   {
     name: 'Interaction',
     icon: faMouse,
     items: [
-      { value: 'a-cursor', label: 'Cursor', icon: '🎯', desc: 'Raycaster/cursor' },
-      { value: 'a-camera', label: 'Player Camera', icon: '👤', desc: 'First-person camera' },
+      { value: 'a-cursor', label: 'Cursor', icon: faCrosshairs, desc: 'Raycaster/cursor' },
+      { value: 'a-camera', label: 'Player Camera', icon: faUser, desc: 'First-person camera' },
     ]
   },
   {
@@ -111,18 +146,18 @@ const PRIMITIVE_GROUPS = [
     icon: faBolt,
     description: 'Common game behaviors (adds component)',
     items: [
-      { value: 'behavior-click-animation', label: 'Click to Animate', icon: '▶️', desc: 'Play animation on click' },
-      { value: 'behavior-click-sound', label: 'Click to Sound', icon: '🔊', desc: 'Play sound on click' },
-      { value: 'behavior-click-hide', label: 'Click to Hide', icon: '👁️', desc: 'Hide on click' },
-      { value: 'behavior-click-destroy', label: 'Click to Destroy', icon: '💥', desc: 'Remove on click' },
-      { value: 'behavior-hover-scale', label: 'Hover Scale', icon: '🔍', desc: 'Scale on mouseover' },
-      { value: 'behavior-look-at', label: 'Look at Camera', icon: '👀', desc: 'Always face camera' },
-      { value: 'behavior-orbit', label: 'Orbit Rotate', icon: '🔄', desc: 'Auto-rotate around center' },
-      { value: 'behavior-bounce', label: 'Bounce', icon: '🏀', desc: 'Bouncing animation' },
-      { value: 'behavior-float', label: 'Float', icon: '🎈', desc: 'Gentle floating motion' },
-      { value: 'behavior-drag-drop', label: 'Drag to Move', icon: '✋', desc: 'Drag and drop' },
-      { value: 'behavior-spawner', label: 'Spawn on Click', icon: '✨', desc: 'Create new entity on click' },
-      { value: 'behavior-pickup', label: 'Pickup Collectible', icon: '🪙', desc: 'Collect on click' },
+      { value: 'behavior-click-animation', label: 'Click to Animate', icon: faPlay, desc: 'Play animation on click' },
+      { value: 'behavior-click-sound', label: 'Click to Sound', icon: faVolumeUp, desc: 'Play sound on click' },
+      { value: 'behavior-click-hide', label: 'Click to Hide', icon: faEyeSlash, desc: 'Hide on click' },
+      { value: 'behavior-click-destroy', label: 'Click to Destroy', icon: faTrashAlt, desc: 'Remove on click' },
+      { value: 'behavior-hover-scale', label: 'Hover Scale', icon: faSearchPlus, desc: 'Scale on mouseover' },
+      { value: 'behavior-look-at', label: 'Look at Camera', icon: faEye, desc: 'Always face camera' },
+      { value: 'behavior-orbit', label: 'Orbit Rotate', icon: faSync, desc: 'Auto-rotate around center' },
+      { value: 'behavior-bounce', label: 'Bounce', icon: faCompressArrowsAlt, desc: 'Bouncing animation' },
+      { value: 'behavior-float', label: 'Float', icon: faArrowUp, desc: 'Gentle floating motion' },
+      { value: 'behavior-drag-drop', label: 'Drag to Move', icon: faHandRock, desc: 'Drag and drop' },
+      { value: 'behavior-spawner', label: 'Spawn on Click', icon: faPlus, desc: 'Create new entity on click' },
+      { value: 'behavior-pickup', label: 'Pickup Collectible', icon: faStar, desc: 'Collect on click' },
     ]
   },
   {
@@ -130,10 +165,10 @@ const PRIMITIVE_GROUPS = [
     icon: faWalking,
     description: 'Movement controls',
     items: [
-      { value: 'wasd-controls', label: 'WASD Move', icon: '🚶', desc: 'Keyboard movement' },
-      { value: 'look-controls', label: 'Look Around', icon: '👁️', desc: 'Mouse look' },
-      { value: 'fly-controls', label: 'Fly Mode', icon: '🦅', desc: 'Free-fly camera' },
-      { value: 'checkpoint-controls', label: 'Checkpoints', icon: '📍', desc: 'Teleport between points' },
+      { value: 'wasd-controls', label: 'WASD Move', icon: faWalking, desc: 'Keyboard movement' },
+      { value: 'look-controls', label: 'Look Around', icon: faEye, desc: 'Mouse look' },
+      { value: 'fly-controls', label: 'Fly Mode', icon: faPaperPlane, desc: 'Free-fly camera' },
+      { value: 'checkpoint-controls', label: 'Checkpoints', icon: faMapMarkerAlt, desc: 'Teleport between points' },
     ]
   },
   {
@@ -141,8 +176,8 @@ const PRIMITIVE_GROUPS = [
     icon: faWeightHanging,
     description: 'Physics simulation (requires physics system)',
     items: [
-      { value: 'dynamic-body', label: 'Dynamic Body', icon: '🏋️', desc: 'Moves with gravity' },
-      { value: 'static-body', label: 'Static Body', icon: '🧱', desc: 'Solid wall/floor' },
+      { value: 'dynamic-body', label: 'Dynamic Body', icon: faWeightHanging, desc: 'Moves with gravity' },
+      { value: 'static-body', label: 'Static Body', icon: faLayerGroup, desc: 'Solid wall/floor' },
     ]
   }
 ];
@@ -260,6 +295,13 @@ export default class Toolbar extends React.Component {
       return;
     }
 
+    // Handle a-scene specially - it creates a new scene container
+    if (primitiveType === 'a-scene') {
+      Events.emit('scenecreate', { element: 'a-scene' });
+      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      return;
+    }
+
     const components = this.primitiveDefaults[primitiveType] || {};
     Events.emit('entitycreate', { element: primitiveType, components: {} });
     this.setState({ showPrimitiveMenu: false, selectedPrimitive: primitiveType });
@@ -353,6 +395,10 @@ export default class Toolbar extends React.Component {
     Events.emit('openhelpmodal');
   };
 
+  openTexturesModal = () => {
+    Events.emit('opentexturesmodal', '', null);
+  };
+
   render() {
     const watcherTitle = 'Write changes with aframe-watcher.';
 
@@ -406,7 +452,7 @@ export default class Toolbar extends React.Component {
                           this.handlePrimitiveSelect(type.value);
                         }}
                       >
-                        <span className="primitiveIcon">{type.icon}</span>
+                        <span className="primitiveIcon"><AwesomeIcon icon={type.icon} /></span>
                         <span className="primitiveLabel">{type.label}</span>
                         <span className="primitiveTag">{type.value}</span>
                       </a>
@@ -446,6 +492,9 @@ export default class Toolbar extends React.Component {
           <MixinsManager />
           <a className="button" title="Help" onClick={this.openHelpModal}>
             <AwesomeIcon icon={faQuestion} />
+          </a>
+          <a className="button" title="Settings" onClick={this.openTexturesModal}>
+            <AwesomeIcon icon={faGear} />
           </a>
         </div>
       </div>

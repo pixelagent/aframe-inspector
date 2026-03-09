@@ -22,6 +22,8 @@ export default class Main extends React.Component {
       isModalSponsorOpen: false,
       isModalTexturesOpen: false,
       sceneEl: AFRAME.scenes[0],
+      scenes: this.getAllScenes(),
+      activeSceneIndex: 0,
       visible: {
         scenegraph: true,
         attributes: true
@@ -63,6 +65,33 @@ export default class Main extends React.Component {
     });
   }
 
+  // Get all scenes from the document
+  getAllScenes() {
+    const scenes = document.querySelectorAll('a-scene');
+    return Array.from(scenes);
+  }
+
+  // Update scenes list and switch to new scene
+  refreshScenes = () => {
+    const scenes = this.getAllScenes();
+    this.setState({
+      scenes: scenes,
+      sceneEl: scenes[this.state.activeSceneIndex] || scenes[0],
+      activeSceneIndex: this.state.activeSceneIndex < scenes.length ? this.state.activeSceneIndex : 0
+    });
+  };
+
+  // Switch to a different scene tab
+  switchToScene = (index) => {
+    const scenes = this.getAllScenes();
+    if (index >= 0 && index < scenes.length) {
+      this.setState({
+        activeSceneIndex: index,
+        sceneEl: scenes[index]
+      });
+    }
+  };
+
   componentDidMount() {
     Events.on(
       'opentexturesmodal',
@@ -86,6 +115,9 @@ export default class Main extends React.Component {
     Events.on('openhelpmodal', () => {
       this.setState({ isHelpOpen: true });
     });
+
+    // Listen for new scene creation to refresh scenes list
+    Events.on('scenecreate', this.refreshScenes);
   }
 
   onCloseHelpModal = (value) => {

@@ -30,7 +30,8 @@ export const componentHelp = {
       displacementScale: 'How much vertices are displaced',
       envMap: 'Reflection from environment texture',
       fog: 'Whether material is affected by fog'
-    }
+    },
+    overview: 'The material component defines how an object looks - its color, texture, transparency, and how it responds to light. Use shaders like "flat" for simple colors or "standard" for realistic lighting with metalness and roughness.'
   },
 
   // Geometry component help text
@@ -55,7 +56,8 @@ export const componentHelp = {
       openEnded: 'Whether the cylinder has top/bottom caps',
       buffer: 'Whether to use buffered geometry (recommended)',
       skipCache: 'Skip geometry caching for dynamic shapes'
-    }
+    },
+    overview: 'The geometry component defines the shape of an object. Common primitives include box, sphere, cylinder, plane, and torus. Use the "primitive" property to quickly switch between basic shapes.'
   },
 
   // Common transform component help text
@@ -127,12 +129,13 @@ export const componentHelp = {
       lookAt: 'Target position for camera to look at',
       aspect: 'Aspect ratio (usually auto-calculated)',
       zoom: 'Camera zoom level'
-    }
+    },
+    overview: 'The camera component defines the viewpoint for the scene. Use multiple cameras to create different views or cut scenes. The active property determines which camera is currently displayed. Field of view (fov) controls how wide or zoomed in the view appears.'
   },
 
   // Cursor
   cursor: {
-    beginner: ['raycaster', ' fuse', 'timeout'],
+    beginner: ['raycaster', 'fuse', 'timeout'],
     descriptions: {
       raycaster: 'Objects the cursor can interact with',
       fuse: 'Click automatically after hovering (for gaze interaction)',
@@ -143,7 +146,8 @@ export const componentHelp = {
       material: 'Material of the cursor visual',
       far: 'Maximum distance for raycasting',
       interval: 'Time between raycast checks (ms)'
-    }
+    },
+    overview: 'The cursor component enables interaction with objects in the scene. It casts a ray from the camera to detect objects. Use fuse for gaze-based interaction (hover to click) or set rayOrigin to mouse for click-based interaction. The cursor visual can be customized with geometry and material properties.'
   },
 
   // Layer
@@ -184,7 +188,8 @@ export const componentHelp = {
       peekTime: 'Time to hover before preview (ms)',
       on: 'Event to trigger navigation',
       target: 'Where to open link (_self = same tab, _blank = new tab)'
-    }
+    },
+    overview: 'The link component creates clickable links to other VR experiences. When clicked, it navigates to the href URL. The thumbnail property shows a preview image, and peekTime controls how long to hover before showing the preview. Links are essential for creating connected VR experiences.'
   },
 
   // Light
@@ -216,7 +221,8 @@ export const componentHelp = {
       loader: 'Which model loader to use',
       nanInstantiator: 'Handle invalid geometry',
       format: 'Model format version (auto-detected)'
-    }
+    },
+    overview: 'The gltf-model component loads and displays 3D models in GLTF/GLB format. GLB is the binary version which includes textures. Use this for complex 3D objects like characters, buildings, or detailed meshes.'
   },
 
   // Particle System
@@ -340,7 +346,33 @@ export const componentHelp = {
       startEvents: 'Event to trigger animation',
       pauseEvents: 'Event to pause animation',
       resumeEvents: 'Event to resume animation'
-    }
+    },
+    overview: 'The animation component adds movement and transitions to entities. Animate properties like position (movement), rotation (spinning), scale (growing/shrinking), or material properties (color changes). Use easing functions to create natural-looking motion with acceleration and deceleration.'
+  },
+
+  // Draw (drawing component)
+  draw: {
+    beginner: ['color', 'size'],
+    descriptions: {
+      color: 'Color of the drawing stroke',
+      size: 'Size/thickness of the stroke',
+      enabled: 'Enable or disable drawing',
+      on: 'Event to trigger drawing',
+      points: 'Array of points for the drawing path'
+    },
+    overview: 'The draw component allows users to create freehand drawings in VR. Users can draw lines and shapes in 3D space by pointing and clicking. Customize the stroke color and size for different drawing effects.'
+  },
+
+  // Smiley (emoji/face component)
+  smiley: {
+    beginner: ['type', 'color'],
+    descriptions: {
+      type: 'Type of face (happy, sad, angry, etc.)',
+      color: 'Color of the face',
+      size: 'Size of the smiley face',
+      expression: 'Expression to display'
+    },
+    overview: 'The smiley component displays emoji faces in the scene. Use it to add emotional feedback, decorations, or interactive elements. Choose from various expressions to convey different emotions.'
   },
 
   // Script
@@ -561,15 +593,309 @@ export const componentHelp = {
       fogDensity: 'Fog thickness',
       lighting: 'Lighting type',
       shadow: 'Enable shadows'
-    }
+    },
+    overview: 'The environment component quickly creates immersive 3D environments with sky, ground, fog, and lighting. Choose from presets like forest, city, studio, or sunset for instant atmosphere. Customize individual elements like sky color, ground type, and fog density for unique environments.'
   },
 
   // Voice
   voice: {
     beginner: [],
     descriptions: {}
+  },
+
+  // models (for model-loader or multiple models)
+  models: {
+    beginner: ['src'],
+    descriptions: {
+      src: 'Array of URLs to 3D model files (.glb, .gltf, .obj)',
+      loaded: 'Shows which models have finished loading',
+      progress: 'Loading progress (0-1) for each model',
+      enableCache: 'Cache loaded models in memory',
+      skipCache: 'Ignore cached models and reload'
+    },
+    overview: 'The models component loads multiple 3D models at once. Useful for loading scenes or collections of objects. Each model can be a GLB, GLTF, or OBJ file. The src property accepts an array of URLs.'
+  },
+
+  // Debug
+  debug: {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Enable or disable debug mode',
+      showBoundingBoxes: 'Show bounding boxes around objects',
+      showWireframes: 'Show wireframes on meshes',
+      showNormals: 'Show surface normals',
+      logging: 'Enable console logging'
+    },
+    overview: 'The debug component helps diagnose issues by showing visual helpers like bounding boxes, wireframes, and surface normals. Use it when something is not rendering correctly or to understand object positions.'
+  },
+
+  // Device Orientation Permission
+  'device-orientation-permission': {
+    beginner: [],
+    descriptions: {
+      enabled: 'Enable device orientation tracking',
+      onPermission: 'Event when permission is granted'
+    },
+    overview: 'The device-orientation component enables tracking of mobile device orientation for VR experiences. It requires user permission on iOS devices. Use for magic window style experiences on mobile.'
+  },
+
+  // Keyboard Shortcuts
+  'keyboard-shortcuts': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Enable keyboard shortcuts',
+      preset: 'Keyboard layout preset',
+      customShortcuts: 'Custom key bindings'
+    },
+    overview: 'The keyboard-shortcuts component defines keyboard controls for the inspector and scene navigation. It provides quick access to common actions through key combinations.'
+  },
+
+  // Screenshot
+  screenshot: {
+    beginner: ['format'],
+    descriptions: {
+      format: 'Image format (png, jpeg)',
+      quality: 'Image quality (0-1)',
+      width: 'Screenshot width',
+      height: 'Screenshot height'
+    },
+    overview: 'The screenshot component captures images of the current scene view. Use it to take snapshots for documentation, sharing, or debugging visual issues.'
+  },
+
+  // XR Mode UI
+  'xr-mode-ui': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Show VR/AR enter button',
+      referenceSpaceType: 'VR reference space (local, viewer, floor)'
+    },
+    overview: 'The xr-mode-ui component controls the VR/AR enter button displayed in the bottom right. It allows users to enter immersive VR or AR experiences from the browser.'
+  },
+
+  // Grabbable
+  grabbable: {
+    beginner: ['grabbable'],
+    descriptions: {
+      grabbable: 'Enable grabbing of this object',
+      hoverable: 'Enable hover highlighting',
+      draggable: 'Enable dragging',
+      droppable: 'Enable dropping onto other objects'
+    },
+    overview: 'The grabbable component makes objects interactive with VR controllers. Users can pick up, move, and release objects. Combine with other components for physics-based grabbing.'
+  },
+
+  // Hand Controls
+  'hand-controls': {
+    beginner: ['hand', 'handModelStyle'],
+    descriptions: {
+      hand: 'Which hand (left, right, or both)',
+      handModelStyle: 'Visual style (lowPoly, highPoly, etc.)',
+      color: 'Hand color override',
+      visible: 'Show or hide hand model',
+      hideOnEnterVR: 'Hide controller when entering VR'
+    },
+    overview: 'The hand-controls component displays virtual hands in VR. It supports hand tracking on compatible devices and controller-based hand visualization. Use for grabbable interactions and hand tracking experiences.'
+  },
+
+  // Raycaster
+  raycaster: {
+    beginner: ['objects', 'far'],
+    descriptions: {
+      objects: 'Selector for objects to detect',
+      far: 'Maximum detection distance',
+      near: 'Minimum detection distance',
+      interval: 'Time between raycast updates (ms)',
+      showLine: 'Show raycaster line',
+      lineColor: 'Color of raycaster line',
+      lineOpacity: 'Opacity of raycaster line',
+      direction: 'Direction of the ray',
+      origin: 'Starting point of the ray'
+    },
+    overview: 'The raycaster component casts rays from entities to detect intersections with other objects. Essential for interaction systems, it detects what objects are in front of controllers, cameras, or cursors.'
+  },
+
+  // Teleport Controls
+  'teleport-controls': {
+    beginner: ['cameraRig', 'teleportOrigin'],
+    descriptions: {
+      cameraRig: 'ID of the camera rig to move',
+      teleportOrigin: 'Where to teleport from (head, hands)',
+      button: 'Controller button to trigger teleport',
+      curveShooting: 'Use parabolic curve for targeting',
+      curveTarget: 'Length of teleport arc',
+      collisionEntities: 'Objects that can be teleported onto',
+      landingNormal: 'Normal for valid landing surfaces',
+      landingMaxAngle: 'Maximum angle for landing surface'
+    },
+    overview: 'The teleport-controls component enables VR locomotion through teleportation. Point at a surface and release to instantly move there. The most comfortable way to navigate large VR environments.'
+  },
+
+  // UI
+  ui: {
+    beginner: ['visible'],
+    descriptions: {
+      visible: 'Show or hide UI elements',
+      position: 'UI panel position',
+      scale: 'UI panel scale',
+      background: 'UI background color'
+    },
+    overview: 'The ui component controls user interface elements in VR. Use it to create interactive menus, buttons, and information panels within the 3D scene.'
+  },
+
+  // Video Controls
+  'video-controls': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Enable video playback controls',
+      playPause: 'Show play/pause button',
+      seekBar: 'Show seek bar',
+      volume: 'Show volume control',
+      fullscreen: 'Show fullscreen button'
+    },
+    overview: 'The video-controls component adds standard video playback controls to video elements. Users can play, pause, seek, and adjust volume without writing custom interaction code.'
+  },
+
+  // OCLUS Touch Controls
+  'oculus-touch-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      armModel: 'Enable arm model for position',
+      controllerModel: 'Custom controller model'
+    },
+    overview: 'The oculus-touch-controls component provides support for Oculus Touch controllers. It enables hand presence and button/trigger tracking for VR interactions on Oculus devices.'
+  },
+
+  // Vive Controls
+  'vive-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed',
+      trigger: 'Enable trigger button',
+      grip: 'Enable grip button',
+      pad: 'Enable trackpad'
+    },
+    overview: 'The vive-controls component provides support for HTC Vive controllers. It tracks controller position, rotation, and button inputs for VR interactions.'
+  },
+
+  // Windows Motion Controls
+  'windows-motion-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      hideOnEnterVR: 'Hide when entering immersive VR',
+      scene: 'Reference to scene for controller'
+    },
+    overview: 'The windows-motion-controls component provides support for Windows Mixed Reality controllers. It tracks position, rotation, and various button inputs for VR interactions on Windows MR headsets.'
+  },
+
+  // Gear VR Controls
+  'gearvr-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad'
+    },
+    overview: 'The gearvr-controls component provides support for Samsung Gear VR controllers. It enables touchpad interaction and controller tracking for Gear VR experiences.'
+  },
+
+  // Daydream Controls
+  'daydream-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad'
+    },
+    overview: 'The daydream-controls component provides support for Google Daydream controllers. It enables touchpad interaction and controller tracking for Daydream VR experiences.'
+  },
+
+  // Laser Controls
+  'laser-controls': {
+    beginner: ['hand', 'raycaster'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      raycaster: 'Configuration for the laser beam',
+      model: 'Show controller model',
+      rayOrigin: 'Where laser ray starts',
+      far: 'Maximum distance of laser',
+      interval: 'Time between raycast updates',
+      lineColor: 'Color of laser beam',
+      lineOpacity: 'Transparency of laser beam',
+      line: 'Enable laser line'
+    },
+    overview: 'The laser-controls component provides a long-range ray for pointing and interacting with distant objects. Works across all controller types and is the recommended way to build VR interaction systems.'
+  },
+
+  // Super Hands
+  'super-hands': {
+    beginner: ['colliderEvent'],
+    descriptions: {
+      colliderEvent: 'Event that triggers collision detection',
+      colliderEventProperty: 'Property to check for collisions',
+      colliderEndEvent: 'Event when collision ends',
+      hand: 'Hand entity to attach',
+      grabStartButtons: 'Buttons to initiate grab',
+      grabEndButtons: 'Buttons to release grab',
+      stretchStartButtons: 'Buttons to start stretching',
+      stretchEndButtons: 'Buttons to end stretching',
+      rotateStartButtons: 'Buttons to start rotating',
+      rotateEndButtons: 'Buttons to end rotating'
+    },
+    overview: 'The super-hands component provides advanced hand interactions including grabbing, stretching, and rotating objects. It extends basic grabbable with more complex interaction patterns.'
+  },
+
+  // Box Collider
+  'box-collider': {
+    beginner: ['objects'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      size: 'Size of collision box',
+      debug: 'Show collision boxes',
+      interval: 'Collision check interval'
+    },
+    overview: 'The box-collider component detects collisions using rectangular box boundaries. Use when you need precise rectangular collision detection.'
   }
 };
+
+/**
+ * Get an overview/help text for a component
+ */
+export function getComponentOverview(componentName) {
+  const baseName = componentName.split('__')[0];
+  return componentHelp[baseName]?.overview;
+}
+
+/**
+ * Get full help content for a component (for the help modal)
+ */
+export function getComponentFullHelp(componentName) {
+  const baseName = componentName.split('__')[0];
+  const help = componentHelp[baseName];
+  if (!help) return null;
+  
+  return {
+    title: baseName,
+    overview: help.overview || `The ${baseName} component adds functionality to entities in your scene.`,
+    beginnerProperties: help.beginner || [],
+    descriptions: help.descriptions || {}
+  };
+}
+
+/**
+ * Check if a component should show beginner mode
+ */
 
 /**
  * Check if a component should show beginner mode
