@@ -66,6 +66,7 @@ export default class Entity extends React.Component {
     const entity = this.props.entity;
     const tagName = entity.tagName.toLowerCase();
     const isScene = tagName === 'a-scene';
+    const isSelected = this.props.isSelected;
 
     // Clone and remove buttons if not a-scene.
     const cloneButton = isScene ? null : (
@@ -75,6 +76,7 @@ export default class Entity extends React.Component {
         className="button"
       >
         <AwesomeIcon icon={faClone} />
+        <span className="action-label">Clone</span>
       </a>
     );
 
@@ -88,6 +90,7 @@ export default class Entity extends React.Component {
         className="button"
       >
         <AwesomeIcon icon={faTrashAlt} />
+        <span className="action-label">Delete</span>
       </a>
     );
 
@@ -99,6 +102,7 @@ export default class Entity extends React.Component {
         className="button entityMoveUp"
       >
         <AwesomeIcon icon={faArrowUp} />
+        <span className="action-label">Up</span>
       </a>
     );
 
@@ -109,6 +113,7 @@ export default class Entity extends React.Component {
         className="button entityMoveDown"
       >
         <AwesomeIcon icon={faArrowDown} />
+        <span className="action-label">Down</span>
       </a>
     );
 
@@ -120,6 +125,7 @@ export default class Entity extends React.Component {
         className="button entityReparent"
       >
         <AwesomeIcon icon={faCodeBranch} />
+        <span className="action-label">Parent</span>
       </a>
     );
 
@@ -157,7 +163,7 @@ export default class Entity extends React.Component {
 
     // Class name.
     const className = clsx({
-      active: this.props.isSelected,
+      active: isSelected,
       entity: true,
       novisible: !visible,
       option: true
@@ -177,13 +183,16 @@ export default class Entity extends React.Component {
             onDoubleClick={this.onDoubleClick}
           />
         </span>
-        <span className="entityActions">
-          {reparentButton}
-          {moveUpButton}
-          {moveDownButton}
-          {cloneButton}
-          {removeButton}
-        </span>
+        {/* Floating action menu that appears below selected entity */}
+        {isSelected && (
+          <span className="entityActionsFloating">
+            {reparentButton}
+            {moveUpButton}
+            {moveDownButton}
+            {cloneButton}
+            {removeButton}
+          </span>
+        )}
       </div>
     );
   }

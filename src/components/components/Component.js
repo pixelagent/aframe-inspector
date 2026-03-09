@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faClipboard, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faTrashAlt, faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import PropertyRow from './PropertyRow';
 import Collapsible from '../Collapsible';
 import copy from 'clipboard-copy';
 import { getComponentClipboardRepresentation } from '../../lib/entity';
 import { shouldShowProperty } from '../../lib/utils';
+import { isBeginnerComponent, isBeginnerProperty } from '../../lib/componentHelp';
 import Events from '../../lib/Events';
 
 const isSingleProperty = AFRAME.schema.isSingleProperty;
@@ -26,7 +27,8 @@ export default class Component extends React.Component {
     super(props);
     this.state = {
       entity: this.props.entity,
-      name: this.props.name
+      name: this.props.name,
+      showAdvanced: false
     };
   }
 
@@ -76,15 +78,17 @@ export default class Component extends React.Component {
    */
   renderPropertyRows = () => {
     const componentData = this.props.component;
+    const componentName = this.props.name;
+    const baseName = componentName.split('__')[0];
+    const isBeginnerMode = isBeginnerComponent(baseName);
+    const { showAdvanced } = this.state;
 
     if (isSingleProperty(componentData.schema)) {
-      const componentName = this.props.name;
-      const schema = AFRAME.components[componentName.split('__')[0]].schema;
       return (
         <PropertyRow
           key={componentName}
           name={componentName}
-          schema={schema}
+          schema={AFRAME.components[baseName].schema}
           data={componentData.data}
           componentname={componentName}
           isSingle={true}
@@ -93,20 +97,56 @@ export default class Component extends React.Component {
       );
     }
 
-    return Object.keys(componentData.schema)
+    const propertyNames = Object.keys(componentData.schema)
       .sort()
-      .filter((propertyName) => shouldShowProperty(propertyName, componentData))
-      .map((propertyName) => (
-        <PropertyRow
-          key={propertyName}
-          name={propertyName}
-          schema={componentData.schema[propertyName]}
-          data={componentData.data[propertyName]}
-          componentname={this.props.name}
-          isSingle={false}
-          entity={this.props.entity}
-        />
-      ));
+      .filter((propertyName) => shouldShowProperty(propertyName, componentData));
+
+    // Separate beginner and advanced properties
+    const beginnerProps = [];
+    const advancedProps = [];
+
+    propertyNames.forEach(propertyName => {
+      if (isBeginnerMode && !showAdvanced) {
+        if (isBeginnerProperty(componentName, propertyName)) {
+          beginnerProps.push(propertyName);
+        } else {
+          advancedProps.push(propertyName);
+        }
+      } else {
+        // Show all properties
+        beginnerProps.push(propertyName);
+      }
+    });
+
+    const renderRow = (propertyName) => (
+      <PropertyRow
+        key={propertyName}
+        name={propertyName}
+        schema={componentData.schema[propertyName]}
+        data={componentData.data[propertyName]}
+        componentname={this.props.name}
+        isSingle={false}
+        entity={this.props.entity}
+      />
+    );
+
+    return (
+      <>
+        {beginnerProps.map(renderRow)}
+        {isBeginnerMode && advancedProps.length > 0 && (
+          <div className="showMoreContainer">
+            <button
+              className="showMoreButton"
+              onClick={() => this.setState({ showAdvanced: !showAdvanced })}
+            >
+              <AwesomeIcon icon={showAdvanced ? faAngleRight : faAngleDown} />
+              {showAdvanced ? 'Show Less' : `Show More (${advancedProps.length} advanced)`}
+            </button>
+          </div>
+        )}
+        {showAdvanced && advancedProps.map(renderRow)}
+      </>
+    );
   };
 
   render() {

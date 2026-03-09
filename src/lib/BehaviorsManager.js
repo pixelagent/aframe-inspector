@@ -123,9 +123,13 @@ const BEHAVIOR_HELP = {
 // On restore: el.setAttribute('material', 'src', originalSrc);`
   },
   'popup-message': {
-    description: 'Shows a browser alert dialog with your message.',
-    examples: ['Show welcome message: Message = Welcome to our site!'],
-    generatedCode: `alert('Hello World!');`
+    description: 'Shows a browser dialog with your message. Use alert for notifications, prompt for user input, or confirm for yes/no questions.',
+    examples: [
+      'Alert: Type = alert, Message = Welcome to our site!',
+      'Prompt: Type = prompt, Message = What is your name?, Default Value = John',
+      'Confirm: Type = confirm, Message = Are you sure?'
+    ],
+    generatedCode: `// Alert\nalert('Hello World!');\n\n// Prompt\nvar name = prompt('What is your name?', 'John');\n\n// Confirm\nvar confirmed = confirm('Are you sure?');`
   },
   'set-status-bar': {
     description: 'Sets the browser status bar text.',
@@ -133,12 +137,14 @@ const BEHAVIOR_HELP = {
     generatedCode: `window.status = 'Loading...';`
   },
   'set-text': {
-    description: 'Changes the text content of an element.',
+    description: 'Changes the text content of an element. Use {{variableName}} to insert variables.',
     examples: [
-      'Change 3D text: Selector = #myText, Text = New Value',
-      'Update score: Selector = #scoreDisplay, Text = Score: 100'
+      'Static text: Selector = #myText, Text = Hello World',
+      'With variable: Text = Score: {{score}} (displays value of window.score)',
+      'Multiple: Text = Player: {{playerName}} Score: {{score}}',
+      'With Get Random: Use Get Random to set damage, then Set Text to show "Damage: {{damage}}"'
     ],
-    generatedCode: `document.querySelector('#selector').setAttribute('text', 'value', 'New Text');`
+    generatedCode: `// Set text with variable interpolation\nvar text = 'Score: ' + (window.score || 0);\ndocument.querySelector('#scoreDisplay').setAttribute('text', 'value', text);`
   },
   'start-animation': {
     description: 'Starts/triggers an animation on the element.',
@@ -234,6 +240,103 @@ confirm('Are you sure?');`
       'Chain after delay: Custom Event = custom-rotate, Delay = 500'
     ],
     generatedCode: `el.emit('custom-pulse'); // Other behaviors can listen for this event`
+  },
+  'change-variable': {
+    description: 'Changes a numeric variable by adding or subtracting a value. Useful for score, health, or currency systems.',
+    examples: [
+      'Increase score: Variable = score, Change = 10, Operation = add',
+      'Decrease health: Variable = health, Change = 5, Operation = subtract',
+      'Reset counter: Variable = counter, Change = 0, Operation = set'
+    ],
+    generatedCode: `// Example: Increase score by 10\nwindow.score = (window.score || 0) + 10;\nconsole.log('Score:', window.score);`
+  },
+  'condition': {
+    description: 'Checks a condition (e.g., score > 10) and triggers different events based on whether it is true or false. Use with other behaviors to create game logic.',
+    examples: [
+      'Score check: Variable = score, Operator = >, Value = 10, On True Event = win-game',
+      'Health check: Variable = health, Operator = <=, Value = 0, On True Event = game-over, On False Event = continue'
+    ],
+    generatedCode: `// If score > 10, trigger win-game event\nvar val = window.score || 0;\nif (val > 10) { el.emit('win-game'); }`
+  },
+  'get-random': {
+    description: 'Generates a random number between min and max and stores it in a variable. Use for damage rolls, random rewards, etc.',
+    examples: [
+      'Dice roll: Minimum = 1, Maximum = 6, Store As = diceRoll',
+      'Damage: Minimum = 5, Maximum = 10, Store As = damage'
+    ],
+    generatedCode: `// Generate random number between 1 and 10\nwindow.randomNumber = Math.floor(Math.random() * 10) + 1;\nconsole.log('Random:', window.randomNumber);`
+  },
+  'random-event': {
+    description: 'Triggers an event based on a percentage chance. Useful for random loot, critical hits, or spawns.',
+    examples: [
+      '10% chance: Chance = 10, On Success Event = spawn-enemy',
+      '50% chance: Chance = 50, On Success Event = double-points'
+    ],
+    generatedCode: `// 10% chance to trigger event\nif (Math.random() * 100 < 10) {\n  el.emit('random-event');\n}`
+  },
+  'game-save': {
+    description: 'Saves game data to browser localStorage for persistent storage.',
+    examples: [
+      'Save score: Key = gameScore, Value = score',
+      'Save position: Key = playerPos, Value = #player'
+    ],
+    generatedCode: `// Save to localStorage\nlocalStorage.setItem('gameScore', window.score);`
+  },
+  'game-load': {
+    description: 'Loads game data from browser localStorage.',
+    examples: [
+      'Load score: Key = gameScore, Variable = score',
+      'Load position: Key = playerPos, Target = #player'
+    ],
+    generatedCode: `// Load from localStorage\nvar data = JSON.parse(localStorage.getItem('gameData'));\nwindow.score = data ? data.score : 0;`
+  },
+  'distance-check': {
+    description: 'Triggers an event when one entity is within a certain distance of another. Useful for proximity triggers.',
+    examples: [
+      'Player in range: Target1 = #player, Target2 = #treasure, Distance = 3, In Range Event = show-prompt',
+      'Enemy detection: Target1 = #player, Target2 = #enemy, Distance = 5, In Range Event = alert-enemy'
+    ],
+    generatedCode: `// Check if player is within 5 units of treasure\nvar pos1 = player.object3D.getWorldPosition(new THREE.Vector3());\nvar pos2 = treasure.object3D.getWorldPosition(new THREE.Vector3());\nif (pos1.distanceTo(pos2) < 5) { el.emit('in-range'); }`
+  },
+  'random-pick': {
+    description: 'Picks a random item from a list and stores it in a variable. Useful for random loot or choices.',
+    examples: [
+      'Random loot: Items = Sword, Shield, Potion, Gold, Store As = loot',
+      'Random enemy: Items = goblin, skeleton, orc, Store As = spawnedEnemy'
+    ],
+    generatedCode: `// Pick random item from list\nvar items = ['Sword', 'Shield', 'Potion', 'Gold'];\nwindow.loot = items[Math.floor(Math.random() * items.length)];\nconsole.log('Picked:', window.loot);`
+  },
+  'get-distance': {
+    description: 'Calculates the distance between two entities and stores it in a variable.',
+    examples: [
+      'Player to enemy: Target1 = #player, Target2 = #enemy, Store As = distToEnemy',
+      'Object to target: Target1 = this element, Target2 = #goal, Store As = distanceLeft'
+    ],
+    generatedCode: `// Get distance between player and goal\nvar pos1 = player.object3D.getWorldPosition(new THREE.Vector3());\nvar pos2 = goal.object3D.getWorldPosition(new THREE.Vector3());\nwindow.distanceLeft = pos1.distanceTo(pos2);`
+  },
+  'look-at': {
+    description: 'Makes the entity face/look at another entity. Useful for turrets, NPCs, or cameras.',
+    examples: [
+      'Turret aiming: Target = #player, Smooth = unchecked',
+      'Smooth follow: Target = #player, Smooth = checked, Duration = 500'
+    ],
+    generatedCode: `// Make turret face player\nel.object3D.lookAt(target.object3D.position);`
+  },
+  'lerp-position': {
+    description: 'Smoothly interpolates the entity position toward a target. Creates smooth movement effects.',
+    examples: [
+      'Follow player: Target = #player, Speed = 0.1',
+      'Move to point: Target = #checkpoint, Speed = 0.05, On Complete Event = arrived'
+    ],
+    generatedCode: `// Smoothly move toward target\nel.object3D.position.lerp(target.object3D.position, 0.1);`
+  },
+  'format-time': {
+    description: 'Converts a number of seconds into MM:SS format string. Useful for timers.',
+    examples: [
+      'Format timer: Seconds Variable = timer, Output Variable = formattedTime',
+      'Format elapsed: Seconds Variable = elapsed, Output Variable = displayTime'
+    ],
+    generatedCode: `// Convert 95 seconds to 1:35\nvar s = window.timer || 0;\nvar m = Math.floor(s / 60);\nvar sec = Math.floor(s % 60);\nwindow.formattedTime = m + ':' + (sec < 10 ? '0' : '') + sec;`
   }
 };
 
@@ -572,7 +675,7 @@ class BehaviorsManager {
         const newSrc = params.newSrc || '';
         const restoreSrc = params.restoreSrc || '';
         const restoreEvent = params.restoreEvent || 'mouseleave';
-        
+
         if (restoreSrc) {
           // Dreamweaver-style swap with restore (rollover)
           return `var el = ${target}; var originalSrc = el.getAttribute('material') ? el.getAttribute('material').src : ''; el.addEventListener('${params.event}', function() { el.setAttribute('material', 'src', '${newSrc}'); }); el.addEventListener('${restoreEvent}', function() { el.setAttribute('material', 'src', originalSrc || '${restoreSrc}'); });`;
@@ -587,12 +690,26 @@ class BehaviorsManager {
       name: 'Popup Message',
       icon: 'fa-comment',
       category: 'Messages',
-      description: 'Show alert message',
+      description: 'Show alert, prompt, or confirm dialog',
       params: [
         { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
-        { name: 'message', type: 'textarea', label: 'Message', default: 'Hello World!' }
+        { name: 'type', type: 'select', label: 'Dialog Type', options: ['alert', 'prompt', 'confirm'], default: 'alert' },
+        { name: 'message', type: 'textarea', label: 'Message', default: 'Hello World!' },
+        { name: 'defaultValue', type: 'text', label: 'Default Value (for prompt)', default: '' }
       ],
-      generate: (params) => `alert('${params.message.replace(/'/g, "\\'")}');`
+      generate: (params) => {
+        const type = params.type || 'alert';
+        const message = (params.message || 'Hello World!').replace(/'/g, "\\'");
+        const defaultValue = params.defaultValue || '';
+
+        if (type === 'prompt') {
+          return `prompt('${message}', '${defaultValue}');`;
+        } else if (type === 'confirm') {
+          return `confirm('${message}');`;
+        } else {
+          return `alert('${message}');`;
+        }
+      }
     },
     'set-status-bar': {
       name: 'Set Status Bar',
@@ -609,13 +726,25 @@ class BehaviorsManager {
       name: 'Set Text',
       icon: 'fa-font',
       category: 'Messages',
-      description: 'Replace element text',
+      description: 'Replace element text (use {{variable}} for variables)',
       params: [
         { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
         { name: 'selector', type: 'text', label: 'Element Selector', default: '' },
         { name: 'text', type: 'textarea', label: 'New Text', default: '' }
       ],
-      generate: (params) => `var el = document.querySelector('${params.selector}'); if (el) { el.setAttribute('text', 'value', '${params.text}'); }`
+      generate: (params) => {
+        const selector = params.selector || '';
+        const text = params.text || '';
+
+        // Check if text contains variable interpolation {{variable}}
+        if (text.includes('{{')) {
+          // Generate code that interpolates variables at runtime
+          return `var text = '${text.replace(/'/g, "\\'")}'.replace(/\\{\\{(\\w+)\\}\\}/g, function(match, varName) { return window[varName] || ''; });\n` +
+            `var el = document.querySelector('${selector}'); if (el) { el.setAttribute('text', 'value', text); }`;
+        } else {
+          return `var el = document.querySelector('${selector}'); if (el) { el.setAttribute('text', 'value', '${text}'); }`;
+        }
+      }
     },
 
     // Animation Behaviors
@@ -943,6 +1072,351 @@ class BehaviorsManager {
       }
     },
 
+    // Game Behaviors
+    'get-random': {
+      name: 'Get Random Number',
+      icon: 'fa-dice',
+      category: 'Game',
+      description: 'Generate a random number and store in a variable',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'min', type: 'number', label: 'Minimum', default: 1 },
+        { name: 'max', type: 'number', label: 'Maximum', default: 10 },
+        { name: 'variableName', type: 'text', label: 'Store Result As', default: 'randomNumber' }
+      ],
+      generate: (params) => {
+        const min = params.min || 1;
+        const max = params.max || 10;
+        const varName = params.variableName || 'randomNumber';
+        return `window.${varName} = Math.floor(Math.random() * (${max} - ${min} + 1)) + ${min};\nconsole.log('${varName}:', window.${varName});`;
+      }
+    },
+    'condition': {
+      name: 'Check Condition',
+      icon: 'fa-question-circle',
+      category: 'Game',
+      description: 'Check a condition and trigger different events based on true/false',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'variable', type: 'text', label: 'Variable', default: 'score' },
+        { name: 'operator', type: 'select', label: 'Operator', options: ['==', '!=', '>', '<', '>=', '<='], default: '>' },
+        { name: 'value', type: 'text', label: 'Value', default: '10' },
+        { name: 'onTrue', type: 'text', label: 'On True Event', default: 'condition-met' },
+        { name: 'onFalse', type: 'text', label: 'On False Event', default: '' }
+      ],
+      generate: (params) => {
+        const variable = params.variable || 'score';
+        const operator = params.operator || '>';
+        const value = params.value || '10';
+        const onTrue = params.onTrue || 'condition-met';
+        const onFalse = params.onFalse || '';
+
+        let code = `var val = window.${variable} || 0;\n`;
+        code += `var compareVal = ${isNaN(value) ? `'${value}'` : value};\n`;
+        code += `var result = false;\n`;
+
+        switch (operator) {
+          case '==':
+            code += `result = val == compareVal;`;
+            break;
+          case '!=':
+            code += `result = val != compareVal;`;
+            break;
+          case '>':
+            code += `result = val > compareVal;`;
+            break;
+          case '<':
+            code += `result = val < compareVal;`;
+            break;
+          case '>=':
+            code += `result = val >= compareVal;`;
+            break;
+          case '<=':
+            code += `result = val <= compareVal;`;
+            break;
+        }
+
+        code += `\nif (result) { el.emit('${onTrue}'); }`;
+        if (onFalse) {
+          code += ` else { el.emit('${onFalse}'); }`;
+        }
+
+        return code;
+      }
+    },
+    'change-variable': {
+      name: 'Change Variable',
+      icon: 'fa-plus-minus',
+      category: 'Game',
+      description: 'Add, subtract, or set a numeric variable',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'variableName', type: 'text', label: 'Variable Name', default: 'score' },
+        { name: 'amount', type: 'number', label: 'Amount', default: 1 },
+        { name: 'operation', type: 'select', label: 'Operation', options: ['add', 'subtract', 'set', 'multiply', 'divide'], default: 'add' },
+        { name: 'minValue', type: 'number', label: 'Minimum Value (optional)', default: '' },
+        { name: 'maxValue', type: 'number', label: 'Maximum Value (optional)', default: '' }
+      ],
+      generate: (params) => {
+        const varName = params.variableName || 'score';
+        const amount = params.amount || 1;
+        const operation = params.operation || 'add';
+        const minVal = params.minValue !== '' ? params.minValue : null;
+        const maxVal = params.maxValue !== '' ? params.maxValue : null;
+
+        let code = `window.${varName} = window.${varName} || 0;\n`;
+
+        switch (operation) {
+          case 'add':
+            code += `window.${varName} += ${amount};`;
+            break;
+          case 'subtract':
+            code += `window.${varName} -= ${amount};`;
+            break;
+          case 'set':
+            code += `window.${varName} = ${amount};`;
+            break;
+          case 'multiply':
+            code += `window.${varName} *= ${amount};`;
+            break;
+          case 'divide':
+            code += `window.${varName} = window.${varName} / ${amount};`;
+            break;
+        }
+
+        if (minVal !== null && maxVal !== null) {
+          code += `\nwindow.${varName} = Math.min(Math.max(window.${varName}, ${minVal}), ${maxVal});`;
+        } else if (minVal !== null) {
+          code += `\nwindow.${varName} = Math.max(window.${varName}, ${minVal});`;
+        } else if (maxVal !== null) {
+          code += `\nwindow.${varName} = Math.min(window.${varName}, ${maxVal});`;
+        }
+
+        code += `\nconsole.log('${varName}:', window.${varName});`;
+        return code;
+      }
+    },
+    'random-event': {
+      name: 'Random Event',
+      icon: 'fa-dice',
+      category: 'Game',
+      description: 'Trigger an event based on percentage chance',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'chance', type: 'number', label: 'Chance (%)', default: 10 },
+        { name: 'successEvent', type: 'text', label: 'Success Event Name', default: 'random-success' },
+        { name: 'failEvent', type: 'text', label: 'Fail Event Name (optional)', default: '' }
+      ],
+      generate: (params) => {
+        const chance = params.chance || 10;
+        const successEvent = params.successEvent || 'random-success';
+        const failEvent = params.failEvent || '';
+
+        let code = `if (Math.random() * 100 < ${chance}) {\n`;
+        code += `  el.emit('${successEvent}');\n`;
+        code += `  console.log('Random event triggered! (${chance}% chance)');\n`;
+        code += `}`;
+
+        if (failEvent) {
+          code += ` else {\n  el.emit('${failEvent}');\n}`;
+        }
+
+        return code;
+      }
+    },
+    'game-save': {
+      name: 'Save Game',
+      icon: 'fa-save',
+      category: 'Game',
+      description: 'Save variable to browser localStorage',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'key', type: 'text', label: 'Storage Key', default: 'gameData' },
+        { name: 'variableName', type: 'text', label: 'Variable to Save', default: 'score' }
+      ],
+      generate: (params) => {
+        const key = params.key || 'gameData';
+        const varName = params.variableName || 'score';
+        return `localStorage.setItem('${key}', JSON.stringify({ ${varName}: window.${varName} }));\nconsole.log('Game saved!');`;
+      }
+    },
+    'game-load': {
+      name: 'Load Game',
+      icon: 'fa-folder-open',
+      category: 'Game',
+      description: 'Load variable from browser localStorage',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'key', type: 'text', label: 'Storage Key', default: 'gameData' },
+        { name: 'variableName', type: 'text', label: 'Variable to Load', default: 'score' },
+        { name: 'defaultValue', type: 'number', label: 'Default Value', default: 0 }
+      ],
+      generate: (params) => {
+        const key = params.key || 'gameData';
+        const varName = params.variableName || 'score';
+        const defaultValue = params.defaultValue || 0;
+        return `var data = JSON.parse(localStorage.getItem('${key}'));\nwindow.${varName} = data ? data.${varName} : ${defaultValue};\nconsole.log('${varName} loaded:', window.${varName});`;
+      }
+    },
+    'distance-check': {
+      name: 'Distance Check',
+      icon: 'fa-ruler',
+      category: 'Game',
+      description: 'Trigger event when target is within distance of another entity',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'target1', type: 'entity', label: 'First Element', default: '' },
+        { name: 'target2', type: 'entity', label: 'Second Element', default: '' },
+        { name: 'distance', type: 'number', label: 'Distance', default: 5 },
+        { name: 'inRangeEvent', type: 'text', label: 'In Range Event', default: 'in-range' },
+        { name: 'outRangeEvent', type: 'text', label: 'Out of Range Event', default: '' }
+      ],
+      generate: (params) => {
+        const t1 = params.target1 || 'this.el';
+        const t2 = params.target2 || '';
+        const dist = params.distance || 5;
+        const inEvent = params.inRangeEvent || 'in-range';
+        const outEvent = params.outRangeEvent || '';
+
+        let code = `var el1 = ${t1};\n`;
+        code += `var el2 = document.querySelector('${t2}');\n`;
+        code += `if (!el2) return;\n`;
+        code += `var pos1 = new THREE.Vector3();\n`;
+        code += `var pos2 = new THREE.Vector3();\n`;
+        code += `el1.object3D.getWorldPosition(pos1);\n`;
+        code += `el2.object3D.getWorldPosition(pos2);\n`;
+        code += `var d = pos1.distanceTo(pos2);\n`;
+        code += `if (d < ${dist}) { el1.emit('${inEvent}'); }`;
+
+        if (outEvent) {
+          code += ` else { el1.emit('${outEvent}'); }`;
+        }
+
+        return code;
+      }
+    },
+    'random-pick': {
+      name: 'Random Pick',
+      icon: 'fa-random',
+      category: 'Game',
+      description: 'Pick a random item from a list and trigger event',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'items', type: 'textarea', label: 'Items (comma separated)', default: 'item1, item2, item3' },
+        { name: 'variableName', type: 'text', label: 'Store Result As', default: 'pickedItem' }
+      ],
+      generate: (params) => {
+        const items = params.items || 'item1, item2, item3';
+        const varName = params.variableName || 'pickedItem';
+        const itemArray = items.split(',').map(s => `'${s.trim()}'`).join(', ');
+        return `var items = [${itemArray}];\nwindow.${varName} = items[Math.floor(Math.random() * items.length)];\nconsole.log('Picked:', window.${varName});`;
+      }
+    },
+    'get-distance': {
+      name: 'Get Distance',
+      icon: 'fa-ruler-horizontal',
+      category: 'Game',
+      description: 'Calculate distance between two entities and store in variable',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'target1', type: 'entity', label: 'First Element', default: '' },
+        { name: 'target2', type: 'entity', label: 'Second Element', default: '' },
+        { name: 'variableName', type: 'text', label: 'Store Distance As', default: 'distance' }
+      ],
+      generate: (params) => {
+        const t1 = params.target1 || 'this.el';
+        const t2 = params.target2 || '';
+        const varName = params.variableName || 'distance';
+
+        let code = `var el1 = ${t1};\n`;
+        code += `var el2 = document.querySelector('${t2}');\n`;
+        code += `if (!el2) return;\n`;
+        code += `var pos1 = new THREE.Vector3();\n`;
+        code += `var pos2 = new THREE.Vector3();\n`;
+        code += `el1.object3D.getWorldPosition(pos1);\n`;
+        code += `el2.object3D.getWorldPosition(pos2);\n`;
+        code += `window.${varName} = pos1.distanceTo(pos2);\n`;
+        code += `console.log('Distance:', window.${varName}.toFixed(2));`;
+
+        return code;
+      }
+    },
+    'look-at': {
+      name: 'Look At',
+      icon: 'fa-eye',
+      category: 'Game',
+      description: 'Make entity face another entity',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'target', type: 'entity', label: 'Target to Face', default: '' },
+        { name: 'smooth', type: 'checkbox', label: 'Smooth Animation', default: false },
+        { name: 'duration', type: 'number', label: 'Duration (ms)', default: 500 }
+      ],
+      generate: (params) => {
+        const target = params.target || '';
+        const smooth = params.smooth || false;
+        const duration = params.duration || 500;
+
+        if (smooth) {
+          return `var el = this.el;\nvar target = document.querySelector('${target}');\nif (!target) return;\nel.object3D.lookAt(target.object3D.position);`;
+        } else {
+          return `var el = this.el;\nvar target = document.querySelector('${target}');\nif (!target) return;\nvar targetPos = target.object3D.position;\nvar lookPos = new THREE.Vector3(targetPos.x, el.object3D.position.y, targetPos.z);\nel.object3D.lookAt(lookPos);`;
+        }
+      }
+    },
+    'lerp-position': {
+      name: 'Lerp Position',
+      icon: 'fa-arrows-alt-h',
+      category: 'Game',
+      description: 'Smoothly move entity toward target position',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'target', type: 'entity', label: 'Target Position', default: '' },
+        { name: 'speed', type: 'number', label: 'Speed (0-1)', default: 0.1 },
+        { name: 'onComplete', type: 'text', label: 'On Complete Event', default: '' }
+      ],
+      generate: (params) => {
+        const target = params.target || '';
+        const speed = params.speed || 0.1;
+        const completeEvent = params.onComplete || '';
+
+        let code = `var el = this.el;\n`;
+        code += `var target = document.querySelector('${target}');\n`;
+        code += `if (!target) return;\n`;
+        code += `var startPos = el.object3D.position.clone();\n`;
+        code += `var endPos = target.object3D.position.clone();\n`;
+        code += `var alpha = ${speed};\n`;
+        code += `el.object3D.position.lerp(endPos, alpha);\n`;
+
+        if (completeEvent) {
+          code += `if (startPos.distanceTo(endPos) < 0.1) { el.emit('${completeEvent}'); }`;
+        }
+
+        return code;
+      }
+    },
+    'format-time': {
+      name: 'Format Time',
+      icon: 'fa-clock',
+      category: 'Game',
+      description: 'Convert seconds to MM:SS format',
+      params: [
+        { name: 'event', type: 'select', label: 'Event', options: EVENT_TYPES, default: 'click' },
+        { name: 'secondsVariable', type: 'text', label: 'Seconds Variable', default: 'timer' },
+        { name: 'outputVariable', type: 'text', label: 'Output Variable', default: 'formattedTime' }
+      ],
+      generate: (params) => {
+        const secondsVar = params.secondsVariable || 'timer';
+        const outputVar = params.outputVariable || 'formattedTime';
+
+        return `var s = window.${secondsVar} || 0;\n` +
+          `var m = Math.floor(s / 60);\n` +
+          `var sec = Math.floor(s % 60);\n` +
+          `window.${outputVar} = m + ':' + (sec < 10 ? '0' : '') + sec;\n` +
+          `console.log('Time:', window.${outputVar});`;
+      }
+    },
+
     // Call JavaScript Function
     'call-javascript': {
       name: 'Call JavaScript',
@@ -961,11 +1435,11 @@ class BehaviorsManager {
         const funcName = params.functionName || '';
         const params_ = params.parameters || '{}';
         const useElement = params.useElement;
-        
+
         if (!funcName) {
           return `// No function name specified`;
         }
-        
+
         // Try to call the function with optional element and custom parameters
         return `var el = ${target}; var func = window['${funcName}']; if (typeof func === 'function') { func(el, ${params_}); } else { console.warn('Function ${funcName} not found'); }`;
       }

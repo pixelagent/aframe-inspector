@@ -36,13 +36,15 @@ import {
   faGhost,
   faWalking,
   faRunning,
-  faCouch
+  faCouch,
+  faUndo
 } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import ThemeSelector from './ThemeSelector';
 import MixinsManager from './MixinsManager';
 import Events from '../../lib/Events';
 import { saveBlob } from '../../lib/utils';
+import { undo, redo, canUndo, canRedo, getHistoryStatus } from '../../lib/history';
 import GLTFIcon from '../../../assets/gltf.svg';
 
 // Grouped primitive types for new entities
@@ -186,7 +188,9 @@ export default class Toolbar extends React.Component {
     this.state = {
       isPlaying: false,
       showPrimitiveMenu: false,
-      selectedPrimitive: 'a-box'
+      selectedPrimitive: 'a-box',
+      canUndo: false,
+      canRedo: false
     };
 
     // Primitive type with default components
@@ -275,12 +279,32 @@ export default class Toolbar extends React.Component {
     document.addEventListener('click', this.handleClickOutside);
     // Close primitive menu on Escape
     document.addEventListener('keydown', this.handleKeyDown);
+    // Listen for history changes
+    Events.on('historychange', this.handleHistoryChange);
+    // Initialize history status
+    this.setState(getHistoryStatus());
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
     document.removeEventListener('keydown', this.handleKeyDown);
+    Events.off('historychange', this.handleHistoryChange);
   }
+
+  handleHistoryChange = (status) => {
+    this.setState({
+      canUndo: status.canUndo,
+      canRedo: status.canRedo
+    });
+  };
+
+  handleUndo = () => {
+    undo();
+  };
+
+  handleRedo = () => {
+    redo();
+  };
 
   handleKeyDown = (e) => {
     // Escape: close primitive menu
@@ -335,6 +359,20 @@ export default class Toolbar extends React.Component {
     return (
       <div id="toolbar">
         <div className="toolbarActions">
+          <a
+            className={`button ${!this.state.canUndo ? 'disabled' : ''}`}
+            title="Undo (Ctrl+Z)"
+            onClick={this.handleUndo}
+          >
+            <AwesomeIcon icon={faUndo} />
+          </a>
+          <a
+            className={`button ${!this.state.canRedo ? 'disabled' : ''}`}
+            title="Redo (Ctrl+Y)"
+            onClick={this.handleRedo}
+          >
+            <AwesomeIcon icon={faRedo} />
+          </a>
           <div className="addEntityContainer">
             <a
               className="button"

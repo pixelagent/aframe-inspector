@@ -50,6 +50,7 @@ export function removeEntity(entity, force = false) {
       var closest = findClosestEntity(entity);
       entity.parentNode.removeChild(entity);
       AFRAME.INSPECTOR.selectEntity(closest);
+      Events.emit('entitydelete', { entity });
     }
   }
 }
@@ -681,7 +682,9 @@ export function reparentEntity(entity, newParent) {
 
   // Apply world rotation
   const newLocalRotation = new THREE.Quaternion();
-  newLocalRotation.copy(worldRotation).multiply(inverseParentMatrix.getQuaternion(new THREE.Quaternion()));
+  newLocalRotation.copy(worldRotation).multiply(
+    new THREE.Quaternion().setFromRotationMatrix(inverseParentMatrix)
+  );
   const euler = new THREE.Euler().setFromQuaternion(newLocalRotation);
   entity.setAttribute('rotation', {
     x: THREE.MathUtils.radToDeg(euler.x),

@@ -17888,7 +17888,7 @@ body.aframe-inspector-opened {
   flex-direction: column;
   overflow: auto;
   padding-top: 32px;
-  width: 230px;
+  width: 260px;
   min-width: 180px;
   max-width: 400px;
   resize: horizontal;

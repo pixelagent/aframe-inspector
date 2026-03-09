@@ -99,6 +99,42 @@
   &:hover::after
     background var(--color-primary)
 
+  // Custom resize handle
+  .resize-handle
+    position absolute
+    right -8px
+    top 50%
+    transform translateY(-50%)
+    width 16px
+    height 40px
+    background var(--color-base-100)
+    border-radius 8px
+    display flex
+    align-items center
+    justify-content center
+    cursor ew-resize
+    z-index 100
+    opacity 0
+    transition opacity 0.2s
+    border 1px solid var(--color-base-300)
+
+    svg
+      font-size 10px
+      color var(--color-base-content)
+      opacity 0.5
+
+    &:hover, &.active
+      opacity 1
+      background var(--color-primary)
+      border-color var(--color-primary)
+
+      svg
+        color var(--color-primary-content)
+        opacity 1
+
+  &:hover .resize-handle
+    opacity 0.7
+
   .entity
     align-items center
     background var(--color-base-200)
@@ -151,6 +187,51 @@
 
   .entityActions
     display none
+
+  // Floating action menu for selected entity
+  .entityActionsFloating
+    display flex
+    align-items center
+    gap 4px
+    padding 4px 8px
+    background var(--color-base-100)
+    border-radius 4px
+    margin-left 8px
+    flex-shrink 0
+    box-shadow 0 2px 8px rgba(0, 0, 0, 0.3)
+    z-index 100
+
+    .button
+      display flex
+      align-items center
+      gap 4px
+      color var(--color-base-content)
+      font-size 11px
+      padding 4px 6px
+      border-radius 3px
+      transition all 0.15s ease
+      white-space nowrap
+
+      .action-label
+        font-size 10px
+        font-weight 500
+
+      &:hover
+        background var(--color-primary)
+        color var(--color-primary-content)
+
+      svg
+        font-size 12px
+
+    .entityReparent
+      cursor grab
+
+    .entityMoveUp, .entityMoveDown
+      cursor pointer
+
+    .entityMoveUp:hover, .entityMoveDown:hover
+      background var(--color-primary)
+      color var(--color-primary-content)
 
     .button
       color var(--color-base-content)

@@ -5,6 +5,7 @@ import {
   cloneEntity
 } from './entity';
 import { getOS } from './utils';
+import { undo, redo } from './history';
 
 const os = getOS();
 
@@ -125,6 +126,18 @@ export const Shortcuts = {
       (event.ctrlKey && os !== 'macos') ||
       (event.metaKey && os === 'macos')
     ) {
+      // z: undo (Ctrl+Z / Cmd+Z)
+      if (event.keyCode === 90 && !event.shiftKey) {
+        event.preventDefault();
+        undo();
+      }
+
+      // y: redo (Ctrl+Y / Cmd+Y) or Ctrl+Shift+Z / Cmd+Shift+Z
+      if (event.keyCode === 89 || (event.keyCode === 90 && event.shiftKey)) {
+        event.preventDefault();
+        redo();
+      }
+
       if (
         AFRAME.INSPECTOR.selectedEntity &&
         document.activeElement.tagName !== 'INPUT'

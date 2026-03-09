@@ -14,6 +14,7 @@ import Vec3Widget from '../widgets/Vec3Widget';
 import Vec2Widget from '../widgets/Vec2Widget';
 import { updateEntity } from '../../lib/entity';
 import { equal } from '../../lib/utils';
+import { getPropertyDescription } from '../../lib/componentHelp';
 
 export default class PropertyRow extends React.Component {
   static propTypes = {
@@ -182,6 +183,10 @@ export default class PropertyRow extends React.Component {
     const title =
       props.name + '\n - type: ' + props.schema.type + '\n - value: ' + value;
 
+    // Get helpful description for beginner-friendly components
+    const description = getPropertyDescription(props.componentname, props.name);
+    const tooltipTitle = description ? `${props.name}: ${description}` : title;
+
     const className = clsx({
       propertyRow: true,
       propertyRowDefined: this.isPropertyDefined()
@@ -189,8 +194,9 @@ export default class PropertyRow extends React.Component {
 
     return (
       <div className={className}>
-        <label htmlFor={this.id} className="text" title={title}>
+        <label htmlFor={this.id} className="text" title={tooltipTitle}>
           {props.name}
+          {description && <span className="propertyHint">?</span>}
         </label>
         {this.getWidget()}
       </div>

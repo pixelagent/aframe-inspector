@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars, react/no-danger */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faSearch, faTimes, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes, faCodeBranch, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import debounce from 'lodash.debounce';
 
@@ -32,8 +32,14 @@ export default class SceneGraph extends React.Component {
       showReparentModal: false,
       reparentEntity: null,
       eligibleParents: [],
-      selectedParent: null
+      selectedParent: null,
+      scenegraphWidth: 230,
+      isResizing: false
     };
+
+    this.scenegraphRef = React.createRef();
+    this.startX = 0;
+    this.startWidth = 0;
 
     this.rebuildEntityOptions = debounce(
       this.rebuildEntityOptions.bind(this),
@@ -65,6 +71,10 @@ export default class SceneGraph extends React.Component {
     Events.on('entityreparent', this.handleReparentRequest);
     document.addEventListener('child-attached', this.onChildAttachedDetached);
     document.addEventListener('child-detached', this.onChildAttachedDetached);
+
+    // Add resize handle event listeners
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
   }
 
   componentWillUnmount() {
@@ -79,6 +89,10 @@ export default class SceneGraph extends React.Component {
       'child-detached',
       this.onChildAttachedDetached
     );
+
+    // Remove resize handle event listeners
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
   }
 
   /**
@@ -335,6 +349,36 @@ export default class SceneGraph extends React.Component {
     this.closeReparentModal();
   };
 
+  // Handle resize start
+  handleResizeStart = (e) => {
+    e.preventDefault();
+    this.setState({ isResizing: true });
+    this.startX = e.clientX;
+    if (this.scenegraphRef.current) {
+      this.startWidth = this.scenegraphRef.current.offsetWidth;
+    }
+    document.body.style.cursor = 'ew-resize';
+    document.body.style.userSelect = 'none';
+  };
+
+  // Handle mouse move during resize
+  handleMouseMove = (e) => {
+    if (!this.state.isResizing || !this.scenegraphRef.current) return;
+
+    const diff = e.clientX - this.startX;
+    const newWidth = Math.max(180, Math.min(600, this.startWidth + diff));
+    this.scenegraphRef.current.style.width = newWidth + 'px';
+  };
+
+  // Handle mouse up to finish resize
+  handleMouseUp = () => {
+    if (this.state.isResizing) {
+      this.setState({ isResizing: false });
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  };
+
   // Render reparent modal
   renderReparentModal() {
     if (!this.state.showReparentModal) return null;
@@ -429,7 +473,7 @@ export default class SceneGraph extends React.Component {
     ) : null;
 
     return (
-      <div id="scenegraph" className="scenegraph">
+      <div id="scenegraph" className="scenegraph" ref={this.scenegraphRef}>
         <div className="scenegraph-toolbar">
           <Toolbar />
           <div className="search">
@@ -451,6 +495,13 @@ export default class SceneGraph extends React.Component {
           onKeyUp={this.onKeyUp}
         >
           {this.renderEntities()}
+        </div>
+        {/* Resize handle */}
+        <div
+          className={`resize-handle ${this.state.isResizing ? 'active' : ''}`}
+          onMouseDown={this.handleResizeStart}
+        >
+          <AwesomeIcon icon={faGripVertical} />
         </div>
         {this.renderReparentModal()}
       </div>
