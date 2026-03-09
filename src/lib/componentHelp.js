@@ -210,7 +210,8 @@ export const componentHelp = {
       target: 'Object the light points at',
       groundColor: 'Hemisphere light ground color',
       skyColor: 'Hemisphere light sky color'
-    }
+    },
+    overview: 'The light component illuminates objects in the scene. Choose from ambient (overall fill), directional (sun-like parallel rays), point (omnidirectional from a point), spot (cone-shaped), or hemisphere (sky-ground gradient). Adjust intensity, color, and shadow settings for different lighting effects.'
   },
 
   // Model (gltf-model)
@@ -866,6 +867,332 @@ export const componentHelp = {
       interval: 'Collision check interval'
     },
     overview: 'The box-collider component detects collisions using rectangular box boundaries. Use when you need precise rectangular collision detection.'
+  },
+
+  // Tracked Controls
+  'tracked-controls': {
+    beginner: ['id', 'controller'],
+    descriptions: {
+      id: 'Controller ID to track',
+      controller: 'Controller type (vive, oculus, windowsMR)',
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller'
+    },
+    overview: 'The tracked-controls component provides generic VR controller tracking. It works with any WebXR-compatible controller and is the base for other controller-specific components.'
+  },
+
+  // Valve Index Controller
+  'valve-index-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      handLevel: 'Hand height offset',
+      elbow: 'Elbow model position',
+      predictVelocity: 'Predict controller velocity',
+      predictPosition: 'Predict controller position'
+    },
+    overview: 'The valve-index-controls component provides support for Valve Index controllers. It includes advanced features like elbow simulation and controller velocity prediction for more natural interactions.'
+  },
+
+  // Vive Wand
+  'vive-wand-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed',
+      showMenuButton: 'Show menu button',
+      haptic: 'Enable haptic feedback'
+    },
+    overview: 'The vive-wand-controls component provides support for HTC Vive wand controllers. It includes tracking for trackpad, trigger, grip buttons, and menu button inputs.'
+  },
+
+  // Scene
+  scene: {
+    beginner: ['background', 'fog'],
+    descriptions: {
+      background: 'Scene background color or sky',
+      fog: 'Fog type and density',
+      lighting: 'Default lighting setup',
+      vrModeUI: 'Show VR enter button',
+      enterVRButton: 'Custom VR button element',
+      ref: 'Scene reference for other components',
+      renderer: 'WebGL renderer settings',
+      stats: 'Show performance stats',
+      deviceOrientationPermissionUI: 'Show device orientation permission'
+    },
+    overview: 'The scene component is the root container for all A-Frame content. It sets up the rendering context, physics world, and manages all entities within the scene.'
+  },
+
+  // Pivot
+  pivot: {
+    beginner: ['enabled', 'pivot'],
+    descriptions: {
+      enabled: 'Enable pivot rotation',
+      pivot: 'Pivot point position (x, y, z)',
+      rotationAxis: 'Axis to rotate around (x, y, or z)',
+      rotationSpeed: 'Speed of automatic rotation'
+    },
+    overview: 'The pivot component rotates an entity around a specified pivot point rather than its center. Useful for creating orbiting animations or adjusting object rotation origins.'
+  },
+
+  // Line
+  line: {
+    beginner: ['start', 'end', 'color'],
+    descriptions: {
+      start: 'Starting position (x, y, z)',
+      end: 'Ending position (x, y, z)',
+      color: 'Line color',
+      opacity: 'Line transparency (0-1)',
+      visible: 'Show or hide line'
+    },
+    overview: 'The line component draws a simple line between two 3D points. Useful for debugging, guides, or simple visual connections between objects.'
+  },
+
+  // Layer
+  layer: {
+    beginner: ['id', 'order'],
+    descriptions: {
+      id: 'Unique layer identifier',
+      order: 'Render order (lower renders first)',
+      objects: 'Objects assigned to this layer',
+      enabled: 'Enable or disable layer'
+    },
+    overview: 'The layer component controls render layers for objects. Useful for managing draw order, creating masked effects, or separating objects into different render passes.'
+  },
+
+  // Text
+  text: {
+    beginner: ['value', 'color', 'align'],
+    descriptions: {
+      value: 'Text string to display',
+      color: 'Text color',
+      align: 'Text alignment (left, center, right)',
+      width: 'Maximum text width',
+      wrapCount: 'Characters per line',
+      font: 'Font family to use',
+      fontSize: 'Text size',
+      lineHeight: 'Line spacing',
+      anchor: 'Text anchor point',
+      baseline: 'Vertical baseline',
+      outlineWidth: 'Outline thickness',
+      outlineColor: 'Outline color',
+      opacity: 'Text transparency'
+    },
+    overview: 'The text component renders 3D text in the scene. Supports various fonts, alignment options, outlines, and word wrapping for creating labels, UI elements, and in-scene text.'
+  },
+
+  // Magic Leap Controls
+  'magicleap-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      gesture: 'Enable hand gestures',
+      controler: 'Enable controller tracking'
+    },
+    overview: 'The magicleap-controls component provides support for Magic Leap controller. It enables touchpad interaction, gesture recognition, and controller tracking for Magic Leap AR experiences.'
+  },
+
+  // HP Mixed Reality Controls
+  'hp-mixed-reality-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed'
+    },
+    overview: 'The hp-mixed-reality-controls component provides support for HP Reverb G2 controllers. It tracks position, rotation, and button inputs for VR interactions on HP Mixed Reality headsets.'
+  },
+
+  // Pico Controls
+  'pico-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      battery: 'Battery level indicator',
+      handTracking: 'Enable hand tracking'
+    },
+    overview: 'The pico-controls component provides support for Pico VR controllers. It enables touchpad interaction, controller tracking, and optional hand tracking for Pico VR headsets.'
+  },
+
+  // Meta Touch Controls
+  'meta-touch-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      handTracking: 'Enable hand tracking',
+      pose: 'Controller pose type',
+      haptic: 'Enable haptic feedback'
+    },
+    overview: 'The meta-touch-controls component provides support for Meta Touch controllers (Quest 2/Pro). It includes hand tracking, controller tracking, and haptic feedback for immersive VR experiences.'
+  },
+
+  // ORB Collider
+  'orb-collider': {
+    beginner: ['objects', 'radius'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      radius: 'Collision sphere radius',
+      debug: 'Show collision visualization',
+      interval: 'Collision check interval'
+    },
+    overview: 'The orb-collider component detects collisions using spherical boundaries. Use when you need simple spherical collision detection for objects like spheres or balls.'
+  },
+
+  // Vive Focus Controls
+  'vive-focus-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      gesture: 'Enable gesture detection'
+    },
+    overview: 'The vive-focus-controls component provides support for HTC Vive Focus controllers. It enables touchpad interaction and controller tracking for Vive Focus VR experiences.'
+  },
+
+  // Models Array
+  'models-array': {
+    beginner: ['src'],
+    descriptions: {
+      src: 'Array of URLs to 3D model files (.glb, .gltf, .obj)',
+      loaded: 'Shows which models have finished loading',
+      progress: 'Loading progress (0-1) for each model',
+      enableCache: 'Cache loaded models in memory',
+      skipCache: 'Ignore cached models and reload',
+      crossOrigin: 'CORS settings for loading models'
+    },
+    overview: 'The models-array component loads multiple 3D models at once. Useful for loading scenes or collections of objects. Each model can be a GLB, GLTF, or OBJ file. The src property accepts an array of URLs.'
+  },
+
+  // Hand Tracking Controls
+  'hand-tracking-controls': {
+    beginner: ['hand', 'handTrackingEnabled'],
+    descriptions: {
+      hand: 'Which hand (left, right, or both)',
+      handTrackingEnabled: 'Enable hand tracking',
+      modelStyle: 'Visual style of hand model',
+      color: 'Hand color',
+      visible: 'Show or hide hand',
+      defaultPlane: 'Default interaction plane',
+      emitTarget: 'Target for emitting events',
+      fetchPolicy: 'How to fetch hand tracking data'
+    },
+    overview: 'The hand-tracking-controls component provides hand tracking using WebXR Hand Input. It displays virtual hands that can track finger movements without controllers. Use for natural hand interactions in VR.'
+  },
+
+  // Generic Tracked Controls
+  'generic-tracked-controls': {
+    beginner: ['controller', 'id'],
+    descriptions: {
+      controller: 'Controller type to track',
+      id: 'Unique controller identifier',
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      armModel: 'Enable arm model for position',
+      buttonMapping: 'Custom button mapping'
+    },
+    overview: 'The generic-tracked-controls component provides a base for tracking any WebXR-compatible controller. It handles controller connection/disconnection and provides position/rotation tracking.'
+  },
+
+  // Hide on Enter AR
+  'hide-on-enter-ar': {
+    beginner: ['hideOnEnterAR'],
+    descriptions: {
+      hideOnEnterAR: 'Hide entity when entering AR mode'
+    },
+    overview: 'The hide-on-enter-ar component automatically hides the entity when the user enters AR (Augmented Reality) mode. Useful for elements that should only appear in VR or on desktop.'
+  },
+
+  // Anchored
+  anchored: {
+    beginner: ['anchored'],
+    descriptions: {
+      anchored: 'Anchor position to world or screen'
+    },
+    overview: 'The anchored component determines how an object is positioned in AR. When anchored to world, the object stays in place in the real world. When anchored to screen, it moves with the device.'
+  },
+
+  // AR Mode UI
+  'ar-mode-ui': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Show AR enter button',
+      referenceSpaceType: 'AR reference space type'
+    },
+    overview: 'The ar-mode-ui component controls the AR mode button displayed in the interface. It allows users to enter AR experiences from the browser on compatible devices.'
+  },
+
+  // Stats
+  stats: {
+    beginner: [],
+    descriptions: {
+      cluster: 'Show cluster statistics',
+      memory: 'Show memory usage',
+      render: 'Show render statistics',
+      scenes: 'Show scene statistics',
+      system: 'Show system information'
+    },
+    overview: 'The stats component displays performance statistics in the corner of the screen. Use it to monitor FPS, memory usage, and other performance metrics while developing.'
+  },
+
+  // Position
+  position: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Horizontal position (left/right)',
+      y: 'Vertical position (up/down)',
+      z: 'Depth position (forward/backward)'
+    },
+    overview: 'The position component sets the location of an entity in 3D space using X (horizontal), Y (vertical), and Z (depth) coordinates.'
+  },
+
+  // Rotation
+  rotation: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Rotation around horizontal axis (pitch)',
+      y: 'Rotation around vertical axis (yaw)',
+      z: 'Rotation around depth axis (roll)'
+    },
+    overview: 'The rotation component sets the orientation of an entity using Euler angles in degrees. X is pitch (up/down), Y is yaw (left/right), Z is roll (tilt).'
+  },
+
+  // Scale
+  scale: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Horizontal scale (1 = normal)',
+      y: 'Vertical scale (1 = normal)',
+      z: 'Depth scale (1 = normal)'
+    },
+    overview: 'The scale component sets the size of an entity. Values greater than 1 enlarge the object, values between 0 and 1 shrink it. Use uniform scaling (same X, Y, Z) to preserve proportions.'
+  },
+
+  // Visible
+  visible: {
+    beginner: ['visible'],
+    descriptions: {
+      visible: 'Show or hide the entity'
+    },
+    overview: 'The visible component controls whether an entity and its children are rendered. When set to false, the entity is hidden but still exists in the scene.'
   }
 };
 

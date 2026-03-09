@@ -18762,6 +18762,224 @@ body.aframe-inspector-opened {
 #aframeInspector .mixin-modal .mixin-modal-footer .btn.primary:hover {
   filter: brightness(1.1);
 }
+#aframeInspector .class-manager {
+  position: relative;
+}
+#aframeInspector .class-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+  border: 1px solid var(--color-base-100);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+#aframeInspector .class-toggle:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  border-color: var(--color-primary);
+}
+#aframeInspector .class-toggle:active {
+  transform: scale(0.95);
+}
+#aframeInspector .class-toggle .svg-inline--fa {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+#aframeInspector .class-panel-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-base-200);
+  border: 1px solid var(--color-base-300);
+  border-radius: 8px;
+  min-width: 400px;
+  max-width: 500px;
+  max-height: 60vh;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+}
+#aframeInspector .class-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+#aframeInspector .class-panel .class-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-base-300);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--color-base-300);
+  border-radius: 8px 8px 0 0;
+}
+#aframeInspector .class-panel .class-header .icon-only {
+  background: transparent;
+  border: none;
+  color: var(--color-base-content);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+#aframeInspector .class-panel .class-header .icon-only:hover {
+  background: var(--color-base-100);
+  color: var(--color-primary);
+}
+#aframeInspector .class-panel .class-list {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 200px;
+}
+#aframeInspector .class-panel .no-classes {
+  padding: 30px 20px;
+  text-align: center;
+  color: var(--color-base-content);
+  opacity: 0.6;
+  font-size: 13px;
+}
+#aframeInspector .class-panel .class-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-base-300);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+#aframeInspector .class-panel .class-item:hover {
+  background: var(--color-base-300);
+}
+#aframeInspector .class-panel .class-item.selected {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector .class-panel .class-item.selected .class-count {
+  color: var(--color-primary-content);
+  opacity: 0.8;
+}
+#aframeInspector .class-panel .class-item:last-child {
+  border-bottom: none;
+}
+#aframeInspector .class-panel .class-item .class-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-base-content);
+}
+#aframeInspector .class-panel .class-item .class-count {
+  font-size: 11px;
+  color: var(--color-primary);
+}
+#aframeInspector .class-detail {
+  border-top: 1px solid var(--color-base-300);
+  max-height: 300px;
+  overflow-y: auto;
+}
+#aframeInspector .class-detail .class-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--color-base-300);
+  position: sticky;
+  top: 0;
+}
+#aframeInspector .class-detail .class-detail-header h4 {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+#aframeInspector .class-detail .class-detail-header .icon-only {
+  background: transparent;
+  border: none;
+  color: var(--color-base-content);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+#aframeInspector .class-detail .class-detail-header .icon-only:hover {
+  background: var(--color-base-100);
+  color: var(--color-primary);
+}
+#aframeInspector .class-detail .class-entities {
+  padding: 0;
+}
+#aframeInspector .class-detail .class-entity-item {
+  border-bottom: 1px solid var(--color-base-300);
+}
+#aframeInspector .class-detail .class-entity-item:last-child {
+  border-bottom: none;
+}
+#aframeInspector .class-detail .class-entity-item .class-entity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#aframeInspector .class-detail .class-entity-item .class-entity-header:hover {
+  background: var(--color-base-300);
+}
+#aframeInspector .class-detail .class-entity-item .class-entity-header .entity-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-base-content);
+}
+#aframeInspector .class-detail .class-entity-item .class-entity-header .entity-tag {
+  font-size: 10px;
+  color: var(--color-primary);
+  font-family: var(--font-monospace);
+  background: var(--color-base-100);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+#aframeInspector .class-detail .class-entity-item .entity-components {
+  padding: 8px 16px 12px 16px;
+  background: var(--color-base-100);
+}
+#aframeInspector .class-detail .class-entity-item .entity-components .component-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--color-base-300);
+}
+#aframeInspector .class-detail .class-entity-item .entity-components .component-item:last-child {
+  border-bottom: none;
+}
+#aframeInspector .class-detail .class-entity-item .entity-components .component-item .comp-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+#aframeInspector .class-detail .class-entity-item .entity-components .component-item .comp-value {
+  font-size: 11px;
+  color: var(--color-base-content);
+  opacity: 0.8;
+  font-family: var(--font-monospace);
+  word-break: break-all;
+}
 #aframeInspector svg:not(:root).svg-inline--fa,
 #aframeInspector svg:not(:host).svg-inline--fa {
   box-sizing: content-box;
@@ -18802,10 +19020,19 @@ body.aframe-inspector-opened {
   vertical-align: bottom !important;
   white-space: nowrap;
 }
+#aframeInspector .componentNameText {
+  display: inline-block;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 #aframeInspector .componentHeaderActions {
   align-items: center;
   display: flex;
   gap: 10px;
+  margin-bottom: 4px;
+  justify-content: flex-end;
 }
 #aframeInspector .collapsible .static {
   background: var(--color-base-100);
@@ -19462,7 +19689,8 @@ body.aframe-inspector-opened {
 #aframeInspector .component-help-modal {
   max-height: 70vh;
   overflow-y: auto;
-  padding: 10px;
+  padding: 15px;
+  margin: 10px;
 }
 #aframeInspector .component-help-modal .help-overview {
   margin-bottom: 20px;
@@ -19669,6 +19897,119 @@ body.aframe-inspector-opened {
   background: var(--color-primary);
   color: var(--color-primary-content);
 }
+#aframeInspector .class-manager-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 165px;
+}
+#aframeInspector .class-manager-list .class-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+#aframeInspector .class-manager-list .class-empty {
+  color: var(--color-base-content);
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.6;
+  padding: 4px 0;
+}
+#aframeInspector .class-manager-list .class-item {
+  align-items: center;
+  background: var(--color-base-300);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+}
+#aframeInspector .class-manager-list .class-item .class-name {
+  color: var(--color-primary);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120px;
+}
+#aframeInspector .class-manager-list .class-item .class-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-base-content);
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.6;
+  padding: 2px;
+  transition: all 0.2s;
+}
+#aframeInspector .class-manager-list .class-item .class-delete-btn:hover {
+  color: var(--color-error);
+  opacity: 1;
+}
+#aframeInspector .class-manager-list .class-add {
+  display: flex;
+  gap: 4px;
+}
+#aframeInspector .class-manager-list .class-add .class-add-input {
+  background: var(--color-base-300);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--color-base-content);
+  font-size: 12px;
+  padding: 4px 8px;
+  width: 120px;
+}
+#aframeInspector .class-manager-list .class-add .class-add-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+#aframeInspector .class-manager-list .class-add .class-add-button {
+  align-items: center;
+  background: var(--color-base-300);
+  border: none;
+  border-radius: 4px;
+  color: var(--color-base-content);
+  cursor: pointer;
+  display: flex;
+  font-size: 12px;
+  padding: 4px 8px;
+}
+#aframeInspector .class-manager-list .class-add .class-add-button:hover {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+}
+#aframeInspector .class-manager-list .class-available {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--color-base-300);
+}
+#aframeInspector .class-manager-list .class-available .class-available-label {
+  color: var(--color-base-content);
+  font-size: 10px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+#aframeInspector .class-manager-list .class-available .class-available-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+#aframeInspector .class-manager-list .class-available .class-available-item {
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-300);
+  border-radius: 4px;
+  color: var(--color-base-content);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 6px;
+  transition: all 0.2s;
+}
+#aframeInspector .class-manager-list .class-available .class-available-item:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-content);
+}
 #aframeInspector svg:not(:root).svg-inline--fa,
 #aframeInspector svg:not(:host).svg-inline--fa {
   box-sizing: content-box;
@@ -19831,6 +20172,27 @@ body.aframe-inspector-opened {
   top: 0;
   width: 100%;
   z-index: 9999999999;
+}
+#aframeInspector #componentHelpModal .modal-content {
+  background-color: var(--color-base-100);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  left: 50%;
+  margin: 30px auto;
+  max-width: 480px;
+  transform: translateX(-50%);
+  width: 90%;
+}
+#aframeInspector #componentHelpModal .modal-header {
+  background-color: var(--color-base-200);
+  border-bottom: 1px solid var(--color-base-300);
+  border-radius: 8px 8px 0 0;
+}
+#aframeInspector #componentHelpModal .modal-body {
+  background-color: var(--color-base-100);
+  border-radius: 0 0 8px 8px;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 #aframeInspector .modal h3 {
   font-size: 18px;
@@ -20040,6 +20402,170 @@ body.aframe-inspector-opened {
 #aframeInspector .texture canvas {
   border: 1px solid var(--color-base-100);
   cursor: pointer;
+}
+#aframeInspector .settings-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-base-300);
+  padding: 0 10px;
+}
+#aframeInspector .settings-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-base-content);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 12px 20px;
+  transition: all 0.2s;
+}
+#aframeInspector .settings-tab:hover {
+  color: var(--color-primary);
+}
+#aframeInspector .settings-tab.active {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary);
+}
+#aframeInspector .settings-content {
+  padding: 15px;
+}
+#aframeInspector .classes-tab .classes-header {
+  margin-bottom: 20px;
+}
+#aframeInspector .classes-tab .classes-header h3 {
+  color: var(--color-primary);
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+#aframeInspector .classes-tab .classes-header p {
+  color: var(--color-base-content);
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.8;
+}
+#aframeInspector .classes-tab .classes-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+#aframeInspector .classes-tab .classes-list .no-classes {
+  color: var(--color-base-content);
+  font-style: italic;
+  opacity: 0.6;
+  padding: 20px;
+  text-align: center;
+}
+#aframeInspector .classes-tab .classes-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#aframeInspector .classes-tab .classes-list .class-item {
+  align-items: center;
+  background: var(--color-base-300);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 10px 15px;
+}
+#aframeInspector .classes-tab .classes-list .class-item .class-name {
+  color: var(--color-primary);
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 13px;
+}
+#aframeInspector .classes-tab .classes-list .class-item .class-count {
+  color: var(--color-base-content);
+  font-size: 12px;
+  opacity: 0.7;
+}
+#aframeInspector .classes-tab .classes-help {
+  margin-top: 20px;
+  padding: 15px;
+  background: var(--color-base-100);
+  border-radius: 4px;
+}
+#aframeInspector .classes-tab .classes-help p {
+  color: var(--color-base-content);
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.8;
+}
+#aframeInspector .models-tab .models-header {
+  margin-bottom: 20px;
+}
+#aframeInspector .models-tab .models-header h3 {
+  color: var(--color-primary);
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+#aframeInspector .models-tab .models-header p {
+  color: var(--color-base-content);
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.8;
+}
+#aframeInspector .models-tab .models-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+#aframeInspector .models-tab .models-list .no-models {
+  color: var(--color-base-content);
+  font-style: italic;
+  opacity: 0.6;
+  padding: 20px;
+  text-align: center;
+}
+#aframeInspector .models-tab .models-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#aframeInspector .models-tab .models-list .model-item {
+  align-items: center;
+  background: var(--color-base-300);
+  border-radius: 4px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding: 12px 15px;
+}
+#aframeInspector .models-tab .models-list .model-item .model-icon {
+  color: var(--color-primary);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+#aframeInspector .models-tab .models-list .model-item .model-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+#aframeInspector .models-tab .models-list .model-item .model-info .model-src {
+  color: var(--color-primary);
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#aframeInspector .models-tab .models-list .model-item .model-info .model-type {
+  color: var(--color-base-content);
+  font-size: 11px;
+  opacity: 0.7;
+}
+#aframeInspector .models-tab .models-help {
+  margin-top: 20px;
+  padding: 15px;
+  background: var(--color-base-100);
+  border-radius: 4px;
+}
+#aframeInspector .models-tab .models-help p {
+  color: var(--color-base-content);
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.8;
 }
 #aframeInspector svg:not(:root).svg-inline--fa,
 #aframeInspector svg:not(:host).svg-inline--fa {
@@ -20429,7 +20955,7 @@ body.aframe-inspector-opened {
     opacity: 1;
   }
 }
-`, "",{"version":3,"sources":["webpack://./src/style/lib.styl","webpack://./src/style/index.styl","webpack://./src/style/scenegraph.styl","webpack://./src/style/components.styl","webpack://./src/style/entity.styl","webpack://./src/style/help.styl","webpack://./src/style/select.styl","webpack://./src/style/textureModal.styl","webpack://./src/style/viewport.styl","webpack://./src/style/widgets.styl"],"names":[],"mappings":"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","sourcesContent":["/* CSS rules from the original FontAwesomeIcon component */\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  box-sizing: content-box;\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n","@import './lib';\n\nbody.aframe-inspector-opened,\n.toggle-edit,\n.sponsor-btn\n  font-family var(--font-normal)\n\nbody.aframe-inspector-opened\n  background var(--color-base-200)\n  color var(--color-base-content)\n  font-size 12px\n  margin 0\n  overflow hidden\n\n/* :where(:root) has zero specificity compared to :root, so any user defined :root will override the below rule */\n:where(:root) {\n  color-scheme: dark;\n\n  --color-base-100: #333;\n  --color-base-200: #242424;\n  --color-base-300: #1d1d1d;\n  --color-base-content: #c3c3c3;\n  --color-primary: #1faaf2;\n  --color-primary-content: #fff;\n  --color-secondary: #92374d;\n  --color-secondary-content: #fafafa;\n  --color-accent: #155373;\n  --color-accent-content: #fff;\n  --color-neutral: #333;\n  --color-neutral-content: #aaa;\n  --color-info: #2cb7ff;\n  --color-info-content: #fff;\n  --color-success: #8b8;\n  --color-success-content: #000;\n  --color-warning: #d66853;\n  --color-warning-content: #000;\n  --color-error: #92374d;\n  --color-error-content: #000;\n  --font-normal: system-ui, BlinkMacSystemFont, -apple-system, \"Segoe UI\", Helvetica, Arial, sans-serif;\n  --font-monospace: Consolas, \"Andale Mono\", Monaco, \"Lucida Console\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Bitstream Vera Sans Mono\", \"Courier New\", monospace;\n}\n\n#aframeInspector\n  --color-base-lighter: unquote(\"color-mix(in oklab, var(--color-base-100) 90%, white 10%)\");\n  --color-primary-hover: unquote(\"color-mix(in oklab, var(--color-primary) 90%, black 10%)\");\n  --color-secondary-hover: unquote(\"color-mix(in oklab, var(--color-secondary) 90%, black 10%)\");\n  --color-accent-hover: unquote(\"color-mix(in oklab, var(--color-accent) 70%, black 30%)\");\n  --color-neutral-hover: unquote(\"color-mix(in oklab, var(--color-neutral) 90%, black 10%)\");\n  --color-property-defined: light-dark(\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, black 90%)\"),   /* darker for light theme */\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, white 90%)\")    /* lighter for dark theme */\n  )\n\n  @import './scenegraph';\n  @import './components';\n  @import './entity';\n  @import './help';\n  @import './select';\n  @import './textureModal';\n  @import './viewport';\n  @import './widgets';\n\n  .select__control,\n  code,\n  pre,\n  input,\n  textarea,\n  select\n    font-size 13px\n\n  code,\n  pre,\n  textarea\n    font-family var(--font-monospace)\n\n  hr\n    border 0\n    border-top 1px solid var(--color-base-content)\n\n  a\n    cursor pointer\n\n  button\n    position relative\n\n  textarea\n    overflow-wrap normal\n    tab-size 4\n    white-space pre\n\n  textarea,\n  input\n    outline none /* osx */\n\n  .gltfIcon svg\n    box-sizing content-box\n    display inline\n    height 20px\n    position relative\n    top 4px\n    vertical-align baseline\n    width 30px\n\n  #scenegraph,\n  #rightPanel\n    z-index 9998\n\n  #sidebar,\n  #scenegraph,\n  .panel\n      cursor default\n      user-select none\n\n  .toggle-edit\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    font-size 13px\n    left 3px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 100px\n    z-index 999999999\n\n  .toggle-edit:hover\n    background-color var(--color-secondary-hover)\n\n  .try-editor-btn\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    display flex\n    font-size 16px\n    gap 5px\n    justify-content center\n    line-height 24px\n    margin 0\n    padding 6px 10px\n    text-align center\n    text-decoration none\n    width 200px\n\n  .try-editor-btn:hover\n    background-color var(--color-secondary-hover)\n    color var(--color-secondary-content)\n\n  .sponsor-btn\n    background-color var(--color-neutral)\n    box-sizing content-box\n    color var(--color-neutral-content)\n    display flex\n    font-size 13px\n    gap 5px\n    justify-content center\n    left 127px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 80px\n    z-index 999999999\n\n    svg\n      color rgb(219, 97, 162)\n      fill currentColor\n\n  .sponsor-btn:hover\n    background-color var(--color-neutral-hover)\n    color var(--color-neutral-content)\n\n  input\n    background-color transparent\n    border 1px solid var(--color-base-200)\n    color var(--color-base-content)\n\n  input,\n  .texture canvas\n    transition 0.1s background-color ease-in-out, 0.1s border-color ease-in-out, 0.1s color ease-in-out\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    border-radius 0\n    min-height 14px\n    outline none\n\n  input[type=\"checkbox\"]\n    appearance none\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 0\n    cursor pointer\n    height 18px\n    margin 0\n    position relative\n    width 18px\n\n    &:checked\n        background var(--color-primary)\n        border 1px solid var(--color-base-300)\n\n        &::after\n            border solid white\n            border-width 0 2px 2px 0\n            content ''\n            height 9px\n            left 5px\n            position absolute\n            top 1px\n            transform rotate(45deg)\n            width 4px\n\n  input[type=\"checkbox\"]:focus\n    box-shadow none\n\n  input.number\n    background-color transparent !important\n    border 0\n    color var(--color-primary) !important\n    cursor col-resize\n    font-size 13px\n    padding 2px\n\n  input.string:focus,\n  input.number:focus\n    border 1px solid var(--color-primary)\n\n  input.error\n    border 1px solid var(--color-error)\n\n  #sidebar\n    background var(--color-base-200)\n    width 331px\n\n  input,\n  textarea,\n  select\n    background var(--color-base-300)\n    border 1px solid transparent\n    color var(--color-base-content)\n\n  select\n    background var(--color-base-lighter)\n\n  input[type=\"color\"]\n    background-color var(--color-base-100)\n    border 1px solid var(--color-base-300)\n    cursor pointer\n    height 26px\n    padding 0\n    width 50px\n\n  /* Note these vendor-prefixed selectors cannot be grouped! */\n  input[type=\"color\"]::-webkit-color-swatch\n    border 0  /* To remove the gray border. */\n\n  input[type=\"color\"]::-webkit-color-swatch-wrapper\n    border-radius 0  /* So it appears as rectangle instead of an ovale in Safari */\n    padding 0  /* To remove the inner padding. */\n\n  input[type=\"color\"]::-moz-color-swatch\n    border 0\n\n  input[type=\"color\"]::-moz-focus-inner\n    border 0  /* To remove the inner border (specific to Firefox). */\n    padding 0\n\n  .hidden\n    visibility hidden\n\n  a.button\n    color var(--color-base-content)\n    font-size 16px\n    line-height 1em\n    text-decoration none\n\n    &:hover\n      color var(--color-primary)\n\n  @keyframes animateopacity\n    from { opacity: 0 }\n    to { opacity: 1 }\n\n  .hide\n    display none\n\n  .a-canvas.state-dragging\n    cursor grabbing\n\n  #rightPanel\n    align-items stretch\n    display flex\n    justify-content flex-end\n\n  #inspectorContainer\n    display flex\n    height 100%\n    justify-content space-between\n    left 0\n    pointer-events none\n    position fixed\n    top 0\n    width 100%\n    z-index 999999\n\n  #scenegraph,\n  #viewportBar,\n  #rightPanel\n    pointer-events all\n\n  .aframe-inspector-opened a-scene .a-canvas\n    background-color #191919\n    z-index 9998\n\n  .toggle-sidebar\n    align-items center\n    display flex\n    height 100%\n    position absolute\n    z-index 9998\n\n    a\n      background-color var(--color-base-200)\n      color var(--color-base-content)\n      padding 5px\n      z-index 9998\n\n    a.hover\n      background-color var(--color-primary)\n      color var(--color-primary-content)\n\n  .toggle-sidebar.left\n    left 0\n    top 0\n\n  .toggle-sidebar.right\n    right 0\n    top 0\n","@import './lib';\n\n#toolbar\n  background-color var(--color-base-300)\n  border-bottom 1px solid var(--color-base-100)\n  padding 4px 8px\n  position relative\n  z-index 9999\n  display flex\n  flex-wrap wrap\n  gap 4px\n\n  .toolbarActions\n    align-items center\n    display flex\n    justify-content flex-start\n    gap 4px\n    padding 4px 0\n    flex-wrap wrap\n\n    a.disabled\n      color #666\n      cursor default\n\n    .button\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover:not(.disabled)\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      &:active\n        transform scale(0.95)\n\n      &.disabled\n        opacity 0.5\n        cursor not-allowed\n\n    .gltfIcon\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      svg\n        width 18px\n        height 18px\n\n#scenegraph\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-300)\n  display flex\n  flex-direction column\n  overflow visible\n  padding-top 60px\n  width 260px\n  min-width 180px\n  max-width 400px\n  resize horizontal\n  overflow-x auto\n  position relative\n  z-index 9999\n  pointer-events all\n\n  &::after\n    content: ''\n    position absolute\n    right 0\n    top 0\n    bottom 0\n    width 8px\n    cursor ew-resize\n    background transparent\n    \n    &:hover\n      background var(--color-primary)\n      opacity 0.5\n    background transparent\n    transition background 0.2s\n\n  &:hover::after\n    background var(--color-primary)\n\n  // Custom resize handle\n  .resize-handle\n    position absolute\n    right -8px\n    top 50%\n    transform translateY(-50%)\n    width 16px\n    height 40px\n    background var(--color-base-100)\n    border-radius 8px\n    display flex\n    align-items center\n    justify-content center\n    cursor ew-resize\n    z-index 100\n    opacity 0\n    transition opacity 0.2s\n    border 1px solid var(--color-base-300)\n\n    svg\n      font-size 10px\n      color var(--color-base-content)\n      opacity 0.5\n\n    &:hover, &.active\n      opacity 1\n      background var(--color-primary)\n      border-color var(--color-primary)\n\n      svg\n        color var(--color-primary-content)\n        opacity 1\n\n  &:hover .resize-handle\n    opacity 0.7\n\n  .entity\n    align-items center\n    background var(--color-base-200)\n    box-sizing border-box\n    cursor pointer\n    display flex\n    gap 6px\n    justify-content space-between\n    line-height 1em\n    padding 3px\n    white-space nowrap\n    width 100%\n    flex-wrap wrap\n\n    &:hover\n      background var(--color-accent-hover)\n      color var(--color-accent-content)\n\n    &.active\n      background-color var(--color-accent)\n      color var(--color-accent-content)\n\n      .entityActions\n        align-items center\n        display flex\n        padding-right 2px\n\n        a.button:hover\n          color var(--color-primary)\n\n    &.novisible\n      &.active\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n      &:not(.active)\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n  .component:hover\n    color var(--color-primary)\n\n  .entityIcons\n    margin-left 2px\n\n  .entityActions\n    display none\n\n  // Floating action menu for selected entity\n  .entityActionsFloating\n    display flex\n    flex-direction column\n    align-items stretch\n    gap 4px\n    padding 4px 8px\n    background var(--color-base-100)\n    border-radius 4px\n    margin-left 8px\n    flex-shrink 0\n    box-shadow 0 2px 8px rgba(0, 0, 0, 0.3)\n    z-index 100\n    min-width 120px\n\n    .button\n      display flex\n      align-items center\n      gap 4px\n      color var(--color-base-content)\n      font-size 11px\n      padding 4px 6px\n      border-radius 3px\n      transition all 0.15s ease\n      white-space nowrap\n\n      .action-label\n        font-size 10px\n        font-weight 500\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n\n      svg\n        font-size 12px\n\n    .entityReparent\n      cursor grab\n\n    .entityMoveUp, .entityMoveDown\n      cursor pointer\n\n    .entityMoveUp:hover, .entityMoveDown:hover\n      background var(--color-primary)\n      color var(--color-primary-content)\n\n    .button\n      color var(--color-base-content)\n      font-size 12px\n      margin-left 6px\n\n  .id\n    color var(--color-base-content)\n\n  .option.active .id\n    color var(--color-base-content)\n\n  .collapsespace\n    color var(--color-base-content)\n    display inline-block\n    text-align center\n    width 14px\n\n  .fa-eye\n    color var(--color-base-content)\n\n  .search\n    display flex\n    font-size 16px\n    padding 5px\n    position relative\n\n    input\n      background var(--color-base-300)\n      border-radius 0\n      box-sizing border-box\n      color var(--color-primary)\n      padding 5px 10px\n      width 100%\n\n    >svg\n      color var(--color-base-content)\n\n    >svg, a.button\n      position absolute\n      right 14px\n      top 10px\n\n  .outliner\n    background var(--color-base-200)\n    color var(--color-base-content)\n    cursor default\n    flex 1 1 auto\n    font-size 13px\n    height calc(100% - 98px)\n    line-height normal\n    outline none\n    overflow-y auto\n    padding 0\n    width 100%\n\n.theme-selector\n  position relative\n\n  .theme-dropdown\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 4px\n    box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)\n    max-height 300px\n    overflow-y auto\n    position fixed\n    top 50px\n    left 10px\n    width 140px\n    z-index 10000\n\n    .theme-option\n      color var(--color-base-content)\n      cursor pointer\n      padding 8px 12px\n\n      &:hover\n        background var(--color-accent-hover)\n        color var(--color-accent-content)\n\n      &.selected\n        background var(--color-accent)\n        color var(--color-accent-content)\n\n// Add Entity Button with Primitive Menu\n.addEntityContainer\n  position relative\n  display flex\n\n.addEntityContainer .button\n  border-radius 4px 0 0 4px\n\n.addEntityContainer .primitiveToggle\n  border-left none\n  border-radius 0 4px 4px 0\n  padding-left 4px\n\n.primitiveMenu\n  position fixed\n  top auto\n  left 235px\n  bottom auto\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 6px\n  padding 6px 0\n  z-index 10001\n  min-width 240px\n  max-height 400px\n  overflow-y auto\n  box-shadow 0 8px 24px rgba(0, 0, 0, 0.4)\n\n.primitiveMenuHeader\n  padding 10px 14px 8px\n  font-size 11px\n  color var(--color-primary)\n  border-bottom 1px solid var(--color-base-300)\n  font-weight 600\n  text-transform uppercase\n  letter-spacing 0.5px\n\n.primitiveMenuItem\n  display flex\n  align-items center\n  gap 10px\n  padding 10px 14px\n  cursor pointer\n  transition background 0.15s, color 0.15s\n  color var(--color-base-content)\n  border-left 3px solid transparent\n\n.primitiveMenuItem:hover\n  background var(--color-base-300)\n  border-left-color var(--color-primary)\n\n.primitiveMenuItem.selected\n  background var(--color-primary)\n  color var(--color-primary-content)\n  border-left-color var(--color-primary)\n\n.primitiveIcon\n  width 24px\n  text-align center\n  font-size 1rem\n\n.primitiveLabel\n  flex 1\n  font-size 13px\n  font-weight 500\n\n.primitiveTag\n  font-size 10px\n  color var(--color-base-content)\n  font-family var(--font-monospace)\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n  opacity  0.8\n\n.primitiveMenuItem.selected .primitiveTag\n  color inherit\n  background rgba(255,255,255,0.2)\n  opacity  1\n\n// Grouped primitive menu styles\n.primitiveGroup\n  margin-bottom 6px\n\n  &:last-child\n    margin-bottom 0\n\n.primitiveGroupHeader\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 14px 6px\n  font-size 10px\n  color var(--color-primary)\n  font-weight 700\n  text-transform uppercase\n  letter-spacing 0.8px\n\n  .icon\n    font-size 11px\n    width 14px\n    text-align center\n\n.primitiveGroup .primitiveMenuItem\n  padding-left 20px\n\n  // Entity actions for move up/down and reparent\n  .entityReparent\n    cursor grab\n\n  .entityMoveUp, .entityMoveDown\n    cursor pointer\n    opacity 0.5\n    transition opacity 0.2s\n\n  .entityMoveUp:hover, .entityMoveDown:hover\n    opacity 1\n\n// Reparent Modal Styles\n.reparent-modal-overlay\n  position fixed\n  top 0\n  left 0\n  right 0\n  bottom 0\n  background rgba(0, 0, 0, 0.7)\n  z-index 10000\n  display flex\n  align-items center\n  justify-content center\n\n.reparent-modal\n  background var(--color-base-200)\n  border 1px solid var(--border-color)\n  border-radius 8px\n  width 350px\n  max-height 80vh\n  display flex\n  flex-direction column\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  overflow hidden\n\n.reparent-modal-header\n  display flex\n  justify-content space-between\n  align-items center\n  padding 16px\n  border-bottom 1px solid var(--border-color)\n  flex-shrink 0\n\n  h3\n    margin 0\n    font-size 1rem\n    color var(--color-base-content)\n    display flex\n    align-items center\n    gap 8px\n\n  .close-btn\n    background none\n    border none\n    color var(--text-secondary)\n    font-size 1.5rem\n    cursor pointer\n    padding 0\n    line-height 1\n\n    &:hover\n      color var(--color-base-content)\n\n.reparent-modal-content\n  padding 16px\n  overflow-y auto\n  flex 1\n  display flex\n  flex-direction column\n\n  p\n    margin 0 0 12px 0\n    font-size 0.85rem\n    color var(--text-secondary)\n\n.reparent-list\n  display flex\n  flex-direction column\n  gap 4px\n  max-height 300px\n  overflow-y auto\n  flex 1\n\n.reparent-option\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 12px\n  border-radius 4px\n  cursor pointer\n  transition background 0.2s\n  color var(--color-base-content)\n\n  &:hover\n    background var(--color-base-300)\n\n  &.selected\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n    .reparent-name\n      color var(--color-primary-content)\n\n.reparent-icon\n  font-size 0.9rem\n  width 24px\n  text-align center\n\n.reparent-name\n  flex 1\n  font-size 0.85rem\n\n.reparent-tag\n  font-size 0.65rem\n  color var(--text-secondary)\n  font-family monospace\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n\n// Modal action buttons\n.reparent-modal-actions\n  display flex\n  justify-content flex-end\n  gap 10px\n  margin-top 16px\n  padding-top 16px\n  border-top 1px solid var(--border-color)\n\n  .btn-cancel\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--color-base-content)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    transition all 0.2s\n\n    &:hover\n      background var(--color-base-100)\n\n  .btn-apply\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--text-secondary)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    font-weight 600\n    transition all 0.2s\n    opacity 0.5\n    pointer-events none\n\n    &.active\n      background var(--color-primary)\n      border-color var(--color-primary)\n      color var(--color-primary-content)\n      opacity 1\n      pointer-events auto\n\n      &:hover\n        filter brightness(1.1)\n\n// Mixins Manager\n.mixins-manager\n  position relative\n\n.mixins-toggle\n  display flex\n  align-items center\n  justify-content center\n  gap 8px\n  height 36px\n  padding 0 14px\n  border-radius 6px\n  background var(--color-base-200)\n  color var(--color-base-content)\n  border 1px solid var(--color-base-100)\n  font-size 13px\n  font-weight 500\n  transition all 0.2s ease\n  cursor pointer\n  white-space nowrap\n\n  &:hover\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n  &:active\n    transform scale(0.95)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Mixins Panel (over canvas)\n.mixins-panel\n  position fixed\n  top 50%\n  left 50%\n  transform translate(-50%, -50%)\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 300px\n  max-width 400px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 10000\n  display flex\n  flex-direction column\n\n  .mixins-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .mixins-list\n    flex 1\n    overflow-y auto\n    max-height calc(60vh - 60px)\n\n  .no-mixins\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .mixin-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n\n    &:hover\n      background var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .mixin-info\n      display flex\n      flex-direction column\n      gap 3px\n      flex 1\n      min-width 0\n\n      .mixin-id\n        font-size 14px\n        font-weight 600\n        color var(--color-base-content)\n\n      .mixin-usage\n        font-size 11px\n        color var(--color-primary)\n\n      .mixin-components\n        font-size 10px\n        color var(--color-base-content)\n        opacity 0.7\n        max-width 200px\n        overflow hidden\n        text-overflow ellipsis\n        white-space nowrap\n\n    .mixin-actions\n      display flex\n      gap 6px\n      margin-left 10px\n\n      .mixin-edit,\n      .mixin-delete\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        color var(--color-base-content)\n        cursor pointer\n        padding 6px 8px\n        font-size 11px\n        border-radius 4px\n        transition all 0.2s\n\n        &:hover\n          background var(--color-primary)\n          border-color var(--color-primary)\n          color var(--color-primary-content)\n\n      .mixin-delete:hover\n        background var(--color-error)\n        border-color var(--color-error)\n\n// Mixin Modal\n.mixin-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.mixin-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 80vh\n  max-width 500px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  position relative\n  margin auto\n\n  .mixin-modal-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 15px 20px\n    border-bottom 1px solid var(--color-base-300)\n\n    h3\n      margin 0\n      font-size 16px\n      color var(--color-base-content)\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .mixin-modal-content\n    padding 20px\n    max-height 50vh\n    overflow-y auto\n\n    .form-group\n      margin-bottom 15px\n\n      &:last-child\n        margin-bottom 0\n\n      label\n        display block\n        font-size 12px\n        font-weight 600\n        color var(--color-base-content)\n        margin-bottom 8px\n        text-transform uppercase\n\n      input[type=\"text\"]\n        width 100%\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        border-radius 4px\n        color var(--color-base-content)\n        padding 8px 10px\n        font-size 13px\n        box-sizing border-box\n\n        &:focus\n          border-color var(--color-primary)\n          outline none\n\n      .component-inputs\n        display flex\n        flex-direction column\n        gap 8px\n\n      .component-input\n        display flex\n        align-items center\n        gap 10px\n\n        .component-name\n          min-width 80px\n          font-size 12px\n          color var(--color-primary)\n          font-weight 500\n\n        input\n          flex 1\n\n    .mixin-help-text\n      background var(--color-base-100)\n      border 1px solid var(--color-base-300)\n      border-radius 4px\n      padding 12px 14px\n      margin-bottom 15px\n      font-size 12px\n      color var(--color-base-content)\n      line-height 1.5\n\n      p\n        margin 0 0 6px 0\n\n        &:last-child\n          margin-bottom 0\n\n  .mixin-modal-footer\n    display flex\n    justify-content flex-end\n    gap 10px\n    padding 15px 20px\n    border-top 1px solid var(--color-base-300)\n\n    .btn\n      padding 8px 16px\n      border-radius 4px\n      font-size 13px\n      cursor pointer\n      transition all 0.2s\n\n    .btn:not(.primary)\n      background var(--color-base-300)\n      border 1px solid var(--color-base-300)\n      color var(--color-base-content)\n\n      &:hover\n        background var(--color-base-100)\n\n    .btn.primary\n      background var(--color-primary)\n      border 1px solid var(--color-primary)\n      color var(--color-primary-content)\n\n      &:hover\n        filter brightness(1.1)\n","@import './lib';\n\n.components\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  height 100%\n  overflow auto\n  position fixed\n  width 331px\n\n.collapsible-header\n  align-items center\n  display flex\n  justify-content space-between\n\n  .entityPrint\n    color var(--color-base-content)\n\n.collapsible-content\n  padding 5px 0\n\n.componentTitle span\n  color var(--color-base-content)\n  font-weight 600\n  max-width 200px\n  overflow hidden\n  text-overflow ellipsis\n  text-transform uppercase\n  vertical-align bottom !important\n  white-space nowrap\n\n.componentHeaderActions\n  align-items center\n  display flex\n  gap 10px\n\n.collapsible .static\n  background var(--color-base-100)\n  border-bottom 2px solid var(--color-base-200)\n  box-sizing content-box\n  cursor pointer\n  font-size 13px\n  height 16px\n  margin 0\n  padding 8px 10px 12px\n  vertical-align bottom\n\n  &:hover\n    background var(--color-base-lighter)\n\n.collapsible .static .collapse-button\n  border 6px solid transparent\n  float left\n  height 0\n  margin-left 2px\n  margin-right 10px\n  width 0\n\n.collapsible.collapsed .static .collapse-button\n  border-left-color var(--color-base-content)\n  margin-top 4px\n\n.collapsible:not(.collapsed) .static .collapse-button\n  border-top-color var(--color-base-content)\n  margin-top 7px\n\n.propertyRow\n  align-items center\n  display flex\n  font-size 13px\n  min-height 30px\n  padding 2px 15px\n\n  .text\n    cursor default\n    display inline-block\n    overflow hidden\n    padding-right 10px\n    text-overflow ellipsis\n    vertical-align middle\n    width 118px\n\n  input.number\n    width 40px\n\n  .vec2 input.number,\n  .vec3 input.number\n    width 40px\n\n  .vec4 input.number\n    width 34px\n\n  .vec2, .vec3, .vec4\n    display inline\n\n  .map_value\n    margin 0 0 0 5px\n    width 68px\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    background var(--color-base-300)\n    color var(--color-primary)\n    min-height 26px\n    padding 1px 5px\n\n    &:last-child\n      padding-right 0\n\n  input.string\n    box-sizing border-box\n    padding-left 8px\n    width 165px\n\n  input[type=\"text\"]:focus,\n  input.string:focus\n    box-shadow none\n\n  .color-widget *\n    vertical-align middle\n\n  .color_value\n    letter-spacing 1px\n    margin 0 0 0 5px\n    width 68px\n\n.propertyRowDefined .text\n  color var(--color-property-defined)\n  font-weight 600\n\n#addComponentContainer\n  align-items center\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  display flex\n  flex-direction column\n  justify-content center\n  padding 20px 10px\n\n  #addComponent\n    text-align left\n    width 200px\n\n    .select__control\n      background var(--color-base-300)\n      color var(--color-primary)\n      height 35px\n\n  #addComponentHeader\n    font-size 15px\n    margin 0 0 10px\n\n  input[type=\"text\"]:focus\n    box-shadow none\n\n.component-title\n  align-items center\n  display flex\n\n#componentEntityHeader\n  .collapsible-header\n    bottom 5px\n    position relative\n\n  a.button\n    margin-left 10px\n\n  .collapse-button\n    display none\n\n  .static\n    height 13px\n\n  .entityPrint\n    font-size 15px\n    padding-left 5px\n\n  .entityName\n    max-width 160px\n\n#mixinSelect\n  width 160px\n\n.propertyRow .texture\n  display flex\n\n  input\n    margin-left 0\n    width 120px\n\n/* Behaviors Panel Styles */\n.behaviors-panel\n  background-color var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  padding 10px\n\n  .panel-header\n    align-items center\n    display flex\n    justify-content space-between\n    margin-bottom 10px\n\n    .panel-header-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 14px\n      font-weight 600\n      gap 8px\n\n  .behaviors-list\n    .no-behaviors\n      text-align center\n      padding 20px 10px\n      color var(--color-base-content)\n      opacity 0.7\n\n      p\n        margin 0 0 15px\n\n    .entity-behavior\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 8px 12px\n\n      .behavior-info\n        align-items center\n        display flex\n        gap 10px\n\n        .behavior-name\n          color var(--color-base-content)\n          font-size 13px\n\n      .behavior-remove\n        background transparent\n        border none\n        color var(--color-base-content)\n        cursor pointer\n        font-size 14px\n        padding 4px\n        opacity 0.6\n\n        &:hover\n          color var(--color-error)\n          opacity 1\n\n/* Entity Behavior - Enhanced */\n.entity-behavior\n  align-items center\n  background var(--color-base-300)\n  border-radius 4px\n  display flex\n  justify-content space-between\n  margin-bottom 8px\n  padding 10px 12px\n\n  .behavior-info\n    align-items center\n    display flex\n    gap 12px\n\n    .behavior-details\n      display flex\n      flex-direction column\n      gap 2px\n\n      .behavior-name\n        color var(--color-base-content)\n        font-size 13px\n        font-weight 500\n\n      .behavior-event\n        color var(--color-primary)\n        font-size 11px\n\n  .behavior-actions\n    align-items center\n    display flex\n    gap 4px\n\n    .behavior-edit,\n    .behavior-remove\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 12px\n      padding 6px\n      opacity 0.6\n      transition all 0.2s\n\n      &:hover\n        color var(--color-primary)\n        opacity 1\n\n    .behavior-remove:hover\n      color var(--color-error)\n\n/* Entity Behavior Selected */\n.entity-behavior:hover\n  background var(--color-base-lighter)\n\n/* Behavior Modal */\n.modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  left 50%\n  max-height 80vh\n  max-width 600px\n  min-width 400px\n  overflow hidden\n  position fixed\n  top 50%\n  transform translate(-50%, -50%)\n  width 90%\n\n  .modal-title\n    align-items center\n    background var(--color-base-100)\n    color var(--color-base-content)\n    display flex\n    font-size 16px\n    font-weight 600\n    gap 10px\n    padding 15px 20px\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      margin-left auto\n      opacity 0.7\n\n      &:hover\n        opacity 1\n\n  .behavior-categories\n    max-height 400px\n    overflow-y auto\n    padding 15px\n\n    .behavior-category\n      margin-bottom 20px\n\n      &:last-child\n        margin-bottom 0\n\n      .category-title\n        color var(--color-primary)\n        font-size 12px\n        font-weight 600\n        margin-bottom 10px\n        text-transform uppercase\n\n      .category-behaviors\n        display flex\n        flex-wrap wrap\n        gap 8px\n\n        .behavior-option\n          align-items center\n          background var(--color-base-300)\n          border 1px solid transparent\n          border-radius 4px\n          color var(--color-base-content)\n          cursor pointer\n          display flex\n          gap 8px\n          padding 8px 12px\n          font-size 13px\n          transition all 0.2s\n\n          &:hover\n            background var(--color-base-lighter)\n            border-color var(--color-primary)\n\n          &.selected\n            background var(--color-primary)\n            color var(--color-primary-content)\n\n  .behavior-params\n    background var(--color-base-300)\n    border-top 1px solid var(--color-base-100)\n    padding 15px 20px\n\n    .params-title\n      color var(--color-base-content)\n      font-size 14px\n      font-weight 600\n      margin-bottom 15px\n\n    .params-form\n      .param-input\n        margin-bottom 15px\n\n        &:last-child\n          margin-bottom 0\n\n        label\n          color var(--color-base-content)\n          display block\n          font-size 12px\n          margin-bottom 5px\n\n        input[type=\"text\"],\n        input[type=\"number\"],\n        textarea,\n        select\n          background var(--color-base-100)\n          border 1px solid var(--color-base-300)\n          border-radius 4px\n          color var(--color-base-content)\n          padding 8px 10px\n          width 100%\n          box-sizing border-box\n\n          &:focus\n            border-color var(--color-primary)\n            outline none\n\n        textarea\n          min-height 60px\n          resize vertical\n\n        &.checkbox\n          align-items center\n          display flex\n\n          label\n            align-items center\n            cursor pointer\n            display flex\n            gap 8px\n            margin-bottom 0\n\n  .modal-actions\n    align-items center\n    border-top 1px solid var(--color-base-100)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n/* Icon sizes for behaviors */\n.behaviors-panel .panel-header .icon,\n.behavior-option .icon,\n.entity-behavior .icon\n  font-size 14px\n  width 16px\n\n/* Behavior Modal - Centered */\n.behavior-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 85vh\n  max-width 550px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  display flex\n  flex-direction column\n\n  .behavior-modal-header\n    align-items center\n    background var(--color-base-100)\n    border-bottom 1px solid var(--color-base-300)\n    display flex\n    justify-content space-between\n    padding 15px 20px\n\n    .behavior-modal-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 16px\n      font-weight 600\n      gap 10px\n\n    .behavior-modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 28px\n      line-height 1\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .behavior-modal-content\n    flex 1\n    overflow-y auto\n    padding 15px\n\n  .behavior-modal-footer\n    align-items center\n    border-top 1px solid var(--color-base-300)\n    display flex\n    gap 10px\n    justify-content space-between\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n// Help button\n.help-btn\n  align-items center\n  background var(--color-base-300)\n  border none\n  border-radius 4px\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  font-size 13px\n  gap 6px\n  padding 8px 12px\n  transition all 0.2s\n\n  &:hover\n    background var(--color-base-lighter)\n    color var(--color-primary)\n\n  &.active\n    background var(--color-primary)\n    color white\n\n// Help section\n.behavior-help\n  background var(--color-base-100)\n  border-radius 6px\n  max-height 350px\n  overflow-y auto\n  padding 15px\n\n  .help-section\n    margin-bottom 15px\n\n    &:last-child\n      margin-bottom 0\n\n    h4\n      color var(--color-primary)\n      font-size 13px\n      font-weight 600\n      letter-spacing 0.5px\n      margin-bottom 8px\n      text-transform uppercase\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      line-height 1.5\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    li\n      border-bottom 1px solid var(--color-base-300)\n      color var(--color-base-content)\n      font-size 12px\n      line-height 1.4\n      padding 6px 0\n\n      &:last-child\n        border-bottom none\n\n    pre\n      background var(--color-base-400)\n      border-radius 4px\n      color var(--color-base-content)\n      font-family 'Monaco', 'Menlo', 'Ubuntu Mono', monospace\n      font-size 11px\n      line-height 1.4\n      overflow-x auto\n      padding 12px\n      white-space pre-wrap\n      word-break break-all\n\n.footer-actions\n  display flex\n  gap 10px\n  margin-left auto\n\n.modal-title .icon\n  font-size 18px\n  width 20px\n\n// Show More button for beginner mode\n.showMoreContainer\n  padding: 8px 0\n  text-align: center\n  border-top: 1px solid var(--color-base-300)\n  margin-top: 4px\n\n.showMoreButton\n  background: var(--color-base-100)\n  border: 1px solid var(--color-base-300)\n  border-radius: 4px\n  color: var(--color-base-content)\n  cursor: pointer\n  font-size: 12px\n  padding: 6px 12px\n  display: flex\n  align-items: center\n  justify-content: center\n  gap: 6px\n  margin: 0 auto\n  transition: all 0.2s\n\n  &:hover\n    background: var(--color-primary)\n    border-color: var(--color-primary)\n    color: var(--color-primary-content)\n\n// Property hint indicator\n.propertyHint\n  display: inline-block\n  width: 14px\n  height: 14px\n  line-height: 14px\n  text-align: center\n  background: var(--color-base-100)\n  border-radius: 50%\n  font-size: 10px\n  margin-left: 4px\n  color: var(--color-primary)\n  cursor: help\n\n  &:hover\n    background: var(--color-primary)\n    color: var(--color-primary-content)\n\n// Component help button in header\n.componentHelpButton\n  padding: 2px 6px\n  margin-right: 4px\n  font-size: 12px\n  color: #aaa\n  cursor: pointer\n  transition: color 0.2s\n  background: transparent\n  border: none\n\n  &:hover\n    color: #fff\n\n// Component Help Modal\n.component-help-modal\n  max-height: 70vh\n  overflow-y: auto\n  padding: 10px\n\n  .help-overview\n    margin-bottom: 20px\n    padding-bottom: 15px\n    border-bottom: 1px solid var(--color-base-300)\n\n    h4\n      color: var(--color-primary)\n      font-size: 14px\n      font-weight: 600\n      margin-bottom: 10px\n\n    p\n      color: var(--color-base-content)\n      font-size: 13px\n      line-height: 1.5\n\n  .help-properties,\n  .help-all-properties\n    margin-bottom: 20px\n\n    h4\n      color: var(--color-primary)\n      font-size: 13px\n      font-weight: 600\n      margin-bottom: 8px\n\n    .help-tip\n      color: var(--color-base-content)\n      font-size: 12px\n      font-style: italic\n      opacity: 0.8\n      margin-bottom: 12px\n\n    ul\n      list-style: none\n      margin: 0\n      padding: 0\n\n    .help-property\n      display: flex\n      flex-direction: column\n      padding: 8px 10px\n      margin-bottom: 6px\n      background: var(--color-base-300)\n      border-radius: 4px\n\n      .property-name\n        color: var(--color-primary)\n        font-size: 12px\n        font-weight: 600\n        font-family: 'Monaco', 'Menlo', monospace\n        margin-bottom: 4px\n\n      .property-desc\n        color: var(--color-base-content)\n        font-size: 11px\n        line-height: 1.4\n\n  .help-all-properties\n    h4\n      margin-top: 15px\n\n  .help-no-beginner\n    padding: 15px\n    background: var(--color-base-300)\n    border-radius: 4px\n\n    p\n      color: var(--color-base-content)\n      font-size: 12px\n      margin: 0\n\n// Class Manager Styles\n.class-manager\n  display: flex\n  flex-direction: column\n  gap: 8px\n  width: 165px\n\n.class-manager-dropdown\n  display: flex\n  gap: 6px\n  align-items: center\n\n  .class-select\n    flex: 1\n    background: var(--color-base-300)\n    border: 1px solid var(--color-base-300)\n    border-radius: 4px\n    color: var(--color-primary)\n    font-size: 13px\n    padding: 4px 8px\n    min-height: 26px\n    cursor: pointer\n    width: 100%\n\n    &:focus\n      outline: none\n      border-color: var(--color-primary)\n\n  .class-add-button\n    background: var(--color-base-300)\n    border: 1px solid var(--color-base-300)\n    border-radius: 4px\n    color: var(--color-base-content)\n    cursor: pointer\n    padding: 4px 8px\n    display: flex\n    align-items: center\n    justify-content: center\n    min-width: 28px\n    min-height: 26px\n    transition: all 0.2s\n\n    &:hover\n      background: var(--color-primary)\n      border-color: var(--color-primary)\n      color: var(--color-primary-content)\n\n.class-tags\n  display: flex\n  flex-wrap: wrap\n  gap: 4px\n\n.class-tag\n  align-items: center\n  background: var(--color-base-300)\n  border-radius: 4px\n  display: flex\n  gap: 4px\n  padding: 2px 6px\n  font-size: 12px\n\n.class-tag-name\n  color: var(--color-primary)\n  cursor: pointer\n  max-width: 100px\n  overflow: hidden\n  text-overflow: ellipsis\n  white-space: nowrap\n\n  &:hover\n    text-decoration: underline\n\n.class-tag-input\n  background: var(--color-base-100)\n  border: 1px solid var(--color-primary)\n  border-radius: 2px\n  color: var(--color-base-content)\n  font-size: 12px\n  padding: 2px 4px\n  width: 80px\n\n  &:focus\n    outline: none\n\n.class-tag-delete\n  background: transparent\n  border: none\n  color: var(--color-base-content)\n  cursor: pointer\n  font-size: 10px\n  opacity: 0.6\n  padding: 0\n\n  &:hover\n    color: var(--color-error)\n    opacity: 1\n\n.class-add\n  display: flex\n  gap: 4px\n\n.class-add-input\n  background: var(--color-base-300)\n  border: 1px solid transparent\n  border-radius: 4px\n  color: var(--color-base-content)\n  font-size: 12px\n  padding: 4px 8px\n  width: 120px\n\n  &:focus\n    border-color: var(--color-primary)\n    outline: none\n\n.class-add-button\n  align-items: center\n  background: var(--color-base-300)\n  border: none\n  border-radius: 4px\n  color: var(--color-base-content)\n  cursor: pointer\n  display: flex\n  font-size: 12px\n  padding: 4px 8px\n\n  &:hover\n    background: var(--color-primary)\n    color: var(--color-primary-content)\n","@import './lib';\n\n.entityPrint\n  font-family var(--font-normal)\n  line-height 1.15em\n\n.entityName\n  display inline-block\n  overflow hidden\n  position relative\n  text-overflow ellipsis\n  top 3px\n  white-space nowrap\n\n[data-entity-name-type=\"id\"]\n  color var(--color-error)\n\n[data-entity-name-type=\"class\"]\n  color var(--color-success)\n\n[data-entity-name-type=\"mixin\"]\n  color var(--color-warning)\n",".help-lists\n  display flex\n  justify-content space-around\n\n.help-list\n  list-style none\n  margin 0\n  padding 0 0 10px\n  width 350px\n\n.help-list li\n  margin-right 40px\n\n.help-key-unit\n  line-height 1.8\n  margin-right 2em\n  padding 5px 0\n\n.help-key\n  bottom 2px\n  margin-right 4px\n  min-width 60px\n  position relative\n\n.help-key span\n  background-color var(--color-neutral)\n  background-repeat repeat-x\n  border 1px solid var(--color-neutral-content)\n  border-radius 3px\n  box-shadow 0 0 5px #000\n  color var(--color-neutral-content)\n  display inline-block\n  font-size 12px\n  padding 0 8px\n  text-align center\n\n.help-key-def\n  color var(--color-base-content)\n  display inline-block\n  margin-left 1em\n","@import './lib';\n\n.select__control\n  border 0\n  border-radius 0\n  cursor pointer\n  min-height 26px\n\n.select__indicator\n  color var(--color-base-content)\n  height 26px\n\n.select__indicator-separator\n  display none\n\n.select__input\n  min-height auto !important\n\n.select__control,\n.select__menu\n  background var(--color-base-300)\n\n.select__option\n  cursor pointer\n  padding 5px 10px\n\n.select__placeholder,\n.select__menu\n  color var(--color-base-content)\n\n.select__single-value\n  color var(--color-primary)\n\n.select__control--is-focused\n  box-shadow none !important\n\n.select__label\n  font-size 11px\n\n.select__option--is-focused\n  background var(--color-accent-hover)\n  color var(--color-accent-content)\n\n.select__option--is-selected\n  background var(--color-accent)\n  color var(--color-accent-content)\n\n.select__value-container\n  height 26px\n  position static\n\n  &.select__value-container--is-multi\n    height auto\n    padding 6px\n\n.select__dropdown-indicator\n  padding 3px 8px\n\n.select__multi-value\n  background var(--color-base-200)\n  color var(--color-primary)\n\n.select__multi-value__label\n  color var(--color-primary)\n\n.select__multi-value__remove:hover\n  background var(--color-base-200)\n  color var(--color-base-content)\n",".modal\n  animation animateopacity 0.2s ease-out\n  background-color rgba(0, 0, 0, 0.6)\n  display flex\n  height 100%\n  left 0\n  overflow auto\n  position fixed\n  top 0\n  width 100%\n  z-index 9999999999\n\n.modal h3\n  font-size 18px\n  font-weight 600\n  margin 0.6em 0\n\n#textureModal .modal-content\n  height calc(100% - 50px)\n  width calc(100% - 50px)\n\n.modal-content\n  background-color var(--color-base-200)\n  box-shadow 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5)\n  margin auto\n  overflow hidden\n  padding 0\n\n.close\n  color var(--color-base-content)\n  float right\n  font-size 28px\n  font-weight bold\n\n.close:hover,\n.close:focus\n  color var(--color-primary)\n  cursor pointer\n  text-decoration none\n\n.modal-header\n  color var(--color-base-content)\n  padding 2px 16px\n\n.modal-body\n  color var(--color-base-content)\n  overflow auto\n  padding 16px\n\n.modal-footer\n  color var(--color-base-content)\n  padding 2px 16px\n\n/* Gallery */\n.gallery\n  background var(--color-base-200)\n  display flex\n  flex-wrap wrap\n  margin 15px auto 0\n  max-height calc(100vh - 370px)\n  overflow auto\n  padding 15px 3px 3px\n\n.newimage .gallery\n  padding 16px\n\n.gallery li\n  border-radius 2px\n  box-shadow 0 0 6px rgba(0, 0, 0, 0.6)\n  cursor pointer\n  margin 8px\n  overflow hidden\n  width 155px\n\n.gallery li.selected,\n.gallery li:hover\n  box-shadow 0 0 0 2px var(--color-primary)\n\n.gallery li .detail\n  background-color var(--color-base-100)\n  margin 0\n  min-height 60px\n  padding 3px 10px\n\n.preview\n  padding 10px\n  width 150px\n\n.preview input\n  display block\n  margin 8px 0\n  width 144px\n\n.preview .iderror\n  background unquote(\"color-mix(in oklab, var(--color-error) 8%, var(--color-base-300))\")\n  color var(--color-error)\n  font-weight 600\n  margin-bottom 8px\n  padding 3px 5px\n  text-align center\n  width 148px\n\n.preview button\n  width 155px\n\n.preview .detail .title\n  color var(--color-base-content)\n  display inline-block\n  max-width 155px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.gallery li.selected .detail,\n.gallery li:hover .detail\n  background-color var(--color-base-lighter)\n\n.gallery li .detail span\n  color var(--color-base-content)\n  display block\n  margin-top 4px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n  width 140px\n\n.gallery li.selected .detail span,\n.gallery li:hover .detail span\n  color var(--color-base-content)\n\n.gallery li .detail span.title\n  color var(--color-property-defined)\n  font-weight 600\n\n.modal button\n  appearance none\n  background-color var(--color-primary)\n  border none\n  border-radius 0\n  box-shadow none\n  color var(--color-primary-content)\n  cursor pointer\n  display inline-block\n  font-size 12px\n  line-height 1.8\n  margin 0 10px 0 0\n  padding 5px 10px\n\n.modal button:focus\n  outline none\n\n.modal button:hover,\n.modal button.hover\n  background-color var(--color-primary-hover)\n\n.modal button:active,\n.modal button.active\n  background-color var(--color-primary-hover)\n\n.modal button:disabled\n  background-color #666\n  color #fff\n  cursor default\n\n.newimage\n  background-color var(--color-base-100)\n  color var(--color-base-content)\n  display flex\n  font-size 13px\n  justify-content space-between\n  margin-top 10px\n  overflow auto\n  padding 10px\n\n.newimage input\n  color var(--color-primary)\n  padding 3px 5px\n\n.texture canvas + input\n  margin-left 5px\n\n.texture svg\n  padding-right 5px\n\n.uploader-normal-button .hidden\n  display none\n\n.assets.search\n  margin-top 10px\n  position relative\n  width 200px\n\n.assets.search input\n  box-sizing border-box\n  padding-right 20px\n  width 100%\n\n.assets.search svg\n  position absolute\n  right 5px\n  top 5px\n\n.new_asset_options\n  margin 10px\n\n.new_asset_options > ul\n  margin-left 10px\n  padding 5px\n\n.new_asset_options > ul > li\n  padding 10px 0\n\n.new_asset_options .imageUrl\n  margin-left 5px\n  width 350px\n\n.texture canvas\n  border 1px solid var(--color-base-100)\n  cursor pointer\n","@import './lib';\n\n#viewportBar\n  align-items center\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  display flex\n  flex-grow 2\n  font-size 15px\n  height 32px\n  justify-content space-between\n  padding 0 5px\n\n.toolbarButtons\n  align-items center\n  display flex\n  gap 6px\n\n  a.button\n    & svg\n      padding 8px\n\n    &:not(.active) svg:hover\n      background-color var(--color-base-lighter)\n\n  .active svg\n    background-color var(--color-primary)\n    color var(--color-primary-content)\n\n  .active:hover svg\n    color var(--color-primary-content) !important\n\n.local-transform\n  align-items center\n  display flex\n  gap 5px\n  padding 0 10px\n\n.local-transform label\n  color var(--color-base-content)\n\n#cameraSelect\n  cursor pointer\n  width 120px\n\n  .select__dropdown-indicator\n    padding-left 3px\n    padding-right 3px\n\n#cameraToolbar\n  align-items center\n  display flex\n\n  .select__control\n    background none\n\n  .select__single-value\n    color var(--color-base-content)\n\n    &:hover\n      color var(--color-primary)\n\n#viewportHud\n  display none\n\n  @media (min-width: 1025px)\n    display block\n","@import './lib';\n\n.select-widget\n  display inline-block\n  width 157px"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/style/lib.styl","webpack://./src/style/index.styl","webpack://./src/style/scenegraph.styl","webpack://./src/style/components.styl","webpack://./src/style/entity.styl","webpack://./src/style/help.styl","webpack://./src/style/select.styl","webpack://./src/style/textureModal.styl","webpack://./src/style/viewport.styl","webpack://./src/style/widgets.styl"],"names":[],"mappings":"AACA;;EACE,uBAAY;EACZ,iBAAU;ACCZ;ADEA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;ACAlB;AARA;;;EAGE,+BAAY;AAUd;AARA;EACE,iCAAW;EACX,gCAAM;EACN,eAAU;EACV,SAAO;EACP,gBAAS;AAUX;AARA,iHAAA;AACA;EACE,kBAAc;EAEd,sBAAkB;EAClB,yBAAkB;EAClB,yBAAkB;EAClB,6BAAsB;EACtB,wBAAiB;EACjB,6BAAyB;EACzB,0BAAmB;EACnB,kCAA2B;EAC3B,uBAAgB;EAChB,4BAAwB;EACxB,qBAAiB;EACjB,6BAAyB;EACzB,qBAAc;EACd,0BAAsB;EACtB,qBAAiB;EACjB,6BAAyB;EACzB,wBAAiB;EACjB,6BAAyB;EACzB,sBAAe;EACf,2BAAuB;EACvB,qGAAwB;EACxB,gKAA0B;AAS5B;AANA;EACE,+EAAsB;EACtB,+EAAuB;EACvB,mFAAyB;EACzB,6EAAsB;EACtB,+EAAuB;EACvB,+LAA0B;AAqN1B,4DAAA;AA5MF;ADxDA;;EACE,uBAAY;EACZ,iBAAU;AC2DZ;ADxDA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;AC0DlB;AClEA;EACE,uCAAiB;EACjB,8CAAc;EACd,gBAAQ;EACR,kBAAS;EACT,aAAQ;EACR,aAAQ;EACR,eAAU;EACV,QAAI;ADoEN;AClEE;EACE,mBAAY;EACZ,aAAQ;EACR,2BAAgB;EAChB,QAAI;EACJ,cAAQ;EACR,eAAU;ADoEd;AClEI;EACE,WAAM;EACN,eAAO;ADoEb;AClEI;EACE,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,WAAM;EACN,YAAO;EACP,kBAAc;EACd,iCAAW;EACX,gCAAM;EACN,uCAAO;EACP,yBAAW;EACX,eAAO;ADoEb;AClEM;EACE,gCAAW;EACX,mCAAM;EACN,kCAAa;ADoErB;AClEM;EACE,sBAAU;ADoElB;AClEM;EACE,YAAQ;EACR,mBAAO;ADoEf;AClEI;EACE,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,WAAM;EACN,YAAO;EACP,kBAAc;EACd,iCAAW;EACX,gCAAM;EACN,uCAAO;EACP,yBAAW;EACX,eAAO;ADoEb;AClEM;EACE,gCAAW;EACX,mCAAM;EACN,kCAAa;ADoErB;AClEM;EACE,WAAM;EACN,YAAO;ADoEf;AClEA;EACE,iCAAW;EACX,2CAAW;EACX,aAAQ;EACR,sBAAe;EACf,iBAAS;EACT,iBAAY;EACZ,YAAM;EACN,gBAAU;EACV,gBAAU;EACV,kBAAO;EACP,gBAAW;EACX,kBAAS;EACT,aAAQ;EACR,mBAAe;ADoEjB;AClEE;EACE,WAAS;EACT,kBAAS;EACT,QAAM;EACN,MAAI;EACJ,SAAO;EACP,UAAM;EACN,iBAAO;EACP,uBAAW;EAKX,uBAAW;EACX,2BAAW;ADgEf;ACpEI;EACE,gCAAW;EACX,YAAQ;ADsEd;AClEE;EACE,gCAAW;ADoEf;ACjEE;EACE,kBAAS;EACT,WAAM;EACN,QAAI;EACJ,2BAAU;EACV,WAAM;EACN,YAAO;EACP,iCAAW;EACX,kBAAc;EACd,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,iBAAO;EACP,YAAQ;EACR,UAAQ;EACR,wBAAW;EACX,uCAAO;ADmEX;ACjEI;EACE,eAAU;EACV,gCAAM;EACN,YAAQ;ADmEd;ACjEI;;EACE,UAAQ;EACR,gCAAW;EACX,kCAAa;ADoEnB;AClEM;;EACE,mCAAM;EACN,UAAQ;ADqEhB;ACnEE;EACE,YAAQ;ADqEZ;ACnEE;EACE,mBAAY;EACZ,iCAAW;EACX,sBAAW;EACX,eAAO;EACP,aAAQ;EACR,QAAI;EACJ,8BAAgB;EAChB,gBAAY;EACZ,YAAQ;EACR,mBAAY;EACZ,WAAM;EACN,eAAU;ADqEd;ACnEI;EACE,qCAAW;EACX,kCAAM;ADqEZ;ACnEI;EACE,qCAAiB;EACjB,kCAAM;ADqEZ;ACnEM;EACE,mBAAY;EACZ,aAAQ;EACR,kBAAc;ADqEtB;ACnEQ;EACE,2BAAM;ADqEhB;ACjEQ;;;;EAIE,cAAM;ADmEhB;AChEQ;;;;EAIE,cAAM;ADkEhB;AChEE;EACE,2BAAM;ADkEV;AChEE;EACE,gBAAY;ADkEhB;AChEE;EACE,aAAQ;ADkEZ;AC/DE;EACE,aAAQ;EACR,sBAAe;EACf,oBAAY;EACZ,QAAI;EACJ,gBAAQ;EACR,iCAAW;EACX,kBAAc;EACd,gBAAY;EACZ,cAAY;EACZ,qCAAW;EACX,YAAQ;EACR,gBAAU;ADiEd;AC/DI;EACE,aAAQ;EACR,mBAAY;EACZ,QAAI;EACJ,gCAAM;EACN,eAAU;EACV,gBAAQ;EACR,kBAAc;EACd,0BAAW;EACX,mBAAY;ADiElB;AC/DM;EACE,eAAU;EACV,gBAAY;ADiEpB;AC/DM;EACE,gCAAW;EACX,mCAAM;ADiEd;AC/DM;EACE,eAAU;ADiElB;AC/DI;EACE,YAAO;ADiEb;AC/DI;;EACE,eAAO;ADkEb;AChEI;;EACE,gCAAW;EACX,mCAAM;ADmEZ;ACjEI;EACE,gCAAM;EACN,eAAU;EACV,gBAAY;ADmElB;ACjEE;EACE,gCAAM;ADmEV;ACjEE;EACE,gCAAM;ADmEV;ACjEE;EACE,gCAAM;EACN,qBAAQ;EACR,kBAAW;EACX,WAAM;ADmEV;ACjEE;EACE,gCAAM;ADmEV;ACjEE;EACE,aAAQ;EACR,eAAU;EACV,YAAQ;EACR,kBAAS;ADmEb;ACjEI;EACE,iCAAW;EACX,gBAAc;EACd,sBAAW;EACX,2BAAM;EACN,iBAAQ;EACR,WAAM;ADmEZ;ACjEI;EACE,gCAAM;ADmEZ;ACjEI;;EACE,kBAAS;EACT,WAAM;EACN,SAAI;ADoEV;AClEE;EACE,iCAAW;EACX,gCAAM;EACN,eAAO;EACP,cAAK;EACL,eAAU;EACV,yBAAO;EACP,mBAAY;EACZ,aAAQ;EACR,gBAAW;EACX,UAAQ;EACR,WAAM;ADoEV;AClEA;EACE,kBAAS;ADoEX;AClEE;EACE,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,sCAAW;EACX,iBAAW;EACX,gBAAW;EACX,eAAS;EACT,SAAI;EACJ,UAAK;EACL,YAAM;EACN,cAAQ;ADoEZ;AClEI;EACE,gCAAM;EACN,eAAO;EACP,iBAAQ;ADoEd;AClEM;EACE,qCAAW;EACX,kCAAM;ADoEd;AClEM;EACE,+BAAW;EACX,kCAAM;ADoEd;ACjEA;EACE,kBAAS;EACT,aAAQ;ADmEV;ACjEA;EACE,0BAAc;ADmEhB;ACjEA;EACE,iBAAY;EACZ,0BAAc;EACd,iBAAa;ADmEf;ACjEA;EACE,eAAS;EACT,SAAI;EACJ,WAAK;EACL,YAAO;EACP,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,cAAQ;EACR,cAAQ;EACR,gBAAU;EACV,iBAAW;EACX,gBAAW;EACX,sCAAW;ADmEb;ACjEA;EACE,sBAAQ;EACR,eAAU;EACV,2BAAM;EACN,8CAAc;EACd,gBAAY;EACZ,yBAAe;EACf,qBAAe;ADmEjB;ACjEA;EACE,aAAQ;EACR,mBAAY;EACZ,SAAI;EACJ,kBAAQ;EACR,eAAO;EACP,yCAA2B;EAC3B,gCAAM;EACN,kCAAY;ADmEd;ACjEA;EACE,iCAAW;EACX,uCAAkB;ADmEpB;ACjEA;EACE,gCAAW;EACX,mCAAM;EACN,uCAAkB;ADmEpB;ACjEA;EACE,WAAM;EACN,kBAAW;EACX,eAAU;ADmEZ;ACjEA;EACE,OAAK;EACL,eAAU;EACV,gBAAY;ADmEd;ACjEA;EACE,eAAU;EACV,gCAAM;EACN,kCAAY;EACZ,iCAAW;EACX,gBAAQ;EACR,kBAAc;EACd,YAAS;ADmEX;ACjEA;EACE,cAAM;EACN,iCAAW;EACX,UAAS;ADmEX;AChEA;EACE,kBAAc;ADkEhB;AChEE;EACE,gBAAc;ADkElB;AChEA;EACE,aAAQ;EACR,mBAAY;EACZ,QAAI;EACJ,sBAAQ;EACR,eAAU;EACV,2BAAM;EACN,gBAAY;EACZ,yBAAe;EACf,qBAAe;ADkEjB;AChEE;EACE,eAAU;EACV,WAAM;EACN,kBAAW;ADkEf;AChEA;EACE,kBAAa;ADkEf;AC/DE;EACE,YAAO;ADiEX;AC/DE;;EACE,eAAO;EACP,YAAQ;EACR,wBAAW;ADkEf;AChEE;;EACE,UAAQ;ADmEZ;AChEA;EACE,eAAS;EACT,MAAI;EACJ,OAAK;EACL,QAAM;EACN,SAAO;EACP,2BAAW;EACX,cAAQ;EACR,aAAQ;EACR,mBAAY;EACZ,uBAAgB;ADkElB;AChEA;EACE,iCAAW;EACX,qCAAO;EACP,kBAAc;EACd,YAAM;EACN,gBAAW;EACX,aAAQ;EACR,sBAAe;EACf,uCAAW;EACX,gBAAS;ADkEX;AChEA;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,aAAQ;EACR,4CAAc;EACd,cAAY;ADkEd;AChEE;EACE,SAAO;EACP,eAAU;EACV,gCAAM;EACN,aAAQ;EACR,mBAAY;EACZ,QAAI;ADkER;AChEE;EACE,gBAAW;EACX,YAAO;EACP,4BAAM;EACN,iBAAU;EACV,eAAO;EACP,UAAQ;EACR,cAAY;ADkEhB;AChEI;EACE,gCAAM;ADkEZ;AChEA;EACE,aAAQ;EACR,gBAAW;EACX,OAAK;EACL,aAAQ;EACR,sBAAe;ADkEjB;AChEE;EACE,kBAAO;EACP,kBAAU;EACV,4BAAM;ADkEV;AChEA;EACE,aAAQ;EACR,sBAAe;EACf,QAAI;EACJ,iBAAW;EACX,gBAAW;EACX,OAAK;ADkEP;AChEA;EACE,aAAQ;EACR,mBAAY;EACZ,QAAI;EACJ,kBAAQ;EACR,kBAAc;EACd,eAAO;EACP,2BAAW;EACX,gCAAM;ADkER;AChEE;EACE,iCAAW;ADkEf;AChEE;EACE,gCAAW;EACX,mCAAM;EACN,kCAAa;ADkEjB;AChEI;EACE,mCAAM;ADkEZ;AChEA;EACE,iBAAU;EACV,WAAM;EACN,kBAAW;ADkEb;AChEA;EACE,OAAK;EACL,kBAAU;ADkEZ;AChEA;EACE,kBAAU;EACV,4BAAM;EACN,sBAAY;EACZ,iCAAW;EACX,gBAAQ;EACR,kBAAc;ADkEhB;AC/DA;EACE,aAAQ;EACR,yBAAgB;EAChB,SAAI;EACJ,gBAAW;EACX,iBAAY;EACZ,yCAAW;ADiEb;AC/DE;EACE,iCAAW;EACX,qCAAO;EACP,gCAAM;EACN,iBAAQ;EACR,kBAAc;EACd,eAAO;EACP,kBAAU;EACV,oBAAW;ADiEf;AC/DI;EACE,iCAAW;ADiEjB;AC/DE;EACE,iCAAW;EACX,qCAAO;EACP,4BAAM;EACN,iBAAQ;EACR,kBAAc;EACd,eAAO;EACP,kBAAU;EACV,gBAAY;EACZ,oBAAW;EACX,YAAQ;EACR,oBAAe;ADiEnB;AC/DI;EACE,gCAAW;EACX,kCAAa;EACb,mCAAM;EACN,UAAQ;EACR,oBAAe;ADiErB;AC/DM;EACE,uBAAO;ADiEf;AC9DA;EACE,kBAAS;ADgEX;AC9DA;EACE,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,QAAI;EACJ,YAAO;EACP,eAAQ;EACR,kBAAc;EACd,iCAAW;EACX,gCAAM;EACN,uCAAO;EACP,eAAU;EACV,gBAAY;EACZ,yBAAW;EACX,eAAO;EACP,mBAAY;ADgEd;AC9DE;EACE,gCAAW;EACX,mCAAM;EACN,kCAAa;ADgEjB;AC9DE;EACE,sBAAU;ADgEd;AC9DE;EACE,eAAU;EACV,WAAM;EACN,YAAO;ADgEX;AC7DA;EACE,eAAS;EACT,QAAI;EACJ,SAAK;EACL,gCAAU;EACV,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,gBAAU;EACV,gBAAU;EACV,gBAAW;EACX,gBAAS;EACT,uCAAW;EACX,cAAQ;EACR,aAAQ;EACR,sBAAe;AD+DjB;AC7DE;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,8CAAc;EACd,gBAAY;EACZ,eAAU;EACV,2BAAM;EACN,yBAAe;EACf,qBAAe;EACf,iCAAW;EACX,0BAAc;AD+DlB;AC7DI;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,YAAQ;EACR,kBAAc;AD+DpB;AC7DM;EACE,iCAAW;EACX,2BAAM;AD+Dd;AC7DE;EACE,OAAK;EACL,gBAAW;EACX,6BAAW;AD+Df;AC7DE;EACE,kBAAQ;EACR,kBAAW;EACX,gCAAM;EACN,YAAQ;EACR,eAAU;AD+Dd;AC7DE;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,8CAAc;EACd,2BAAW;AD+Df;AC7DI;EACE,iCAAW;AD+DjB;AC7DI;EACE,mBAAc;AD+DpB;AC7DI;EACE,aAAQ;EACR,sBAAe;EACf,QAAI;EACJ,OAAK;EACL,YAAU;AD+DhB;AC7DM;EACE,eAAU;EACV,gBAAY;EACZ,gCAAM;AD+Dd;AC7DM;EACE,eAAU;EACV,2BAAM;AD+Dd;AC7DM;EACE,eAAU;EACV,gCAAM;EACN,YAAQ;EACR,gBAAU;EACV,gBAAS;EACT,uBAAc;EACd,mBAAY;AD+DpB;AC7DI;EACE,aAAQ;EACR,QAAI;EACJ,iBAAY;AD+DlB;AC7DM;;EAEE,iCAAW;EACX,uCAAO;EACP,gCAAM;EACN,eAAO;EACP,gBAAQ;EACR,eAAU;EACV,kBAAc;EACd,oBAAW;AD+DnB;AC7DQ;;EACE,gCAAW;EACX,kCAAa;EACb,mCAAM;ADgEhB;AC9DM;EACE,8BAAW;EACX,gCAAa;ADgErB;AC7DA;EACE,2BAAW;EACX,SAAO;EACP,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,OAAK;EACL,eAAS;EACT,QAAM;EACN,MAAI;EACJ,cAAQ;AD+DV;AC7DA;EACE,iCAAW;EACX,kBAAc;EACd,gBAAW;EACX,gBAAU;EACV,gBAAU;EACV,gBAAS;EACT,UAAM;EACN,uCAAW;EACX,kBAAS;EACT,YAAO;AD+DT;AC7DE;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,8CAAc;AD+DlB;AC7DI;EACE,SAAO;EACP,eAAU;EACV,gCAAM;AD+DZ;AC7DI;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,eAAU;EACV,YAAQ;EACR,UAAQ;AD+Dd;AC7DM;EACE,UAAQ;AD+DhB;AC7DE;EACE,aAAQ;EACR,gBAAW;EACX,gBAAW;AD+Df;AC7DI;EACE,mBAAc;AD+DpB;AC7DM;EACE,gBAAc;AD+DtB;AC7DM;EACE,cAAQ;EACR,eAAU;EACV,gBAAY;EACZ,gCAAM;EACN,kBAAc;EACd,yBAAe;AD+DvB;AC7DM;EACE,WAAM;EACN,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,gCAAM;EACN,iBAAQ;EACR,eAAU;EACV,sBAAW;AD+DnB;AC7DQ;EACE,kCAAa;EACb,aAAQ;AD+DlB;AC7DM;EACE,aAAQ;EACR,sBAAe;EACf,QAAI;AD+DZ;AC7DM;EACE,aAAQ;EACR,mBAAY;EACZ,SAAI;AD+DZ;AC7DQ;EACE,eAAU;EACV,eAAU;EACV,2BAAM;EACN,gBAAY;AD+DtB;AC7DQ;EACE,OAAK;AD+Df;AC7DI;EACE,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,kBAAQ;EACR,mBAAc;EACd,eAAU;EACV,gCAAM;EACN,gBAAY;AD+DlB;AC7DM;EACE,iBAAO;AD+Df;AC7DQ;EACE,gBAAc;AD+DxB;AC7DE;EACE,aAAQ;EACR,yBAAgB;EAChB,SAAI;EACJ,kBAAQ;EACR,2CAAW;AD+Df;AC7DI;EACE,iBAAQ;EACR,kBAAc;EACd,eAAU;EACV,eAAO;EACP,oBAAW;AD+DjB;AC7DI;EACE,iCAAW;EACX,uCAAO;EACP,gCAAM;AD+DZ;AC7DM;EACE,iCAAW;AD+DnB;AC7DI;EACE,gCAAW;EACX,sCAAO;EACP,mCAAM;AD+DZ;AC7DM;EACE,uBAAO;AD+Df;AC5DA;EACE,kBAAS;AD8DX;AC5DA;EACE,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,QAAI;EACJ,YAAO;EACP,eAAQ;EACR,kBAAc;EACd,iCAAW;EACX,gCAAM;EACN,uCAAO;EACP,eAAU;EACV,gBAAY;EACZ,yBAAW;EACX,eAAO;EACP,mBAAY;AD8Dd;AC5DE;EACE,gCAAW;EACX,mCAAM;EACN,kCAAa;AD8DjB;AC5DE;EACE,sBAAU;AD8Dd;AC5DE;EACE,eAAU;EACV,WAAM;EACN,YAAO;AD8DX;AC3DA;EACE,eAAS;EACT,QAAI;EACJ,SAAK;EACL,gCAAU;EACV,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,gBAAU;EACV,gBAAU;EACV,gBAAW;EACX,gBAAS;EACT,uCAAW;EACX,cAAQ;EACR,aAAQ;EACR,sBAAe;AD6DjB;AC3DA;EACE,aAAQ;EACR,sBAAe;EACf,OAAK;EACL,gBAAS;AD6DX;AC3DE;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,8CAAc;EACd,gBAAY;EACZ,eAAU;EACV,2BAAM;EACN,yBAAe;EACf,qBAAe;EACf,iCAAW;EACX,0BAAc;AD6DlB;AC3DI;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,YAAQ;EACR,kBAAc;AD6DpB;AC3DM;EACE,iCAAW;EACX,2BAAM;AD6Dd;AC3DE;EACE,OAAK;EACL,gBAAW;EACX,iBAAW;AD6Df;AC3DE;EACE,kBAAQ;EACR,kBAAW;EACX,gCAAM;EACN,YAAQ;EACR,eAAU;AD6Dd;AC3DE;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,8CAAc;EACd,2BAAW;EACX,eAAO;AD6DX;AC3DI;EACE,iCAAW;AD6DjB;AC3DI;EACE,gCAAW;EACX,mCAAM;AD6DZ;AC3DM;EACE,mCAAM;EACN,YAAQ;AD6DhB;AC3DI;EACE,mBAAc;AD6DpB;AC3DI;EACE,eAAU;EACV,gBAAY;EACZ,gCAAM;AD6DZ;AC3DI;EACE,eAAU;EACV,2BAAM;AD6DZ;AC1DA;EACE,2CAAW;EACX,iBAAW;EACX,gBAAW;AD4Db;AC1DE;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,iCAAW;EACX,gBAAS;EACT,MAAI;AD4DR;AC1DI;EACE,SAAO;EACP,eAAU;EACV,2BAAM;EACN,gBAAY;AD4DlB;AC1DI;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,YAAQ;EACR,kBAAc;AD4DpB;AC1DM;EACE,iCAAW;EACX,2BAAM;AD4Dd;AC1DE;EACE,UAAQ;AD4DZ;AC1DE;EACE,8CAAc;AD4DlB;AC1DI;EACE,mBAAc;AD4DpB;AC1DI;EACE,aAAQ;EACR,8BAAgB;EAChB,mBAAY;EACZ,kBAAQ;EACR,eAAO;EACP,2BAAW;AD4DjB;AC1DM;EACE,iCAAW;AD4DnB;AC1DM;EACE,eAAU;EACV,gBAAY;EACZ,gCAAM;AD4Dd;AC1DM;EACE,eAAU;EACV,2BAAM;EACN,kCAAY;EACZ,iCAAW;EACX,gBAAQ;EACR,kBAAc;AD4DtB;AC1DI;EACE,2BAAQ;EACR,iCAAW;AD4DjB;AC1DM;EACE,aAAQ;EACR,sBAAe;EACf,QAAI;EACJ,cAAQ;EACR,8CAAc;AD4DtB;AC1DQ;EACE,mBAAc;AD4DxB;AC1DQ;EACE,eAAU;EACV,gBAAY;EACZ,2BAAM;EACN,yBAAe;AD4DzB;AC1DQ;EACE,eAAU;EACV,gCAAM;EACN,YAAQ;EACR,kCAAY;EACZ,qBAAW;AD4DrB;AD3pCA;;EACE,uBAAY;EACZ,iBAAU;AC8pCZ;AD3pCA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;AC6pClB;AErqCA;EACE,uCAAiB;EACjB,gCAAM;EACN,YAAO;EACP,cAAS;EACT,eAAS;EACT,YAAM;AFuqCR;AErqCA;EACE,mBAAY;EACZ,aAAQ;EACR,8BAAgB;AFuqClB;AErqCE;EACE,gCAAM;AFuqCV;AErqCA;EACE,cAAQ;AFuqCV;AErqCA;EACE,gCAAM;EACN,gBAAY;EACZ,gBAAU;EACV,gBAAS;EACT,uBAAc;EACd,yBAAe;EACf,iCAAe;EACf,mBAAY;AFuqCd;AErqCA;EACE,qBAAQ;EACR,gBAAU;EACV,gBAAS;EACT,uBAAc;EACd,mBAAY;AFuqCd;AErqCA;EACE,mBAAY;EACZ,aAAQ;EACR,SAAI;EACJ,kBAAc;EACd,yBAAgB;AFuqClB;AErqCA;EACE,iCAAW;EACX,8CAAc;EACd,uBAAW;EACX,eAAO;EACP,eAAU;EACV,YAAO;EACP,SAAO;EACP,sBAAQ;EACR,sBAAe;AFuqCjB;AErqCE;EACE,qCAAW;AFuqCf;AErqCA;EACE,6BAAO;EACP,WAAM;EACN,SAAO;EACP,gBAAY;EACZ,kBAAa;EACb,QAAM;AFuqCR;AErqCA;EACE,4CAAkB;EAClB,eAAW;AFuqCb;AErqCA;EACE,2CAAiB;EACjB,eAAW;AFuqCb;AErqCA;EACE,mBAAY;EACZ,aAAQ;EACR,eAAU;EACV,gBAAW;EACX,iBAAQ;AFuqCV;AErqCE;EACE,eAAO;EACP,qBAAQ;EACR,gBAAS;EACT,mBAAc;EACd,uBAAc;EACd,sBAAe;EACf,YAAM;AFuqCV;AErqCE;EACE,WAAM;AFuqCV;AErqCE;;EAEE,WAAM;AFuqCV;AErqCE;EACE,WAAM;AFuqCV;AErqCE;;;EACE,eAAQ;AFyqCZ;AEvqCE;EACE,iBAAO;EACP,WAAM;AFyqCV;AEvqCE;;;;EAIE,iCAAW;EACX,2BAAM;EACN,gBAAW;EACX,gBAAQ;AFyqCZ;AEvqCI;;;;EACE,gBAAc;AF4qCpB;AE1qCE;EACE,sBAAW;EACX,iBAAa;EACb,YAAM;AF4qCV;AE1qCE;;EAEE,gBAAW;AF4qCf;AE1qCE;EACE,sBAAe;AF4qCnB;AE1qCE;EACE,mBAAe;EACf,iBAAO;EACP,WAAM;AF4qCV;AE1qCA;EACE,oCAAM;EACN,gBAAY;AF4qCd;AE1qCA;EACE,mBAAY;EACZ,iCAAW;EACX,2CAAW;EACX,aAAQ;EACR,sBAAe;EACf,uBAAgB;EAChB,kBAAQ;AF4qCV;AE1qCE;EACE,gBAAW;EACX,YAAM;AF4qCV;AE1qCI;EACE,iCAAW;EACX,2BAAM;EACN,YAAO;AF4qCb;AE1qCE;EACE,eAAU;EACV,gBAAO;AF4qCX;AE1qCE;EACE,gBAAW;AF4qCf;AE1qCA;EACE,mBAAY;EACZ,aAAQ;AF4qCV;AEzqCE;EACE,WAAO;EACP,kBAAS;AF2qCb;AEzqCE;EACE,iBAAY;AF2qChB;AEzqCE;EACE,aAAQ;AF2qCZ;AEzqCE;EACE,YAAO;AF2qCX;AEzqCE;EACE,eAAU;EACV,iBAAa;AF2qCjB;AEzqCE;EACE,gBAAU;AF2qCd;AEzqCA;EACE,YAAM;AF2qCR;AEzqCA;EACE,aAAQ;AF2qCV;AEzqCE;EACE,cAAY;EACZ,YAAM;AF2qCV;AExqCA;EACE,uCAAiB;EACjB,2CAAW;EACX,aAAQ;AF0qCV;AExqCE;EACE,mBAAY;EACZ,aAAQ;EACR,8BAAgB;EAChB,mBAAc;AF0qClB;AExqCI;EACE,mBAAY;EACZ,gCAAM;EACN,aAAQ;EACR,eAAU;EACV,gBAAY;EACZ,QAAI;AF0qCV;AEvqCI;EACE,kBAAW;EACX,kBAAQ;EACR,gCAAM;EACN,YAAQ;AFyqCd;AEvqCM;EACE,gBAAO;AFyqCf;AEvqCI;EACE,mBAAY;EACZ,iCAAW;EACX,kBAAc;EACd,aAAQ;EACR,8BAAgB;EAChB,kBAAc;EACd,iBAAQ;AFyqCd;AEvqCM;EACE,mBAAY;EACZ,aAAQ;EACR,SAAI;AFyqCZ;AEvqCQ;EACE,gCAAM;EACN,eAAU;AFyqCpB;AEvqCM;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,eAAU;EACV,YAAQ;EACR,YAAQ;AFyqChB;AEvqCQ;EACE,yBAAM;EACN,UAAQ;AFyqClB;AEtqCA;EACE,mBAAY;EACZ,iCAAW;EACX,kBAAc;EACd,aAAQ;EACR,8BAAgB;EAChB,kBAAc;EACd,kBAAQ;AFwqCV;AEtqCE;EACE,mBAAY;EACZ,aAAQ;EACR,SAAI;AFwqCR;AEtqCI;EACE,aAAQ;EACR,sBAAe;EACf,QAAI;AFwqCV;AEtqCM;EACE,gCAAM;EACN,eAAU;EACV,gBAAY;AFwqCpB;AEtqCM;EACE,2BAAM;EACN,eAAU;AFwqClB;AEtqCE;EACE,mBAAY;EACZ,aAAQ;EACR,QAAI;AFwqCR;AEtqCI;;EAEE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,eAAU;EACV,YAAQ;EACR,YAAQ;EACR,oBAAW;AFwqCjB;AEtqCM;;EACE,2BAAM;EACN,UAAQ;AFyqChB;AEvqCI;EACE,yBAAM;AFyqCZ;AEtqCA;EACE,qCAAW;AFwqCb;AErqCA;EACE,2BAAW;EACX,SAAO;EACP,OAAK;EACL,eAAS;EACT,QAAM;EACN,MAAI;EACJ,cAAQ;AFuqCV;AErqCA;EACE,iCAAW;EACX,kBAAc;EACd,SAAK;EACL,gBAAW;EACX,gBAAU;EACV,gBAAU;EACV,gBAAS;EACT,eAAS;EACT,QAAI;EACJ,gCAAU;EACV,UAAM;AFuqCR;AErqCE;EACE,mBAAY;EACZ,iCAAW;EACX,gCAAM;EACN,aAAQ;EACR,eAAU;EACV,gBAAY;EACZ,SAAI;EACJ,kBAAQ;AFuqCZ;AErqCI;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,eAAU;EACV,iBAAY;EACZ,YAAQ;AFuqCd;AErqCM;EACE,UAAQ;AFuqChB;AErqCE;EACE,iBAAW;EACX,gBAAW;EACX,aAAQ;AFuqCZ;AErqCI;EACE,mBAAc;AFuqCpB;AErqCM;EACE,gBAAc;AFuqCtB;AErqCM;EACE,2BAAM;EACN,eAAU;EACV,gBAAY;EACZ,mBAAc;EACd,yBAAe;AFuqCvB;AErqCM;EACE,aAAQ;EACR,eAAU;EACV,QAAI;AFuqCZ;AErqCQ;EACE,mBAAY;EACZ,iCAAW;EACX,6BAAO;EACP,kBAAc;EACd,gCAAM;EACN,eAAO;EACP,aAAQ;EACR,QAAI;EACJ,iBAAQ;EACR,eAAU;EACV,oBAAW;AFuqCrB;AErqCU;EACE,qCAAW;EACX,kCAAa;AFuqCzB;AErqCU;EACE,gCAAW;EACX,mCAAM;AFuqClB;AErqCE;EACE,iCAAW;EACX,2CAAW;EACX,kBAAQ;AFuqCZ;AErqCI;EACE,gCAAM;EACN,eAAU;EACV,gBAAY;EACZ,mBAAc;AFuqCpB;AEpqCM;EACE,mBAAc;AFsqCtB;AEpqCQ;EACE,gBAAc;AFsqCxB;AEpqCQ;EACE,gCAAM;EACN,cAAQ;EACR,eAAU;EACV,kBAAc;AFsqCxB;AEpqCQ;;;;EAIE,iCAAW;EACX,uCAAO;EACP,kBAAc;EACd,gCAAM;EACN,iBAAQ;EACR,WAAM;EACN,sBAAW;AFsqCrB;AEpqCU;;;;EACE,kCAAa;EACb,aAAQ;AFyqCpB;AEvqCQ;EACE,gBAAW;EACX,gBAAO;AFyqCjB;AEvqCQ;EACE,mBAAY;EACZ,aAAQ;AFyqClB;AEvqCU;EACE,mBAAY;EACZ,eAAO;EACP,aAAQ;EACR,QAAI;EACJ,gBAAc;AFyqC1B;AEvqCE;EACE,mBAAY;EACZ,2CAAW;EACX,aAAQ;EACR,SAAI;EACJ,yBAAgB;EAChB,kBAAQ;AFyqCZ;AEvqCI;EACE,iBAAQ;AFyqCd;AEvqCM;EACE,YAAQ;EACR,mBAAO;AFyqCf;AEtqCA;;;EAGE,eAAU;EACV,WAAM;AFwqCR;AErqCA;EACE,2BAAW;EACX,SAAO;EACP,aAAQ;EACR,mBAAY;EACZ,uBAAgB;EAChB,OAAK;EACL,eAAS;EACT,QAAM;EACN,MAAI;EACJ,cAAQ;AFuqCV;AErqCA;EACE,iCAAW;EACX,kBAAc;EACd,gBAAW;EACX,gBAAU;EACV,gBAAU;EACV,gBAAS;EACT,UAAM;EACN,uCAAW;EACX,aAAQ;EACR,sBAAe;AFuqCjB;AErqCE;EACE,mBAAY;EACZ,iCAAW;EACX,8CAAc;EACd,aAAQ;EACR,8BAAgB;EAChB,kBAAQ;AFuqCZ;AErqCI;EACE,mBAAY;EACZ,gCAAM;EACN,aAAQ;EACR,eAAU;EACV,gBAAY;EACZ,SAAI;AFuqCV;AErqCI;EACE,uBAAW;EACX,YAAO;EACP,gCAAM;EACN,eAAO;EACP,eAAU;EACV,cAAY;EACZ,YAAQ;EACR,UAAQ;AFuqCd;AErqCM;EACE,UAAQ;AFuqChB;AErqCE;EACE,OAAK;EACL,gBAAW;EACX,aAAQ;AFuqCZ;AErqCE;EACE,mBAAY;EACZ,2CAAW;EACX,aAAQ;EACR,SAAI;EACJ,8BAAgB;EAChB,kBAAQ;AFuqCZ;AErqCI;EACE,iBAAQ;AFuqCd;AErqCM;EACE,YAAQ;EACR,mBAAO;AFuqCf;AEpqCA;EACE,mBAAY;EACZ,iCAAW;EACX,YAAO;EACP,kBAAc;EACd,gCAAM;EACN,eAAO;EACP,aAAQ;EACR,eAAU;EACV,QAAI;EACJ,iBAAQ;EACR,oBAAW;AFsqCb;AEpqCE;EACE,qCAAW;EACX,2BAAM;AFsqCV;AEpqCE;EACE,gCAAW;EACX,WAAM;AFsqCV;AEnqCA;EACE,iCAAW;EACX,kBAAc;EACd,iBAAW;EACX,gBAAW;EACX,aAAQ;AFqqCV;AEnqCE;EACE,mBAAc;AFqqClB;AEnqCI;EACE,gBAAc;AFqqCpB;AEnqCI;EACE,2BAAM;EACN,eAAU;EACV,gBAAY;EACZ,qBAAe;EACf,kBAAc;EACd,yBAAe;AFqqCrB;AEnqCI;EACE,gCAAM;EACN,eAAU;EACV,gBAAY;AFqqClB;AEnqCI;EACE,gBAAW;EACX,SAAO;EACP,UAAQ;AFqqCd;AEnqCI;EACE,8CAAc;EACd,gCAAM;EACN,eAAU;EACV,gBAAY;EACZ,cAAQ;AFqqCd;AEnqCM;EACE,mBAAc;AFqqCtB;AEnqCI;EACE,iCAAW;EACX,kBAAc;EACd,gCAAM;EACN,wDAAoB;EACpB,eAAU;EACV,gBAAY;EACZ,gBAAW;EACX,aAAQ;EACR,qBAAY;EACZ,qBAAW;AFqqCjB;AEnqCA;EACE,aAAQ;EACR,SAAI;EACJ,iBAAY;AFqqCd;AEnqCA;EACE,eAAU;EACV,WAAM;AFqqCR;AElqCA;EACE,cAAS;EACT,kBAAY;EACZ,2CAAY;EACZ,eAAY;AFoqCd;AElqCA;EACE,iCAAY;EACZ,uCAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAQ;EACR,eAAW;EACX,iBAAS;EACT,aAAS;EACT,mBAAa;EACb,uBAAiB;EACjB,QAAK;EACL,cAAQ;EACR,oBAAY;AFoqCd;AElqCE;EACE,gCAAY;EACZ,kCAAc;EACd,mCAAO;AFoqCX;AEjqCA;EACE,qBAAS;EACT,WAAO;EACP,YAAQ;EACR,iBAAa;EACb,kBAAY;EACZ,iCAAY;EACZ,kBAAe;EACf,eAAW;EACX,gBAAa;EACb,2BAAO;EACP,YAAQ;AFmqCV;AEjqCE;EACE,gCAAY;EACZ,mCAAO;AFmqCX;AEhqCA;EACE,gBAAS;EACT,iBAAc;EACd,eAAW;EACX,WAAO;EACP,eAAQ;EACR,sBAAY;EACZ,uBAAY;EACZ,YAAQ;AFkqCV;AEhqCE;EACE,WAAO;AFkqCX;AE/pCA;EACE,gBAAY;EACZ,gBAAY;EACZ,aAAS;EACT,YAAQ;AFiqCV;AE/pCE;EACE,mBAAe;EACf,oBAAgB;EAChB,8CAAe;AFiqCnB;AE/pCI;EACE,2BAAO;EACP,eAAW;EACX,gBAAa;EACb,mBAAe;AFiqCrB;AE/pCI;EACE,gCAAO;EACP,eAAW;EACX,gBAAa;AFiqCnB;AE/pCE;;EAEE,mBAAe;AFiqCnB;AE/pCI;;EACE,2BAAO;EACP,eAAW;EACX,gBAAa;EACb,kBAAe;AFkqCrB;AEhqCI;;EACE,gCAAO;EACP,eAAW;EACX,kBAAY;EACZ,YAAS;EACT,mBAAe;AFmqCrB;AEjqCI;;EACE,gBAAY;EACZ,SAAQ;EACR,UAAS;AFoqCf;AElqCI;;EACE,aAAS;EACT,sBAAgB;EAChB,iBAAS;EACT,kBAAe;EACf,iCAAY;EACZ,kBAAe;AFqqCrB;AEnqCM;;EACE,2BAAO;EACP,eAAW;EACX,gBAAa;EACb,yCAAqB;EACrB,kBAAe;AFsqCvB;AEpqCM;;EACE,gCAAO;EACP,eAAW;EACX,gBAAa;AFuqCrB;AEpqCI;EACE,gBAAY;AFsqClB;AEpqCE;EACE,aAAS;EACT,iCAAY;EACZ,kBAAe;AFsqCnB;AEpqCI;EACE,gCAAO;EACP,eAAW;EACX,SAAQ;AFsqCd;AEnqCA;EACE,aAAS;EACT,sBAAgB;EAChB,QAAK;EACL,YAAO;AFqqCT;AEnqCA;EACE,aAAS;EACT,QAAK;EACL,mBAAa;AFqqCf;AEnqCE;EACE,OAAM;EACN,iCAAY;EACZ,uCAAQ;EACR,kBAAe;EACf,2BAAO;EACP,eAAW;EACX,gBAAS;EACT,gBAAY;EACZ,eAAQ;EACR,WAAO;AFqqCX;AEnqCI;EACE,aAAS;EACT,kCAAc;AFqqCpB;AEnqCE;EACE,iCAAY;EACZ,uCAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAQ;EACR,gBAAS;EACT,aAAS;EACT,mBAAa;EACb,uBAAiB;EACjB,eAAW;EACX,gBAAY;EACZ,oBAAY;AFqqChB;AEnqCI;EACE,gCAAY;EACZ,kCAAc;EACd,mCAAO;AFqqCb;AEnqCA;EACE,aAAS;EACT,eAAW;EACX,QAAK;AFqqCP;AEnqCA;EACE,mBAAa;EACb,iCAAY;EACZ,kBAAe;EACf,aAAS;EACT,QAAK;EACL,gBAAS;EACT,eAAW;AFqqCb;AEnqCA;EACE,2BAAO;EACP,eAAQ;EACR,gBAAW;EACX,gBAAU;EACV,uBAAe;EACf,mBAAa;AFqqCf;AEnqCE;EACE,0BAAiB;AFqqCrB;AEnqCA;EACE,iCAAY;EACZ,sCAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAW;EACX,gBAAS;EACT,WAAO;AFqqCT;AEnqCE;EACE,aAAS;AFqqCb;AEnqCA;EACE,uBAAY;EACZ,YAAQ;EACR,gCAAO;EACP,eAAQ;EACR,eAAW;EACX,YAAS;EACT,UAAS;AFqqCX;AEnqCE;EACE,yBAAO;EACP,UAAS;AFqqCb;AEnqCA;EACE,aAAS;EACT,QAAK;AFqqCP;AEnqCA;EACE,iCAAY;EACZ,6BAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAW;EACX,gBAAS;EACT,YAAO;AFqqCT;AEnqCE;EACE,kCAAc;EACd,aAAS;AFqqCb;AEnqCA;EACE,mBAAa;EACb,iCAAY;EACZ,YAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAQ;EACR,aAAS;EACT,eAAW;EACX,gBAAS;AFqqCX;AEnqCE;EACE,gCAAY;EACZ,mCAAO;AFqqCX;AElqCA;EACE,aAAS;EACT,sBAAgB;EAChB,QAAK;EACL,YAAO;AFoqCT;AElqCE;EACE,aAAS;EACT,sBAAgB;EAChB,QAAK;EACL,iBAAY;EACZ,gBAAY;AFoqChB;AElqCE;EACE,gCAAO;EACP,eAAW;EACX,kBAAY;EACZ,YAAS;EACT,cAAS;AFoqCb;AElqCE;EACE,mBAAa;EACb,iCAAY;EACZ,kBAAe;EACf,aAAS;EACT,8BAAiB;EACjB,gBAAS;AFoqCb;AElqCI;EACE,2BAAO;EACP,eAAW;EACX,gBAAU;EACV,uBAAe;EACf,mBAAa;EACb,gBAAW;AFoqCjB;AElqCI;EACE,uBAAY;EACZ,YAAQ;EACR,gCAAO;EACP,eAAQ;EACR,eAAW;EACX,YAAS;EACT,YAAS;EACT,oBAAY;AFoqClB;AElqCM;EACE,yBAAO;EACP,UAAS;AFoqCjB;AElqCE;EACE,aAAS;EACT,QAAK;AFoqCT;AElqCI;EACE,iCAAY;EACZ,6BAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAW;EACX,gBAAS;EACT,YAAO;AFoqCb;AElqCM;EACE,kCAAc;EACd,aAAS;AFoqCjB;AElqCI;EACE,mBAAa;EACb,iCAAY;EACZ,YAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAQ;EACR,aAAS;EACT,eAAW;EACX,gBAAS;AFoqCf;AElqCM;EACE,gCAAY;EACZ,mCAAO;AFoqCf;AElqCE;EACE,eAAY;EACZ,gBAAa;EACb,2CAAY;AFoqChB;AElqCI;EACE,gCAAO;EACP,eAAW;EACX,YAAS;EACT,kBAAe;AFoqCrB;AElqCI;EACE,aAAS;EACT,eAAW;EACX,QAAK;AFoqCX;AElqCI;EACE,iCAAY;EACZ,uCAAQ;EACR,kBAAe;EACf,gCAAO;EACP,eAAQ;EACR,eAAW;EACX,gBAAS;EACT,oBAAY;AFoqClB;AElqCM;EACE,gCAAY;EACZ,kCAAc;EACd,mCAAO;AFoqCf;ADjqEA;;EACE,uBAAY;EACZ,iBAAU;ACoqEZ;ADjqEA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;ACmqElB;AG3qEA;EACE,+BAAY;EACZ,mBAAY;AH6qEd;AG3qEA;EACE,qBAAQ;EACR,gBAAS;EACT,kBAAS;EACT,uBAAc;EACd,QAAI;EACJ,mBAAY;AH6qEd;AG3qEA;EACE,yBAAM;AH6qER;AG3qEA;EACE,2BAAM;AH6qER;AG3qEA;EACE,2BAAM;AH6qER;AIlsEA;EACE,aAAQ;EACR,6BAAgB;AJosElB;AIlsEA;EACE,gBAAW;EACX,SAAO;EACP,iBAAQ;EACR,YAAM;AJosER;AIlsEA;EACE,kBAAa;AJosEf;AIlsEA;EACE,gBAAY;EACZ,iBAAa;EACb,cAAQ;AJosEV;AIlsEA;EACE,WAAO;EACP,iBAAa;EACb,eAAU;EACV,kBAAS;AJosEX;AIlsEA;EACE,sCAAiB;EACjB,2BAAkB;EAClB,8CAAO;EACP,kBAAc;EACd,wBAAW;EACX,mCAAM;EACN,qBAAQ;EACR,eAAU;EACV,cAAQ;EACR,kBAAW;AJosEb;AIlsEA;EACE,gCAAM;EACN,qBAAQ;EACR,gBAAY;AJosEd;AD1uEA;;EACE,uBAAY;EACZ,iBAAU;AC6uEZ;AD1uEA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;AC4uElB;AKpvEA;EACE,SAAO;EACP,gBAAc;EACd,eAAO;EACP,gBAAW;ALsvEb;AKpvEA;EACE,gCAAM;EACN,YAAO;ALsvET;AKpvEA;EACE,aAAQ;ALsvEV;AKpvEA;EACE,2BAAW;ALsvEb;AKpvEA;;EAEE,iCAAW;ALsvEb;AKpvEA;EACE,eAAO;EACP,iBAAQ;ALsvEV;AKpvEA;;EAEE,gCAAM;ALsvER;AKpvEA;EACE,2BAAM;ALsvER;AKpvEA;EACE,2BAAW;ALsvEb;AKpvEA;EACE,eAAU;ALsvEZ;AKpvEA;EACE,qCAAW;EACX,kCAAM;ALsvER;AKpvEA;EACE,+BAAW;EACX,kCAAM;ALsvER;AKpvEA;EACE,YAAO;EACP,gBAAS;ALsvEX;AKpvEE;EACE,YAAO;EACP,YAAQ;ALsvEZ;AKpvEA;EACE,gBAAQ;ALsvEV;AKpvEA;EACE,iCAAW;EACX,2BAAM;ALsvER;AKpvEA;EACE,2BAAM;ALsvER;AKpvEA;EACE,iCAAW;EACX,gCAAM;ALsvER;AMzzEA;EACE,uCAAU;EACV,iCAAiB;EACjB,aAAQ;EACR,YAAO;EACP,OAAK;EACL,cAAS;EACT,eAAS;EACT,MAAI;EACJ,WAAM;EACN,mBAAQ;AN2zEV;AMvzEE;EACE,uCAAkB;EAClB,kBAAe;EACf,sCAAY;EACZ,SAAM;EACN,iBAAQ;EACR,gBAAW;EACX,2BAAW;EACX,UAAO;ANyzEX;AMvzEE;EACE,uCAAkB;EAClB,8CAAe;EACf,0BAAe;ANyzEnB;AMvzEE;EACE,uCAAkB;EAClB,0BAAe;EACf,gBAAY;EACZ,gBAAY;ANyzEhB;AMvzEA;EACE,eAAU;EACV,gBAAY;EACZ,eAAO;ANyzET;AMvzEA;EACE,yBAAO;EACP,wBAAM;ANyzER;AMvzEA;EACE,uCAAiB;EACjB,qEAAyC;EACzC,YAAO;EACP,gBAAS;EACT,UAAQ;ANyzEV;AMvzEA;EACE,gCAAM;EACN,YAAM;EACN,eAAU;EACV,iBAAY;ANyzEd;AMvzEA;;EAEE,2BAAM;EACN,eAAO;EACP,qBAAgB;ANyzElB;AMvzEA;EACE,gCAAM;EACN,iBAAQ;ANyzEV;AMvzEA;EACE,gCAAM;EACN,cAAS;EACT,aAAQ;ANyzEV;AMvzEA;EACE,gCAAM;EACN,iBAAQ;ANyzEV;AMtzEA;EACE,iCAAW;EACX,aAAQ;EACR,eAAU;EACV,mBAAO;EACP,+BAAW;EACX,cAAS;EACT,qBAAQ;ANwzEV;AMtzEA;EACE,aAAQ;ANwzEV;AMtzEA;EACE,kBAAc;EACd,mCAAW;EACX,eAAO;EACP,WAAO;EACP,gBAAS;EACT,YAAM;ANwzER;AMtzEA;;EAEE,0CAAW;ANwzEb;AMtzEA;EACE,uCAAiB;EACjB,SAAO;EACP,gBAAW;EACX,iBAAQ;ANwzEV;AMtzEA;EACE,aAAQ;EACR,YAAM;ANwzER;AMtzEA;EACE,cAAQ;EACR,aAAO;EACP,YAAM;ANwzER;AMtzEA;EACE,6EAAW;EACX,yBAAM;EACN,gBAAY;EACZ,kBAAc;EACd,gBAAQ;EACR,kBAAW;EACX,YAAM;ANwzER;AMtzEA;EACE,YAAM;ANwzER;AMtzEA;EACE,gCAAM;EACN,qBAAQ;EACR,gBAAU;EACV,gBAAS;EACT,uBAAc;EACd,mBAAY;ANwzEd;AMtzEA;;EAEE,2CAAiB;ANwzEnB;AMtzEA;EACE,gCAAM;EACN,cAAQ;EACR,eAAW;EACX,gBAAS;EACT,uBAAc;EACd,mBAAY;EACZ,YAAM;ANwzER;AMtzEA;;EAEE,gCAAM;ANwzER;AMtzEA;EACE,oCAAM;EACN,gBAAY;ANwzEd;AMtzEA;EACE,wBAAW;KAAX,qBAAW;UAAX,gBAAW;EACX,sCAAiB;EACjB,YAAO;EACP,gBAAc;EACd,gBAAW;EACX,mCAAM;EACN,eAAO;EACP,qBAAQ;EACR,eAAU;EACV,gBAAY;EACZ,kBAAO;EACP,iBAAQ;ANwzEV;AMtzEA;EACE,aAAQ;ANwzEV;AMtzEA;;EAEE,4CAAiB;ANwzEnB;AMtzEA;;EAEE,4CAAiB;ANwzEnB;AMtzEA;EACE,sBAAiB;EACjB,WAAM;EACN,eAAO;ANwzET;AMtzEA;EACE,uCAAiB;EACjB,gCAAM;EACN,aAAQ;EACR,eAAU;EACV,8BAAgB;EAChB,gBAAW;EACX,cAAS;EACT,aAAQ;ANwzEV;AMtzEA;EACE,2BAAM;EACN,gBAAQ;ANwzEV;AMtzEA;EACE,gBAAY;ANwzEd;AMtzEA;EACE,kBAAc;ANwzEhB;AMtzEA;EACE,aAAQ;ANwzEV;AMtzEA;EACE,gBAAW;EACX,kBAAS;EACT,YAAM;ANwzER;AMtzEA;EACE,sBAAW;EACX,mBAAc;EACd,WAAM;ANwzER;AMtzEA;EACE,kBAAS;EACT,UAAM;EACN,QAAI;ANwzEN;AMtzEA;EACE,YAAO;ANwzET;AMtzEA;EACE,iBAAY;EACZ,YAAQ;ANwzEV;AMtzEA;EACE,eAAQ;ANwzEV;AMtzEA;EACE,gBAAY;EACZ,YAAM;ANwzER;AMtzEA;EACE,uCAAO;EACP,eAAO;ANwzET;AMrzEA;EACE,aAAQ;EACR,8CAAc;EACd,eAAQ;ANuzEV;AMrzEA;EACE,uBAAW;EACX,YAAO;EACP,oCAAc;EACd,gCAAM;EACN,eAAO;EACP,aAAQ;EACR,mBAAY;EACZ,QAAI;EACJ,eAAU;EACV,kBAAQ;EACR,oBAAW;ANuzEb;AMrzEE;EACE,2BAAM;ANuzEV;AMrzEE;EACE,yCAAoB;EACpB,2BAAM;ANuzEV;AMrzEA;EACE,aAAQ;ANuzEV;AMnzEE;EACE,mBAAc;ANqzElB;AMnzEI;EACE,2BAAM;EACN,eAAU;EACV,eAAO;ANqzEb;AMnzEI;EACE,gCAAM;EACN,eAAU;EACV,SAAO;EACP,YAAQ;ANqzEd;AMnzEE;EACE,iBAAW;EACX,gBAAW;ANqzEf;AMnzEI;EACE,gCAAM;EACN,kBAAW;EACX,YAAQ;EACR,aAAQ;EACR,kBAAW;ANqzEjB;AMnzEI;EACE,gBAAW;EACX,SAAO;EACP,UAAQ;ANqzEd;AMnzEI;EACE,mBAAY;EACZ,iCAAW;EACX,kBAAc;EACd,aAAQ;EACR,8BAAgB;EAChB,kBAAc;EACd,kBAAQ;ANqzEd;AMnzEM;EACE,2BAAM;EACN,yCAAoB;EACpB,eAAU;ANqzElB;AMnzEM;EACE,gCAAM;EACN,eAAU;EACV,YAAQ;ANqzEhB;AMnzEE;EACE,gBAAW;EACX,aAAQ;EACR,iCAAW;EACX,kBAAc;ANqzElB;AMnzEI;EACE,gCAAM;EACN,eAAU;EACV,SAAO;EACP,YAAQ;ANqzEd;AMjzEE;EACE,mBAAc;ANmzElB;AMjzEI;EACE,2BAAM;EACN,eAAU;EACV,eAAO;ANmzEb;AMjzEI;EACE,gCAAM;EACN,eAAU;EACV,SAAO;EACP,YAAQ;ANmzEd;AMjzEE;EACE,iBAAW;EACX,gBAAW;ANmzEf;AMjzEI;EACE,gCAAM;EACN,kBAAW;EACX,YAAQ;EACR,aAAQ;EACR,kBAAW;ANmzEjB;AMjzEI;EACE,gBAAW;EACX,SAAO;EACP,UAAQ;ANmzEd;AMjzEI;EACE,mBAAY;EACZ,iCAAW;EACX,kBAAc;EACd,aAAQ;EACR,SAAI;EACJ,kBAAc;EACd,kBAAQ;ANmzEd;AMjzEM;EACE,2BAAM;EACN,eAAU;EACV,cAAY;ANmzEpB;AMjzEM;EACE,aAAQ;EACR,sBAAe;EACf,QAAI;EACJ,YAAU;ANmzElB;AMjzEQ;EACE,2BAAM;EACN,yCAAoB;EACpB,eAAU;EACV,gBAAS;EACT,uBAAc;EACd,mBAAY;ANmzEtB;AMjzEQ;EACE,gCAAM;EACN,eAAU;EACV,YAAQ;ANmzElB;AMjzEE;EACE,gBAAW;EACX,aAAQ;EACR,iCAAW;EACX,kBAAc;ANmzElB;AMjzEI;EACE,gCAAM;EACN,eAAU;EACV,SAAO;EACP,YAAQ;ANmzEd;AD5sFA;;EACE,uBAAY;EACZ,iBAAU;AC+sFZ;AD5sFA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;AC8sFlB;AOttFA;EACE,mBAAY;EACZ,uCAAiB;EACjB,gCAAM;EACN,aAAQ;EACR,YAAU;EACV,eAAU;EACV,YAAO;EACP,8BAAgB;EAChB,cAAQ;APwtFV;AOttFA;EACE,mBAAY;EACZ,aAAQ;EACR,QAAI;APwtFN;AOrtFI;EACE,YAAQ;APutFd;AOrtFI;EACE,2CAAiB;APutFvB;AOrtFE;EACE,sCAAiB;EACjB,mCAAM;APutFV;AOrtFE;EACE,8CAAM;APutFV;AOrtFA;EACE,mBAAY;EACZ,aAAQ;EACR,QAAI;EACJ,eAAQ;APutFV;AOrtFA;EACE,gCAAM;APutFR;AOrtFA;EACE,eAAO;EACP,YAAM;APutFR;AOrtFE;EACE,iBAAa;EACb,kBAAc;APutFlB;AOrtFA;EACE,mBAAY;EACZ,aAAQ;APutFV;AOrtFE;EACE,gBAAW;APutFf;AOrtFE;EACE,gCAAM;APutFV;AOrtFI;EACE,2BAAM;APutFZ;AOrtFA;EACE,aAAQ;APutFV;AOrtF2B;EAAA;IACvB,cAAQ;EPwtFV;AACF;AD1xFA;;EACE,uBAAY;EACZ,iBAAU;AC6xFZ;AD1xFA;EACE,qBAAS;EACT,WAAQ;EACR,iBAAU;EACV,wBAAgB;AC4xFlB;AQpyFA;EACE,qBAAQ;EACR,YAAM;ARsyFR;AA5uFE;;;;;;EAME,eAAU;AA8uFd;AA5uFE;;;EAGE,kCAAY;AA8uFhB;AA5uFE;EACE,SAAO;EACP,+CAAW;AA8uFf;AA5uFE;EACE,eAAO;AA8uFX;AA5uFE;EACE,kBAAS;AA8uFb;AA5uFE;EACE,qBAAc;EACd,gBAAS;IAAT,cAAS;OAAT,WAAS;EACT,gBAAY;AA8uFhB;AA5uFE;;EAEE,uBAAQ;AA8uFZ;AA5uFE;EACE,uBAAW;EACX,eAAQ;EACR,YAAO;EACP,kBAAS;EACT,QAAI;EACJ,wBAAe;EACf,WAAM;AA8uFV;AA5uFE;;EAEE,aAAQ;AA8uFZ;AA5uFE;;;EAGI,eAAO;EACP,yBAAY;KAAZ,sBAAY;UAAZ,iBAAY;AA8uFlB;AA5uFE;EACE,wCAAiB;EACjB,uBAAW;EACX,qCAAM;EACN,eAAU;EACV,SAAK;EACL,iBAAY;EACZ,SAAO;EACP,iBAAQ;EACR,eAAS;EACT,kBAAW;EACX,qBAAgB;EAChB,QAAI;EACJ,YAAM;EACN,kBAAQ;AA8uFZ;AA5uFE;EACE,8CAAiB;AA8uFrB;AA5uFE;EACE,wCAAiB;EACjB,uBAAW;EACX,qCAAM;EACN,aAAQ;EACR,eAAU;EACV,QAAI;EACJ,uBAAgB;EAChB,iBAAY;EACZ,SAAO;EACP,iBAAQ;EACR,kBAAW;EACX,qBAAgB;EAChB,YAAM;AA8uFV;AA5uFE;EACE,8CAAiB;EACjB,qCAAM;AA8uFV;AA5uFE;EACE,sCAAiB;EACjB,uBAAW;EACX,mCAAM;EACN,aAAQ;EACR,eAAU;EACV,QAAI;EACJ,uBAAgB;EAChB,WAAK;EACL,iBAAY;EACZ,SAAO;EACP,iBAAQ;EACR,eAAS;EACT,kBAAW;EACX,qBAAgB;EAChB,QAAI;EACJ,WAAM;EACN,kBAAQ;AA8uFZ;AA5uFI;EACE,cAAM;EACN,kBAAK;AA8uFX;AA5uFE;EACE,4CAAiB;EACjB,mCAAM;AA8uFV;AA5uFE;EACE,6BAAiB;EACjB,uCAAO;EACP,gCAAM;AA8uFV;AA5uFE;;EAEE,oGAA4C;AA8uFhD;AA5uFE;;;;EAIE,gBAAc;EACd,gBAAW;EACX,aAAQ;AA8uFZ;AA5uFE;EACE,wBAAW;KAAX,qBAAW;UAAX,gBAAW;EACX,iCAAW;EACX,uCAAO;EACP,gBAAc;EACd,eAAO;EACP,YAAO;EACP,SAAO;EACP,kBAAS;EACT,WAAM;AA8uFV;AA5uFI;EACI,gCAAW;EACX,uCAAO;AA8uFf;AA5uFQ;EACI,kBAAO;EACP,yBAAa;EACb,WAAQ;EACR,WAAO;EACP,SAAK;EACL,kBAAS;EACT,QAAI;EACJ,wBAAU;EACV,UAAM;AA8uFlB;AA5uFE;EACE,gBAAW;AA8uFf;AA5uFE;EACE,wCAAiB;EACjB,SAAO;EACP,sCAAM;EACN,kBAAO;EACP,eAAU;EACV,YAAQ;AA8uFZ;AA5uFE;;EAEE,sCAAO;AA8uFX;AA5uFE;EACE,oCAAO;AA8uFX;AA5uFE;EACE,iCAAW;EACX,YAAM;AA8uFV;AA5uFE;;;EAGE,iCAAW;EACX,6BAAO;EACP,gCAAM;AA8uFV;AA5uFE;EACE,qCAAW;AA8uFf;AA5uFE;EACE,uCAAiB;EACjB,uCAAO;EACP,eAAO;EACP,YAAO;EACP,UAAQ;EACR,WAAM;AA8uFV;AA3uFE;EACE,0CAAO;AA6uFX;AA3uFE;EACE,+EAAc;EACd,6CAAQ;AA6uFZ;AA3uFE;EACE,SAAO;AA6uFX;AA3uFE;EACE,iEAAO;EACP,UAAQ;AA6uFZ;AA3uFE;EACE,kBAAW;AA6uFf;AA3uFE;EACE,gCAAM;EACN,eAAU;EACV,gBAAY;EACZ,qBAAgB;AA6uFpB;AA3uFI;EACE,2BAAM;AA6uFZ;AAvuFE;EACE,aAAQ;AAyuFZ;AAvuFE;EACE,gBAAO;AAyuFX;AAvuFE;EACE,oBAAY;EACZ,aAAQ;EACR,yBAAgB;AAyuFpB;AAvuFE;EACE,aAAQ;EACR,YAAO;EACP,8BAAgB;EAChB,OAAK;EACL,oBAAe;EACf,eAAS;EACT,MAAI;EACJ,WAAM;EACN,eAAQ;AAyuFZ;AAvuFE;;;EAGE,mBAAe;AAyuFnB;AAvuFE;EACE,yBAAiB;EACjB,aAAQ;AAyuFZ;AAvuFE;EACE,mBAAY;EACZ,aAAQ;EACR,YAAO;EACP,kBAAS;EACT,aAAQ;AAyuFZ;AAvuFI;EACE,uCAAiB;EACjB,gCAAM;EACN,YAAQ;EACR,aAAQ;AAyuFd;AAvuFI;EACE,sCAAiB;EACjB,mCAAM;AAyuFZ;AAvuFE;EACE,OAAK;EACL,MAAI;AAyuFR;AAvuFE;EACE,QAAM;EACN,MAAI;AAyuFR;AAnyFE;EACE;IAAO,UAAS;EA8zFlB;EA7zFE;IAAK,UAAS;EAg0FhB;AACF","sourcesContent":["/* CSS rules from the original FontAwesomeIcon component */\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  box-sizing: content-box;\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n","@import './lib';\n\nbody.aframe-inspector-opened,\n.toggle-edit,\n.sponsor-btn\n  font-family var(--font-normal)\n\nbody.aframe-inspector-opened\n  background var(--color-base-200)\n  color var(--color-base-content)\n  font-size 12px\n  margin 0\n  overflow hidden\n\n/* :where(:root) has zero specificity compared to :root, so any user defined :root will override the below rule */\n:where(:root) {\n  color-scheme: dark;\n\n  --color-base-100: #333;\n  --color-base-200: #242424;\n  --color-base-300: #1d1d1d;\n  --color-base-content: #c3c3c3;\n  --color-primary: #1faaf2;\n  --color-primary-content: #fff;\n  --color-secondary: #92374d;\n  --color-secondary-content: #fafafa;\n  --color-accent: #155373;\n  --color-accent-content: #fff;\n  --color-neutral: #333;\n  --color-neutral-content: #aaa;\n  --color-info: #2cb7ff;\n  --color-info-content: #fff;\n  --color-success: #8b8;\n  --color-success-content: #000;\n  --color-warning: #d66853;\n  --color-warning-content: #000;\n  --color-error: #92374d;\n  --color-error-content: #000;\n  --font-normal: system-ui, BlinkMacSystemFont, -apple-system, \"Segoe UI\", Helvetica, Arial, sans-serif;\n  --font-monospace: Consolas, \"Andale Mono\", Monaco, \"Lucida Console\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Bitstream Vera Sans Mono\", \"Courier New\", monospace;\n}\n\n#aframeInspector\n  --color-base-lighter: unquote(\"color-mix(in oklab, var(--color-base-100) 90%, white 10%)\");\n  --color-primary-hover: unquote(\"color-mix(in oklab, var(--color-primary) 90%, black 10%)\");\n  --color-secondary-hover: unquote(\"color-mix(in oklab, var(--color-secondary) 90%, black 10%)\");\n  --color-accent-hover: unquote(\"color-mix(in oklab, var(--color-accent) 70%, black 30%)\");\n  --color-neutral-hover: unquote(\"color-mix(in oklab, var(--color-neutral) 90%, black 10%)\");\n  --color-property-defined: light-dark(\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, black 90%)\"),   /* darker for light theme */\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, white 90%)\")    /* lighter for dark theme */\n  )\n\n  @import './scenegraph';\n  @import './components';\n  @import './entity';\n  @import './help';\n  @import './select';\n  @import './textureModal';\n  @import './viewport';\n  @import './widgets';\n\n  .select__control,\n  code,\n  pre,\n  input,\n  textarea,\n  select\n    font-size 13px\n\n  code,\n  pre,\n  textarea\n    font-family var(--font-monospace)\n\n  hr\n    border 0\n    border-top 1px solid var(--color-base-content)\n\n  a\n    cursor pointer\n\n  button\n    position relative\n\n  textarea\n    overflow-wrap normal\n    tab-size 4\n    white-space pre\n\n  textarea,\n  input\n    outline none /* osx */\n\n  .gltfIcon svg\n    box-sizing content-box\n    display inline\n    height 20px\n    position relative\n    top 4px\n    vertical-align baseline\n    width 30px\n\n  #scenegraph,\n  #rightPanel\n    z-index 9998\n\n  #sidebar,\n  #scenegraph,\n  .panel\n      cursor default\n      user-select none\n\n  .toggle-edit\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    font-size 13px\n    left 3px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 100px\n    z-index 999999999\n\n  .toggle-edit:hover\n    background-color var(--color-secondary-hover)\n\n  .try-editor-btn\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    display flex\n    font-size 16px\n    gap 5px\n    justify-content center\n    line-height 24px\n    margin 0\n    padding 6px 10px\n    text-align center\n    text-decoration none\n    width 200px\n\n  .try-editor-btn:hover\n    background-color var(--color-secondary-hover)\n    color var(--color-secondary-content)\n\n  .sponsor-btn\n    background-color var(--color-neutral)\n    box-sizing content-box\n    color var(--color-neutral-content)\n    display flex\n    font-size 13px\n    gap 5px\n    justify-content center\n    left 127px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 80px\n    z-index 999999999\n\n    svg\n      color rgb(219, 97, 162)\n      fill currentColor\n\n  .sponsor-btn:hover\n    background-color var(--color-neutral-hover)\n    color var(--color-neutral-content)\n\n  input\n    background-color transparent\n    border 1px solid var(--color-base-200)\n    color var(--color-base-content)\n\n  input,\n  .texture canvas\n    transition 0.1s background-color ease-in-out, 0.1s border-color ease-in-out, 0.1s color ease-in-out\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    border-radius 0\n    min-height 14px\n    outline none\n\n  input[type=\"checkbox\"]\n    appearance none\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 0\n    cursor pointer\n    height 18px\n    margin 0\n    position relative\n    width 18px\n\n    &:checked\n        background var(--color-primary)\n        border 1px solid var(--color-base-300)\n\n        &::after\n            border solid white\n            border-width 0 2px 2px 0\n            content ''\n            height 9px\n            left 5px\n            position absolute\n            top 1px\n            transform rotate(45deg)\n            width 4px\n\n  input[type=\"checkbox\"]:focus\n    box-shadow none\n\n  input.number\n    background-color transparent !important\n    border 0\n    color var(--color-primary) !important\n    cursor col-resize\n    font-size 13px\n    padding 2px\n\n  input.string:focus,\n  input.number:focus\n    border 1px solid var(--color-primary)\n\n  input.error\n    border 1px solid var(--color-error)\n\n  #sidebar\n    background var(--color-base-200)\n    width 331px\n\n  input,\n  textarea,\n  select\n    background var(--color-base-300)\n    border 1px solid transparent\n    color var(--color-base-content)\n\n  select\n    background var(--color-base-lighter)\n\n  input[type=\"color\"]\n    background-color var(--color-base-100)\n    border 1px solid var(--color-base-300)\n    cursor pointer\n    height 26px\n    padding 0\n    width 50px\n\n  /* Note these vendor-prefixed selectors cannot be grouped! */\n  input[type=\"color\"]::-webkit-color-swatch\n    border 0  /* To remove the gray border. */\n\n  input[type=\"color\"]::-webkit-color-swatch-wrapper\n    border-radius 0  /* So it appears as rectangle instead of an ovale in Safari */\n    padding 0  /* To remove the inner padding. */\n\n  input[type=\"color\"]::-moz-color-swatch\n    border 0\n\n  input[type=\"color\"]::-moz-focus-inner\n    border 0  /* To remove the inner border (specific to Firefox). */\n    padding 0\n\n  .hidden\n    visibility hidden\n\n  a.button\n    color var(--color-base-content)\n    font-size 16px\n    line-height 1em\n    text-decoration none\n\n    &:hover\n      color var(--color-primary)\n\n  @keyframes animateopacity\n    from { opacity: 0 }\n    to { opacity: 1 }\n\n  .hide\n    display none\n\n  .a-canvas.state-dragging\n    cursor grabbing\n\n  #rightPanel\n    align-items stretch\n    display flex\n    justify-content flex-end\n\n  #inspectorContainer\n    display flex\n    height 100%\n    justify-content space-between\n    left 0\n    pointer-events none\n    position fixed\n    top 0\n    width 100%\n    z-index 999999\n\n  #scenegraph,\n  #viewportBar,\n  #rightPanel\n    pointer-events all\n\n  .aframe-inspector-opened a-scene .a-canvas\n    background-color #191919\n    z-index 9998\n\n  .toggle-sidebar\n    align-items center\n    display flex\n    height 100%\n    position absolute\n    z-index 9998\n\n    a\n      background-color var(--color-base-200)\n      color var(--color-base-content)\n      padding 5px\n      z-index 9998\n\n    a.hover\n      background-color var(--color-primary)\n      color var(--color-primary-content)\n\n  .toggle-sidebar.left\n    left 0\n    top 0\n\n  .toggle-sidebar.right\n    right 0\n    top 0\n","@import './lib';\n\n#toolbar\n  background-color var(--color-base-300)\n  border-bottom 1px solid var(--color-base-100)\n  padding 4px 8px\n  position relative\n  z-index 9999\n  display flex\n  flex-wrap wrap\n  gap 4px\n\n  .toolbarActions\n    align-items center\n    display flex\n    justify-content flex-start\n    gap 4px\n    padding 4px 0\n    flex-wrap wrap\n\n    a.disabled\n      color #666\n      cursor default\n\n    .button\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover:not(.disabled)\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      &:active\n        transform scale(0.95)\n\n      &.disabled\n        opacity 0.5\n        cursor not-allowed\n\n    .gltfIcon\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      svg\n        width 18px\n        height 18px\n\n#scenegraph\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-300)\n  display flex\n  flex-direction column\n  overflow visible\n  padding-top 60px\n  width 260px\n  min-width 180px\n  max-width 400px\n  resize horizontal\n  overflow-x auto\n  position relative\n  z-index 9999\n  pointer-events all\n\n  &::after\n    content: ''\n    position absolute\n    right 0\n    top 0\n    bottom 0\n    width 8px\n    cursor ew-resize\n    background transparent\n    \n    &:hover\n      background var(--color-primary)\n      opacity 0.5\n    background transparent\n    transition background 0.2s\n\n  &:hover::after\n    background var(--color-primary)\n\n  // Custom resize handle\n  .resize-handle\n    position absolute\n    right -8px\n    top 50%\n    transform translateY(-50%)\n    width 16px\n    height 40px\n    background var(--color-base-100)\n    border-radius 8px\n    display flex\n    align-items center\n    justify-content center\n    cursor ew-resize\n    z-index 100\n    opacity 0\n    transition opacity 0.2s\n    border 1px solid var(--color-base-300)\n\n    svg\n      font-size 10px\n      color var(--color-base-content)\n      opacity 0.5\n\n    &:hover, &.active\n      opacity 1\n      background var(--color-primary)\n      border-color var(--color-primary)\n\n      svg\n        color var(--color-primary-content)\n        opacity 1\n\n  &:hover .resize-handle\n    opacity 0.7\n\n  .entity\n    align-items center\n    background var(--color-base-200)\n    box-sizing border-box\n    cursor pointer\n    display flex\n    gap 6px\n    justify-content space-between\n    line-height 1em\n    padding 3px\n    white-space nowrap\n    width 100%\n    flex-wrap wrap\n\n    &:hover\n      background var(--color-accent-hover)\n      color var(--color-accent-content)\n\n    &.active\n      background-color var(--color-accent)\n      color var(--color-accent-content)\n\n      .entityActions\n        align-items center\n        display flex\n        padding-right 2px\n\n        a.button:hover\n          color var(--color-primary)\n\n    &.novisible\n      &.active\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n      &:not(.active)\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n  .component:hover\n    color var(--color-primary)\n\n  .entityIcons\n    margin-left 2px\n\n  .entityActions\n    display none\n\n  // Floating action menu for selected entity\n  .entityActionsFloating\n    display flex\n    flex-direction column\n    align-items stretch\n    gap 4px\n    padding 4px 8px\n    background var(--color-base-100)\n    border-radius 4px\n    margin-left 8px\n    flex-shrink 0\n    box-shadow 0 2px 8px rgba(0, 0, 0, 0.3)\n    z-index 100\n    min-width 120px\n\n    .button\n      display flex\n      align-items center\n      gap 4px\n      color var(--color-base-content)\n      font-size 11px\n      padding 4px 6px\n      border-radius 3px\n      transition all 0.15s ease\n      white-space nowrap\n\n      .action-label\n        font-size 10px\n        font-weight 500\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n\n      svg\n        font-size 12px\n\n    .entityReparent\n      cursor grab\n\n    .entityMoveUp, .entityMoveDown\n      cursor pointer\n\n    .entityMoveUp:hover, .entityMoveDown:hover\n      background var(--color-primary)\n      color var(--color-primary-content)\n\n    .button\n      color var(--color-base-content)\n      font-size 12px\n      margin-left 6px\n\n  .id\n    color var(--color-base-content)\n\n  .option.active .id\n    color var(--color-base-content)\n\n  .collapsespace\n    color var(--color-base-content)\n    display inline-block\n    text-align center\n    width 14px\n\n  .fa-eye\n    color var(--color-base-content)\n\n  .search\n    display flex\n    font-size 16px\n    padding 5px\n    position relative\n\n    input\n      background var(--color-base-300)\n      border-radius 0\n      box-sizing border-box\n      color var(--color-primary)\n      padding 5px 10px\n      width 100%\n\n    >svg\n      color var(--color-base-content)\n\n    >svg, a.button\n      position absolute\n      right 14px\n      top 10px\n\n  .outliner\n    background var(--color-base-200)\n    color var(--color-base-content)\n    cursor default\n    flex 1 1 auto\n    font-size 13px\n    height calc(100% - 98px)\n    line-height normal\n    outline none\n    overflow-y auto\n    padding 0\n    width 100%\n\n.theme-selector\n  position relative\n\n  .theme-dropdown\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 4px\n    box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)\n    max-height 300px\n    overflow-y auto\n    position fixed\n    top 50px\n    left 10px\n    width 140px\n    z-index 10000\n\n    .theme-option\n      color var(--color-base-content)\n      cursor pointer\n      padding 8px 12px\n\n      &:hover\n        background var(--color-accent-hover)\n        color var(--color-accent-content)\n\n      &.selected\n        background var(--color-accent)\n        color var(--color-accent-content)\n\n// Add Entity Button with Primitive Menu\n.addEntityContainer\n  position relative\n  display flex\n\n.addEntityContainer .button\n  border-radius 4px 0 0 4px\n\n.addEntityContainer .primitiveToggle\n  border-left none\n  border-radius 0 4px 4px 0\n  padding-left 4px\n\n.primitiveMenu\n  position fixed\n  top auto\n  left 235px\n  bottom auto\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 6px\n  padding 6px 0\n  z-index 10001\n  min-width 240px\n  max-height 400px\n  overflow-y auto\n  box-shadow 0 8px 24px rgba(0, 0, 0, 0.4)\n\n.primitiveMenuHeader\n  padding 10px 14px 8px\n  font-size 11px\n  color var(--color-primary)\n  border-bottom 1px solid var(--color-base-300)\n  font-weight 600\n  text-transform uppercase\n  letter-spacing 0.5px\n\n.primitiveMenuItem\n  display flex\n  align-items center\n  gap 10px\n  padding 10px 14px\n  cursor pointer\n  transition background 0.15s, color 0.15s\n  color var(--color-base-content)\n  border-left 3px solid transparent\n\n.primitiveMenuItem:hover\n  background var(--color-base-300)\n  border-left-color var(--color-primary)\n\n.primitiveMenuItem.selected\n  background var(--color-primary)\n  color var(--color-primary-content)\n  border-left-color var(--color-primary)\n\n.primitiveIcon\n  width 24px\n  text-align center\n  font-size 1rem\n\n.primitiveLabel\n  flex 1\n  font-size 13px\n  font-weight 500\n\n.primitiveTag\n  font-size 10px\n  color var(--color-base-content)\n  font-family var(--font-monospace)\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n  opacity  0.8\n\n.primitiveMenuItem.selected .primitiveTag\n  color inherit\n  background rgba(255,255,255,0.2)\n  opacity  1\n\n// Grouped primitive menu styles\n.primitiveGroup\n  margin-bottom 6px\n\n  &:last-child\n    margin-bottom 0\n\n.primitiveGroupHeader\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 14px 6px\n  font-size 10px\n  color var(--color-primary)\n  font-weight 700\n  text-transform uppercase\n  letter-spacing 0.8px\n\n  .icon\n    font-size 11px\n    width 14px\n    text-align center\n\n.primitiveGroup .primitiveMenuItem\n  padding-left 20px\n\n  // Entity actions for move up/down and reparent\n  .entityReparent\n    cursor grab\n\n  .entityMoveUp, .entityMoveDown\n    cursor pointer\n    opacity 0.5\n    transition opacity 0.2s\n\n  .entityMoveUp:hover, .entityMoveDown:hover\n    opacity 1\n\n// Reparent Modal Styles\n.reparent-modal-overlay\n  position fixed\n  top 0\n  left 0\n  right 0\n  bottom 0\n  background rgba(0, 0, 0, 0.7)\n  z-index 10000\n  display flex\n  align-items center\n  justify-content center\n\n.reparent-modal\n  background var(--color-base-200)\n  border 1px solid var(--border-color)\n  border-radius 8px\n  width 350px\n  max-height 80vh\n  display flex\n  flex-direction column\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  overflow hidden\n\n.reparent-modal-header\n  display flex\n  justify-content space-between\n  align-items center\n  padding 16px\n  border-bottom 1px solid var(--border-color)\n  flex-shrink 0\n\n  h3\n    margin 0\n    font-size 1rem\n    color var(--color-base-content)\n    display flex\n    align-items center\n    gap 8px\n\n  .close-btn\n    background none\n    border none\n    color var(--text-secondary)\n    font-size 1.5rem\n    cursor pointer\n    padding 0\n    line-height 1\n\n    &:hover\n      color var(--color-base-content)\n\n.reparent-modal-content\n  padding 16px\n  overflow-y auto\n  flex 1\n  display flex\n  flex-direction column\n\n  p\n    margin 0 0 12px 0\n    font-size 0.85rem\n    color var(--text-secondary)\n\n.reparent-list\n  display flex\n  flex-direction column\n  gap 4px\n  max-height 300px\n  overflow-y auto\n  flex 1\n\n.reparent-option\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 12px\n  border-radius 4px\n  cursor pointer\n  transition background 0.2s\n  color var(--color-base-content)\n\n  &:hover\n    background var(--color-base-300)\n\n  &.selected\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n    .reparent-name\n      color var(--color-primary-content)\n\n.reparent-icon\n  font-size 0.9rem\n  width 24px\n  text-align center\n\n.reparent-name\n  flex 1\n  font-size 0.85rem\n\n.reparent-tag\n  font-size 0.65rem\n  color var(--text-secondary)\n  font-family monospace\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n\n// Modal action buttons\n.reparent-modal-actions\n  display flex\n  justify-content flex-end\n  gap 10px\n  margin-top 16px\n  padding-top 16px\n  border-top 1px solid var(--border-color)\n\n  .btn-cancel\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--color-base-content)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    transition all 0.2s\n\n    &:hover\n      background var(--color-base-100)\n\n  .btn-apply\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--text-secondary)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    font-weight 600\n    transition all 0.2s\n    opacity 0.5\n    pointer-events none\n\n    &.active\n      background var(--color-primary)\n      border-color var(--color-primary)\n      color var(--color-primary-content)\n      opacity 1\n      pointer-events auto\n\n      &:hover\n        filter brightness(1.1)\n\n// Mixins Manager\n.mixins-manager\n  position relative\n\n.mixins-toggle\n  display flex\n  align-items center\n  justify-content center\n  gap 8px\n  height 36px\n  padding 0 14px\n  border-radius 6px\n  background var(--color-base-200)\n  color var(--color-base-content)\n  border 1px solid var(--color-base-100)\n  font-size 13px\n  font-weight 500\n  transition all 0.2s ease\n  cursor pointer\n  white-space nowrap\n\n  &:hover\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n  &:active\n    transform scale(0.95)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Mixins Panel (over canvas)\n.mixins-panel\n  position fixed\n  top 50%\n  left 50%\n  transform translate(-50%, -50%)\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 300px\n  max-width 400px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 10000\n  display flex\n  flex-direction column\n\n  .mixins-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .mixins-list\n    flex 1\n    overflow-y auto\n    max-height calc(60vh - 60px)\n\n  .no-mixins\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .mixin-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n\n    &:hover\n      background var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .mixin-info\n      display flex\n      flex-direction column\n      gap 3px\n      flex 1\n      min-width 0\n\n      .mixin-id\n        font-size 14px\n        font-weight 600\n        color var(--color-base-content)\n\n      .mixin-usage\n        font-size 11px\n        color var(--color-primary)\n\n      .mixin-components\n        font-size 10px\n        color var(--color-base-content)\n        opacity 0.7\n        max-width 200px\n        overflow hidden\n        text-overflow ellipsis\n        white-space nowrap\n\n    .mixin-actions\n      display flex\n      gap 6px\n      margin-left 10px\n\n      .mixin-edit,\n      .mixin-delete\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        color var(--color-base-content)\n        cursor pointer\n        padding 6px 8px\n        font-size 11px\n        border-radius 4px\n        transition all 0.2s\n\n        &:hover\n          background var(--color-primary)\n          border-color var(--color-primary)\n          color var(--color-primary-content)\n\n      .mixin-delete:hover\n        background var(--color-error)\n        border-color var(--color-error)\n\n// Mixin Modal\n.mixin-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.mixin-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 80vh\n  max-width 500px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  position relative\n  margin auto\n\n  .mixin-modal-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 15px 20px\n    border-bottom 1px solid var(--color-base-300)\n\n    h3\n      margin 0\n      font-size 16px\n      color var(--color-base-content)\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .mixin-modal-content\n    padding 20px\n    max-height 50vh\n    overflow-y auto\n\n    .form-group\n      margin-bottom 15px\n\n      &:last-child\n        margin-bottom 0\n\n      label\n        display block\n        font-size 12px\n        font-weight 600\n        color var(--color-base-content)\n        margin-bottom 8px\n        text-transform uppercase\n\n      input[type=\"text\"]\n        width 100%\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        border-radius 4px\n        color var(--color-base-content)\n        padding 8px 10px\n        font-size 13px\n        box-sizing border-box\n\n        &:focus\n          border-color var(--color-primary)\n          outline none\n\n      .component-inputs\n        display flex\n        flex-direction column\n        gap 8px\n\n      .component-input\n        display flex\n        align-items center\n        gap 10px\n\n        .component-name\n          min-width 80px\n          font-size 12px\n          color var(--color-primary)\n          font-weight 500\n\n        input\n          flex 1\n\n    .mixin-help-text\n      background var(--color-base-100)\n      border 1px solid var(--color-base-300)\n      border-radius 4px\n      padding 12px 14px\n      margin-bottom 15px\n      font-size 12px\n      color var(--color-base-content)\n      line-height 1.5\n\n      p\n        margin 0 0 6px 0\n\n        &:last-child\n          margin-bottom 0\n\n  .mixin-modal-footer\n    display flex\n    justify-content flex-end\n    gap 10px\n    padding 15px 20px\n    border-top 1px solid var(--color-base-300)\n\n    .btn\n      padding 8px 16px\n      border-radius 4px\n      font-size 13px\n      cursor pointer\n      transition all 0.2s\n\n    .btn:not(.primary)\n      background var(--color-base-300)\n      border 1px solid var(--color-base-300)\n      color var(--color-base-content)\n\n      &:hover\n        background var(--color-base-100)\n\n    .btn.primary\n      background var(--color-primary)\n      border 1px solid var(--color-primary)\n      color var(--color-primary-content)\n\n      &:hover\n        filter brightness(1.1)\n\n// Class Manager\n.class-manager\n  position relative\n\n.class-toggle\n  display flex\n  align-items center\n  justify-content center\n  gap 8px\n  height 36px\n  padding 0 14px\n  border-radius 6px\n  background var(--color-base-200)\n  color var(--color-base-content)\n  border 1px solid var(--color-base-100)\n  font-size 13px\n  font-weight 500\n  transition all 0.2s ease\n  cursor pointer\n  white-space nowrap\n\n  &:hover\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n  &:active\n    transform scale(0.95)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Class Panel Container\n.class-panel-container\n  position fixed\n  top 50%\n  left 50%\n  transform translate(-50%, -50%)\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 400px\n  max-width 500px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 10000\n  display flex\n  flex-direction column\n\n.class-panel\n  display flex\n  flex-direction column\n  flex 1\n  overflow hidden\n\n  .class-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .class-list\n    flex 1\n    overflow-y auto\n    max-height 200px\n\n  .no-classes\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .class-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n    cursor pointer\n\n    &:hover\n      background var(--color-base-300)\n\n    &.selected\n      background var(--color-primary)\n      color var(--color-primary-content)\n\n      .class-count\n        color var(--color-primary-content)\n        opacity 0.8\n\n    &:last-child\n      border-bottom none\n\n    .class-name\n      font-size 14px\n      font-weight 600\n      color var(--color-base-content)\n\n    .class-count\n      font-size 11px\n      color var(--color-primary)\n\n// Class Detail Panel\n.class-detail\n  border-top 1px solid var(--color-base-300)\n  max-height 300px\n  overflow-y auto\n\n  .class-detail-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    background var(--color-base-300)\n    position sticky\n    top 0\n\n    h4\n      margin 0\n      font-size 13px\n      color var(--color-primary)\n      font-weight 600\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .class-entities\n    padding 0\n\n  .class-entity-item\n    border-bottom 1px solid var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .class-entity-header\n      display flex\n      justify-content space-between\n      align-items center\n      padding 10px 16px\n      cursor pointer\n      transition background 0.2s\n\n      &:hover\n        background var(--color-base-300)\n\n      .entity-name\n        font-size 13px\n        font-weight 500\n        color var(--color-base-content)\n\n      .entity-tag\n        font-size 10px\n        color var(--color-primary)\n        font-family var(--font-monospace)\n        background var(--color-base-100)\n        padding 2px 6px\n        border-radius 3px\n\n    .entity-components\n      padding 8px 16px 12px 16px\n      background var(--color-base-100)\n\n      .component-item\n        display flex\n        flex-direction column\n        gap 2px\n        padding 4px 0\n        border-bottom 1px solid var(--color-base-300)\n\n        &:last-child\n          border-bottom none\n\n        .comp-name\n          font-size 11px\n          font-weight 600\n          color var(--color-primary)\n          text-transform uppercase\n\n        .comp-value\n          font-size 11px\n          color var(--color-base-content)\n          opacity 0.8\n          font-family var(--font-monospace)\n          word-break break-all\n","@import './lib';\n\n.components\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  height 100%\n  overflow auto\n  position fixed\n  width 331px\n\n.collapsible-header\n  align-items center\n  display flex\n  justify-content space-between\n\n  .entityPrint\n    color var(--color-base-content)\n\n.collapsible-content\n  padding 5px 0\n\n.componentTitle span\n  color var(--color-base-content)\n  font-weight 600\n  max-width 200px\n  overflow hidden\n  text-overflow ellipsis\n  text-transform uppercase\n  vertical-align bottom !important\n  white-space nowrap\n\n.componentNameText\n  display inline-block\n  max-width 180px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.componentHeaderActions\n  align-items center\n  display flex\n  gap 10px\n  margin-bottom 4px\n  justify-content flex-end\n\n.collapsible .static\n  background var(--color-base-100)\n  border-bottom 2px solid var(--color-base-200)\n  box-sizing content-box\n  cursor pointer\n  font-size 13px\n  height 16px\n  margin 0\n  padding 8px 10px 12px\n  vertical-align bottom\n\n  &:hover\n    background var(--color-base-lighter)\n\n.collapsible .static .collapse-button\n  border 6px solid transparent\n  float left\n  height 0\n  margin-left 2px\n  margin-right 10px\n  width 0\n\n.collapsible.collapsed .static .collapse-button\n  border-left-color var(--color-base-content)\n  margin-top 4px\n\n.collapsible:not(.collapsed) .static .collapse-button\n  border-top-color var(--color-base-content)\n  margin-top 7px\n\n.propertyRow\n  align-items center\n  display flex\n  font-size 13px\n  min-height 30px\n  padding 2px 15px\n\n  .text\n    cursor default\n    display inline-block\n    overflow hidden\n    padding-right 10px\n    text-overflow ellipsis\n    vertical-align middle\n    width 118px\n\n  input.number\n    width 40px\n\n  .vec2 input.number,\n  .vec3 input.number\n    width 40px\n\n  .vec4 input.number\n    width 34px\n\n  .vec2, .vec3, .vec4\n    display inline\n\n  .map_value\n    margin 0 0 0 5px\n    width 68px\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    background var(--color-base-300)\n    color var(--color-primary)\n    min-height 26px\n    padding 1px 5px\n\n    &:last-child\n      padding-right 0\n\n  input.string\n    box-sizing border-box\n    padding-left 8px\n    width 165px\n\n  input[type=\"text\"]:focus,\n  input.string:focus\n    box-shadow none\n\n  .color-widget *\n    vertical-align middle\n\n  .color_value\n    letter-spacing 1px\n    margin 0 0 0 5px\n    width 68px\n\n.propertyRowDefined .text\n  color var(--color-property-defined)\n  font-weight 600\n\n#addComponentContainer\n  align-items center\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  display flex\n  flex-direction column\n  justify-content center\n  padding 20px 10px\n\n  #addComponent\n    text-align left\n    width 200px\n\n    .select__control\n      background var(--color-base-300)\n      color var(--color-primary)\n      height 35px\n\n  #addComponentHeader\n    font-size 15px\n    margin 0 0 10px\n\n  input[type=\"text\"]:focus\n    box-shadow none\n\n.component-title\n  align-items center\n  display flex\n\n#componentEntityHeader\n  .collapsible-header\n    bottom 5px\n    position relative\n\n  a.button\n    margin-left 10px\n\n  .collapse-button\n    display none\n\n  .static\n    height 13px\n\n  .entityPrint\n    font-size 15px\n    padding-left 5px\n\n  .entityName\n    max-width 160px\n\n#mixinSelect\n  width 160px\n\n.propertyRow .texture\n  display flex\n\n  input\n    margin-left 0\n    width 120px\n\n/* Behaviors Panel Styles */\n.behaviors-panel\n  background-color var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  padding 10px\n\n  .panel-header\n    align-items center\n    display flex\n    justify-content space-between\n    margin-bottom 10px\n\n    .panel-header-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 14px\n      font-weight 600\n      gap 8px\n\n  .behaviors-list\n    .no-behaviors\n      text-align center\n      padding 20px 10px\n      color var(--color-base-content)\n      opacity 0.7\n\n      p\n        margin 0 0 15px\n\n    .entity-behavior\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 8px 12px\n\n      .behavior-info\n        align-items center\n        display flex\n        gap 10px\n\n        .behavior-name\n          color var(--color-base-content)\n          font-size 13px\n\n      .behavior-remove\n        background transparent\n        border none\n        color var(--color-base-content)\n        cursor pointer\n        font-size 14px\n        padding 4px\n        opacity 0.6\n\n        &:hover\n          color var(--color-error)\n          opacity 1\n\n/* Entity Behavior - Enhanced */\n.entity-behavior\n  align-items center\n  background var(--color-base-300)\n  border-radius 4px\n  display flex\n  justify-content space-between\n  margin-bottom 8px\n  padding 10px 12px\n\n  .behavior-info\n    align-items center\n    display flex\n    gap 12px\n\n    .behavior-details\n      display flex\n      flex-direction column\n      gap 2px\n\n      .behavior-name\n        color var(--color-base-content)\n        font-size 13px\n        font-weight 500\n\n      .behavior-event\n        color var(--color-primary)\n        font-size 11px\n\n  .behavior-actions\n    align-items center\n    display flex\n    gap 4px\n\n    .behavior-edit,\n    .behavior-remove\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 12px\n      padding 6px\n      opacity 0.6\n      transition all 0.2s\n\n      &:hover\n        color var(--color-primary)\n        opacity 1\n\n    .behavior-remove:hover\n      color var(--color-error)\n\n/* Entity Behavior Selected */\n.entity-behavior:hover\n  background var(--color-base-lighter)\n\n/* Behavior Modal */\n.modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  left 50%\n  max-height 80vh\n  max-width 600px\n  min-width 400px\n  overflow hidden\n  position fixed\n  top 50%\n  transform translate(-50%, -50%)\n  width 90%\n\n  .modal-title\n    align-items center\n    background var(--color-base-100)\n    color var(--color-base-content)\n    display flex\n    font-size 16px\n    font-weight 600\n    gap 10px\n    padding 15px 20px\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      margin-left auto\n      opacity 0.7\n\n      &:hover\n        opacity 1\n\n  .behavior-categories\n    max-height 400px\n    overflow-y auto\n    padding 15px\n\n    .behavior-category\n      margin-bottom 20px\n\n      &:last-child\n        margin-bottom 0\n\n      .category-title\n        color var(--color-primary)\n        font-size 12px\n        font-weight 600\n        margin-bottom 10px\n        text-transform uppercase\n\n      .category-behaviors\n        display flex\n        flex-wrap wrap\n        gap 8px\n\n        .behavior-option\n          align-items center\n          background var(--color-base-300)\n          border 1px solid transparent\n          border-radius 4px\n          color var(--color-base-content)\n          cursor pointer\n          display flex\n          gap 8px\n          padding 8px 12px\n          font-size 13px\n          transition all 0.2s\n\n          &:hover\n            background var(--color-base-lighter)\n            border-color var(--color-primary)\n\n          &.selected\n            background var(--color-primary)\n            color var(--color-primary-content)\n\n  .behavior-params\n    background var(--color-base-300)\n    border-top 1px solid var(--color-base-100)\n    padding 15px 20px\n\n    .params-title\n      color var(--color-base-content)\n      font-size 14px\n      font-weight 600\n      margin-bottom 15px\n\n    .params-form\n      .param-input\n        margin-bottom 15px\n\n        &:last-child\n          margin-bottom 0\n\n        label\n          color var(--color-base-content)\n          display block\n          font-size 12px\n          margin-bottom 5px\n\n        input[type=\"text\"],\n        input[type=\"number\"],\n        textarea,\n        select\n          background var(--color-base-100)\n          border 1px solid var(--color-base-300)\n          border-radius 4px\n          color var(--color-base-content)\n          padding 8px 10px\n          width 100%\n          box-sizing border-box\n\n          &:focus\n            border-color var(--color-primary)\n            outline none\n\n        textarea\n          min-height 60px\n          resize vertical\n\n        &.checkbox\n          align-items center\n          display flex\n\n          label\n            align-items center\n            cursor pointer\n            display flex\n            gap 8px\n            margin-bottom 0\n\n  .modal-actions\n    align-items center\n    border-top 1px solid var(--color-base-100)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n/* Icon sizes for behaviors */\n.behaviors-panel .panel-header .icon,\n.behavior-option .icon,\n.entity-behavior .icon\n  font-size 14px\n  width 16px\n\n/* Behavior Modal - Centered */\n.behavior-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 85vh\n  max-width 550px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  display flex\n  flex-direction column\n\n  .behavior-modal-header\n    align-items center\n    background var(--color-base-100)\n    border-bottom 1px solid var(--color-base-300)\n    display flex\n    justify-content space-between\n    padding 15px 20px\n\n    .behavior-modal-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 16px\n      font-weight 600\n      gap 10px\n\n    .behavior-modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 28px\n      line-height 1\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .behavior-modal-content\n    flex 1\n    overflow-y auto\n    padding 15px\n\n  .behavior-modal-footer\n    align-items center\n    border-top 1px solid var(--color-base-300)\n    display flex\n    gap 10px\n    justify-content space-between\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n// Help button\n.help-btn\n  align-items center\n  background var(--color-base-300)\n  border none\n  border-radius 4px\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  font-size 13px\n  gap 6px\n  padding 8px 12px\n  transition all 0.2s\n\n  &:hover\n    background var(--color-base-lighter)\n    color var(--color-primary)\n\n  &.active\n    background var(--color-primary)\n    color white\n\n// Help section\n.behavior-help\n  background var(--color-base-100)\n  border-radius 6px\n  max-height 350px\n  overflow-y auto\n  padding 15px\n\n  .help-section\n    margin-bottom 15px\n\n    &:last-child\n      margin-bottom 0\n\n    h4\n      color var(--color-primary)\n      font-size 13px\n      font-weight 600\n      letter-spacing 0.5px\n      margin-bottom 8px\n      text-transform uppercase\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      line-height 1.5\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    li\n      border-bottom 1px solid var(--color-base-300)\n      color var(--color-base-content)\n      font-size 12px\n      line-height 1.4\n      padding 6px 0\n\n      &:last-child\n        border-bottom none\n\n    pre\n      background var(--color-base-400)\n      border-radius 4px\n      color var(--color-base-content)\n      font-family 'Monaco', 'Menlo', 'Ubuntu Mono', monospace\n      font-size 11px\n      line-height 1.4\n      overflow-x auto\n      padding 12px\n      white-space pre-wrap\n      word-break break-all\n\n.footer-actions\n  display flex\n  gap 10px\n  margin-left auto\n\n.modal-title .icon\n  font-size 18px\n  width 20px\n\n// Show More button for beginner mode\n.showMoreContainer\n  padding: 8px 0\n  text-align: center\n  border-top: 1px solid var(--color-base-300)\n  margin-top: 4px\n\n.showMoreButton\n  background: var(--color-base-100)\n  border: 1px solid var(--color-base-300)\n  border-radius: 4px\n  color: var(--color-base-content)\n  cursor: pointer\n  font-size: 12px\n  padding: 6px 12px\n  display: flex\n  align-items: center\n  justify-content: center\n  gap: 6px\n  margin: 0 auto\n  transition: all 0.2s\n\n  &:hover\n    background: var(--color-primary)\n    border-color: var(--color-primary)\n    color: var(--color-primary-content)\n\n// Property hint indicator\n.propertyHint\n  display: inline-block\n  width: 14px\n  height: 14px\n  line-height: 14px\n  text-align: center\n  background: var(--color-base-100)\n  border-radius: 50%\n  font-size: 10px\n  margin-left: 4px\n  color: var(--color-primary)\n  cursor: help\n\n  &:hover\n    background: var(--color-primary)\n    color: var(--color-primary-content)\n\n// Component help button in header\n.componentHelpButton\n  padding: 2px 6px\n  margin-right: 4px\n  font-size: 12px\n  color: #aaa\n  cursor: pointer\n  transition: color 0.2s\n  background: transparent\n  border: none\n\n  &:hover\n    color: #fff\n\n// Component Help Modal\n.component-help-modal\n  max-height: 70vh\n  overflow-y: auto\n  padding: 15px\n  margin: 10px\n\n  .help-overview\n    margin-bottom: 20px\n    padding-bottom: 15px\n    border-bottom: 1px solid var(--color-base-300)\n\n    h4\n      color: var(--color-primary)\n      font-size: 14px\n      font-weight: 600\n      margin-bottom: 10px\n\n    p\n      color: var(--color-base-content)\n      font-size: 13px\n      line-height: 1.5\n\n  .help-properties,\n  .help-all-properties\n    margin-bottom: 20px\n\n    h4\n      color: var(--color-primary)\n      font-size: 13px\n      font-weight: 600\n      margin-bottom: 8px\n\n    .help-tip\n      color: var(--color-base-content)\n      font-size: 12px\n      font-style: italic\n      opacity: 0.8\n      margin-bottom: 12px\n\n    ul\n      list-style: none\n      margin: 0\n      padding: 0\n\n    .help-property\n      display: flex\n      flex-direction: column\n      padding: 8px 10px\n      margin-bottom: 6px\n      background: var(--color-base-300)\n      border-radius: 4px\n\n      .property-name\n        color: var(--color-primary)\n        font-size: 12px\n        font-weight: 600\n        font-family: 'Monaco', 'Menlo', monospace\n        margin-bottom: 4px\n\n      .property-desc\n        color: var(--color-base-content)\n        font-size: 11px\n        line-height: 1.4\n\n  .help-all-properties\n    h4\n      margin-top: 15px\n\n  .help-no-beginner\n    padding: 15px\n    background: var(--color-base-300)\n    border-radius: 4px\n\n    p\n      color: var(--color-base-content)\n      font-size: 12px\n      margin: 0\n\n// Class Manager Styles\n.class-manager\n  display: flex\n  flex-direction: column\n  gap: 8px\n  width: 165px\n\n.class-manager-dropdown\n  display: flex\n  gap: 6px\n  align-items: center\n\n  .class-select\n    flex: 1\n    background: var(--color-base-300)\n    border: 1px solid var(--color-base-300)\n    border-radius: 4px\n    color: var(--color-primary)\n    font-size: 13px\n    padding: 4px 8px\n    min-height: 26px\n    cursor: pointer\n    width: 100%\n\n    &:focus\n      outline: none\n      border-color: var(--color-primary)\n\n  .class-add-button\n    background: var(--color-base-300)\n    border: 1px solid var(--color-base-300)\n    border-radius: 4px\n    color: var(--color-base-content)\n    cursor: pointer\n    padding: 4px 8px\n    display: flex\n    align-items: center\n    justify-content: center\n    min-width: 28px\n    min-height: 26px\n    transition: all 0.2s\n\n    &:hover\n      background: var(--color-primary)\n      border-color: var(--color-primary)\n      color: var(--color-primary-content)\n\n.class-tags\n  display: flex\n  flex-wrap: wrap\n  gap: 4px\n\n.class-tag\n  align-items: center\n  background: var(--color-base-300)\n  border-radius: 4px\n  display: flex\n  gap: 4px\n  padding: 2px 6px\n  font-size: 12px\n\n.class-tag-name\n  color: var(--color-primary)\n  cursor: pointer\n  max-width: 100px\n  overflow: hidden\n  text-overflow: ellipsis\n  white-space: nowrap\n\n  &:hover\n    text-decoration: underline\n\n.class-tag-input\n  background: var(--color-base-100)\n  border: 1px solid var(--color-primary)\n  border-radius: 2px\n  color: var(--color-base-content)\n  font-size: 12px\n  padding: 2px 4px\n  width: 80px\n\n  &:focus\n    outline: none\n\n.class-tag-delete\n  background: transparent\n  border: none\n  color: var(--color-base-content)\n  cursor: pointer\n  font-size: 10px\n  opacity: 0.6\n  padding: 0\n\n  &:hover\n    color: var(--color-error)\n    opacity: 1\n\n.class-add\n  display: flex\n  gap: 4px\n\n.class-add-input\n  background: var(--color-base-300)\n  border: 1px solid transparent\n  border-radius: 4px\n  color: var(--color-base-content)\n  font-size: 12px\n  padding: 4px 8px\n  width: 120px\n\n  &:focus\n    border-color: var(--color-primary)\n    outline: none\n\n.class-add-button\n  align-items: center\n  background: var(--color-base-300)\n  border: none\n  border-radius: 4px\n  color: var(--color-base-content)\n  cursor: pointer\n  display: flex\n  font-size: 12px\n  padding: 4px 8px\n\n  &:hover\n    background: var(--color-primary)\n    color: var(--color-primary-content)\n\n// New Class Manager List Styles\n.class-manager-list\n  display: flex\n  flex-direction: column\n  gap: 8px\n  width: 165px\n\n  .class-items\n    display: flex\n    flex-direction: column\n    gap: 4px\n    max-height: 120px\n    overflow-y: auto\n\n  .class-empty\n    color: var(--color-base-content)\n    font-size: 12px\n    font-style: italic\n    opacity: 0.6\n    padding: 4px 0\n\n  .class-item\n    align-items: center\n    background: var(--color-base-300)\n    border-radius: 4px\n    display: flex\n    justify-content: space-between\n    padding: 4px 8px\n\n    .class-name\n      color: var(--color-primary)\n      font-size: 12px\n      overflow: hidden\n      text-overflow: ellipsis\n      white-space: nowrap\n      max-width: 120px\n\n    .class-delete-btn\n      background: transparent\n      border: none\n      color: var(--color-base-content)\n      cursor: pointer\n      font-size: 12px\n      opacity: 0.6\n      padding: 2px\n      transition: all 0.2s\n\n      &:hover\n        color: var(--color-error)\n        opacity: 1\n\n  .class-add\n    display: flex\n    gap: 4px\n\n    .class-add-input\n      background: var(--color-base-300)\n      border: 1px solid transparent\n      border-radius: 4px\n      color: var(--color-base-content)\n      font-size: 12px\n      padding: 4px 8px\n      width: 120px\n\n      &:focus\n        border-color: var(--color-primary)\n        outline: none\n\n    .class-add-button\n      align-items: center\n      background: var(--color-base-300)\n      border: none\n      border-radius: 4px\n      color: var(--color-base-content)\n      cursor: pointer\n      display: flex\n      font-size: 12px\n      padding: 4px 8px\n\n      &:hover\n        background: var(--color-primary)\n        color: var(--color-primary-content)\n\n  .class-available\n    margin-top: 4px\n    padding-top: 4px\n    border-top: 1px solid var(--color-base-300)\n\n    .class-available-label\n      color: var(--color-base-content)\n      font-size: 10px\n      opacity: 0.7\n      margin-bottom: 4px\n\n    .class-available-items\n      display: flex\n      flex-wrap: wrap\n      gap: 4px\n\n    .class-available-item\n      background: var(--color-base-100)\n      border: 1px solid var(--color-base-300)\n      border-radius: 4px\n      color: var(--color-base-content)\n      cursor: pointer\n      font-size: 11px\n      padding: 2px 6px\n      transition: all 0.2s\n\n      &:hover\n        background: var(--color-primary)\n        border-color: var(--color-primary)\n        color: var(--color-primary-content)\n","@import './lib';\n\n.entityPrint\n  font-family var(--font-normal)\n  line-height 1.15em\n\n.entityName\n  display inline-block\n  overflow hidden\n  position relative\n  text-overflow ellipsis\n  top 3px\n  white-space nowrap\n\n[data-entity-name-type=\"id\"]\n  color var(--color-error)\n\n[data-entity-name-type=\"class\"]\n  color var(--color-success)\n\n[data-entity-name-type=\"mixin\"]\n  color var(--color-warning)\n",".help-lists\n  display flex\n  justify-content space-around\n\n.help-list\n  list-style none\n  margin 0\n  padding 0 0 10px\n  width 350px\n\n.help-list li\n  margin-right 40px\n\n.help-key-unit\n  line-height 1.8\n  margin-right 2em\n  padding 5px 0\n\n.help-key\n  bottom 2px\n  margin-right 4px\n  min-width 60px\n  position relative\n\n.help-key span\n  background-color var(--color-neutral)\n  background-repeat repeat-x\n  border 1px solid var(--color-neutral-content)\n  border-radius 3px\n  box-shadow 0 0 5px #000\n  color var(--color-neutral-content)\n  display inline-block\n  font-size 12px\n  padding 0 8px\n  text-align center\n\n.help-key-def\n  color var(--color-base-content)\n  display inline-block\n  margin-left 1em\n","@import './lib';\n\n.select__control\n  border 0\n  border-radius 0\n  cursor pointer\n  min-height 26px\n\n.select__indicator\n  color var(--color-base-content)\n  height 26px\n\n.select__indicator-separator\n  display none\n\n.select__input\n  min-height auto !important\n\n.select__control,\n.select__menu\n  background var(--color-base-300)\n\n.select__option\n  cursor pointer\n  padding 5px 10px\n\n.select__placeholder,\n.select__menu\n  color var(--color-base-content)\n\n.select__single-value\n  color var(--color-primary)\n\n.select__control--is-focused\n  box-shadow none !important\n\n.select__label\n  font-size 11px\n\n.select__option--is-focused\n  background var(--color-accent-hover)\n  color var(--color-accent-content)\n\n.select__option--is-selected\n  background var(--color-accent)\n  color var(--color-accent-content)\n\n.select__value-container\n  height 26px\n  position static\n\n  &.select__value-container--is-multi\n    height auto\n    padding 6px\n\n.select__dropdown-indicator\n  padding 3px 8px\n\n.select__multi-value\n  background var(--color-base-200)\n  color var(--color-primary)\n\n.select__multi-value__label\n  color var(--color-primary)\n\n.select__multi-value__remove:hover\n  background var(--color-base-200)\n  color var(--color-base-content)\n",".modal\n  animation animateopacity 0.2s ease-out\n  background-color rgba(0, 0, 0, 0.6)\n  display flex\n  height 100%\n  left 0\n  overflow auto\n  position fixed\n  top 0\n  width 100%\n  z-index 9999999999\n\n// Component Help Modal specific styling - centered with margins\n#componentHelpModal\n  .modal-content\n    background-color: var(--color-base-100)\n    border-radius: 8px\n    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6)\n    left: 50%\n    margin: 30px auto\n    max-width: 480px\n    transform: translateX(-50%)\n    width: 90%\n\n  .modal-header\n    background-color: var(--color-base-200)\n    border-bottom: 1px solid var(--color-base-300)\n    border-radius: 8px 8px 0 0\n\n  .modal-body\n    background-color: var(--color-base-100)\n    border-radius: 0 0 8px 8px\n    max-height: 70vh\n    overflow-y: auto\n\n.modal h3\n  font-size 18px\n  font-weight 600\n  margin 0.6em 0\n\n#textureModal .modal-content\n  height calc(100% - 50px)\n  width calc(100% - 50px)\n\n.modal-content\n  background-color var(--color-base-200)\n  box-shadow 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5)\n  margin auto\n  overflow hidden\n  padding 0\n\n.close\n  color var(--color-base-content)\n  float right\n  font-size 28px\n  font-weight bold\n\n.close:hover,\n.close:focus\n  color var(--color-primary)\n  cursor pointer\n  text-decoration none\n\n.modal-header\n  color var(--color-base-content)\n  padding 2px 16px\n\n.modal-body\n  color var(--color-base-content)\n  overflow auto\n  padding 16px\n\n.modal-footer\n  color var(--color-base-content)\n  padding 2px 16px\n\n/* Gallery */\n.gallery\n  background var(--color-base-200)\n  display flex\n  flex-wrap wrap\n  margin 15px auto 0\n  max-height calc(100vh - 370px)\n  overflow auto\n  padding 15px 3px 3px\n\n.newimage .gallery\n  padding 16px\n\n.gallery li\n  border-radius 2px\n  box-shadow 0 0 6px rgba(0, 0, 0, 0.6)\n  cursor pointer\n  margin 8px\n  overflow hidden\n  width 155px\n\n.gallery li.selected,\n.gallery li:hover\n  box-shadow 0 0 0 2px var(--color-primary)\n\n.gallery li .detail\n  background-color var(--color-base-100)\n  margin 0\n  min-height 60px\n  padding 3px 10px\n\n.preview\n  padding 10px\n  width 150px\n\n.preview input\n  display block\n  margin 8px 0\n  width 144px\n\n.preview .iderror\n  background unquote(\"color-mix(in oklab, var(--color-error) 8%, var(--color-base-300))\")\n  color var(--color-error)\n  font-weight 600\n  margin-bottom 8px\n  padding 3px 5px\n  text-align center\n  width 148px\n\n.preview button\n  width 155px\n\n.preview .detail .title\n  color var(--color-base-content)\n  display inline-block\n  max-width 155px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.gallery li.selected .detail,\n.gallery li:hover .detail\n  background-color var(--color-base-lighter)\n\n.gallery li .detail span\n  color var(--color-base-content)\n  display block\n  margin-top 4px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n  width 140px\n\n.gallery li.selected .detail span,\n.gallery li:hover .detail span\n  color var(--color-base-content)\n\n.gallery li .detail span.title\n  color var(--color-property-defined)\n  font-weight 600\n\n.modal button\n  appearance none\n  background-color var(--color-primary)\n  border none\n  border-radius 0\n  box-shadow none\n  color var(--color-primary-content)\n  cursor pointer\n  display inline-block\n  font-size 12px\n  line-height 1.8\n  margin 0 10px 0 0\n  padding 5px 10px\n\n.modal button:focus\n  outline none\n\n.modal button:hover,\n.modal button.hover\n  background-color var(--color-primary-hover)\n\n.modal button:active,\n.modal button.active\n  background-color var(--color-primary-hover)\n\n.modal button:disabled\n  background-color #666\n  color #fff\n  cursor default\n\n.newimage\n  background-color var(--color-base-100)\n  color var(--color-base-content)\n  display flex\n  font-size 13px\n  justify-content space-between\n  margin-top 10px\n  overflow auto\n  padding 10px\n\n.newimage input\n  color var(--color-primary)\n  padding 3px 5px\n\n.texture canvas + input\n  margin-left 5px\n\n.texture svg\n  padding-right 5px\n\n.uploader-normal-button .hidden\n  display none\n\n.assets.search\n  margin-top 10px\n  position relative\n  width 200px\n\n.assets.search input\n  box-sizing border-box\n  padding-right 20px\n  width 100%\n\n.assets.search svg\n  position absolute\n  right 5px\n  top 5px\n\n.new_asset_options\n  margin 10px\n\n.new_asset_options > ul\n  margin-left 10px\n  padding 5px\n\n.new_asset_options > ul > li\n  padding 10px 0\n\n.new_asset_options .imageUrl\n  margin-left 5px\n  width 350px\n\n.texture canvas\n  border 1px solid var(--color-base-100)\n  cursor pointer\n\n/* Settings Modal Tabs */\n.settings-tabs\n  display flex\n  border-bottom 1px solid var(--color-base-300)\n  padding 0 10px\n\n.settings-tab\n  background transparent\n  border none\n  border-bottom 2px solid transparent\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  align-items center\n  gap 8px\n  font-size 14px\n  padding 12px 20px\n  transition all 0.2s\n\n  &:hover\n    color var(--color-primary)\n\n  &.active\n    border-bottom-color var(--color-primary)\n    color var(--color-primary)\n\n.settings-content\n  padding 15px\n\n/* Classes Tab */\n.classes-tab\n  .classes-header\n    margin-bottom 20px\n\n    h3\n      color var(--color-primary)\n      font-size 16px\n      margin 0 0 8px\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      margin 0\n      opacity 0.8\n\n  .classes-list\n    max-height 400px\n    overflow-y auto\n\n    .no-classes\n      color var(--color-base-content)\n      font-style italic\n      opacity 0.6\n      padding 20px\n      text-align center\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    .class-item\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 10px 15px\n\n      .class-name\n        color var(--color-primary)\n        font-family 'Monaco', 'Menlo', monospace\n        font-size 13px\n\n      .class-count\n        color var(--color-base-content)\n        font-size 12px\n        opacity 0.7\n\n  .classes-help\n    margin-top 20px\n    padding 15px\n    background var(--color-base-100)\n    border-radius 4px\n\n    p\n      color var(--color-base-content)\n      font-size 12px\n      margin 0\n      opacity 0.8\n\n/* Models Tab */\n.models-tab\n  .models-header\n    margin-bottom 20px\n\n    h3\n      color var(--color-primary)\n      font-size 16px\n      margin 0 0 8px\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      margin 0\n      opacity 0.8\n\n  .models-list\n    max-height 400px\n    overflow-y auto\n\n    .no-models\n      color var(--color-base-content)\n      font-style italic\n      opacity 0.6\n      padding 20px\n      text-align center\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    .model-item\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      gap 12px\n      margin-bottom 8px\n      padding 12px 15px\n\n      .model-icon\n        color var(--color-primary)\n        font-size 18px\n        flex-shrink 0\n\n      .model-info\n        display flex\n        flex-direction column\n        gap 4px\n        min-width 0\n\n        .model-src\n          color var(--color-primary)\n          font-family 'Monaco', 'Menlo', monospace\n          font-size 12px\n          overflow hidden\n          text-overflow ellipsis\n          white-space nowrap\n\n        .model-type\n          color var(--color-base-content)\n          font-size 11px\n          opacity 0.7\n\n  .models-help\n    margin-top 20px\n    padding 15px\n    background var(--color-base-100)\n    border-radius 4px\n\n    p\n      color var(--color-base-content)\n      font-size 12px\n      margin 0\n      opacity 0.8\n","@import './lib';\n\n#viewportBar\n  align-items center\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  display flex\n  flex-grow 2\n  font-size 15px\n  height 32px\n  justify-content space-between\n  padding 0 5px\n\n.toolbarButtons\n  align-items center\n  display flex\n  gap 6px\n\n  a.button\n    & svg\n      padding 8px\n\n    &:not(.active) svg:hover\n      background-color var(--color-base-lighter)\n\n  .active svg\n    background-color var(--color-primary)\n    color var(--color-primary-content)\n\n  .active:hover svg\n    color var(--color-primary-content) !important\n\n.local-transform\n  align-items center\n  display flex\n  gap 5px\n  padding 0 10px\n\n.local-transform label\n  color var(--color-base-content)\n\n#cameraSelect\n  cursor pointer\n  width 120px\n\n  .select__dropdown-indicator\n    padding-left 3px\n    padding-right 3px\n\n#cameraToolbar\n  align-items center\n  display flex\n\n  .select__control\n    background none\n\n  .select__single-value\n    color var(--color-base-content)\n\n    &:hover\n      color var(--color-primary)\n\n#viewportHud\n  display none\n\n  @media (min-width: 1025px)\n    display block\n","@import './lib';\n\n.select-widget\n  display inline-block\n  width 157px"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68327,6 +68853,7 @@ class CommonComponents extends (react__WEBPACK_IMPORTED_MODULE_0___default().Com
 /**
  * ClassManager - Component to manage CSS classes for an entity
  * Allows adding, editing, and deleting CSS classes via dropdown and prompt
+ * Shows all classes in the scene for easy selection
  */
 class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
   static propTypes = {
@@ -68336,19 +68863,31 @@ class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compone
     super(props);
     this.state = {
       classes: this.getClasses(props.entity),
+      availableClasses: this.getAllSceneClasses(),
       selectedClass: '',
-      entityId: props.entity.id
+      entityId: props.entity.id,
+      newClassName: ''
     };
   }
   static getDerivedStateFromProps(props, state) {
-    // Handle null entity or null id
-    if (!props.entity || props.entity.id === undefined) {
+    // Handle null entity
+    if (!props.entity) {
       return null;
     }
-    // Sync classes when entity changes
-    if (props.entity.id !== state.entityId) {
+
+    // Always sync classes from the entity to ensure we have the latest state
+    const currentClasses = props.entity.getAttribute('class') || '';
+    const currentClassesArray = currentClasses.split(/\s+/).filter(c => c.length > 0);
+    const storedClassesStr = state.classes.join(' ');
+
+    // Also get fresh available classes from scene
+    const availableClasses = ClassManager.getAllSceneClassesStatic();
+
+    // Sync if classes are different
+    if (storedClassesStr !== currentClasses) {
       return {
-        classes: props.entity.getAttribute('class') ? props.entity.getAttribute('class').split(/\s+/).filter(c => c.length > 0) : [],
+        classes: currentClassesArray,
+        availableClasses: availableClasses,
         selectedClass: '',
         entityId: props.entity.id
       };
@@ -68359,17 +68898,49 @@ class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compone
     _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityupdate', this.onEntityUpdate);
     _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityclone', this.onEntityUpdate);
     _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].on('entityselected', this.onEntitySelected);
+    // Refresh available classes periodically
+    this.refreshInterval = setInterval(() => {
+      this.setState({
+        availableClasses: ClassManager.getAllSceneClassesStatic()
+      });
+    }, 2000);
   }
   componentWillUnmount() {
     _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityupdate', this.onEntityUpdate);
     _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityclone', this.onEntityUpdate);
     _lib_Events__WEBPACK_IMPORTED_MODULE_11__["default"].off('entityselected', this.onEntitySelected);
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
+  }
+  static getAllSceneClassesStatic() {
+    if (!AFRAME || !AFRAME.scenes || !AFRAME.scenes[0]) {
+      return [];
+    }
+    try {
+      const scene = AFRAME.scenes[0];
+      const allEntities = scene.querySelectorAll('*');
+      const classSet = new Set();
+      allEntities.forEach(el => {
+        if (el.classList && el.classList.length > 0) {
+          el.classList.forEach(cls => classSet.add(cls));
+        }
+      });
+      return Array.from(classSet).sort();
+    } catch (e) {
+      console.warn('Error getting scene classes:', e);
+      return [];
+    }
+  }
+  getAllSceneClasses() {
+    return ClassManager.getAllSceneClassesStatic();
   }
   onEntitySelected = entity => {
     // Refresh classes when a new entity is selected
     if (entity === this.props.entity) {
       this.setState({
         classes: this.getClasses(this.props.entity),
+        availableClasses: this.getAllSceneClasses(),
         selectedClass: ''
       });
     }
@@ -68381,7 +68952,8 @@ class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compone
     // Update when class attribute changes
     if (detail.component === 'class' || detail.property === 'class') {
       this.setState({
-        classes: this.getClasses(this.props.entity)
+        classes: this.getClasses(this.props.entity),
+        availableClasses: this.getAllSceneClasses()
       });
     }
   };
@@ -68402,32 +68974,53 @@ class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compone
   }
   handleSelectChange = event => {
     const selectedClass = event.target.value;
-    this.setState({
-      selectedClass
-    });
-
-    // If a class is selected, remove it (toggle behavior)
-    if (selectedClass && this.state.classes.includes(selectedClass)) {
-      this.handleDeleteClass(selectedClass);
+    if (!selectedClass) {
+      this.setState({
+        selectedClass: ''
+      });
+      return;
     }
+
+    // Check if this is an existing class to remove
+    if (this.state.classes.includes(selectedClass)) {
+      // Remove class (toggle behavior)
+      this.handleDeleteClass(selectedClass);
+    } else {
+      // Add new class
+      this.handleAddExistingClass(selectedClass);
+    }
+
     // Reset selection
     this.setState({
       selectedClass: ''
     });
   };
+  handleAddExistingClass = className => {
+    const {
+      classes
+    } = this.state;
+    if (!classes.includes(className)) {
+      const newClasses = [...classes, className];
+      this.updateEntityClasses(newClasses);
+      this.setState({
+        classes: newClasses
+      });
+    }
+  };
   handleAddClass = () => {
-    // Use browser prompt to get new class name
-    const newClassName = window.prompt('Enter new class name:');
+    const {
+      newClassName,
+      classes
+    } = this.state;
     if (newClassName && newClassName.trim()) {
       const trimmedName = newClassName.trim();
-      const {
-        classes
-      } = this.state;
       if (!classes.includes(trimmedName)) {
         const newClasses = [...classes, trimmedName];
         this.updateEntityClasses(newClasses);
         this.setState({
-          classes: newClasses
+          classes: newClasses,
+          availableClasses: this.getAllSceneClasses(),
+          newClassName: ''
         });
       }
     }
@@ -68445,28 +69038,65 @@ class ClassManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compone
   render() {
     const {
       classes,
-      selectedClass
+      availableClasses,
+      newClassName
     } = this.state;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
-      className: "class-manager-dropdown",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("select", {
-        className: "class-select",
-        value: selectedClass,
-        onChange: this.handleSelectChange,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("option", {
-          value: "",
-          children: classes.length > 0 ? `Select class (${classes.length})` : 'No classes'
-        }), classes.map(className => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("option", {
-          value: className,
-          children: className
+      className: "class-manager-list",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+        className: "class-items",
+        children: [classes.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
+          className: "class-empty",
+          children: "No classes assigned"
+        }), classes.map(className => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+          className: "class-item",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("span", {
+            className: "class-name",
+            children: className
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
+            className: "class-delete-btn",
+            onClick: () => this.handleDeleteClass(className),
+            title: "Delete class",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+              icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTimes
+            })
+          })]
         }, className))]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
-        className: "class-add-button",
-        onClick: this.handleAddClass,
-        title: "Add new class",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlus
-        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+        className: "class-add",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("input", {
+          type: "text",
+          className: "class-add-input",
+          placeholder: "Add class...",
+          value: newClassName,
+          onChange: e => this.setState({
+            newClassName: e.target.value
+          }),
+          onKeyDown: e => {
+            if (e.key === 'Enter') this.handleAddClass();
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
+          className: "class-add-button",
+          onClick: this.handleAddClass,
+          title: "Add class",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+            icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlus
+          })
+        })]
+      }), availableClasses.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+        className: "class-available",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
+          className: "class-available-label",
+          children: "Available classes in scene:"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
+          className: "class-available-items",
+          children: availableClasses.filter(c => !classes.includes(c)).map(className => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("button", {
+            className: "class-available-item",
+            onClick: () => this.handleAddExistingClass(className),
+            title: "Add to entity",
+            children: ["+ ", className]
+          }, className))
+        })]
       })]
     });
   }
@@ -68647,13 +69277,7 @@ class Component extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component)
         collapsed: this.props.isCollapsed,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
           className: "componentHeader collapsible-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
-            className: "componentTitle",
-            title: componentName,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
-              children: componentName
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
             className: "componentHeaderActions",
             children: [componentOverview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("a", {
               title: "Click for help",
@@ -68687,6 +69311,13 @@ class Component extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component)
                 icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTrashAlt
               })
             })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
+            className: "componentTitle",
+            title: componentName,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
+              className: "componentNameText",
+              children: componentName
+            })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
           className: "collapsible-content",
@@ -69247,6 +69878,7 @@ class ComponentHelpModal extends (react__WEBPACK_IMPORTED_MODULE_0___default().C
     } = this.state;
     const help = componentName ? (0,_lib_componentHelp__WEBPACK_IMPORTED_MODULE_3__.getComponentFullHelp)(componentName) : null;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      id: "componentHelpModal",
       title: help ? `Help: ${help.title}` : 'Component Help',
       isOpen: this.state.isOpen,
       onClose: this.onClose,
@@ -69688,6 +70320,8 @@ class ModalTextures extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compon
       registryImages: [],
       addNewDialogOpened: false,
       newUrl: '',
+      activeTab: 'textures',
+      // 'textures', 'classes', or 'models'
       preview: {
         width: 0,
         height: 0,
@@ -69868,6 +70502,227 @@ class ModalTextures extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compon
       filterText: e.target.value
     });
   };
+  setActiveTab = tab => {
+    this.setState({
+      activeTab: tab
+    });
+  };
+  renderTabs() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "settings-tabs",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("button", {
+        className: `settings-tab ${this.state.activeTab === 'textures' ? 'active' : ''}`,
+        onClick: () => this.setActiveTab('textures'),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faImage
+        }), "Textures"]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("button", {
+        className: `settings-tab ${this.state.activeTab === 'classes' ? 'active' : ''}`,
+        onClick: () => this.setActiveTab('classes'),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faCode
+        }), "Classes"]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("button", {
+        className: `settings-tab ${this.state.activeTab === 'models' ? 'active' : ''}`,
+        onClick: () => this.setActiveTab('models'),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faCube
+        }), "Models"]
+      })]
+    });
+  }
+  renderClassesTab() {
+    // Get all unique classes from the scene
+    const classes = new Set();
+    const scene = AFRAME.INSPECTOR.sceneEl;
+    if (scene) {
+      scene.querySelectorAll('*').forEach(el => {
+        const classAttr = el.getAttribute('class');
+        if (classAttr) {
+          classAttr.split(/\s+/).forEach(c => {
+            if (c) classes.add(c);
+          });
+        }
+      });
+    }
+    const classList = Array.from(classes).sort();
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "classes-tab",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "classes-header",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
+          children: "CSS Classes in Scene"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          children: "These classes are used by elements in your scene."
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "classes-list",
+        children: classList.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          className: "no-classes",
+          children: "No classes found in the scene."
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
+          children: classList.map(className => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+            className: "class-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+              className: "class-name",
+              children: className
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+              className: "class-count",
+              children: ["(", this.getClassUsageCount(className), ")"]
+            })]
+          }, className))
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "classes-help",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          children: "To add classes to an element, select it in the scene and edit the class attribute in the sidebar."
+        })
+      })]
+    });
+  }
+  getClassUsageCount(className) {
+    const scene = AFRAME.INSPECTOR.sceneEl;
+    if (!scene) return 0;
+    let count = 0;
+    scene.querySelectorAll('*').forEach(el => {
+      const classAttr = el.getAttribute('class');
+      if (classAttr && classAttr.split(/\s+/).includes(className)) {
+        count++;
+      }
+    });
+    return count;
+  }
+  renderModelsTab() {
+    // Get all models (gltf-model, models, models-array) from the scene
+    const models = new Map(); // Use Map to avoid duplicates
+    const scene = AFRAME.INSPECTOR.sceneEl;
+    if (scene) {
+      // Find all elements with model-related attributes
+      scene.querySelectorAll('*').forEach(el => {
+        // Check for gltf-model
+        const gltfModel = el.getAttribute('gltf-model');
+        if (gltfModel) {
+          const modelSrc = typeof gltfModel === 'string' ? gltfModel : gltfModel.src;
+          if (modelSrc && !models.has(modelSrc)) {
+            models.set(modelSrc, {
+              type: 'gltf-model',
+              src: modelSrc,
+              element: el.tagName
+            });
+          }
+        }
+
+        // Check for model attribute (used by some components)
+        const model = el.getAttribute('model');
+        if (model) {
+          const modelSrc = typeof model === 'string' ? model : model.src;
+          if (modelSrc && !models.has(modelSrc)) {
+            models.set(modelSrc, {
+              type: 'model',
+              src: modelSrc,
+              element: el.tagName
+            });
+          }
+        }
+
+        // Check for models (array) attribute
+        const modelsAttr = el.getAttribute('models');
+        if (modelsAttr && Array.isArray(modelsAttr)) {
+          modelsAttr.forEach(m => {
+            const src = m.src || m;
+            if (src && !models.has(src)) {
+              models.set(src, {
+                type: 'models',
+                src: src,
+                element: el.tagName
+              });
+            }
+          });
+        }
+
+        // Check for models-array attribute
+        const modelsArray = el.getAttribute('models-array');
+        if (modelsArray && modelsArray.src) {
+          const src = modelsArray.src;
+          if (Array.isArray(src)) {
+            src.forEach(s => {
+              if (s && !models.has(s)) {
+                models.set(s, {
+                  type: 'models-array',
+                  src: s,
+                  element: el.tagName
+                });
+              }
+            });
+          } else if (src && !models.has(src)) {
+            models.set(src, {
+              type: 'models-array',
+              src: src,
+              element: el.tagName
+            });
+          }
+        }
+      });
+
+      // Also check a-assets for model assets
+      const assets = scene.querySelectorAll('a-assets > [id]');
+      assets.forEach(asset => {
+        // Check for gltf-model assets
+        if (asset.hasAttribute('gltf-model') || asset.getAttribute('src')?.endsWith('.glb') || asset.getAttribute('src')?.endsWith('.gltf')) {
+          const src = '#' + asset.id;
+          if (!models.has(src)) {
+            models.set(src, {
+              type: 'asset',
+              src: src,
+              element: 'a-asset'
+            });
+          }
+        }
+      });
+    }
+    const modelList = Array.from(models.values());
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "models-tab",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "models-header",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h3", {
+          children: "3D Models in Scene"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          children: "These models are used by elements in your scene."
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "models-list",
+        children: modelList.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          className: "no-models",
+          children: "No models found in the scene."
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
+          children: modelList.map((model, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+            className: "model-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              className: "model-icon",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+                icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faCube
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "model-info",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                className: "model-src",
+                children: model.src
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                className: "model-type",
+                children: [model.type, " (", model.element, ")"]
+              })]
+            })]
+          }, index))
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "models-help",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          children: "To add a model, use the gltf-model component on an entity or add it to a-assets."
+        })
+      })]
+    });
+  }
   renderRegistryImages() {
     var self = this;
     let selectSample = function (image) {
@@ -69925,130 +70780,135 @@ class ModalTextures extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compon
     let addNewAssetButton = this.state.addNewDialogOpened ? 'BACK' : 'LOAD TEXTURE';
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
       id: "textureModal",
-      title: "Textures",
+      title: "Settings",
       isOpen: isOpen,
       onClose: this.onClose,
       closeOnClickOutside: false,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-        onClick: this.toggleNewDialog,
-        children: addNewAssetButton
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        className: this.state.addNewDialogOpened ? '' : 'hide',
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          className: "newimage",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "new_asset_options",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-              children: "Load a new texture from one of these sources:"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("ul", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+      children: [this.renderTabs(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "settings-content",
+        children: [this.state.activeTab === 'textures' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+            onClick: this.toggleNewDialog,
+            children: addNewAssetButton
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: this.state.addNewDialogOpened ? '' : 'hide',
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "newimage",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "new_asset_options",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                  children: "From URL (and press Enter):"
-                }), ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-                  type: "text",
-                  className: "imageUrl",
-                  value: this.state.newUrl,
-                  onChange: this.onUrlChange,
-                  onKeyUp: this.onNewUrl,
-                  spellCheck: "false"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                  children: "From assets registry: "
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                  className: "assets search",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-                    placeholder: "Filter...",
-                    value: this.state.filterText,
-                    onChange: this.onChangeFilter
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
-                    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faSearch
+                  children: "Load a new texture from one of these sources:"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("ul", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                      children: "From URL (and press Enter):"
+                    }), ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                      type: "text",
+                      className: "imageUrl",
+                      value: this.state.newUrl,
+                      onChange: this.onUrlChange,
+                      onKeyUp: this.onNewUrl,
+                      spellCheck: "false"
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                      children: "From assets registry: "
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                      className: "assets search",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                        placeholder: "Filter...",
+                        value: this.state.filterText,
+                        onChange: this.onChangeFilter
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
+                        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faSearch
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
+                      ref: this.registryGallery,
+                      className: "gallery",
+                      children: this.renderRegistryImages()
+                    })]
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
-                  ref: this.registryGallery,
-                  className: "gallery",
-                  children: this.renderRegistryImages()
                 })]
-              })]
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "preview",
-            children: ["Name:", ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-              ref: this.imageName,
-              className: this.state.preview.name.length > 0 && (!validId || assetIdTaken) ? 'error' : '',
-              readOnly: preview.type === 'asset',
-              type: "text",
-              value: this.state.preview.name,
-              onChange: this.onNameChanged,
-              onKeyUp: event => {
-                if (event.keyCode === 13 && validAsset) {
-                  this.addNewAsset();
-                }
-              },
-              spellCheck: "false"
-            }), preview.type !== 'asset' && assetIdTaken && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              className: "iderror",
-              children: "Name already taken by another asset or entity"
-            }), this.state.preview.name.length > 0 && !validId && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              className: "iderror",
-              children: "Name is not valid"
-            }), preview.type === 'asset' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-              className: "iderror",
-              children: "Texture already loaded"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-              ref: this.preview,
-              width: "155px",
-              height: "155px",
-              src: preview.src,
-              style: {
-                visibility: preview.src ? 'visible' : 'hidden'
-              }
-            }), this.state.preview.loaded ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "detail",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                className: "title",
-                title: preview.filename,
-                children: preview.filename
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
-                children: [preview.width, " x ", preview.height]
-              })]
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-              disabled: !validAsset,
-              onClick: this.addNewAsset,
-              children: "LOAD THIS TEXTURE"
-            })]
-          })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        className: this.state.addNewDialogOpened ? 'hide' : '',
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
-          className: "gallery",
-          children: this.state.assetsImages.sort(function (a, b) {
-            return a.id > b.id;
-          }).map(function (image) {
-            let textureClick = this.selectTexture.bind(this, image);
-            var selectedClass = this.props.selectedTexture === '#' + image.id ? 'selected' : '';
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
-              onClick: textureClick,
-              className: selectedClass,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
-                width: "155px",
-                height: "155px",
-                src: image.src
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                className: "detail",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                  className: "title",
-                  children: image.name
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-                  children: (0,_lib_assetsUtils__WEBPACK_IMPORTED_MODULE_6__.getFilename)(image.src)
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
-                  children: [image.width, " x ", image.height]
+                className: "preview",
+                children: ["Name:", ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                  ref: this.imageName,
+                  className: this.state.preview.name.length > 0 && (!validId || assetIdTaken) ? 'error' : '',
+                  readOnly: preview.type === 'asset',
+                  type: "text",
+                  value: this.state.preview.name,
+                  onChange: this.onNameChanged,
+                  onKeyUp: event => {
+                    if (event.keyCode === 13 && validAsset) {
+                      this.addNewAsset();
+                    }
+                  },
+                  spellCheck: "false"
+                }), preview.type !== 'asset' && assetIdTaken && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "iderror",
+                  children: "Name already taken by another asset or entity"
+                }), this.state.preview.name.length > 0 && !validId && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "iderror",
+                  children: "Name is not valid"
+                }), preview.type === 'asset' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "iderror",
+                  children: "Texture already loaded"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+                  ref: this.preview,
+                  width: "155px",
+                  height: "155px",
+                  src: preview.src,
+                  style: {
+                    visibility: preview.src ? 'visible' : 'hidden'
+                  }
+                }), this.state.preview.loaded ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  className: "detail",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                    className: "title",
+                    title: preview.filename,
+                    children: preview.filename
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                    children: [preview.width, " x ", preview.height]
+                  })]
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                  disabled: !validAsset,
+                  onClick: this.addNewAsset,
+                  children: "LOAD THIS TEXTURE"
                 })]
               })]
-            }, image.id);
-          }.bind(this))
-        })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: this.state.addNewDialogOpened ? 'hide' : '',
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
+              className: "gallery",
+              children: this.state.assetsImages.sort(function (a, b) {
+                return a.id > b.id;
+              }).map(function (image) {
+                let textureClick = this.selectTexture.bind(this, image);
+                var selectedClass = this.props.selectedTexture === '#' + image.id ? 'selected' : '';
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+                  onClick: textureClick,
+                  className: selectedClass,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+                    width: "155px",
+                    height: "155px",
+                    src: image.src
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                    className: "detail",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                      className: "title",
+                      children: image.name
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                      children: (0,_lib_assetsUtils__WEBPACK_IMPORTED_MODULE_6__.getFilename)(image.src)
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                      children: [image.width, " x ", image.height]
+                    })]
+                  })]
+                }, image.id);
+              }.bind(this))
+            })
+          })]
+        }) : this.renderClassesTab(), this.state.activeTab === 'models' && this.renderModelsTab()]
       })]
     });
   }
@@ -77139,7 +77999,8 @@ const componentHelp = {
       target: 'Object the light points at',
       groundColor: 'Hemisphere light ground color',
       skyColor: 'Hemisphere light sky color'
-    }
+    },
+    overview: 'The light component illuminates objects in the scene. Choose from ambient (overall fill), directional (sun-like parallel rays), point (omnidirectional from a point), spot (cone-shaped), or hemisphere (sky-ground gradient). Adjust intensity, color, and shadow settings for different lighting effects.'
   },
   // Model (gltf-model)
   'gltf-model': {
@@ -77512,6 +78373,540 @@ const componentHelp = {
       skipCache: 'Ignore cached models and reload'
     },
     overview: 'The models component loads multiple 3D models at once. Useful for loading scenes or collections of objects. Each model can be a GLB, GLTF, or OBJ file. The src property accepts an array of URLs.'
+  },
+  // Debug
+  debug: {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Enable or disable debug mode',
+      showBoundingBoxes: 'Show bounding boxes around objects',
+      showWireframes: 'Show wireframes on meshes',
+      showNormals: 'Show surface normals',
+      logging: 'Enable console logging'
+    },
+    overview: 'The debug component helps diagnose issues by showing visual helpers like bounding boxes, wireframes, and surface normals. Use it when something is not rendering correctly or to understand object positions.'
+  },
+  // Device Orientation Permission
+  'device-orientation-permission': {
+    beginner: [],
+    descriptions: {
+      enabled: 'Enable device orientation tracking',
+      onPermission: 'Event when permission is granted'
+    },
+    overview: 'The device-orientation component enables tracking of mobile device orientation for VR experiences. It requires user permission on iOS devices. Use for magic window style experiences on mobile.'
+  },
+  // Keyboard Shortcuts
+  'keyboard-shortcuts': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Enable keyboard shortcuts',
+      preset: 'Keyboard layout preset',
+      customShortcuts: 'Custom key bindings'
+    },
+    overview: 'The keyboard-shortcuts component defines keyboard controls for the inspector and scene navigation. It provides quick access to common actions through key combinations.'
+  },
+  // Screenshot
+  screenshot: {
+    beginner: ['format'],
+    descriptions: {
+      format: 'Image format (png, jpeg)',
+      quality: 'Image quality (0-1)',
+      width: 'Screenshot width',
+      height: 'Screenshot height'
+    },
+    overview: 'The screenshot component captures images of the current scene view. Use it to take snapshots for documentation, sharing, or debugging visual issues.'
+  },
+  // XR Mode UI
+  'xr-mode-ui': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Show VR/AR enter button',
+      referenceSpaceType: 'VR reference space (local, viewer, floor)'
+    },
+    overview: 'The xr-mode-ui component controls the VR/AR enter button displayed in the bottom right. It allows users to enter immersive VR or AR experiences from the browser.'
+  },
+  // Grabbable
+  grabbable: {
+    beginner: ['grabbable'],
+    descriptions: {
+      grabbable: 'Enable grabbing of this object',
+      hoverable: 'Enable hover highlighting',
+      draggable: 'Enable dragging',
+      droppable: 'Enable dropping onto other objects'
+    },
+    overview: 'The grabbable component makes objects interactive with VR controllers. Users can pick up, move, and release objects. Combine with other components for physics-based grabbing.'
+  },
+  // Hand Controls
+  'hand-controls': {
+    beginner: ['hand', 'handModelStyle'],
+    descriptions: {
+      hand: 'Which hand (left, right, or both)',
+      handModelStyle: 'Visual style (lowPoly, highPoly, etc.)',
+      color: 'Hand color override',
+      visible: 'Show or hide hand model',
+      hideOnEnterVR: 'Hide controller when entering VR'
+    },
+    overview: 'The hand-controls component displays virtual hands in VR. It supports hand tracking on compatible devices and controller-based hand visualization. Use for grabbable interactions and hand tracking experiences.'
+  },
+  // Raycaster
+  raycaster: {
+    beginner: ['objects', 'far'],
+    descriptions: {
+      objects: 'Selector for objects to detect',
+      far: 'Maximum detection distance',
+      near: 'Minimum detection distance',
+      interval: 'Time between raycast updates (ms)',
+      showLine: 'Show raycaster line',
+      lineColor: 'Color of raycaster line',
+      lineOpacity: 'Opacity of raycaster line',
+      direction: 'Direction of the ray',
+      origin: 'Starting point of the ray'
+    },
+    overview: 'The raycaster component casts rays from entities to detect intersections with other objects. Essential for interaction systems, it detects what objects are in front of controllers, cameras, or cursors.'
+  },
+  // Teleport Controls
+  'teleport-controls': {
+    beginner: ['cameraRig', 'teleportOrigin'],
+    descriptions: {
+      cameraRig: 'ID of the camera rig to move',
+      teleportOrigin: 'Where to teleport from (head, hands)',
+      button: 'Controller button to trigger teleport',
+      curveShooting: 'Use parabolic curve for targeting',
+      curveTarget: 'Length of teleport arc',
+      collisionEntities: 'Objects that can be teleported onto',
+      landingNormal: 'Normal for valid landing surfaces',
+      landingMaxAngle: 'Maximum angle for landing surface'
+    },
+    overview: 'The teleport-controls component enables VR locomotion through teleportation. Point at a surface and release to instantly move there. The most comfortable way to navigate large VR environments.'
+  },
+  // UI
+  ui: {
+    beginner: ['visible'],
+    descriptions: {
+      visible: 'Show or hide UI elements',
+      position: 'UI panel position',
+      scale: 'UI panel scale',
+      background: 'UI background color'
+    },
+    overview: 'The ui component controls user interface elements in VR. Use it to create interactive menus, buttons, and information panels within the 3D scene.'
+  },
+  // Video Controls
+  'video-controls': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Enable video playback controls',
+      playPause: 'Show play/pause button',
+      seekBar: 'Show seek bar',
+      volume: 'Show volume control',
+      fullscreen: 'Show fullscreen button'
+    },
+    overview: 'The video-controls component adds standard video playback controls to video elements. Users can play, pause, seek, and adjust volume without writing custom interaction code.'
+  },
+  // OCLUS Touch Controls
+  'oculus-touch-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      armModel: 'Enable arm model for position',
+      controllerModel: 'Custom controller model'
+    },
+    overview: 'The oculus-touch-controls component provides support for Oculus Touch controllers. It enables hand presence and button/trigger tracking for VR interactions on Oculus devices.'
+  },
+  // Vive Controls
+  'vive-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed',
+      trigger: 'Enable trigger button',
+      grip: 'Enable grip button',
+      pad: 'Enable trackpad'
+    },
+    overview: 'The vive-controls component provides support for HTC Vive controllers. It tracks controller position, rotation, and button inputs for VR interactions.'
+  },
+  // Windows Motion Controls
+  'windows-motion-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      hideOnEnterVR: 'Hide when entering immersive VR',
+      scene: 'Reference to scene for controller'
+    },
+    overview: 'The windows-motion-controls component provides support for Windows Mixed Reality controllers. It tracks position, rotation, and various button inputs for VR interactions on Windows MR headsets.'
+  },
+  // Gear VR Controls
+  'gearvr-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad'
+    },
+    overview: 'The gearvr-controls component provides support for Samsung Gear VR controllers. It enables touchpad interaction and controller tracking for Gear VR experiences.'
+  },
+  // Daydream Controls
+  'daydream-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad'
+    },
+    overview: 'The daydream-controls component provides support for Google Daydream controllers. It enables touchpad interaction and controller tracking for Daydream VR experiences.'
+  },
+  // Laser Controls
+  'laser-controls': {
+    beginner: ['hand', 'raycaster'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      raycaster: 'Configuration for the laser beam',
+      model: 'Show controller model',
+      rayOrigin: 'Where laser ray starts',
+      far: 'Maximum distance of laser',
+      interval: 'Time between raycast updates',
+      lineColor: 'Color of laser beam',
+      lineOpacity: 'Transparency of laser beam',
+      line: 'Enable laser line'
+    },
+    overview: 'The laser-controls component provides a long-range ray for pointing and interacting with distant objects. Works across all controller types and is the recommended way to build VR interaction systems.'
+  },
+  // Super Hands
+  'super-hands': {
+    beginner: ['colliderEvent'],
+    descriptions: {
+      colliderEvent: 'Event that triggers collision detection',
+      colliderEventProperty: 'Property to check for collisions',
+      colliderEndEvent: 'Event when collision ends',
+      hand: 'Hand entity to attach',
+      grabStartButtons: 'Buttons to initiate grab',
+      grabEndButtons: 'Buttons to release grab',
+      stretchStartButtons: 'Buttons to start stretching',
+      stretchEndButtons: 'Buttons to end stretching',
+      rotateStartButtons: 'Buttons to start rotating',
+      rotateEndButtons: 'Buttons to end rotating'
+    },
+    overview: 'The super-hands component provides advanced hand interactions including grabbing, stretching, and rotating objects. It extends basic grabbable with more complex interaction patterns.'
+  },
+  // Box Collider
+  'box-collider': {
+    beginner: ['objects'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      size: 'Size of collision box',
+      debug: 'Show collision boxes',
+      interval: 'Collision check interval'
+    },
+    overview: 'The box-collider component detects collisions using rectangular box boundaries. Use when you need precise rectangular collision detection.'
+  },
+  // Tracked Controls
+  'tracked-controls': {
+    beginner: ['id', 'controller'],
+    descriptions: {
+      id: 'Controller ID to track',
+      controller: 'Controller type (vive, oculus, windowsMR)',
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller'
+    },
+    overview: 'The tracked-controls component provides generic VR controller tracking. It works with any WebXR-compatible controller and is the base for other controller-specific components.'
+  },
+  // Valve Index Controller
+  'valve-index-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      handLevel: 'Hand height offset',
+      elbow: 'Elbow model position',
+      predictVelocity: 'Predict controller velocity',
+      predictPosition: 'Predict controller position'
+    },
+    overview: 'The valve-index-controls component provides support for Valve Index controllers. It includes advanced features like elbow simulation and controller velocity prediction for more natural interactions.'
+  },
+  // Vive Wand
+  'vive-wand-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed',
+      showMenuButton: 'Show menu button',
+      haptic: 'Enable haptic feedback'
+    },
+    overview: 'The vive-wand-controls component provides support for HTC Vive wand controllers. It includes tracking for trackpad, trigger, grip buttons, and menu button inputs.'
+  },
+  // Scene
+  scene: {
+    beginner: ['background', 'fog'],
+    descriptions: {
+      background: 'Scene background color or sky',
+      fog: 'Fog type and density',
+      lighting: 'Default lighting setup',
+      vrModeUI: 'Show VR enter button',
+      enterVRButton: 'Custom VR button element',
+      ref: 'Scene reference for other components',
+      renderer: 'WebGL renderer settings',
+      stats: 'Show performance stats',
+      deviceOrientationPermissionUI: 'Show device orientation permission'
+    },
+    overview: 'The scene component is the root container for all A-Frame content. It sets up the rendering context, physics world, and manages all entities within the scene.'
+  },
+  // Pivot
+  pivot: {
+    beginner: ['enabled', 'pivot'],
+    descriptions: {
+      enabled: 'Enable pivot rotation',
+      pivot: 'Pivot point position (x, y, z)',
+      rotationAxis: 'Axis to rotate around (x, y, or z)',
+      rotationSpeed: 'Speed of automatic rotation'
+    },
+    overview: 'The pivot component rotates an entity around a specified pivot point rather than its center. Useful for creating orbiting animations or adjusting object rotation origins.'
+  },
+  // Line
+  line: {
+    beginner: ['start', 'end', 'color'],
+    descriptions: {
+      start: 'Starting position (x, y, z)',
+      end: 'Ending position (x, y, z)',
+      color: 'Line color',
+      opacity: 'Line transparency (0-1)',
+      visible: 'Show or hide line'
+    },
+    overview: 'The line component draws a simple line between two 3D points. Useful for debugging, guides, or simple visual connections between objects.'
+  },
+  // Layer
+  layer: {
+    beginner: ['id', 'order'],
+    descriptions: {
+      id: 'Unique layer identifier',
+      order: 'Render order (lower renders first)',
+      objects: 'Objects assigned to this layer',
+      enabled: 'Enable or disable layer'
+    },
+    overview: 'The layer component controls render layers for objects. Useful for managing draw order, creating masked effects, or separating objects into different render passes.'
+  },
+  // Text
+  text: {
+    beginner: ['value', 'color', 'align'],
+    descriptions: {
+      value: 'Text string to display',
+      color: 'Text color',
+      align: 'Text alignment (left, center, right)',
+      width: 'Maximum text width',
+      wrapCount: 'Characters per line',
+      font: 'Font family to use',
+      fontSize: 'Text size',
+      lineHeight: 'Line spacing',
+      anchor: 'Text anchor point',
+      baseline: 'Vertical baseline',
+      outlineWidth: 'Outline thickness',
+      outlineColor: 'Outline color',
+      opacity: 'Text transparency'
+    },
+    overview: 'The text component renders 3D text in the scene. Supports various fonts, alignment options, outlines, and word wrapping for creating labels, UI elements, and in-scene text.'
+  },
+  // Magic Leap Controls
+  'magicleap-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      gesture: 'Enable hand gestures',
+      controler: 'Enable controller tracking'
+    },
+    overview: 'The magicleap-controls component provides support for Magic Leap controller. It enables touchpad interaction, gesture recognition, and controller tracking for Magic Leap AR experiences.'
+  },
+  // HP Mixed Reality Controls
+  'hp-mixed-reality-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      buttonColor: 'Button color',
+      buttonHighlightColor: 'Button color when pressed'
+    },
+    overview: 'The hp-mixed-reality-controls component provides support for HP Reverb G2 controllers. It tracks position, rotation, and button inputs for VR interactions on HP Mixed Reality headsets.'
+  },
+  // Pico Controls
+  'pico-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      battery: 'Battery level indicator',
+      handTracking: 'Enable hand tracking'
+    },
+    overview: 'The pico-controls component provides support for Pico VR controllers. It enables touchpad interaction, controller tracking, and optional hand tracking for Pico VR headsets.'
+  },
+  // Meta Touch Controls
+  'meta-touch-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      handTracking: 'Enable hand tracking',
+      pose: 'Controller pose type',
+      haptic: 'Enable haptic feedback'
+    },
+    overview: 'The meta-touch-controls component provides support for Meta Touch controllers (Quest 2/Pro). It includes hand tracking, controller tracking, and haptic feedback for immersive VR experiences.'
+  },
+  // ORB Collider
+  'orb-collider': {
+    beginner: ['objects', 'radius'],
+    descriptions: {
+      objects: 'Selector for objects to collide with',
+      radius: 'Collision sphere radius',
+      debug: 'Show collision visualization',
+      interval: 'Collision check interval'
+    },
+    overview: 'The orb-collider component detects collisions using spherical boundaries. Use when you need simple spherical collision detection for objects like spheres or balls.'
+  },
+  // Vive Focus Controls
+  'vive-focus-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      touchpad: 'Enable touchpad',
+      gesture: 'Enable gesture detection'
+    },
+    overview: 'The vive-focus-controls component provides support for HTC Vive Focus controllers. It enables touchpad interaction and controller tracking for Vive Focus VR experiences.'
+  },
+  // Models Array
+  'models-array': {
+    beginner: ['src'],
+    descriptions: {
+      src: 'Array of URLs to 3D model files (.glb, .gltf, .obj)',
+      loaded: 'Shows which models have finished loading',
+      progress: 'Loading progress (0-1) for each model',
+      enableCache: 'Cache loaded models in memory',
+      skipCache: 'Ignore cached models and reload',
+      crossOrigin: 'CORS settings for loading models'
+    },
+    overview: 'The models-array component loads multiple 3D models at once. Useful for loading scenes or collections of objects. Each model can be a GLB, GLTF, or OBJ file. The src property accepts an array of URLs.'
+  },
+  // Hand Tracking Controls
+  'hand-tracking-controls': {
+    beginner: ['hand', 'handTrackingEnabled'],
+    descriptions: {
+      hand: 'Which hand (left, right, or both)',
+      handTrackingEnabled: 'Enable hand tracking',
+      modelStyle: 'Visual style of hand model',
+      color: 'Hand color',
+      visible: 'Show or hide hand',
+      defaultPlane: 'Default interaction plane',
+      emitTarget: 'Target for emitting events',
+      fetchPolicy: 'How to fetch hand tracking data'
+    },
+    overview: 'The hand-tracking-controls component provides hand tracking using WebXR Hand Input. It displays virtual hands that can track finger movements without controllers. Use for natural hand interactions in VR.'
+  },
+  // Generic Tracked Controls
+  'generic-tracked-controls': {
+    beginner: ['controller', 'id'],
+    descriptions: {
+      controller: 'Controller type to track',
+      id: 'Unique controller identifier',
+      hand: 'Which hand (left or right)',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      armModel: 'Enable arm model for position',
+      buttonMapping: 'Custom button mapping'
+    },
+    overview: 'The generic-tracked-controls component provides a base for tracking any WebXR-compatible controller. It handles controller connection/disconnection and provides position/rotation tracking.'
+  },
+  // Hide on Enter AR
+  'hide-on-enter-ar': {
+    beginner: ['hideOnEnterAR'],
+    descriptions: {
+      hideOnEnterAR: 'Hide entity when entering AR mode'
+    },
+    overview: 'The hide-on-enter-ar component automatically hides the entity when the user enters AR (Augmented Reality) mode. Useful for elements that should only appear in VR or on desktop.'
+  },
+  // Anchored
+  anchored: {
+    beginner: ['anchored'],
+    descriptions: {
+      anchored: 'Anchor position to world or screen'
+    },
+    overview: 'The anchored component determines how an object is positioned in AR. When anchored to world, the object stays in place in the real world. When anchored to screen, it moves with the device.'
+  },
+  // AR Mode UI
+  'ar-mode-ui': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Show AR enter button',
+      referenceSpaceType: 'AR reference space type'
+    },
+    overview: 'The ar-mode-ui component controls the AR mode button displayed in the interface. It allows users to enter AR experiences from the browser on compatible devices.'
+  },
+  // Stats
+  stats: {
+    beginner: [],
+    descriptions: {
+      cluster: 'Show cluster statistics',
+      memory: 'Show memory usage',
+      render: 'Show render statistics',
+      scenes: 'Show scene statistics',
+      system: 'Show system information'
+    },
+    overview: 'The stats component displays performance statistics in the corner of the screen. Use it to monitor FPS, memory usage, and other performance metrics while developing.'
+  },
+  // Position
+  position: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Horizontal position (left/right)',
+      y: 'Vertical position (up/down)',
+      z: 'Depth position (forward/backward)'
+    },
+    overview: 'The position component sets the location of an entity in 3D space using X (horizontal), Y (vertical), and Z (depth) coordinates.'
+  },
+  // Rotation
+  rotation: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Rotation around horizontal axis (pitch)',
+      y: 'Rotation around vertical axis (yaw)',
+      z: 'Rotation around depth axis (roll)'
+    },
+    overview: 'The rotation component sets the orientation of an entity using Euler angles in degrees. X is pitch (up/down), Y is yaw (left/right), Z is roll (tilt).'
+  },
+  // Scale
+  scale: {
+    beginner: ['x', 'y', 'z'],
+    descriptions: {
+      x: 'Horizontal scale (1 = normal)',
+      y: 'Vertical scale (1 = normal)',
+      z: 'Depth scale (1 = normal)'
+    },
+    overview: 'The scale component sets the size of an entity. Values greater than 1 enlarge the object, values between 0 and 1 shrink it. Use uniform scaling (same X, Y, Z) to preserve proportions.'
+  },
+  // Visible
+  visible: {
+    beginner: ['visible'],
+    descriptions: {
+      visible: 'Show or hide the entity'
+    },
+    overview: 'The visible component controls whether an entity and its children are rendered. When set to false, the entity is hidden but still exists in the scene.'
   }
 };
 

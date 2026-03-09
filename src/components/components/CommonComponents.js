@@ -154,6 +154,7 @@ export default class CommonComponents extends React.Component {
 /**
  * ClassManager - Component to manage CSS classes for an entity
  * Allows adding, editing, and deleting CSS classes via dropdown and prompt
+ * Shows all classes in the scene for easy selection
  */
 class ClassManager extends React.Component {
   static propTypes = {
@@ -164,8 +165,10 @@ class ClassManager extends React.Component {
     super(props);
     this.state = {
       classes: this.getClasses(props.entity),
+      availableClasses: this.getAllSceneClasses(),
       selectedClass: '',
-      entityId: props.entity.id
+      entityId: props.entity.id,
+      newClassName: ''
     };
   }
 
@@ -176,15 +179,18 @@ class ClassManager extends React.Component {
     }
 
     // Always sync classes from the entity to ensure we have the latest state
-    // This handles cases where the class attribute was modified externally
     const currentClasses = props.entity.getAttribute('class') || '';
     const currentClassesArray = currentClasses.split(/\s+/).filter(c => c.length > 0);
     const storedClassesStr = state.classes.join(' ');
+
+    // Also get fresh available classes from scene
+    const availableClasses = ClassManager.getAllSceneClassesStatic();
 
     // Sync if classes are different
     if (storedClassesStr !== currentClasses) {
       return {
         classes: currentClassesArray,
+        availableClasses: availableClasses,
         selectedClass: '',
         entityId: props.entity.id
       };
@@ -197,12 +203,46 @@ class ClassManager extends React.Component {
     Events.on('entityupdate', this.onEntityUpdate);
     Events.on('entityclone', this.onEntityUpdate);
     Events.on('entityselected', this.onEntitySelected);
+    // Refresh available classes periodically
+    this.refreshInterval = setInterval(() => {
+      this.setState({ availableClasses: ClassManager.getAllSceneClassesStatic() });
+    }, 2000);
   }
 
   componentWillUnmount() {
     Events.off('entityupdate', this.onEntityUpdate);
     Events.off('entityclone', this.onEntityUpdate);
     Events.off('entityselected', this.onEntitySelected);
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
+  }
+
+  static getAllSceneClassesStatic() {
+    if (!AFRAME || !AFRAME.scenes || !AFRAME.scenes[0]) {
+      return [];
+    }
+
+    try {
+      const scene = AFRAME.scenes[0];
+      const allEntities = scene.querySelectorAll('*');
+      const classSet = new Set();
+
+      allEntities.forEach(el => {
+        if (el.classList && el.classList.length > 0) {
+          el.classList.forEach(cls => classSet.add(cls));
+        }
+      });
+
+      return Array.from(classSet).sort();
+    } catch (e) {
+      console.warn('Error getting scene classes:', e);
+      return [];
+    }
+  }
+
+  getAllSceneClasses() {
+    return ClassManager.getAllSceneClassesStatic();
   }
 
   onEntitySelected = (entity) => {
@@ -210,6 +250,7 @@ class ClassManager extends React.Component {
     if (entity === this.props.entity) {
       this.setState({
         classes: this.getClasses(this.props.entity),
+        availableClasses: this.getAllSceneClasses(),
         selectedClass: ''
       });
     }
@@ -221,7 +262,10 @@ class ClassManager extends React.Component {
     }
     // Update when class attribute changes
     if (detail.component === 'class' || detail.property === 'class') {
-      this.setState({ classes: this.getClasses(this.props.entity) });
+      this.setState({
+        classes: this.getClasses(this.props.entity),
+        availableClasses: this.getAllSceneClasses()
+      });
     }
   };
 
@@ -244,28 +288,48 @@ class ClassManager extends React.Component {
 
   handleSelectChange = (event) => {
     const selectedClass = event.target.value;
-    this.setState({ selectedClass });
 
-    // If a class is selected, remove it (toggle behavior)
-    if (selectedClass && this.state.classes.includes(selectedClass)) {
-      this.handleDeleteClass(selectedClass);
+    if (!selectedClass) {
+      this.setState({ selectedClass: '' });
+      return;
     }
+
+    // Check if this is an existing class to remove
+    if (this.state.classes.includes(selectedClass)) {
+      // Remove class (toggle behavior)
+      this.handleDeleteClass(selectedClass);
+    } else {
+      // Add new class
+      this.handleAddExistingClass(selectedClass);
+    }
+
     // Reset selection
     this.setState({ selectedClass: '' });
   };
 
+  handleAddExistingClass = (className) => {
+    const { classes } = this.state;
+    if (!classes.includes(className)) {
+      const newClasses = [...classes, className];
+      this.updateEntityClasses(newClasses);
+      this.setState({ classes: newClasses });
+    }
+  };
+
   handleAddClass = () => {
-    // Use browser prompt to get new class name
-    const newClassName = window.prompt('Enter new class name:');
+    const { newClassName, classes } = this.state;
 
     if (newClassName && newClassName.trim()) {
       const trimmedName = newClassName.trim();
-      const { classes } = this.state;
 
       if (!classes.includes(trimmedName)) {
         const newClasses = [...classes, trimmedName];
         this.updateEntityClasses(newClasses);
-        this.setState({ classes: newClasses });
+        this.setState({
+          classes: newClasses,
+          availableClasses: this.getAllSceneClasses(),
+          newClassName: ''
+        });
       }
     }
   };
@@ -278,29 +342,65 @@ class ClassManager extends React.Component {
   };
 
   render() {
-    const { classes, selectedClass } = this.state;
+    const { classes, availableClasses, newClassName } = this.state;
 
     return (
-      <div className="class-manager-dropdown">
-        <select
-          className="class-select"
-          value={selectedClass}
-          onChange={this.handleSelectChange}
-        >
-          <option value="">{classes.length > 0 ? `Select class (${classes.length})` : 'No classes'}</option>
+      <div className="class-manager-list">
+        <div className="class-items">
+          {classes.length === 0 && (
+            <div className="class-empty">No classes assigned</div>
+          )}
           {classes.map((className) => (
-            <option key={className} value={className}>
-              {className}
-            </option>
+            <div key={className} className="class-item">
+              <span className="class-name">{className}</span>
+              <button
+                className="class-delete-btn"
+                onClick={() => this.handleDeleteClass(className)}
+                title="Delete class"
+              >
+                <AwesomeIcon icon={faTimes} />
+              </button>
+            </div>
           ))}
-        </select>
-        <button
-          className="class-add-button"
-          onClick={this.handleAddClass}
-          title="Add new class"
-        >
-          <AwesomeIcon icon={faPlus} />
-        </button>
+        </div>
+        <div className="class-add">
+          <input
+            type="text"
+            className="class-add-input"
+            placeholder="Add class..."
+            value={newClassName}
+            onChange={(e) => this.setState({ newClassName: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') this.handleAddClass();
+            }}
+          />
+          <button
+            className="class-add-button"
+            onClick={this.handleAddClass}
+            title="Add class"
+          >
+            <AwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+        {availableClasses.length > 0 && (
+          <div className="class-available">
+            <div className="class-available-label">Available classes in scene:</div>
+            <div className="class-available-items">
+              {availableClasses
+                .filter(c => !classes.includes(c))
+                .map((className) => (
+                  <button
+                    key={className}
+                    className="class-available-item"
+                    onClick={() => this.handleAddExistingClass(className)}
+                    title="Add to entity"
+                  >
+                    + {className}
+                  </button>
+                ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

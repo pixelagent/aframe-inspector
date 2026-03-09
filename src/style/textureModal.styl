@@ -240,3 +240,172 @@
 .texture canvas
   border 1px solid var(--color-base-100)
   cursor pointer
+
+/* Settings Modal Tabs */
+.settings-tabs
+  display flex
+  border-bottom 1px solid var(--color-base-300)
+  padding 0 10px
+
+.settings-tab
+  background transparent
+  border none
+  border-bottom 2px solid transparent
+  color var(--color-base-content)
+  cursor pointer
+  display flex
+  align-items center
+  gap 8px
+  font-size 14px
+  padding 12px 20px
+  transition all 0.2s
+
+  &:hover
+    color var(--color-primary)
+
+  &.active
+    border-bottom-color var(--color-primary)
+    color var(--color-primary)
+
+.settings-content
+  padding 15px
+
+/* Classes Tab */
+.classes-tab
+  .classes-header
+    margin-bottom 20px
+
+    h3
+      color var(--color-primary)
+      font-size 16px
+      margin 0 0 8px
+
+    p
+      color var(--color-base-content)
+      font-size 13px
+      margin 0
+      opacity 0.8
+
+  .classes-list
+    max-height 400px
+    overflow-y auto
+
+    .no-classes
+      color var(--color-base-content)
+      font-style italic
+      opacity 0.6
+      padding 20px
+      text-align center
+
+    ul
+      list-style none
+      margin 0
+      padding 0
+
+    .class-item
+      align-items center
+      background var(--color-base-300)
+      border-radius 4px
+      display flex
+      justify-content space-between
+      margin-bottom 8px
+      padding 10px 15px
+
+      .class-name
+        color var(--color-primary)
+        font-family 'Monaco', 'Menlo', monospace
+        font-size 13px
+
+      .class-count
+        color var(--color-base-content)
+        font-size 12px
+        opacity 0.7
+
+  .classes-help
+    margin-top 20px
+    padding 15px
+    background var(--color-base-100)
+    border-radius 4px
+
+    p
+      color var(--color-base-content)
+      font-size 12px
+      margin 0
+      opacity 0.8
+
+/* Models Tab */
+.models-tab
+  .models-header
+    margin-bottom 20px
+
+    h3
+      color var(--color-primary)
+      font-size 16px
+      margin 0 0 8px
+
+    p
+      color var(--color-base-content)
+      font-size 13px
+      margin 0
+      opacity 0.8
+
+  .models-list
+    max-height 400px
+    overflow-y auto
+
+    .no-models
+      color var(--color-base-content)
+      font-style italic
+      opacity 0.6
+      padding 20px
+      text-align center
+
+    ul
+      list-style none
+      margin 0
+      padding 0
+
+    .model-item
+      align-items center
+      background var(--color-base-300)
+      border-radius 4px
+      display flex
+      gap 12px
+      margin-bottom 8px
+      padding 12px 15px
+
+      .model-icon
+        color var(--color-primary)
+        font-size 18px
+        flex-shrink 0
+
+      .model-info
+        display flex
+        flex-direction column
+        gap 4px
+        min-width 0
+
+        .model-src
+          color var(--color-primary)
+          font-family 'Monaco', 'Menlo', monospace
+          font-size 12px
+          overflow hidden
+          text-overflow ellipsis
+          white-space nowrap
+
+        .model-type
+          color var(--color-base-content)
+          font-size 11px
+          opacity 0.7
+
+  .models-help
+    margin-top 20px
+    padding 15px
+    background var(--color-base-100)
+    border-radius 4px
+
+    p
+      color var(--color-base-content)
+      font-size 12px
+      margin 0
+      opacity 0.8

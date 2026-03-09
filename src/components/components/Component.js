@@ -161,9 +161,6 @@ export default class Component extends React.Component {
       <>
         <Collapsible collapsed={this.props.isCollapsed}>
           <div className="componentHeader collapsible-header">
-            <span className="componentTitle" title={componentName}>
-              <span>{componentName}</span>
-            </span>
             <div className="componentHeaderActions">
               {componentOverview && (
                 <a
@@ -202,6 +199,9 @@ export default class Component extends React.Component {
                 <AwesomeIcon icon={faTrashAlt} />
               </a>
             </div>
+            <span className="componentTitle" title={componentName}>
+              <span className="componentNameText">{componentName}</span>
+            </span>
           </div>
           <div className="collapsible-content">{this.renderPropertyRows()}</div>
         </Collapsible>
