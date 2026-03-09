@@ -17869,89 +17869,31 @@ body.aframe-inspector-opened {
   vertical-align: -0.125em;
 }
 #aframeInspector #toolbar {
-  background-color: var(--color-base-300);
-  border-bottom: 1px solid var(--color-base-100);
-  padding: 4px 8px;
-  position: relative;
-  z-index: 9999;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+  background-color: var(--color-base-200);
 }
 #aframeInspector #toolbar .toolbarActions {
-  align-items: center;
+  align-items: baseline;
   display: flex;
-  justify-content: flex-start;
-  gap: 4px;
-  padding: 4px 0;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 5px 10px;
 }
 #aframeInspector #toolbar .toolbarActions a.disabled {
   color: #666;
   cursor: default;
-}
-#aframeInspector #toolbar .toolbarActions .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  background: var(--color-base-200);
-  color: var(--color-base-content);
-  border: 1px solid var(--color-base-100);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-#aframeInspector #toolbar .toolbarActions .button:hover:not(.disabled) {
-  background: var(--color-primary);
-  color: var(--color-primary-content);
-  border-color: var(--color-primary);
-}
-#aframeInspector #toolbar .toolbarActions .button:active {
-  transform: scale(0.95);
-}
-#aframeInspector #toolbar .toolbarActions .button.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-#aframeInspector #toolbar .toolbarActions .gltfIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  background: var(--color-base-200);
-  color: var(--color-base-content);
-  border: 1px solid var(--color-base-100);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-#aframeInspector #toolbar .toolbarActions .gltfIcon:hover {
-  background: var(--color-primary);
-  color: var(--color-primary-content);
-  border-color: var(--color-primary);
-}
-#aframeInspector #toolbar .toolbarActions .gltfIcon svg {
-  width: 18px;
-  height: 18px;
 }
 #aframeInspector #scenegraph {
   background: var(--color-base-200);
   border-top: 1px solid var(--color-base-300);
   display: flex;
   flex-direction: column;
-  overflow: visible;
-  padding-top: 60px;
+  overflow: auto;
+  padding-top: 32px;
   width: 230px;
   min-width: 180px;
   max-width: 400px;
   resize: horizontal;
   overflow-x: auto;
   position: relative;
-  z-index: 9999;
-  pointer-events: all;
 }
 #aframeInspector #scenegraph::after {
   content: '';
@@ -18083,9 +18025,9 @@ body.aframe-inspector-opened {
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   max-height: 300px;
   overflow-y: auto;
-  position: fixed;
-  top: 50px;
-  left: 10px;
+  position: absolute;
+  right: 0;
+  top: 100%;
   width: 140px;
   z-index: 10000;
 }
@@ -18236,11 +18178,10 @@ body.aframe-inspector-opened {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   width: 350px;
-  max-height: 80vh;
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  overflow: hidden;
 }
 #aframeInspector .reparent-modal-header {
   display: flex;
@@ -18248,7 +18189,6 @@ body.aframe-inspector-opened {
   align-items: center;
   padding: 16px;
   border-bottom: 1px solid var(--border-color);
-  flex-shrink: 0;
 }
 #aframeInspector .reparent-modal-header h3 {
   margin: 0;
@@ -18274,8 +18214,6 @@ body.aframe-inspector-opened {
   padding: 16px;
   overflow-y: auto;
   flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 #aframeInspector .reparent-modal-content p {
   margin: 0 0 12px 0;
@@ -18286,9 +18224,8 @@ body.aframe-inspector-opened {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
-  flex: 1;
 }
 #aframeInspector .reparent-option {
   display: flex;
@@ -18302,14 +18239,6 @@ body.aframe-inspector-opened {
 }
 #aframeInspector .reparent-option:hover {
   background: var(--color-base-300);
-}
-#aframeInspector .reparent-option.selected {
-  background: var(--color-primary);
-  color: var(--color-primary-content);
-  border-color: var(--color-primary);
-}
-#aframeInspector .reparent-option.selected .reparent-name {
-  color: var(--color-primary-content);
 }
 #aframeInspector .reparent-icon {
   font-size: 0.9rem;
@@ -18376,29 +18305,20 @@ body.aframe-inspector-opened {
   position: relative;
 }
 #aframeInspector .mixins-toggle {
+  background: transparent;
+  border: none;
+  color: var(--color-base-content);
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 14px;
-  border-radius: 6px;
-  background: var(--color-base-200);
-  color: var(--color-base-content);
-  border: 1px solid var(--color-base-100);
+  gap: 6px;
+  padding: 8px 10px;
   font-size: 13px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  cursor: pointer;
+  transition: all 0.2s;
   white-space: nowrap;
 }
 #aframeInspector .mixins-toggle:hover {
-  background: var(--color-primary);
-  color: var(--color-primary-content);
-  border-color: var(--color-primary);
-}
-#aframeInspector .mixins-toggle:active {
-  transform: scale(0.95);
+  color: var(--color-primary);
 }
 #aframeInspector .mixins-toggle .svg-inline--fa {
   font-size: 14px;
@@ -18407,9 +18327,8 @@ body.aframe-inspector-opened {
 }
 #aframeInspector .mixins-panel {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 60px;
+  right: 250px;
   background: var(--color-base-200);
   border: 1px solid var(--color-base-300);
   border-radius: 8px;
@@ -18418,7 +18337,7 @@ body.aframe-inspector-opened {
   max-height: 60vh;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-  z-index: 10000;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
 }
@@ -19219,7 +19138,7 @@ body.aframe-inspector-opened {
   border-top: 1px solid var(--color-base-300);
   display: flex;
   gap: 10px;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 15px 20px;
 }
 #aframeInspector .behavior-modal .behavior-modal-footer .btn {
@@ -19228,85 +19147,6 @@ body.aframe-inspector-opened {
 #aframeInspector .behavior-modal .behavior-modal-footer .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-#aframeInspector .help-btn {
-  align-items: center;
-  background: var(--color-base-300);
-  border: none;
-  border-radius: 4px;
-  color: var(--color-base-content);
-  cursor: pointer;
-  display: flex;
-  font-size: 13px;
-  gap: 6px;
-  padding: 8px 12px;
-  transition: all 0.2s;
-}
-#aframeInspector .help-btn:hover {
-  background: var(--color-base-lighter);
-  color: var(--color-primary);
-}
-#aframeInspector .help-btn.active {
-  background: var(--color-primary);
-  color: #fff;
-}
-#aframeInspector .behavior-help {
-  background: var(--color-base-100);
-  border-radius: 6px;
-  max-height: 350px;
-  overflow-y: auto;
-  padding: 15px;
-}
-#aframeInspector .behavior-help .help-section {
-  margin-bottom: 15px;
-}
-#aframeInspector .behavior-help .help-section:last-child {
-  margin-bottom: 0;
-}
-#aframeInspector .behavior-help .help-section h4 {
-  color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-#aframeInspector .behavior-help .help-section p {
-  color: var(--color-base-content);
-  font-size: 13px;
-  line-height: 1.5;
-}
-#aframeInspector .behavior-help .help-section ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-#aframeInspector .behavior-help .help-section li {
-  border-bottom: 1px solid var(--color-base-300);
-  color: var(--color-base-content);
-  font-size: 12px;
-  line-height: 1.4;
-  padding: 6px 0;
-}
-#aframeInspector .behavior-help .help-section li:last-child {
-  border-bottom: none;
-}
-#aframeInspector .behavior-help .help-section pre {
-  background: var(--color-base-400);
-  border-radius: 4px;
-  color: var(--color-base-content);
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: 11px;
-  line-height: 1.4;
-  overflow-x: auto;
-  padding: 12px;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-#aframeInspector .footer-actions {
-  display: flex;
-  gap: 10px;
-  margin-left: auto;
 }
 #aframeInspector .modal-title .icon {
   font-size: 18px;
@@ -20072,7 +19912,7 @@ body.aframe-inspector-opened {
     opacity: 1;
   }
 }
-`, "",{"version":3,"sources":["webpack://./src/style/lib.styl","webpack://./src/style/index.styl","webpack://./src/style/scenegraph.styl","webpack://./src/style/components.styl","webpack://./src/style/entity.styl","webpack://./src/style/help.styl","webpack://./src/style/select.styl","webpack://./src/style/textureModal.styl","webpack://./src/style/viewport.styl","webpack://./src/style/widgets.styl"],"names":[],"mappings":"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","sourcesContent":["/* CSS rules from the original FontAwesomeIcon component */\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  box-sizing: content-box;\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n","@import './lib';\n\nbody.aframe-inspector-opened,\n.toggle-edit,\n.sponsor-btn\n  font-family var(--font-normal)\n\nbody.aframe-inspector-opened\n  background var(--color-base-200)\n  color var(--color-base-content)\n  font-size 12px\n  margin 0\n  overflow hidden\n\n/* :where(:root) has zero specificity compared to :root, so any user defined :root will override the below rule */\n:where(:root) {\n  color-scheme: dark;\n\n  --color-base-100: #333;\n  --color-base-200: #242424;\n  --color-base-300: #1d1d1d;\n  --color-base-content: #c3c3c3;\n  --color-primary: #1faaf2;\n  --color-primary-content: #fff;\n  --color-secondary: #92374d;\n  --color-secondary-content: #fafafa;\n  --color-accent: #155373;\n  --color-accent-content: #fff;\n  --color-neutral: #333;\n  --color-neutral-content: #aaa;\n  --color-info: #2cb7ff;\n  --color-info-content: #fff;\n  --color-success: #8b8;\n  --color-success-content: #000;\n  --color-warning: #d66853;\n  --color-warning-content: #000;\n  --color-error: #92374d;\n  --color-error-content: #000;\n  --font-normal: system-ui, BlinkMacSystemFont, -apple-system, \"Segoe UI\", Helvetica, Arial, sans-serif;\n  --font-monospace: Consolas, \"Andale Mono\", Monaco, \"Lucida Console\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Bitstream Vera Sans Mono\", \"Courier New\", monospace;\n}\n\n#aframeInspector\n  --color-base-lighter: unquote(\"color-mix(in oklab, var(--color-base-100) 90%, white 10%)\");\n  --color-primary-hover: unquote(\"color-mix(in oklab, var(--color-primary) 90%, black 10%)\");\n  --color-secondary-hover: unquote(\"color-mix(in oklab, var(--color-secondary) 90%, black 10%)\");\n  --color-accent-hover: unquote(\"color-mix(in oklab, var(--color-accent) 70%, black 30%)\");\n  --color-neutral-hover: unquote(\"color-mix(in oklab, var(--color-neutral) 90%, black 10%)\");\n  --color-property-defined: light-dark(\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, black 90%)\"),   /* darker for light theme */\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, white 90%)\")    /* lighter for dark theme */\n  )\n\n  @import './scenegraph';\n  @import './components';\n  @import './entity';\n  @import './help';\n  @import './select';\n  @import './textureModal';\n  @import './viewport';\n  @import './widgets';\n\n  .select__control,\n  code,\n  pre,\n  input,\n  textarea,\n  select\n    font-size 13px\n\n  code,\n  pre,\n  textarea\n    font-family var(--font-monospace)\n\n  hr\n    border 0\n    border-top 1px solid var(--color-base-content)\n\n  a\n    cursor pointer\n\n  button\n    position relative\n\n  textarea\n    overflow-wrap normal\n    tab-size 4\n    white-space pre\n\n  textarea,\n  input\n    outline none /* osx */\n\n  .gltfIcon svg\n    box-sizing content-box\n    display inline\n    height 20px\n    position relative\n    top 4px\n    vertical-align baseline\n    width 30px\n\n  #scenegraph,\n  #rightPanel\n    z-index 9998\n\n  #sidebar,\n  #scenegraph,\n  .panel\n      cursor default\n      user-select none\n\n  .toggle-edit\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    font-size 13px\n    left 3px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 100px\n    z-index 999999999\n\n  .toggle-edit:hover\n    background-color var(--color-secondary-hover)\n\n  .try-editor-btn\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    display flex\n    font-size 16px\n    gap 5px\n    justify-content center\n    line-height 24px\n    margin 0\n    padding 6px 10px\n    text-align center\n    text-decoration none\n    width 200px\n\n  .try-editor-btn:hover\n    background-color var(--color-secondary-hover)\n    color var(--color-secondary-content)\n\n  .sponsor-btn\n    background-color var(--color-neutral)\n    box-sizing content-box\n    color var(--color-neutral-content)\n    display flex\n    font-size 13px\n    gap 5px\n    justify-content center\n    left 127px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 80px\n    z-index 999999999\n\n    svg\n      color rgb(219, 97, 162)\n      fill currentColor\n\n  .sponsor-btn:hover\n    background-color var(--color-neutral-hover)\n    color var(--color-neutral-content)\n\n  input\n    background-color transparent\n    border 1px solid var(--color-base-200)\n    color var(--color-base-content)\n\n  input,\n  .texture canvas\n    transition 0.1s background-color ease-in-out, 0.1s border-color ease-in-out, 0.1s color ease-in-out\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    border-radius 0\n    min-height 14px\n    outline none\n\n  input[type=\"checkbox\"]\n    appearance none\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 0\n    cursor pointer\n    height 18px\n    margin 0\n    position relative\n    width 18px\n\n    &:checked\n        background var(--color-primary)\n        border 1px solid var(--color-base-300)\n\n        &::after\n            border solid white\n            border-width 0 2px 2px 0\n            content ''\n            height 9px\n            left 5px\n            position absolute\n            top 1px\n            transform rotate(45deg)\n            width 4px\n\n  input[type=\"checkbox\"]:focus\n    box-shadow none\n\n  input.number\n    background-color transparent !important\n    border 0\n    color var(--color-primary) !important\n    cursor col-resize\n    font-size 13px\n    padding 2px\n\n  input.string:focus,\n  input.number:focus\n    border 1px solid var(--color-primary)\n\n  input.error\n    border 1px solid var(--color-error)\n\n  #sidebar\n    background var(--color-base-200)\n    width 331px\n\n  input,\n  textarea,\n  select\n    background var(--color-base-300)\n    border 1px solid transparent\n    color var(--color-base-content)\n\n  select\n    background var(--color-base-lighter)\n\n  input[type=\"color\"]\n    background-color var(--color-base-100)\n    border 1px solid var(--color-base-300)\n    cursor pointer\n    height 26px\n    padding 0\n    width 50px\n\n  /* Note these vendor-prefixed selectors cannot be grouped! */\n  input[type=\"color\"]::-webkit-color-swatch\n    border 0  /* To remove the gray border. */\n\n  input[type=\"color\"]::-webkit-color-swatch-wrapper\n    border-radius 0  /* So it appears as rectangle instead of an ovale in Safari */\n    padding 0  /* To remove the inner padding. */\n\n  input[type=\"color\"]::-moz-color-swatch\n    border 0\n\n  input[type=\"color\"]::-moz-focus-inner\n    border 0  /* To remove the inner border (specific to Firefox). */\n    padding 0\n\n  .hidden\n    visibility hidden\n\n  a.button\n    color var(--color-base-content)\n    font-size 16px\n    line-height 1em\n    text-decoration none\n\n    &:hover\n      color var(--color-primary)\n\n  @keyframes animateopacity\n    from { opacity: 0 }\n    to { opacity: 1 }\n\n  .hide\n    display none\n\n  .a-canvas.state-dragging\n    cursor grabbing\n\n  #rightPanel\n    align-items stretch\n    display flex\n    justify-content flex-end\n\n  #inspectorContainer\n    display flex\n    height 100%\n    justify-content space-between\n    left 0\n    pointer-events none\n    position fixed\n    top 0\n    width 100%\n    z-index 999999\n\n  #scenegraph,\n  #viewportBar,\n  #rightPanel\n    pointer-events all\n\n  .aframe-inspector-opened a-scene .a-canvas\n    background-color #191919\n    z-index 9998\n\n  .toggle-sidebar\n    align-items center\n    display flex\n    height 100%\n    position absolute\n    z-index 9998\n\n    a\n      background-color var(--color-base-200)\n      color var(--color-base-content)\n      padding 5px\n      z-index 9998\n\n    a.hover\n      background-color var(--color-primary)\n      color var(--color-primary-content)\n\n  .toggle-sidebar.left\n    left 0\n    top 0\n\n  .toggle-sidebar.right\n    right 0\n    top 0\n","@import './lib';\n\n#toolbar\n  background-color var(--color-base-300)\n  border-bottom 1px solid var(--color-base-100)\n  padding 4px 8px\n  position relative\n  z-index 9999\n  display flex\n  flex-wrap wrap\n  gap 4px\n\n  .toolbarActions\n    align-items center\n    display flex\n    justify-content flex-start\n    gap 4px\n    padding 4px 0\n    flex-wrap wrap\n\n    a.disabled\n      color #666\n      cursor default\n\n    .button\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover:not(.disabled)\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      &:active\n        transform scale(0.95)\n\n      &.disabled\n        opacity 0.5\n        cursor not-allowed\n\n    .gltfIcon\n      display flex\n      align-items center\n      justify-content center\n      width 36px\n      height 36px\n      border-radius 6px\n      background var(--color-base-200)\n      color var(--color-base-content)\n      border 1px solid var(--color-base-100)\n      transition all 0.2s ease\n      cursor pointer\n\n      &:hover\n        background var(--color-primary)\n        color var(--color-primary-content)\n        border-color var(--color-primary)\n\n      svg\n        width 18px\n        height 18px\n\n#scenegraph\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-300)\n  display flex\n  flex-direction column\n  overflow visible\n  padding-top 60px\n  width 230px\n  min-width 180px\n  max-width 400px\n  resize horizontal\n  overflow-x auto\n  position relative\n  z-index 9999\n  pointer-events all\n\n  &::after\n    content: ''\n    position absolute\n    right 0\n    top 0\n    bottom 0\n    width 4px\n    cursor ew-resize\n    background transparent\n    transition background 0.2s\n\n  &:hover::after\n    background var(--color-primary)\n\n  .entity\n    align-items center\n    background var(--color-base-200)\n    box-sizing border-box\n    cursor pointer\n    display flex\n    gap 6px\n    justify-content space-between\n    line-height 1em\n    padding 3px\n    white-space nowrap\n    width 100%\n\n    &:hover\n      background var(--color-accent-hover)\n      color var(--color-accent-content)\n\n    &.active\n      background-color var(--color-accent)\n      color var(--color-accent-content)\n\n      .entityActions\n        align-items center\n        display flex\n        padding-right 2px\n\n        a.button:hover\n          color var(--color-primary)\n\n    &.novisible\n      &.active\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n      &:not(.active)\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n  .component:hover\n    color var(--color-primary)\n\n  .entityIcons\n    margin-left 2px\n\n  .entityActions\n    display none\n\n    .button\n      color var(--color-base-content)\n      font-size 12px\n      margin-left 6px\n\n  .id\n    color var(--color-base-content)\n\n  .option.active .id\n    color var(--color-base-content)\n\n  .collapsespace\n    color var(--color-base-content)\n    display inline-block\n    text-align center\n    width 14px\n\n  .fa-eye\n    color var(--color-base-content)\n\n  .search\n    display flex\n    font-size 16px\n    padding 5px\n    position relative\n\n    input\n      background var(--color-base-300)\n      border-radius 0\n      box-sizing border-box\n      color var(--color-primary)\n      padding 5px 10px\n      width 100%\n\n    >svg\n      color var(--color-base-content)\n\n    >svg, a.button\n      position absolute\n      right 14px\n      top 10px\n\n  .outliner\n    background var(--color-base-200)\n    color var(--color-base-content)\n    cursor default\n    flex 1 1 auto\n    font-size 13px\n    height calc(100% - 98px)\n    line-height normal\n    outline none\n    overflow-y auto\n    padding 0\n    width 100%\n\n.theme-selector\n  position relative\n\n  .theme-dropdown\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 4px\n    box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)\n    max-height 300px\n    overflow-y auto\n    position fixed\n    top 50px\n    left 10px\n    width 140px\n    z-index 10000\n\n    .theme-option\n      color var(--color-base-content)\n      cursor pointer\n      padding 8px 12px\n\n      &:hover\n        background var(--color-accent-hover)\n        color var(--color-accent-content)\n\n      &.selected\n        background var(--color-accent)\n        color var(--color-accent-content)\n\n// Add Entity Button with Primitive Menu\n.addEntityContainer\n  position relative\n  display flex\n\n.addEntityContainer .button\n  border-radius 4px 0 0 4px\n\n.addEntityContainer .primitiveToggle\n  border-left none\n  border-radius 0 4px 4px 0\n  padding-left 4px\n\n.primitiveMenu\n  position fixed\n  top auto\n  left 235px\n  bottom auto\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 6px\n  padding 6px 0\n  z-index 10001\n  min-width 240px\n  max-height 400px\n  overflow-y auto\n  box-shadow 0 8px 24px rgba(0, 0, 0, 0.4)\n\n.primitiveMenuHeader\n  padding 10px 14px 8px\n  font-size 11px\n  color var(--color-primary)\n  border-bottom 1px solid var(--color-base-300)\n  font-weight 600\n  text-transform uppercase\n  letter-spacing 0.5px\n\n.primitiveMenuItem\n  display flex\n  align-items center\n  gap 10px\n  padding 10px 14px\n  cursor pointer\n  transition background 0.15s, color 0.15s\n  color var(--color-base-content)\n  border-left 3px solid transparent\n\n.primitiveMenuItem:hover\n  background var(--color-base-300)\n  border-left-color var(--color-primary)\n\n.primitiveMenuItem.selected\n  background var(--color-primary)\n  color var(--color-primary-content)\n  border-left-color var(--color-primary)\n\n.primitiveIcon\n  width 24px\n  text-align center\n  font-size 1rem\n\n.primitiveLabel\n  flex 1\n  font-size 13px\n  font-weight 500\n\n.primitiveTag\n  font-size 10px\n  color var(--color-base-content)\n  font-family var(--font-monospace)\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n  opacity  0.8\n\n.primitiveMenuItem.selected .primitiveTag\n  color inherit\n  background rgba(255,255,255,0.2)\n  opacity  1\n\n// Grouped primitive menu styles\n.primitiveGroup\n  margin-bottom 6px\n\n  &:last-child\n    margin-bottom 0\n\n.primitiveGroupHeader\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 14px 6px\n  font-size 10px\n  color var(--color-primary)\n  font-weight 700\n  text-transform uppercase\n  letter-spacing 0.8px\n\n  .icon\n    font-size 11px\n    width 14px\n    text-align center\n\n.primitiveGroup .primitiveMenuItem\n  padding-left 20px\n\n  // Entity actions for move up/down and reparent\n  .entityReparent\n    cursor grab\n\n  .entityMoveUp, .entityMoveDown\n    cursor pointer\n    opacity 0.5\n    transition opacity 0.2s\n\n  .entityMoveUp:hover, .entityMoveDown:hover\n    opacity 1\n\n// Reparent Modal Styles\n.reparent-modal-overlay\n  position fixed\n  top 0\n  left 0\n  right 0\n  bottom 0\n  background rgba(0, 0, 0, 0.7)\n  z-index 10000\n  display flex\n  align-items center\n  justify-content center\n\n.reparent-modal\n  background var(--color-base-200)\n  border 1px solid var(--border-color)\n  border-radius 8px\n  width 350px\n  max-height 80vh\n  display flex\n  flex-direction column\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  overflow hidden\n\n.reparent-modal-header\n  display flex\n  justify-content space-between\n  align-items center\n  padding 16px\n  border-bottom 1px solid var(--border-color)\n  flex-shrink 0\n\n  h3\n    margin 0\n    font-size 1rem\n    color var(--color-base-content)\n    display flex\n    align-items center\n    gap 8px\n\n  .close-btn\n    background none\n    border none\n    color var(--text-secondary)\n    font-size 1.5rem\n    cursor pointer\n    padding 0\n    line-height 1\n\n    &:hover\n      color var(--color-base-content)\n\n.reparent-modal-content\n  padding 16px\n  overflow-y auto\n  flex 1\n  display flex\n  flex-direction column\n\n  p\n    margin 0 0 12px 0\n    font-size 0.85rem\n    color var(--text-secondary)\n\n.reparent-list\n  display flex\n  flex-direction column\n  gap 4px\n  max-height 300px\n  overflow-y auto\n  flex 1\n\n.reparent-option\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 12px\n  border-radius 4px\n  cursor pointer\n  transition background 0.2s\n  color var(--color-base-content)\n\n  &:hover\n    background var(--color-base-300)\n\n  &.selected\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n    .reparent-name\n      color var(--color-primary-content)\n\n.reparent-icon\n  font-size 0.9rem\n  width 24px\n  text-align center\n\n.reparent-name\n  flex 1\n  font-size 0.85rem\n\n.reparent-tag\n  font-size 0.65rem\n  color var(--text-secondary)\n  font-family monospace\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n\n// Modal action buttons\n.reparent-modal-actions\n  display flex\n  justify-content flex-end\n  gap 10px\n  margin-top 16px\n  padding-top 16px\n  border-top 1px solid var(--border-color)\n\n  .btn-cancel\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--color-base-content)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    transition all 0.2s\n\n    &:hover\n      background var(--color-base-100)\n\n  .btn-apply\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--text-secondary)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    font-weight 600\n    transition all 0.2s\n    opacity 0.5\n    pointer-events none\n\n    &.active\n      background var(--color-primary)\n      border-color var(--color-primary)\n      color var(--color-primary-content)\n      opacity 1\n      pointer-events auto\n\n      &:hover\n        filter brightness(1.1)\n\n// Mixins Manager\n.mixins-manager\n  position relative\n\n.mixins-toggle\n  display flex\n  align-items center\n  justify-content center\n  gap 8px\n  height 36px\n  padding 0 14px\n  border-radius 6px\n  background var(--color-base-200)\n  color var(--color-base-content)\n  border 1px solid var(--color-base-100)\n  font-size 13px\n  font-weight 500\n  transition all 0.2s ease\n  cursor pointer\n  white-space nowrap\n\n  &:hover\n    background var(--color-primary)\n    color var(--color-primary-content)\n    border-color var(--color-primary)\n\n  &:active\n    transform scale(0.95)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Mixins Panel (over canvas)\n.mixins-panel\n  position fixed\n  top 50%\n  left 50%\n  transform translate(-50%, -50%)\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 300px\n  max-width 400px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 10000\n  display flex\n  flex-direction column\n\n  .mixins-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .mixins-list\n    flex 1\n    overflow-y auto\n    max-height calc(60vh - 60px)\n\n  .no-mixins\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .mixin-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n\n    &:hover\n      background var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .mixin-info\n      display flex\n      flex-direction column\n      gap 3px\n      flex 1\n      min-width 0\n\n      .mixin-id\n        font-size 14px\n        font-weight 600\n        color var(--color-base-content)\n\n      .mixin-usage\n        font-size 11px\n        color var(--color-primary)\n\n      .mixin-components\n        font-size 10px\n        color var(--color-base-content)\n        opacity 0.7\n        max-width 200px\n        overflow hidden\n        text-overflow ellipsis\n        white-space nowrap\n\n    .mixin-actions\n      display flex\n      gap 6px\n      margin-left 10px\n\n      .mixin-edit,\n      .mixin-delete\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        color var(--color-base-content)\n        cursor pointer\n        padding 6px 8px\n        font-size 11px\n        border-radius 4px\n        transition all 0.2s\n\n        &:hover\n          background var(--color-primary)\n          border-color var(--color-primary)\n          color var(--color-primary-content)\n\n      .mixin-delete:hover\n        background var(--color-error)\n        border-color var(--color-error)\n\n// Mixin Modal\n.mixin-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.mixin-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 80vh\n  max-width 500px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  position relative\n  margin auto\n\n  .mixin-modal-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 15px 20px\n    border-bottom 1px solid var(--color-base-300)\n\n    h3\n      margin 0\n      font-size 16px\n      color var(--color-base-content)\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .mixin-modal-content\n    padding 20px\n    max-height 50vh\n    overflow-y auto\n\n    .form-group\n      margin-bottom 15px\n\n      &:last-child\n        margin-bottom 0\n\n      label\n        display block\n        font-size 12px\n        font-weight 600\n        color var(--color-base-content)\n        margin-bottom 8px\n        text-transform uppercase\n\n      input[type=\"text\"]\n        width 100%\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        border-radius 4px\n        color var(--color-base-content)\n        padding 8px 10px\n        font-size 13px\n        box-sizing border-box\n\n        &:focus\n          border-color var(--color-primary)\n          outline none\n\n      .component-inputs\n        display flex\n        flex-direction column\n        gap 8px\n\n      .component-input\n        display flex\n        align-items center\n        gap 10px\n\n        .component-name\n          min-width 80px\n          font-size 12px\n          color var(--color-primary)\n          font-weight 500\n\n        input\n          flex 1\n\n    .mixin-help-text\n      background var(--color-base-100)\n      border 1px solid var(--color-base-300)\n      border-radius 4px\n      padding 12px 14px\n      margin-bottom 15px\n      font-size 12px\n      color var(--color-base-content)\n      line-height 1.5\n\n      p\n        margin 0 0 6px 0\n\n        &:last-child\n          margin-bottom 0\n\n  .mixin-modal-footer\n    display flex\n    justify-content flex-end\n    gap 10px\n    padding 15px 20px\n    border-top 1px solid var(--color-base-300)\n\n    .btn\n      padding 8px 16px\n      border-radius 4px\n      font-size 13px\n      cursor pointer\n      transition all 0.2s\n\n    .btn:not(.primary)\n      background var(--color-base-300)\n      border 1px solid var(--color-base-300)\n      color var(--color-base-content)\n\n      &:hover\n        background var(--color-base-100)\n\n    .btn.primary\n      background var(--color-primary)\n      border 1px solid var(--color-primary)\n      color var(--color-primary-content)\n\n      &:hover\n        filter brightness(1.1)\n","@import './lib';\n\n.components\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  height 100%\n  overflow auto\n  position fixed\n  width 331px\n\n.collapsible-header\n  align-items center\n  display flex\n  justify-content space-between\n\n  .entityPrint\n    color var(--color-base-content)\n\n.collapsible-content\n  padding 5px 0\n\n.componentTitle span\n  color var(--color-base-content)\n  font-weight 600\n  max-width 200px\n  overflow hidden\n  text-overflow ellipsis\n  text-transform uppercase\n  vertical-align bottom !important\n  white-space nowrap\n\n.componentHeaderActions\n  align-items center\n  display flex\n  gap 10px\n\n.collapsible .static\n  background var(--color-base-100)\n  border-bottom 2px solid var(--color-base-200)\n  box-sizing content-box\n  cursor pointer\n  font-size 13px\n  height 16px\n  margin 0\n  padding 8px 10px 12px\n  vertical-align bottom\n\n  &:hover\n    background var(--color-base-lighter)\n\n.collapsible .static .collapse-button\n  border 6px solid transparent\n  float left\n  height 0\n  margin-left 2px\n  margin-right 10px\n  width 0\n\n.collapsible.collapsed .static .collapse-button\n  border-left-color var(--color-base-content)\n  margin-top 4px\n\n.collapsible:not(.collapsed) .static .collapse-button\n  border-top-color var(--color-base-content)\n  margin-top 7px\n\n.propertyRow\n  align-items center\n  display flex\n  font-size 13px\n  min-height 30px\n  padding 2px 15px\n\n  .text\n    cursor default\n    display inline-block\n    overflow hidden\n    padding-right 10px\n    text-overflow ellipsis\n    vertical-align middle\n    width 118px\n\n  input.number\n    width 40px\n\n  .vec2 input.number,\n  .vec3 input.number\n    width 40px\n\n  .vec4 input.number\n    width 34px\n\n  .vec2, .vec3, .vec4\n    display inline\n\n  .map_value\n    margin 0 0 0 5px\n    width 68px\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    background var(--color-base-300)\n    color var(--color-primary)\n    min-height 26px\n    padding 1px 5px\n\n    &:last-child\n      padding-right 0\n\n  input.string\n    box-sizing border-box\n    padding-left 8px\n    width 165px\n\n  input[type=\"text\"]:focus,\n  input.string:focus\n    box-shadow none\n\n  .color-widget *\n    vertical-align middle\n\n  .color_value\n    letter-spacing 1px\n    margin 0 0 0 5px\n    width 68px\n\n.propertyRowDefined .text\n  color var(--color-property-defined)\n  font-weight 600\n\n#addComponentContainer\n  align-items center\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  display flex\n  flex-direction column\n  justify-content center\n  padding 20px 10px\n\n  #addComponent\n    text-align left\n    width 200px\n\n    .select__control\n      background var(--color-base-300)\n      color var(--color-primary)\n      height 35px\n\n  #addComponentHeader\n    font-size 15px\n    margin 0 0 10px\n\n  input[type=\"text\"]:focus\n    box-shadow none\n\n.component-title\n  align-items center\n  display flex\n\n#componentEntityHeader\n  .collapsible-header\n    bottom 5px\n    position relative\n\n  a.button\n    margin-left 10px\n\n  .collapse-button\n    display none\n\n  .static\n    height 13px\n\n  .entityPrint\n    font-size 15px\n    padding-left 5px\n\n  .entityName\n    max-width 160px\n\n#mixinSelect\n  width 160px\n\n.propertyRow .texture\n  display flex\n\n  input\n    margin-left 0\n    width 120px\n\n/* Behaviors Panel Styles */\n.behaviors-panel\n  background-color var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  padding 10px\n\n  .panel-header\n    align-items center\n    display flex\n    justify-content space-between\n    margin-bottom 10px\n\n    .panel-header-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 14px\n      font-weight 600\n      gap 8px\n\n  .behaviors-list\n    .no-behaviors\n      text-align center\n      padding 20px 10px\n      color var(--color-base-content)\n      opacity 0.7\n\n      p\n        margin 0 0 15px\n\n    .entity-behavior\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 8px 12px\n\n      .behavior-info\n        align-items center\n        display flex\n        gap 10px\n\n        .behavior-name\n          color var(--color-base-content)\n          font-size 13px\n\n      .behavior-remove\n        background transparent\n        border none\n        color var(--color-base-content)\n        cursor pointer\n        font-size 14px\n        padding 4px\n        opacity 0.6\n\n        &:hover\n          color var(--color-error)\n          opacity 1\n\n/* Entity Behavior - Enhanced */\n.entity-behavior\n  align-items center\n  background var(--color-base-300)\n  border-radius 4px\n  display flex\n  justify-content space-between\n  margin-bottom 8px\n  padding 10px 12px\n\n  .behavior-info\n    align-items center\n    display flex\n    gap 12px\n\n    .behavior-details\n      display flex\n      flex-direction column\n      gap 2px\n\n      .behavior-name\n        color var(--color-base-content)\n        font-size 13px\n        font-weight 500\n\n      .behavior-event\n        color var(--color-primary)\n        font-size 11px\n\n  .behavior-actions\n    align-items center\n    display flex\n    gap 4px\n\n    .behavior-edit,\n    .behavior-remove\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 12px\n      padding 6px\n      opacity 0.6\n      transition all 0.2s\n\n      &:hover\n        color var(--color-primary)\n        opacity 1\n\n    .behavior-remove:hover\n      color var(--color-error)\n\n/* Entity Behavior Selected */\n.entity-behavior:hover\n  background var(--color-base-lighter)\n\n/* Behavior Modal */\n.modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  left 50%\n  max-height 80vh\n  max-width 600px\n  min-width 400px\n  overflow hidden\n  position fixed\n  top 50%\n  transform translate(-50%, -50%)\n  width 90%\n\n  .modal-title\n    align-items center\n    background var(--color-base-100)\n    color var(--color-base-content)\n    display flex\n    font-size 16px\n    font-weight 600\n    gap 10px\n    padding 15px 20px\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      margin-left auto\n      opacity 0.7\n\n      &:hover\n        opacity 1\n\n  .behavior-categories\n    max-height 400px\n    overflow-y auto\n    padding 15px\n\n    .behavior-category\n      margin-bottom 20px\n\n      &:last-child\n        margin-bottom 0\n\n      .category-title\n        color var(--color-primary)\n        font-size 12px\n        font-weight 600\n        margin-bottom 10px\n        text-transform uppercase\n\n      .category-behaviors\n        display flex\n        flex-wrap wrap\n        gap 8px\n\n        .behavior-option\n          align-items center\n          background var(--color-base-300)\n          border 1px solid transparent\n          border-radius 4px\n          color var(--color-base-content)\n          cursor pointer\n          display flex\n          gap 8px\n          padding 8px 12px\n          font-size 13px\n          transition all 0.2s\n\n          &:hover\n            background var(--color-base-lighter)\n            border-color var(--color-primary)\n\n          &.selected\n            background var(--color-primary)\n            color var(--color-primary-content)\n\n  .behavior-params\n    background var(--color-base-300)\n    border-top 1px solid var(--color-base-100)\n    padding 15px 20px\n\n    .params-title\n      color var(--color-base-content)\n      font-size 14px\n      font-weight 600\n      margin-bottom 15px\n\n    .params-form\n      .param-input\n        margin-bottom 15px\n\n        &:last-child\n          margin-bottom 0\n\n        label\n          color var(--color-base-content)\n          display block\n          font-size 12px\n          margin-bottom 5px\n\n        input[type=\"text\"],\n        input[type=\"number\"],\n        textarea,\n        select\n          background var(--color-base-100)\n          border 1px solid var(--color-base-300)\n          border-radius 4px\n          color var(--color-base-content)\n          padding 8px 10px\n          width 100%\n          box-sizing border-box\n\n          &:focus\n            border-color var(--color-primary)\n            outline none\n\n        textarea\n          min-height 60px\n          resize vertical\n\n        &.checkbox\n          align-items center\n          display flex\n\n          label\n            align-items center\n            cursor pointer\n            display flex\n            gap 8px\n            margin-bottom 0\n\n  .modal-actions\n    align-items center\n    border-top 1px solid var(--color-base-100)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n/* Icon sizes for behaviors */\n.behaviors-panel .panel-header .icon,\n.behavior-option .icon,\n.entity-behavior .icon\n  font-size 14px\n  width 16px\n\n/* Behavior Modal - Centered */\n.behavior-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 85vh\n  max-width 550px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  display flex\n  flex-direction column\n\n  .behavior-modal-header\n    align-items center\n    background var(--color-base-100)\n    border-bottom 1px solid var(--color-base-300)\n    display flex\n    justify-content space-between\n    padding 15px 20px\n\n    .behavior-modal-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 16px\n      font-weight 600\n      gap 10px\n\n    .behavior-modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 28px\n      line-height 1\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .behavior-modal-content\n    flex 1\n    overflow-y auto\n    padding 15px\n\n  .behavior-modal-footer\n    align-items center\n    border-top 1px solid var(--color-base-300)\n    display flex\n    gap 10px\n    justify-content space-between\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n// Help button\n.help-btn\n  align-items center\n  background var(--color-base-300)\n  border none\n  border-radius 4px\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  font-size 13px\n  gap 6px\n  padding 8px 12px\n  transition all 0.2s\n\n  &:hover\n    background var(--color-base-lighter)\n    color var(--color-primary)\n\n  &.active\n    background var(--color-primary)\n    color white\n\n// Help section\n.behavior-help\n  background var(--color-base-100)\n  border-radius 6px\n  max-height 350px\n  overflow-y auto\n  padding 15px\n\n  .help-section\n    margin-bottom 15px\n\n    &:last-child\n      margin-bottom 0\n\n    h4\n      color var(--color-primary)\n      font-size 13px\n      font-weight 600\n      letter-spacing 0.5px\n      margin-bottom 8px\n      text-transform uppercase\n\n    p\n      color var(--color-base-content)\n      font-size 13px\n      line-height 1.5\n\n    ul\n      list-style none\n      margin 0\n      padding 0\n\n    li\n      border-bottom 1px solid var(--color-base-300)\n      color var(--color-base-content)\n      font-size 12px\n      line-height 1.4\n      padding 6px 0\n\n      &:last-child\n        border-bottom none\n\n    pre\n      background var(--color-base-400)\n      border-radius 4px\n      color var(--color-base-content)\n      font-family 'Monaco', 'Menlo', 'Ubuntu Mono', monospace\n      font-size 11px\n      line-height 1.4\n      overflow-x auto\n      padding 12px\n      white-space pre-wrap\n      word-break break-all\n\n.footer-actions\n  display flex\n  gap 10px\n  margin-left auto\n\n.modal-title .icon\n  font-size 18px\n  width 20px\n","@import './lib';\n\n.entityPrint\n  font-family var(--font-normal)\n  line-height 1.15em\n\n.entityName\n  display inline-block\n  overflow hidden\n  position relative\n  text-overflow ellipsis\n  top 3px\n  white-space nowrap\n\n[data-entity-name-type=\"id\"]\n  color var(--color-error)\n\n[data-entity-name-type=\"class\"]\n  color var(--color-success)\n\n[data-entity-name-type=\"mixin\"]\n  color var(--color-warning)\n",".help-lists\n  display flex\n  justify-content space-around\n\n.help-list\n  list-style none\n  margin 0\n  padding 0 0 10px\n  width 350px\n\n.help-list li\n  margin-right 40px\n\n.help-key-unit\n  line-height 1.8\n  margin-right 2em\n  padding 5px 0\n\n.help-key\n  bottom 2px\n  margin-right 4px\n  min-width 60px\n  position relative\n\n.help-key span\n  background-color var(--color-neutral)\n  background-repeat repeat-x\n  border 1px solid var(--color-neutral-content)\n  border-radius 3px\n  box-shadow 0 0 5px #000\n  color var(--color-neutral-content)\n  display inline-block\n  font-size 12px\n  padding 0 8px\n  text-align center\n\n.help-key-def\n  color var(--color-base-content)\n  display inline-block\n  margin-left 1em\n","@import './lib';\n\n.select__control\n  border 0\n  border-radius 0\n  cursor pointer\n  min-height 26px\n\n.select__indicator\n  color var(--color-base-content)\n  height 26px\n\n.select__indicator-separator\n  display none\n\n.select__input\n  min-height auto !important\n\n.select__control,\n.select__menu\n  background var(--color-base-300)\n\n.select__option\n  cursor pointer\n  padding 5px 10px\n\n.select__placeholder,\n.select__menu\n  color var(--color-base-content)\n\n.select__single-value\n  color var(--color-primary)\n\n.select__control--is-focused\n  box-shadow none !important\n\n.select__label\n  font-size 11px\n\n.select__option--is-focused\n  background var(--color-accent-hover)\n  color var(--color-accent-content)\n\n.select__option--is-selected\n  background var(--color-accent)\n  color var(--color-accent-content)\n\n.select__value-container\n  height 26px\n  position static\n\n  &.select__value-container--is-multi\n    height auto\n    padding 6px\n\n.select__dropdown-indicator\n  padding 3px 8px\n\n.select__multi-value\n  background var(--color-base-200)\n  color var(--color-primary)\n\n.select__multi-value__label\n  color var(--color-primary)\n\n.select__multi-value__remove:hover\n  background var(--color-base-200)\n  color var(--color-base-content)\n",".modal\n  animation animateopacity 0.2s ease-out\n  background-color rgba(0, 0, 0, 0.6)\n  display flex\n  height 100%\n  left 0\n  overflow auto\n  position fixed\n  top 0\n  width 100%\n  z-index 9999999999\n\n.modal h3\n  font-size 18px\n  font-weight 600\n  margin 0.6em 0\n\n#textureModal .modal-content\n  height calc(100% - 50px)\n  width calc(100% - 50px)\n\n.modal-content\n  background-color var(--color-base-200)\n  box-shadow 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5)\n  margin auto\n  overflow hidden\n  padding 0\n\n.close\n  color var(--color-base-content)\n  float right\n  font-size 28px\n  font-weight bold\n\n.close:hover,\n.close:focus\n  color var(--color-primary)\n  cursor pointer\n  text-decoration none\n\n.modal-header\n  color var(--color-base-content)\n  padding 2px 16px\n\n.modal-body\n  color var(--color-base-content)\n  overflow auto\n  padding 16px\n\n.modal-footer\n  color var(--color-base-content)\n  padding 2px 16px\n\n/* Gallery */\n.gallery\n  background var(--color-base-200)\n  display flex\n  flex-wrap wrap\n  margin 15px auto 0\n  max-height calc(100vh - 370px)\n  overflow auto\n  padding 15px 3px 3px\n\n.newimage .gallery\n  padding 16px\n\n.gallery li\n  border-radius 2px\n  box-shadow 0 0 6px rgba(0, 0, 0, 0.6)\n  cursor pointer\n  margin 8px\n  overflow hidden\n  width 155px\n\n.gallery li.selected,\n.gallery li:hover\n  box-shadow 0 0 0 2px var(--color-primary)\n\n.gallery li .detail\n  background-color var(--color-base-100)\n  margin 0\n  min-height 60px\n  padding 3px 10px\n\n.preview\n  padding 10px\n  width 150px\n\n.preview input\n  display block\n  margin 8px 0\n  width 144px\n\n.preview .iderror\n  background unquote(\"color-mix(in oklab, var(--color-error) 8%, var(--color-base-300))\")\n  color var(--color-error)\n  font-weight 600\n  margin-bottom 8px\n  padding 3px 5px\n  text-align center\n  width 148px\n\n.preview button\n  width 155px\n\n.preview .detail .title\n  color var(--color-base-content)\n  display inline-block\n  max-width 155px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.gallery li.selected .detail,\n.gallery li:hover .detail\n  background-color var(--color-base-lighter)\n\n.gallery li .detail span\n  color var(--color-base-content)\n  display block\n  margin-top 4px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n  width 140px\n\n.gallery li.selected .detail span,\n.gallery li:hover .detail span\n  color var(--color-base-content)\n\n.gallery li .detail span.title\n  color var(--color-property-defined)\n  font-weight 600\n\n.modal button\n  appearance none\n  background-color var(--color-primary)\n  border none\n  border-radius 0\n  box-shadow none\n  color var(--color-primary-content)\n  cursor pointer\n  display inline-block\n  font-size 12px\n  line-height 1.8\n  margin 0 10px 0 0\n  padding 5px 10px\n\n.modal button:focus\n  outline none\n\n.modal button:hover,\n.modal button.hover\n  background-color var(--color-primary-hover)\n\n.modal button:active,\n.modal button.active\n  background-color var(--color-primary-hover)\n\n.modal button:disabled\n  background-color #666\n  color #fff\n  cursor default\n\n.newimage\n  background-color var(--color-base-100)\n  color var(--color-base-content)\n  display flex\n  font-size 13px\n  justify-content space-between\n  margin-top 10px\n  overflow auto\n  padding 10px\n\n.newimage input\n  color var(--color-primary)\n  padding 3px 5px\n\n.texture canvas + input\n  margin-left 5px\n\n.texture svg\n  padding-right 5px\n\n.uploader-normal-button .hidden\n  display none\n\n.assets.search\n  margin-top 10px\n  position relative\n  width 200px\n\n.assets.search input\n  box-sizing border-box\n  padding-right 20px\n  width 100%\n\n.assets.search svg\n  position absolute\n  right 5px\n  top 5px\n\n.new_asset_options\n  margin 10px\n\n.new_asset_options > ul\n  margin-left 10px\n  padding 5px\n\n.new_asset_options > ul > li\n  padding 10px 0\n\n.new_asset_options .imageUrl\n  margin-left 5px\n  width 350px\n\n.texture canvas\n  border 1px solid var(--color-base-100)\n  cursor pointer\n","@import './lib';\n\n#viewportBar\n  align-items center\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  display flex\n  flex-grow 2\n  font-size 15px\n  height 32px\n  justify-content space-between\n  padding 0 5px\n\n.toolbarButtons\n  align-items center\n  display flex\n  gap 6px\n\n  a.button\n    & svg\n      padding 8px\n\n    &:not(.active) svg:hover\n      background-color var(--color-base-lighter)\n\n  .active svg\n    background-color var(--color-primary)\n    color var(--color-primary-content)\n\n  .active:hover svg\n    color var(--color-primary-content) !important\n\n.local-transform\n  align-items center\n  display flex\n  gap 5px\n  padding 0 10px\n\n.local-transform label\n  color var(--color-base-content)\n\n#cameraSelect\n  cursor pointer\n  width 120px\n\n  .select__dropdown-indicator\n    padding-left 3px\n    padding-right 3px\n\n#cameraToolbar\n  align-items center\n  display flex\n\n  .select__control\n    background none\n\n  .select__single-value\n    color var(--color-base-content)\n\n    &:hover\n      color var(--color-primary)\n\n#viewportHud\n  display none\n\n  @media (min-width: 1025px)\n    display block\n","@import './lib';\n\n.select-widget\n  display inline-block\n  width 157px"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/style/lib.styl","webpack://./src/style/index.styl","webpack://./src/style/scenegraph.styl","webpack://./src/style/components.styl","webpack://./src/style/entity.styl","webpack://./src/style/help.styl","webpack://./src/style/select.styl","webpack://./src/style/textureModal.styl","webpack://./src/style/viewport.styl","webpack://./src/style/widgets.styl"],"names":[],"mappings":"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","sourcesContent":["/* CSS rules from the original FontAwesomeIcon component */\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  box-sizing: content-box;\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n","@import './lib';\n\nbody.aframe-inspector-opened,\n.toggle-edit,\n.sponsor-btn\n  font-family var(--font-normal)\n\nbody.aframe-inspector-opened\n  background var(--color-base-200)\n  color var(--color-base-content)\n  font-size 12px\n  margin 0\n  overflow hidden\n\n/* :where(:root) has zero specificity compared to :root, so any user defined :root will override the below rule */\n:where(:root) {\n  color-scheme: dark;\n\n  --color-base-100: #333;\n  --color-base-200: #242424;\n  --color-base-300: #1d1d1d;\n  --color-base-content: #c3c3c3;\n  --color-primary: #1faaf2;\n  --color-primary-content: #fff;\n  --color-secondary: #92374d;\n  --color-secondary-content: #fafafa;\n  --color-accent: #155373;\n  --color-accent-content: #fff;\n  --color-neutral: #333;\n  --color-neutral-content: #aaa;\n  --color-info: #2cb7ff;\n  --color-info-content: #fff;\n  --color-success: #8b8;\n  --color-success-content: #000;\n  --color-warning: #d66853;\n  --color-warning-content: #000;\n  --color-error: #92374d;\n  --color-error-content: #000;\n  --font-normal: system-ui, BlinkMacSystemFont, -apple-system, \"Segoe UI\", Helvetica, Arial, sans-serif;\n  --font-monospace: Consolas, \"Andale Mono\", Monaco, \"Lucida Console\", \"Liberation Mono\", \"DejaVu Sans Mono\", \"Bitstream Vera Sans Mono\", \"Courier New\", monospace;\n}\n\n#aframeInspector\n  --color-base-lighter: unquote(\"color-mix(in oklab, var(--color-base-100) 90%, white 10%)\");\n  --color-primary-hover: unquote(\"color-mix(in oklab, var(--color-primary) 90%, black 10%)\");\n  --color-secondary-hover: unquote(\"color-mix(in oklab, var(--color-secondary) 90%, black 10%)\");\n  --color-accent-hover: unquote(\"color-mix(in oklab, var(--color-accent) 70%, black 30%)\");\n  --color-neutral-hover: unquote(\"color-mix(in oklab, var(--color-neutral) 90%, black 10%)\");\n  --color-property-defined: light-dark(\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, black 90%)\"),   /* darker for light theme */\n    unquote(\"color-mix(in oklab, var(--color-base-content) 10%, white 90%)\")    /* lighter for dark theme */\n  )\n\n  @import './scenegraph';\n  @import './components';\n  @import './entity';\n  @import './help';\n  @import './select';\n  @import './textureModal';\n  @import './viewport';\n  @import './widgets';\n\n  .select__control,\n  code,\n  pre,\n  input,\n  textarea,\n  select\n    font-size 13px\n\n  code,\n  pre,\n  textarea\n    font-family var(--font-monospace)\n\n  hr\n    border 0\n    border-top 1px solid var(--color-base-content)\n\n  a\n    cursor pointer\n\n  button\n    position relative\n\n  textarea\n    overflow-wrap normal\n    tab-size 4\n    white-space pre\n\n  textarea,\n  input\n    outline none /* osx */\n\n  .gltfIcon svg\n    box-sizing content-box\n    display inline\n    height 20px\n    position relative\n    top 4px\n    vertical-align baseline\n    width 30px\n\n  #scenegraph,\n  #rightPanel\n    z-index 9998\n\n  #sidebar,\n  #scenegraph,\n  .panel\n      cursor default\n      user-select none\n\n  .toggle-edit\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    font-size 13px\n    left 3px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 100px\n    z-index 999999999\n\n  .toggle-edit:hover\n    background-color var(--color-secondary-hover)\n\n  .try-editor-btn\n    background-color var(--color-secondary)\n    box-sizing content-box\n    color var(--color-secondary-content)\n    display flex\n    font-size 16px\n    gap 5px\n    justify-content center\n    line-height 24px\n    margin 0\n    padding 6px 10px\n    text-align center\n    text-decoration none\n    width 200px\n\n  .try-editor-btn:hover\n    background-color var(--color-secondary-hover)\n    color var(--color-secondary-content)\n\n  .sponsor-btn\n    background-color var(--color-neutral)\n    box-sizing content-box\n    color var(--color-neutral-content)\n    display flex\n    font-size 13px\n    gap 5px\n    justify-content center\n    left 127px\n    line-height 16px\n    margin 0\n    padding 6px 10px\n    position fixed\n    text-align center\n    text-decoration none\n    top 3px\n    width 80px\n    z-index 999999999\n\n    svg\n      color rgb(219, 97, 162)\n      fill currentColor\n\n  .sponsor-btn:hover\n    background-color var(--color-neutral-hover)\n    color var(--color-neutral-content)\n\n  input\n    background-color transparent\n    border 1px solid var(--color-base-200)\n    color var(--color-base-content)\n\n  input,\n  .texture canvas\n    transition 0.1s background-color ease-in-out, 0.1s border-color ease-in-out, 0.1s color ease-in-out\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    border-radius 0\n    min-height 14px\n    outline none\n\n  input[type=\"checkbox\"]\n    appearance none\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 0\n    cursor pointer\n    height 18px\n    margin 0\n    position relative\n    width 18px\n\n    &:checked\n        background var(--color-primary)\n        border 1px solid var(--color-base-300)\n\n        &::after\n            border solid white\n            border-width 0 2px 2px 0\n            content ''\n            height 9px\n            left 5px\n            position absolute\n            top 1px\n            transform rotate(45deg)\n            width 4px\n\n  input[type=\"checkbox\"]:focus\n    box-shadow none\n\n  input.number\n    background-color transparent !important\n    border 0\n    color var(--color-primary) !important\n    cursor col-resize\n    font-size 13px\n    padding 2px\n\n  input.string:focus,\n  input.number:focus\n    border 1px solid var(--color-primary)\n\n  input.error\n    border 1px solid var(--color-error)\n\n  #sidebar\n    background var(--color-base-200)\n    width 331px\n\n  input,\n  textarea,\n  select\n    background var(--color-base-300)\n    border 1px solid transparent\n    color var(--color-base-content)\n\n  select\n    background var(--color-base-lighter)\n\n  input[type=\"color\"]\n    background-color var(--color-base-100)\n    border 1px solid var(--color-base-300)\n    cursor pointer\n    height 26px\n    padding 0\n    width 50px\n\n  /* Note these vendor-prefixed selectors cannot be grouped! */\n  input[type=\"color\"]::-webkit-color-swatch\n    border 0  /* To remove the gray border. */\n\n  input[type=\"color\"]::-webkit-color-swatch-wrapper\n    border-radius 0  /* So it appears as rectangle instead of an ovale in Safari */\n    padding 0  /* To remove the inner padding. */\n\n  input[type=\"color\"]::-moz-color-swatch\n    border 0\n\n  input[type=\"color\"]::-moz-focus-inner\n    border 0  /* To remove the inner border (specific to Firefox). */\n    padding 0\n\n  .hidden\n    visibility hidden\n\n  a.button\n    color var(--color-base-content)\n    font-size 16px\n    line-height 1em\n    text-decoration none\n\n    &:hover\n      color var(--color-primary)\n\n  @keyframes animateopacity\n    from { opacity: 0 }\n    to { opacity: 1 }\n\n  .hide\n    display none\n\n  .a-canvas.state-dragging\n    cursor grabbing\n\n  #rightPanel\n    align-items stretch\n    display flex\n    justify-content flex-end\n\n  #inspectorContainer\n    display flex\n    height 100%\n    justify-content space-between\n    left 0\n    pointer-events none\n    position fixed\n    top 0\n    width 100%\n    z-index 999999\n\n  #scenegraph,\n  #viewportBar,\n  #rightPanel\n    pointer-events all\n\n  .aframe-inspector-opened a-scene .a-canvas\n    background-color #191919\n    z-index 9998\n\n  .toggle-sidebar\n    align-items center\n    display flex\n    height 100%\n    position absolute\n    z-index 9998\n\n    a\n      background-color var(--color-base-200)\n      color var(--color-base-content)\n      padding 5px\n      z-index 9998\n\n    a.hover\n      background-color var(--color-primary)\n      color var(--color-primary-content)\n\n  .toggle-sidebar.left\n    left 0\n    top 0\n\n  .toggle-sidebar.right\n    right 0\n    top 0\n","@import './lib';\n\n#toolbar\n  background-color var(--color-base-200)\n\n  .toolbarActions\n    align-items baseline\n    display flex\n    justify-content space-between\n    padding 5px 10px\n\n    a.disabled\n      color #666\n      cursor default\n\n#scenegraph\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-300)\n  display flex\n  flex-direction column\n  overflow auto\n  padding-top 32px\n  width 230px\n  min-width 180px\n  max-width 400px\n  resize horizontal\n  overflow-x auto\n  position relative\n\n  &::after\n    content: ''\n    position absolute\n    right 0\n    top 0\n    bottom 0\n    width 4px\n    cursor ew-resize\n    background transparent\n    transition background 0.2s\n\n  &:hover::after\n    background var(--color-primary)\n\n  .entity\n    align-items center\n    background var(--color-base-200)\n    box-sizing border-box\n    cursor pointer\n    display flex\n    gap 6px\n    justify-content space-between\n    line-height 1em\n    padding 3px\n    white-space nowrap\n    width 100%\n\n    &:hover\n      background var(--color-accent-hover)\n      color var(--color-accent-content)\n\n    &.active\n      background-color var(--color-accent)\n      color var(--color-accent-content)\n\n      .entityActions\n        align-items center\n        display flex\n        padding-right 2px\n\n        a.button:hover\n          color var(--color-primary)\n\n    &.novisible\n      &.active\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n      &:not(.active)\n        span,\n        svg,\n        .collapsespace,\n        .id\n          color #626262\n\n  .component:hover\n    color var(--color-primary)\n\n  .entityIcons\n    margin-left 2px\n\n  .entityActions\n    display none\n\n    .button\n      color var(--color-base-content)\n      font-size 12px\n      margin-left 6px\n\n  .id\n    color var(--color-base-content)\n\n  .option.active .id\n    color var(--color-base-content)\n\n  .collapsespace\n    color var(--color-base-content)\n    display inline-block\n    text-align center\n    width 14px\n\n  .fa-eye\n    color var(--color-base-content)\n\n  .search\n    display flex\n    font-size 16px\n    padding 5px\n    position relative\n\n    input\n      background var(--color-base-300)\n      border-radius 0\n      box-sizing border-box\n      color var(--color-primary)\n      padding 5px 10px\n      width 100%\n\n    >svg\n      color var(--color-base-content)\n\n    >svg, a.button\n      position absolute\n      right 14px\n      top 10px\n\n  .outliner\n    background var(--color-base-200)\n    color var(--color-base-content)\n    cursor default\n    flex 1 1 auto\n    font-size 13px\n    height calc(100% - 98px)\n    line-height normal\n    outline none\n    overflow-y auto\n    padding 0\n    width 100%\n\n.theme-selector\n  position relative\n\n  .theme-dropdown\n    background var(--color-base-300)\n    border 1px solid var(--color-base-300)\n    border-radius 4px\n    box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)\n    max-height 300px\n    overflow-y auto\n    position absolute\n    right 0\n    top 100%\n    width 140px\n    z-index 10000\n\n    .theme-option\n      color var(--color-base-content)\n      cursor pointer\n      padding 8px 12px\n\n      &:hover\n        background var(--color-accent-hover)\n        color var(--color-accent-content)\n\n      &.selected\n        background var(--color-accent)\n        color var(--color-accent-content)\n\n// Add Entity Button with Primitive Menu\n.addEntityContainer\n  position relative\n  display flex\n\n.addEntityContainer .button\n  border-radius 4px 0 0 4px\n\n.addEntityContainer .primitiveToggle\n  border-left none\n  border-radius 0 4px 4px 0\n  padding-left 4px\n\n.primitiveMenu\n  position fixed\n  top auto\n  left 235px\n  bottom auto\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 6px\n  padding 6px 0\n  z-index 10001\n  min-width 240px\n  max-height 400px\n  overflow-y auto\n  box-shadow 0 8px 24px rgba(0, 0, 0, 0.4)\n\n.primitiveMenuHeader\n  padding 10px 14px 8px\n  font-size 11px\n  color var(--color-primary)\n  border-bottom 1px solid var(--color-base-300)\n  font-weight 600\n  text-transform uppercase\n  letter-spacing 0.5px\n\n.primitiveMenuItem\n  display flex\n  align-items center\n  gap 10px\n  padding 10px 14px\n  cursor pointer\n  transition background 0.15s, color 0.15s\n  color var(--color-base-content)\n  border-left 3px solid transparent\n\n.primitiveMenuItem:hover\n  background var(--color-base-300)\n  border-left-color var(--color-primary)\n\n.primitiveMenuItem.selected\n  background var(--color-primary)\n  color var(--color-primary-content)\n  border-left-color var(--color-primary)\n\n.primitiveIcon\n  width 24px\n  text-align center\n  font-size 1rem\n\n.primitiveLabel\n  flex 1\n  font-size 13px\n  font-weight 500\n\n.primitiveTag\n  font-size 10px\n  color var(--color-base-content)\n  font-family var(--font-monospace)\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n  opacity  0.8\n\n.primitiveMenuItem.selected .primitiveTag\n  color inherit\n  background rgba(255,255,255,0.2)\n  opacity  1\n\n// Grouped primitive menu styles\n.primitiveGroup\n  margin-bottom 6px\n\n  &:last-child\n    margin-bottom 0\n\n.primitiveGroupHeader\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 14px 6px\n  font-size 10px\n  color var(--color-primary)\n  font-weight 700\n  text-transform uppercase\n  letter-spacing 0.8px\n\n  .icon\n    font-size 11px\n    width 14px\n    text-align center\n\n.primitiveGroup .primitiveMenuItem\n  padding-left 20px\n\n  // Entity actions for move up/down and reparent\n  .entityReparent\n    cursor grab\n\n  .entityMoveUp, .entityMoveDown\n    cursor pointer\n    opacity 0.5\n    transition opacity 0.2s\n\n  .entityMoveUp:hover, .entityMoveDown:hover\n    opacity 1\n\n// Reparent Modal Styles\n.reparent-modal-overlay\n  position fixed\n  top 0\n  left 0\n  right 0\n  bottom 0\n  background rgba(0, 0, 0, 0.7)\n  z-index 10000\n  display flex\n  align-items center\n  justify-content center\n\n.reparent-modal\n  background var(--color-base-200)\n  border 1px solid var(--border-color)\n  border-radius 8px\n  width 350px\n  max-height 70vh\n  display flex\n  flex-direction column\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n\n.reparent-modal-header\n  display flex\n  justify-content space-between\n  align-items center\n  padding 16px\n  border-bottom 1px solid var(--border-color)\n\n  h3\n    margin 0\n    font-size 1rem\n    color var(--color-base-content)\n    display flex\n    align-items center\n    gap 8px\n\n  .close-btn\n    background none\n    border none\n    color var(--text-secondary)\n    font-size 1.5rem\n    cursor pointer\n    padding 0\n    line-height 1\n\n    &:hover\n      color var(--color-base-content)\n\n.reparent-modal-content\n  padding 16px\n  overflow-y auto\n  flex 1\n\n  p\n    margin 0 0 12px 0\n    font-size 0.85rem\n    color var(--text-secondary)\n\n.reparent-list\n  display flex\n  flex-direction column\n  gap 4px\n  max-height 400px\n  overflow-y auto\n\n.reparent-option\n  display flex\n  align-items center\n  gap 8px\n  padding 10px 12px\n  border-radius 4px\n  cursor pointer\n  transition background 0.2s\n  color var(--color-base-content)\n\n  &:hover\n    background var(--color-base-300)\n\n.reparent-icon\n  font-size 0.9rem\n  width 24px\n  text-align center\n\n.reparent-name\n  flex 1\n  font-size 0.85rem\n\n.reparent-tag\n  font-size 0.65rem\n  color var(--text-secondary)\n  font-family monospace\n  background var(--color-base-300)\n  padding 2px 6px\n  border-radius 3px\n\n// Modal action buttons\n.reparent-modal-actions\n  display flex\n  justify-content flex-end\n  gap 10px\n  margin-top 16px\n  padding-top 16px\n  border-top 1px solid var(--border-color)\n\n  .btn-cancel\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--color-base-content)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    transition all 0.2s\n\n    &:hover\n      background var(--color-base-100)\n\n  .btn-apply\n    background var(--color-base-300)\n    border 1px solid var(--border-color)\n    color var(--text-secondary)\n    padding 8px 16px\n    border-radius 4px\n    cursor pointer\n    font-size 0.85rem\n    font-weight 600\n    transition all 0.2s\n    opacity 0.5\n    pointer-events none\n\n    &.active\n      background var(--color-primary)\n      border-color var(--color-primary)\n      color var(--color-primary-content)\n      opacity 1\n      pointer-events auto\n\n      &:hover\n        filter brightness(1.1)\n\n// Mixins Manager\n.mixins-manager\n  position relative\n\n.mixins-toggle\n  background transparent\n  border none\n  color var(--color-base-content)\n  cursor pointer\n  display flex\n  align-items center\n  gap 6px\n  padding 8px 10px\n  font-size 13px\n  transition all 0.2s\n  white-space nowrap\n\n  &:hover\n    color var(--color-primary)\n\n  .svg-inline--fa\n    font-size 14px\n    width 14px\n    height 14px\n\n// Floating Mixins Panel (over canvas)\n.mixins-panel\n  position fixed\n  top 60px\n  right 250px\n  background var(--color-base-200)\n  border 1px solid var(--color-base-300)\n  border-radius 8px\n  min-width 300px\n  max-width 400px\n  max-height 60vh\n  overflow hidden\n  box-shadow 0 12px 40px rgba(0, 0, 0, 0.5)\n  z-index 1000\n  display flex\n  flex-direction column\n\n  .mixins-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    font-weight 600\n    font-size 13px\n    color var(--color-primary)\n    text-transform uppercase\n    letter-spacing 0.5px\n    background var(--color-base-300)\n    border-radius 8px 8px 0 0\n\n    .icon-only\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      padding 4px\n      border-radius 4px\n\n      &:hover\n        background var(--color-base-100)\n        color var(--color-primary)\n\n  .mixins-list\n    flex 1\n    overflow-y auto\n    max-height calc(60vh - 60px)\n\n  .no-mixins\n    padding 30px 20px\n    text-align center\n    color var(--color-base-content)\n    opacity 0.6\n    font-size 13px\n\n  .mixin-item\n    display flex\n    justify-content space-between\n    align-items center\n    padding 12px 16px\n    border-bottom 1px solid var(--color-base-300)\n    transition background 0.2s\n\n    &:hover\n      background var(--color-base-300)\n\n    &:last-child\n      border-bottom none\n\n    .mixin-info\n      display flex\n      flex-direction column\n      gap 3px\n      flex 1\n      min-width 0\n\n      .mixin-id\n        font-size 14px\n        font-weight 600\n        color var(--color-base-content)\n\n      .mixin-usage\n        font-size 11px\n        color var(--color-primary)\n\n      .mixin-components\n        font-size 10px\n        color var(--color-base-content)\n        opacity 0.7\n        max-width 200px\n        overflow hidden\n        text-overflow ellipsis\n        white-space nowrap\n\n    .mixin-actions\n      display flex\n      gap 6px\n      margin-left 10px\n\n      .mixin-edit,\n      .mixin-delete\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        color var(--color-base-content)\n        cursor pointer\n        padding 6px 8px\n        font-size 11px\n        border-radius 4px\n        transition all 0.2s\n\n        &:hover\n          background var(--color-primary)\n          border-color var(--color-primary)\n          color var(--color-primary-content)\n\n      .mixin-delete:hover\n        background var(--color-error)\n        border-color var(--color-error)\n\n// Mixin Modal\n.mixin-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.mixin-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 80vh\n  max-width 500px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  position relative\n  margin auto\n\n  .mixin-modal-header\n    display flex\n    justify-content space-between\n    align-items center\n    padding 15px 20px\n    border-bottom 1px solid var(--color-base-300)\n\n    h3\n      margin 0\n      font-size 16px\n      color var(--color-base-content)\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .mixin-modal-content\n    padding 20px\n    max-height 50vh\n    overflow-y auto\n\n    .form-group\n      margin-bottom 15px\n\n      &:last-child\n        margin-bottom 0\n\n      label\n        display block\n        font-size 12px\n        font-weight 600\n        color var(--color-base-content)\n        margin-bottom 8px\n        text-transform uppercase\n\n      input[type=\"text\"]\n        width 100%\n        background var(--color-base-100)\n        border 1px solid var(--color-base-300)\n        border-radius 4px\n        color var(--color-base-content)\n        padding 8px 10px\n        font-size 13px\n        box-sizing border-box\n\n        &:focus\n          border-color var(--color-primary)\n          outline none\n\n      .component-inputs\n        display flex\n        flex-direction column\n        gap 8px\n\n      .component-input\n        display flex\n        align-items center\n        gap 10px\n\n        .component-name\n          min-width 80px\n          font-size 12px\n          color var(--color-primary)\n          font-weight 500\n\n        input\n          flex 1\n\n    .mixin-help-text\n      background var(--color-base-100)\n      border 1px solid var(--color-base-300)\n      border-radius 4px\n      padding 12px 14px\n      margin-bottom 15px\n      font-size 12px\n      color var(--color-base-content)\n      line-height 1.5\n\n      p\n        margin 0 0 6px 0\n\n        &:last-child\n          margin-bottom 0\n\n  .mixin-modal-footer\n    display flex\n    justify-content flex-end\n    gap 10px\n    padding 15px 20px\n    border-top 1px solid var(--color-base-300)\n\n    .btn\n      padding 8px 16px\n      border-radius 4px\n      font-size 13px\n      cursor pointer\n      transition all 0.2s\n\n    .btn:not(.primary)\n      background var(--color-base-300)\n      border 1px solid var(--color-base-300)\n      color var(--color-base-content)\n\n      &:hover\n        background var(--color-base-100)\n\n    .btn.primary\n      background var(--color-primary)\n      border 1px solid var(--color-primary)\n      color var(--color-primary-content)\n\n      &:hover\n        filter brightness(1.1)\n","@import './lib';\n\n.components\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  height 100%\n  overflow auto\n  position fixed\n  width 331px\n\n.collapsible-header\n  align-items center\n  display flex\n  justify-content space-between\n\n  .entityPrint\n    color var(--color-base-content)\n\n.collapsible-content\n  padding 5px 0\n\n.componentTitle span\n  color var(--color-base-content)\n  font-weight 600\n  max-width 200px\n  overflow hidden\n  text-overflow ellipsis\n  text-transform uppercase\n  vertical-align bottom !important\n  white-space nowrap\n\n.componentHeaderActions\n  align-items center\n  display flex\n  gap 10px\n\n.collapsible .static\n  background var(--color-base-100)\n  border-bottom 2px solid var(--color-base-200)\n  box-sizing content-box\n  cursor pointer\n  font-size 13px\n  height 16px\n  margin 0\n  padding 8px 10px 12px\n  vertical-align bottom\n\n  &:hover\n    background var(--color-base-lighter)\n\n.collapsible .static .collapse-button\n  border 6px solid transparent\n  float left\n  height 0\n  margin-left 2px\n  margin-right 10px\n  width 0\n\n.collapsible.collapsed .static .collapse-button\n  border-left-color var(--color-base-content)\n  margin-top 4px\n\n.collapsible:not(.collapsed) .static .collapse-button\n  border-top-color var(--color-base-content)\n  margin-top 7px\n\n.propertyRow\n  align-items center\n  display flex\n  font-size 13px\n  min-height 30px\n  padding 2px 15px\n\n  .text\n    cursor default\n    display inline-block\n    overflow hidden\n    padding-right 10px\n    text-overflow ellipsis\n    vertical-align middle\n    width 118px\n\n  input.number\n    width 40px\n\n  .vec2 input.number,\n  .vec3 input.number\n    width 40px\n\n  .vec4 input.number\n    width 34px\n\n  .vec2, .vec3, .vec4\n    display inline\n\n  .map_value\n    margin 0 0 0 5px\n    width 68px\n\n  input[type=\"text\"],\n  input[type=\"number\"],\n  input.string,\n  input.number\n    background var(--color-base-300)\n    color var(--color-primary)\n    min-height 26px\n    padding 1px 5px\n\n    &:last-child\n      padding-right 0\n\n  input.string\n    box-sizing border-box\n    padding-left 8px\n    width 165px\n\n  input[type=\"text\"]:focus,\n  input.string:focus\n    box-shadow none\n\n  .color-widget *\n    vertical-align middle\n\n  .color_value\n    letter-spacing 1px\n    margin 0 0 0 5px\n    width 68px\n\n.propertyRowDefined .text\n  color var(--color-property-defined)\n  font-weight 600\n\n#addComponentContainer\n  align-items center\n  background var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  display flex\n  flex-direction column\n  justify-content center\n  padding 20px 10px\n\n  #addComponent\n    text-align left\n    width 200px\n\n    .select__control\n      background var(--color-base-300)\n      color var(--color-primary)\n      height 35px\n\n  #addComponentHeader\n    font-size 15px\n    margin 0 0 10px\n\n  input[type=\"text\"]:focus\n    box-shadow none\n\n.component-title\n  align-items center\n  display flex\n\n#componentEntityHeader\n  .collapsible-header\n    bottom 5px\n    position relative\n\n  a.button\n    margin-left 10px\n\n  .collapse-button\n    display none\n\n  .static\n    height 13px\n\n  .entityPrint\n    font-size 15px\n    padding-left 5px\n\n  .entityName\n    max-width 160px\n\n#mixinSelect\n  width 160px\n\n.propertyRow .texture\n  display flex\n\n  input\n    margin-left 0\n    width 120px\n\n/* Behaviors Panel Styles */\n.behaviors-panel\n  background-color var(--color-base-200)\n  border-top 1px solid var(--color-base-100)\n  padding 10px\n\n  .panel-header\n    align-items center\n    display flex\n    justify-content space-between\n    margin-bottom 10px\n\n    .panel-header-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 14px\n      font-weight 600\n      gap 8px\n\n  .behaviors-list\n    .no-behaviors\n      text-align center\n      padding 20px 10px\n      color var(--color-base-content)\n      opacity 0.7\n\n      p\n        margin 0 0 15px\n\n    .entity-behavior\n      align-items center\n      background var(--color-base-300)\n      border-radius 4px\n      display flex\n      justify-content space-between\n      margin-bottom 8px\n      padding 8px 12px\n\n      .behavior-info\n        align-items center\n        display flex\n        gap 10px\n\n        .behavior-name\n          color var(--color-base-content)\n          font-size 13px\n\n      .behavior-remove\n        background transparent\n        border none\n        color var(--color-base-content)\n        cursor pointer\n        font-size 14px\n        padding 4px\n        opacity 0.6\n\n        &:hover\n          color var(--color-error)\n          opacity 1\n\n/* Entity Behavior - Enhanced */\n.entity-behavior\n  align-items center\n  background var(--color-base-300)\n  border-radius 4px\n  display flex\n  justify-content space-between\n  margin-bottom 8px\n  padding 10px 12px\n\n  .behavior-info\n    align-items center\n    display flex\n    gap 12px\n\n    .behavior-details\n      display flex\n      flex-direction column\n      gap 2px\n\n      .behavior-name\n        color var(--color-base-content)\n        font-size 13px\n        font-weight 500\n\n      .behavior-event\n        color var(--color-primary)\n        font-size 11px\n\n  .behavior-actions\n    align-items center\n    display flex\n    gap 4px\n\n    .behavior-edit,\n    .behavior-remove\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 12px\n      padding 6px\n      opacity 0.6\n      transition all 0.2s\n\n      &:hover\n        color var(--color-primary)\n        opacity 1\n\n    .behavior-remove:hover\n      color var(--color-error)\n\n/* Entity Behavior Selected */\n.entity-behavior:hover\n  background var(--color-base-lighter)\n\n/* Behavior Modal */\n.modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  left 50%\n  max-height 80vh\n  max-width 600px\n  min-width 400px\n  overflow hidden\n  position fixed\n  top 50%\n  transform translate(-50%, -50%)\n  width 90%\n\n  .modal-title\n    align-items center\n    background var(--color-base-100)\n    color var(--color-base-content)\n    display flex\n    font-size 16px\n    font-weight 600\n    gap 10px\n    padding 15px 20px\n\n    .modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 24px\n      margin-left auto\n      opacity 0.7\n\n      &:hover\n        opacity 1\n\n  .behavior-categories\n    max-height 400px\n    overflow-y auto\n    padding 15px\n\n    .behavior-category\n      margin-bottom 20px\n\n      &:last-child\n        margin-bottom 0\n\n      .category-title\n        color var(--color-primary)\n        font-size 12px\n        font-weight 600\n        margin-bottom 10px\n        text-transform uppercase\n\n      .category-behaviors\n        display flex\n        flex-wrap wrap\n        gap 8px\n\n        .behavior-option\n          align-items center\n          background var(--color-base-300)\n          border 1px solid transparent\n          border-radius 4px\n          color var(--color-base-content)\n          cursor pointer\n          display flex\n          gap 8px\n          padding 8px 12px\n          font-size 13px\n          transition all 0.2s\n\n          &:hover\n            background var(--color-base-lighter)\n            border-color var(--color-primary)\n\n          &.selected\n            background var(--color-primary)\n            color var(--color-primary-content)\n\n  .behavior-params\n    background var(--color-base-300)\n    border-top 1px solid var(--color-base-100)\n    padding 15px 20px\n\n    .params-title\n      color var(--color-base-content)\n      font-size 14px\n      font-weight 600\n      margin-bottom 15px\n\n    .params-form\n      .param-input\n        margin-bottom 15px\n\n        &:last-child\n          margin-bottom 0\n\n        label\n          color var(--color-base-content)\n          display block\n          font-size 12px\n          margin-bottom 5px\n\n        input[type=\"text\"],\n        input[type=\"number\"],\n        textarea,\n        select\n          background var(--color-base-100)\n          border 1px solid var(--color-base-300)\n          border-radius 4px\n          color var(--color-base-content)\n          padding 8px 10px\n          width 100%\n          box-sizing border-box\n\n          &:focus\n            border-color var(--color-primary)\n            outline none\n\n        textarea\n          min-height 60px\n          resize vertical\n\n        &.checkbox\n          align-items center\n          display flex\n\n          label\n            align-items center\n            cursor pointer\n            display flex\n            gap 8px\n            margin-bottom 0\n\n  .modal-actions\n    align-items center\n    border-top 1px solid var(--color-base-100)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n/* Icon sizes for behaviors */\n.behaviors-panel .panel-header .icon,\n.behavior-option .icon,\n.entity-behavior .icon\n  font-size 14px\n  width 16px\n\n/* Behavior Modal - Centered */\n.behavior-modal-overlay\n  background rgba(0, 0, 0, 0.7)\n  bottom 0\n  display flex\n  align-items center\n  justify-content center\n  left 0\n  position fixed\n  right 0\n  top 0\n  z-index 10000\n\n.behavior-modal\n  background var(--color-base-200)\n  border-radius 8px\n  max-height 85vh\n  max-width 550px\n  min-width 400px\n  overflow hidden\n  width 90%\n  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)\n  display flex\n  flex-direction column\n\n  .behavior-modal-header\n    align-items center\n    background var(--color-base-100)\n    border-bottom 1px solid var(--color-base-300)\n    display flex\n    justify-content space-between\n    padding 15px 20px\n\n    .behavior-modal-title\n      align-items center\n      color var(--color-base-content)\n      display flex\n      font-size 16px\n      font-weight 600\n      gap 10px\n\n    .behavior-modal-close\n      background transparent\n      border none\n      color var(--color-base-content)\n      cursor pointer\n      font-size 28px\n      line-height 1\n      opacity 0.7\n      padding 0\n\n      &:hover\n        opacity 1\n\n  .behavior-modal-content\n    flex 1\n    overflow-y auto\n    padding 15px\n\n  .behavior-modal-footer\n    align-items center\n    border-top 1px solid var(--color-base-300)\n    display flex\n    gap 10px\n    justify-content flex-end\n    padding 15px 20px\n\n    .btn\n      padding 8px 16px\n\n      &:disabled\n        opacity 0.5\n        cursor not-allowed\n\n.modal-title .icon\n  font-size 18px\n  width 20px\n","@import './lib';\n\n.entityPrint\n  font-family var(--font-normal)\n  line-height 1.15em\n\n.entityName\n  display inline-block\n  overflow hidden\n  position relative\n  text-overflow ellipsis\n  top 3px\n  white-space nowrap\n\n[data-entity-name-type=\"id\"]\n  color var(--color-error)\n\n[data-entity-name-type=\"class\"]\n  color var(--color-success)\n\n[data-entity-name-type=\"mixin\"]\n  color var(--color-warning)\n",".help-lists\n  display flex\n  justify-content space-around\n\n.help-list\n  list-style none\n  margin 0\n  padding 0 0 10px\n  width 350px\n\n.help-list li\n  margin-right 40px\n\n.help-key-unit\n  line-height 1.8\n  margin-right 2em\n  padding 5px 0\n\n.help-key\n  bottom 2px\n  margin-right 4px\n  min-width 60px\n  position relative\n\n.help-key span\n  background-color var(--color-neutral)\n  background-repeat repeat-x\n  border 1px solid var(--color-neutral-content)\n  border-radius 3px\n  box-shadow 0 0 5px #000\n  color var(--color-neutral-content)\n  display inline-block\n  font-size 12px\n  padding 0 8px\n  text-align center\n\n.help-key-def\n  color var(--color-base-content)\n  display inline-block\n  margin-left 1em\n","@import './lib';\n\n.select__control\n  border 0\n  border-radius 0\n  cursor pointer\n  min-height 26px\n\n.select__indicator\n  color var(--color-base-content)\n  height 26px\n\n.select__indicator-separator\n  display none\n\n.select__input\n  min-height auto !important\n\n.select__control,\n.select__menu\n  background var(--color-base-300)\n\n.select__option\n  cursor pointer\n  padding 5px 10px\n\n.select__placeholder,\n.select__menu\n  color var(--color-base-content)\n\n.select__single-value\n  color var(--color-primary)\n\n.select__control--is-focused\n  box-shadow none !important\n\n.select__label\n  font-size 11px\n\n.select__option--is-focused\n  background var(--color-accent-hover)\n  color var(--color-accent-content)\n\n.select__option--is-selected\n  background var(--color-accent)\n  color var(--color-accent-content)\n\n.select__value-container\n  height 26px\n  position static\n\n  &.select__value-container--is-multi\n    height auto\n    padding 6px\n\n.select__dropdown-indicator\n  padding 3px 8px\n\n.select__multi-value\n  background var(--color-base-200)\n  color var(--color-primary)\n\n.select__multi-value__label\n  color var(--color-primary)\n\n.select__multi-value__remove:hover\n  background var(--color-base-200)\n  color var(--color-base-content)\n",".modal\n  animation animateopacity 0.2s ease-out\n  background-color rgba(0, 0, 0, 0.6)\n  display flex\n  height 100%\n  left 0\n  overflow auto\n  position fixed\n  top 0\n  width 100%\n  z-index 9999999999\n\n.modal h3\n  font-size 18px\n  font-weight 600\n  margin 0.6em 0\n\n#textureModal .modal-content\n  height calc(100% - 50px)\n  width calc(100% - 50px)\n\n.modal-content\n  background-color var(--color-base-200)\n  box-shadow 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5)\n  margin auto\n  overflow hidden\n  padding 0\n\n.close\n  color var(--color-base-content)\n  float right\n  font-size 28px\n  font-weight bold\n\n.close:hover,\n.close:focus\n  color var(--color-primary)\n  cursor pointer\n  text-decoration none\n\n.modal-header\n  color var(--color-base-content)\n  padding 2px 16px\n\n.modal-body\n  color var(--color-base-content)\n  overflow auto\n  padding 16px\n\n.modal-footer\n  color var(--color-base-content)\n  padding 2px 16px\n\n/* Gallery */\n.gallery\n  background var(--color-base-200)\n  display flex\n  flex-wrap wrap\n  margin 15px auto 0\n  max-height calc(100vh - 370px)\n  overflow auto\n  padding 15px 3px 3px\n\n.newimage .gallery\n  padding 16px\n\n.gallery li\n  border-radius 2px\n  box-shadow 0 0 6px rgba(0, 0, 0, 0.6)\n  cursor pointer\n  margin 8px\n  overflow hidden\n  width 155px\n\n.gallery li.selected,\n.gallery li:hover\n  box-shadow 0 0 0 2px var(--color-primary)\n\n.gallery li .detail\n  background-color var(--color-base-100)\n  margin 0\n  min-height 60px\n  padding 3px 10px\n\n.preview\n  padding 10px\n  width 150px\n\n.preview input\n  display block\n  margin 8px 0\n  width 144px\n\n.preview .iderror\n  background unquote(\"color-mix(in oklab, var(--color-error) 8%, var(--color-base-300))\")\n  color var(--color-error)\n  font-weight 600\n  margin-bottom 8px\n  padding 3px 5px\n  text-align center\n  width 148px\n\n.preview button\n  width 155px\n\n.preview .detail .title\n  color var(--color-base-content)\n  display inline-block\n  max-width 155px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n\n.gallery li.selected .detail,\n.gallery li:hover .detail\n  background-color var(--color-base-lighter)\n\n.gallery li .detail span\n  color var(--color-base-content)\n  display block\n  margin-top 4px\n  overflow hidden\n  text-overflow ellipsis\n  white-space nowrap\n  width 140px\n\n.gallery li.selected .detail span,\n.gallery li:hover .detail span\n  color var(--color-base-content)\n\n.gallery li .detail span.title\n  color var(--color-property-defined)\n  font-weight 600\n\n.modal button\n  appearance none\n  background-color var(--color-primary)\n  border none\n  border-radius 0\n  box-shadow none\n  color var(--color-primary-content)\n  cursor pointer\n  display inline-block\n  font-size 12px\n  line-height 1.8\n  margin 0 10px 0 0\n  padding 5px 10px\n\n.modal button:focus\n  outline none\n\n.modal button:hover,\n.modal button.hover\n  background-color var(--color-primary-hover)\n\n.modal button:active,\n.modal button.active\n  background-color var(--color-primary-hover)\n\n.modal button:disabled\n  background-color #666\n  color #fff\n  cursor default\n\n.newimage\n  background-color var(--color-base-100)\n  color var(--color-base-content)\n  display flex\n  font-size 13px\n  justify-content space-between\n  margin-top 10px\n  overflow auto\n  padding 10px\n\n.newimage input\n  color var(--color-primary)\n  padding 3px 5px\n\n.texture canvas + input\n  margin-left 5px\n\n.texture svg\n  padding-right 5px\n\n.uploader-normal-button .hidden\n  display none\n\n.assets.search\n  margin-top 10px\n  position relative\n  width 200px\n\n.assets.search input\n  box-sizing border-box\n  padding-right 20px\n  width 100%\n\n.assets.search svg\n  position absolute\n  right 5px\n  top 5px\n\n.new_asset_options\n  margin 10px\n\n.new_asset_options > ul\n  margin-left 10px\n  padding 5px\n\n.new_asset_options > ul > li\n  padding 10px 0\n\n.new_asset_options .imageUrl\n  margin-left 5px\n  width 350px\n\n.texture canvas\n  border 1px solid var(--color-base-100)\n  cursor pointer\n","@import './lib';\n\n#viewportBar\n  align-items center\n  background-color var(--color-base-200)\n  color var(--color-base-content)\n  display flex\n  flex-grow 2\n  font-size 15px\n  height 32px\n  justify-content space-between\n  padding 0 5px\n\n.toolbarButtons\n  align-items center\n  display flex\n  gap 6px\n\n  a.button\n    & svg\n      padding 8px\n\n    &:not(.active) svg:hover\n      background-color var(--color-base-lighter)\n\n  .active svg\n    background-color var(--color-primary)\n    color var(--color-primary-content)\n\n  .active:hover svg\n    color var(--color-primary-content) !important\n\n.local-transform\n  align-items center\n  display flex\n  gap 5px\n  padding 0 10px\n\n.local-transform label\n  color var(--color-base-content)\n\n#cameraSelect\n  cursor pointer\n  width 120px\n\n  .select__dropdown-indicator\n    padding-left 3px\n    padding-right 3px\n\n#cameraToolbar\n  align-items center\n  display flex\n\n  .select__control\n    background none\n\n  .select__single-value\n    color var(--color-base-content)\n\n    &:hover\n      color var(--color-primary)\n\n#viewportHud\n  display none\n\n  @media (min-width: 1025px)\n    display block\n","@import './lib';\n\n.select-widget\n  display inline-block\n  width 157px"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67188,10 +67028,7 @@ const iconMap = {
   'fa-window-restore': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faWindowRestore,
   'fa-play': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlay,
   'fa-stop': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faStop,
-  'fa-play-circle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPlayCircle,
   'fa-eye': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faEye,
-  'fa-eye-slash': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faEyeSlash,
-  'fa-cog': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faCog,
   'fa-images': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faImages,
   'fa-comment': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faComment,
   'fa-info-circle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faInfoCircle,
@@ -67201,21 +67038,7 @@ const iconMap = {
   'fa-pause-circle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPauseCircle,
   'fa-vr-cardboard': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faVrCardboard,
   'fa-mobile-alt': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faMobileAlt,
-  'fa-times-circle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTimesCircle,
-  'fa-map-marker-alt': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faMapMarkerAlt,
-  // Anime.js icons
-  'fa-heart': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faHeart,
-  'fa-sync': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faSync,
-  'fa-expand': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faExpand,
-  'fa-palette': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faPalette,
-  'fa-arrows-alt': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faArrowsAlt,
-  'fa-random': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faRandom,
-  'fa-redo': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faRedo,
-  'fa-adjust': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faAdjust,
-  'fa-exclamation-triangle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faExclamationTriangle,
-  'fa-bolt': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faBolt,
-  'fa-code': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faCode,
-  'fa-question-circle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faQuestionCircle
+  'fa-times-circle': _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faTimesCircle
 };
 
 /**
@@ -67235,10 +67058,9 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
       behaviorParams: {},
       entityBehaviors: [],
       editingBehavior: null,
+      // { id, name, params }
       sceneEntities: [],
-      availableAssets: [],
-      availableTextures: [],
-      showHelp: false
+      availableAssets: []
     };
   }
   componentDidMount() {
@@ -67277,11 +67099,9 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
   updateSceneData = () => {
     const entities = _lib_BehaviorsManager__WEBPACK_IMPORTED_MODULE_5__.BehaviorsManager.getSceneEntities();
     const assets = _lib_BehaviorsManager__WEBPACK_IMPORTED_MODULE_5__.BehaviorsManager.getAvailableAssets();
-    const textures = _lib_BehaviorsManager__WEBPACK_IMPORTED_MODULE_5__.BehaviorsManager.getAllTextures();
     this.setState({
       sceneEntities: entities,
-      availableAssets: assets,
-      availableTextures: textures
+      availableAssets: assets
     });
   };
   updateEntityBehaviors = () => {
@@ -67312,8 +67132,7 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
       isModalOpen: false,
       selectedBehavior: null,
       behaviorParams: {},
-      editingBehavior: null,
-      showHelp: false
+      editingBehavior: null
     });
   };
   selectBehavior = behaviorKey => {
@@ -67326,8 +67145,7 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
     }
     this.setState({
       selectedBehavior: behaviorKey,
-      behaviorParams: defaultParams,
-      showHelp: false
+      behaviorParams: defaultParams
     });
   };
   updateParam = (paramName, value) => {
@@ -67336,11 +67154,6 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
         ...prevState.behaviorParams,
         [paramName]: value
       }
-    }));
-  };
-  toggleHelp = () => {
-    this.setState(prevState => ({
-      showHelp: !prevState.showHelp
     }));
   };
   applyBehavior = () => {
@@ -67404,8 +67217,7 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
       behaviorParams,
       selectedBehavior,
       sceneEntities,
-      availableAssets,
-      availableTextures
+      availableAssets
     } = this.state;
     const value = behaviorParams[param.name] !== undefined ? behaviorParams[param.name] : param.default;
     switch (param.type) {
@@ -67517,38 +67329,6 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
             }
           })]
         }, param.name);
-      case 'texture':
-        // Use all textures from scene (including from textureModal)
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          className: "param-input",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
-            children: param.label
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
-            value: value,
-            onChange: e => this.updateParam(param.name, e.target.value),
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-              value: "",
-              children: "-- Select Image --"
-            }), availableTextures.length > 0 ? availableTextures.map(tex => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("option", {
-              value: tex.value,
-              children: [tex.label, " (", tex.type, ")"]
-            }, tex.value)) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-              value: "",
-              disabled: true,
-              children: "No images found in scene"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-              value: "",
-              children: "-- Or enter URL --"
-            })]
-          }), value === '' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-            type: "text",
-            placeholder: "Or enter image URL",
-            onChange: e => this.updateParam(param.name, e.target.value),
-            style: {
-              marginTop: '5px'
-            }
-          })]
-        }, param.name);
       default:
         return null;
     }
@@ -67558,7 +67338,6 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
     const behaviorsByCategory = _lib_BehaviorsManager__WEBPACK_IMPORTED_MODULE_5__.BehaviorsManager.getBehaviorsByCategory();
     const selectedBehaviorData = this.state.selectedBehavior ? _lib_BehaviorsManager__WEBPACK_IMPORTED_MODULE_5__.BehaviorsManager.BEHAVIORS[this.state.selectedBehavior] : null;
     const isEditing = !!this.state.editingBehavior;
-    const behaviorHelp = this.state.selectedBehavior ? _lib_BehaviorsManager__WEBPACK_IMPORTED_MODULE_5__.BehaviorsManager.getBehaviorHelp(this.state.selectedBehavior) : null;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       className: "behavior-modal-overlay",
       onClick: this.closeModal,
@@ -67598,8 +67377,7 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
                 className: "behavior-option selected",
                 onClick: () => this.setState({
                   selectedBehavior: null,
-                  editingBehavior: null,
-                  showHelp: false
+                  editingBehavior: null
                 }),
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
                   icon: iconMap[selectedBehaviorData.icon] || _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faMagic
@@ -67608,7 +67386,7 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
                 })]
               })
             })]
-          }), selectedBehaviorData && selectedBehaviorData.params.length > 0 && !this.state.showHelp && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          }), selectedBehaviorData && selectedBehaviorData.params.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
             className: "behavior-params",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
               className: "params-title",
@@ -67617,56 +67395,18 @@ class BehaviorsPanel extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compo
               className: "params-form",
               children: selectedBehaviorData.params.map(param => this.renderParamInput(param))
             })]
-          }), this.state.showHelp && behaviorHelp && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "behavior-help",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "help-section",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
-                children: "Description"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-                children: behaviorHelp.description
-              })]
-            }), behaviorHelp.examples && behaviorHelp.examples.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "help-section",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
-                children: "Examples"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
-                children: behaviorHelp.examples.map((example, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("li", {
-                  children: example
-                }, idx))
-              })]
-            }), behaviorHelp.generatedCode && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "help-section",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
-                children: "Generated Code"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("pre", {
-                children: behaviorHelp.generatedCode
-              })]
-            })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "behavior-modal-footer",
-          children: [selectedBehaviorData && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("button", {
-            className: `btn help-btn ${this.state.showHelp ? 'active' : ''}`,
-            onClick: this.toggleHelp,
-            title: "Show help",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_AwesomeIcon__WEBPACK_IMPORTED_MODULE_3__.AwesomeIcon, {
-              icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__.faQuestionCircle
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-              children: this.state.showHelp ? 'Hide Help' : 'Help'
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-            className: "footer-actions",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-              className: "btn",
-              onClick: this.closeModal,
-              children: "Cancel"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
-              className: "btn primary",
-              onClick: this.applyBehavior,
-              disabled: !this.state.selectedBehavior,
-              children: isEditing ? 'Update Behavior' : 'Apply Behavior'
-            })]
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+            className: "btn",
+            onClick: this.closeModal,
+            children: "Cancel"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+            className: "btn primary",
+            onClick: this.applyBehavior,
+            disabled: !this.state.selectedBehavior,
+            children: isEditing ? 'Update Behavior' : 'Apply Behavior'
           })]
         })]
       })
@@ -68370,25 +68110,6 @@ class PropertyRow extends (react__WEBPACK_IMPORTED_MODULE_0___default().Componen
       type = 'boolean';
     }
     let value = type === 'selector' ? props.entity.getDOMAttribute(props.componentname)?.[props.name] : props.data;
-
-    // Ensure value is the correct type for each widget
-    if (type === 'color' && value !== null && value !== undefined) {
-      if (typeof value !== 'string') {
-        // Handle object format like {r: 1, g: 0, b: 0} or THREE.Color
-        if (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number') {
-          value = '#' + ((1 << 24) + (Math.round(value.r * 255) << 16) + (Math.round(value.g * 255) << 8) + Math.round(value.b * 255)).toString(16).slice(1);
-        } else if (value.getHexString) {
-          // THREE.Color object
-          value = '#' + value.getHexString();
-        }
-      }
-    }
-    if (type === 'boolean' && value !== null && value !== undefined) {
-      // Handle number format (0 or 1) for booleans
-      if (typeof value === 'number') {
-        value = value !== 0;
-      }
-    }
     if (type === 'string' && value && typeof value !== 'string') {
       // Allow editing a custom type like event-set component schema
       value = props.schema.stringify(value);
@@ -69546,22 +69267,7 @@ class MixinsManager extends (react__WEBPACK_IMPORTED_MODULE_0___default().Compon
   }
   componentDidMount() {
     this.loadMixins();
-    // Close panel on Escape
-    document.addEventListener('keydown', this.handleKeyDown);
   }
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
-  handleKeyDown = e => {
-    // Escape: close mixins panel
-    if (e.keyCode === 27) {
-      if (this.state.isOpen) {
-        this.setState({
-          isOpen: false
-        });
-      }
-    }
-  };
   loadMixins = () => {
     const mixins = Array.prototype.slice.call(document.querySelectorAll('a-mixin')).map(mixin => ({
       id: mixin.id,
@@ -70987,23 +70693,10 @@ class Toolbar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
   componentDidMount() {
     // Close menu when clicking outside
     document.addEventListener('click', this.handleClickOutside);
-    // Close primitive menu on Escape
-    document.addEventListener('keydown', this.handleKeyDown);
   }
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
-    document.removeEventListener('keydown', this.handleKeyDown);
   }
-  handleKeyDown = e => {
-    // Escape: close primitive menu
-    if (e.keyCode === 27) {
-      if (this.state.showPrimitiveMenu) {
-        this.setState({
-          showPrimitiveMenu: false
-        });
-      }
-    }
-  };
   handleClickOutside = () => {
     if (this.state.showPrimitiveMenu) {
       this.setState({
@@ -72438,197 +72131,12 @@ const EVENT_TYPES = [{
   value: 'loaded',
   label: 'On Loaded'
 }, {
-  value: 'animationstart',
-  label: 'On Animation Start'
-}, {
   value: 'animationcomplete',
   label: 'On Animation Complete'
 }, {
-  value: 'animationcancel',
-  label: 'On Animation Cancel'
-}, {
-  value: 'animationiteration',
-  label: 'On Animation Iteration'
+  value: 'click',
+  label: 'On Click'
 }];
-
-// Custom event type for user-defined events
-const CUSTOM_EVENT_TYPES = [{
-  value: 'custom-click',
-  label: 'Custom Click Event'
-}, {
-  value: 'custom-hover',
-  label: 'Custom Hover Event'
-}, {
-  value: 'custom-pulse',
-  label: 'Custom Pulse Event'
-}, {
-  value: 'custom-rotate',
-  label: 'Custom Rotate Event'
-}, {
-  value: 'custom-scale',
-  label: 'Custom Scale Event'
-}, {
-  value: 'custom-move',
-  label: 'Custom Move Event'
-}];
-
-// Help text for behaviors
-const BEHAVIOR_HELP = {
-  'goto-url': {
-    description: 'Navigates the browser to a specified URL.',
-    examples: ['Go to Google: URL = https://www.google.com, Target = _blank', 'Go to internal page: URL = /about.html, Target = _self'],
-    generatedCode: `window.open('https://example.com', '_blank');`
-  },
-  'go-back': {
-    description: 'Navigates to the previous page in the browser history.',
-    examples: ['No parameters needed - just add the behavior'],
-    generatedCode: `if (history.length > 0) { history.back(); }`
-  },
-  'go-forward': {
-    description: 'Navigates to the next page in the browser history.',
-    examples: ['No parameters needed - just add the behavior'],
-    generatedCode: `if (history.length > 0) { history.forward(); }`
-  },
-  'goto-scene': {
-    description: 'Moves the camera to a specific scene entity position.',
-    examples: ['Select a camera entity as the target to move the view to that position'],
-    generatedCode: `// Moves camera to target entity position`
-  },
-  'open-window': {
-    description: 'Opens a new browser window with specified settings.',
-    examples: ['Popup window: URL = https://google.com, Width = 600, Height = 400', 'With toolbar: URL = https://example.com, Toolbar = checked'],
-    generatedCode: `window.open('url', 'name', 'width=400,height=300,toolbar=yes');`
-  },
-  'play-media': {
-    description: 'Plays audio or video on the target element.',
-    examples: ['Play sound: Target = this element, Media Type = sound', 'Play video: Target = #videoEntity, Media Type = video'],
-    generatedCode: `el.components['sound'].play();`
-  },
-  'stop-media': {
-    description: 'Stops audio or video on the target element.',
-    examples: ['Stop sound on click'],
-    generatedCode: `el.components['sound'].stop();`
-  },
-  'toggle-media': {
-    description: 'Toggles between play and pause for audio/video.',
-    examples: ['Click to play, click again to pause'],
-    generatedCode: `// Toggles between play and stop`
-  },
-  'show-element': {
-    description: 'Makes the target element visible.',
-    examples: ['Show a hidden panel on click'],
-    generatedCode: `el.setAttribute('visible', true);`
-  },
-  'hide-element': {
-    description: 'Hides the target element.',
-    examples: ['Hide a menu on click'],
-    generatedCode: `el.setAttribute('visible', false);`
-  },
-  'toggle-visibility': {
-    description: 'Toggles between visible and hidden states.',
-    examples: ['Toggle self: Target = This Element', 'Show another: Mode = show, Target = #otherElement', 'Hide another: Mode = hide, Target = #otherElement'],
-    generatedCode: `var visible = el.getAttribute('visible'); el.setAttribute('visible', !visible);`
-  },
-  'set-property': {
-    description: 'Sets any property/attribute on an element.',
-    examples: ['Change color: Property = material/color, Value = #FF0000', 'Change scale: Property = scale, Value = 2 2 2', 'Change position: Property = position, Value = 0 1 -3', 'Change text: Property = text/value, Value = Hello World'],
-    generatedCode: `el.setAttribute('property', 'value');`
-  },
-  'swap-image': {
-    description: 'Changes the texture/image on an element. Can also restore the original image on mouseout for rollover effects.',
-    examples: ['Simple swap: Event = click, New Image = #texture2', 'Rollover: Event = mouseenter, New Image = #hoverTexture, Restore Image = #originalTexture, Restore Event = mouseleave'],
-    generatedCode: `// On event: el.setAttribute('material', 'src', '#newImage');
-// On restore: el.setAttribute('material', 'src', originalSrc);`
-  },
-  'popup-message': {
-    description: 'Shows a browser alert dialog with your message.',
-    examples: ['Show welcome message: Message = Welcome to our site!'],
-    generatedCode: `alert('Hello World!');`
-  },
-  'set-status-bar': {
-    description: 'Sets the browser status bar text.',
-    examples: ['Show loading status: Status Text = Loading...'],
-    generatedCode: `window.status = 'Loading...';`
-  },
-  'set-text': {
-    description: 'Changes the text content of an element.',
-    examples: ['Change 3D text: Selector = #myText, Text = New Value', 'Update score: Selector = #scoreDisplay, Text = Score: 100'],
-    generatedCode: `document.querySelector('#selector').setAttribute('text', 'value', 'New Text');`
-  },
-  'start-animation': {
-    description: 'Starts/triggers an animation on the element.',
-    examples: ['Trigger default animation: Animation Name = animation', 'Trigger named: Animation Name = animation__spin'],
-    generatedCode: `el.emit('animation');`
-  },
-  'stop-animation': {
-    description: 'Removes/stops animation from the element.',
-    examples: ['Stop any running animation'],
-    generatedCode: `el.removeAttribute('animation');`
-  },
-  'toggle-animation': {
-    description: 'Toggles animation between enabled and disabled.',
-    examples: ['Click to start/stop animation'],
-    generatedCode: `// Toggles animation enabled state`
-  },
-  'enter-vr': {
-    description: 'Enters VR mode for virtual reality viewing.',
-    examples: ['Enter VR on click'],
-    generatedCode: `this.el.sceneEl.enterVR();`
-  },
-  'enter-ar': {
-    description: 'Enters AR mode for augmented reality viewing.',
-    examples: ['Enter AR on click'],
-    generatedCode: `this.el.sceneEl.enterAR();`
-  },
-  'exit-vr': {
-    description: 'Exits VR/AR mode back to standard view.',
-    examples: ['Exit VR on click'],
-    generatedCode: `this.el.sceneEl.exitVR();`
-  },
-  'call-javascript': {
-    description: 'Calls a custom JavaScript function. The function must be defined globally.',
-    examples: ['Alert: Function Name = alert, Parameters = {"message":"Hello!"}, Pass element = unchecked', 'Prompt: Function Name = prompt, Parameters = {"question":"Your name?","default":"John"}', 'Custom with element: Function Name = myFunction, Parameters = {"color":"#FF0000"}, Pass element = checked'],
-    generatedCode: `// Example global functions:
-function myFunction(el, options) {
-  el.setAttribute('color', options.color);
-}
-
-// Or use built-in:
-alert('Hello!');
-prompt('What is your name?');
-confirm('Are you sure?');`
-  },
-  'anime-pulse': {
-    description: 'Creates a pulsing scale animation using anime.js library.',
-    examples: ['Gentle pulse: Scale = 1.1, Duration = 500, Loop = 0 (forever)', 'Bouncy pulse: Scale = 1.2, Duration = 300, Easing = easeOutElastic'],
-    generatedCode: `anime({ targets: el.object3D, scale: 1.2, duration: 500, easing: 'easeInOutSine', direction: 'alternate', loop: true });`
-  },
-  'anime-rotate': {
-    description: 'Rotates the element around specified axes.',
-    examples: ['Spin around Y: Axis = y, Angle = 360, Duration = 2000', 'Spin 3D: Axis = xyz, Angle = 360, Loop = 1'],
-    generatedCode: `anime({ targets: el.object3D, rotationY: 360, duration: 2000, easing: 'linear', loop: true });`
-  },
-  'anime-scale': {
-    description: 'Animates the scale of the element.',
-    examples: ['Grow: Scale X/Y/Z = 1.5, Direction = alternate', 'Squash and stretch: Scale Y = 0.5, Scale X = 1.5'],
-    generatedCode: `anime({ targets: el.object3D, scaleX: 1.5, scaleY: 1.5, scaleZ: 1.5, duration: 500, easing: 'easeInOutBack' });`
-  },
-  'anime-color': {
-    description: 'Animates the color of the element material.',
-    examples: ['Change to red: Color = #FF0000'],
-    generatedCode: `anime({ targets: el.getAttribute('material'), color: '#FF0000', duration: 500 });`
-  },
-  'anime-move': {
-    description: 'Moves the element to a new position.',
-    examples: ['Move forward: Position Z = -5, Duration = 1000', 'Move up: Position Y = 2'],
-    generatedCode: `anime({ targets: el.object3D.position, x: 0, y: 1, z: -3, duration: 1000, easing: 'easeInOutQuad' });`
-  },
-  'trigger-event': {
-    description: 'Triggers a custom event that can start other behaviors (for chaining animations).',
-    examples: ['Trigger pulse: Custom Event = custom-pulse, Delay = 0', 'Chain after delay: Custom Event = custom-rotate, Delay = 500'],
-    generatedCode: `el.emit('custom-pulse'); // Other behaviors can listen for this event`
-  }
-};
 class BehaviorsManager {
   constructor() {
     this.behaviors = new Map();
@@ -72641,20 +72149,6 @@ class BehaviorsManager {
    */
   static getEventTypes() {
     return EVENT_TYPES;
-  }
-
-  /**
-   * Get custom event types
-   */
-  static getCustomEventTypes() {
-    return CUSTOM_EVENT_TYPES;
-  }
-
-  /**
-   * Get all event types combined
-   */
-  static getAllEventTypes() {
-    return [...EVENT_TYPES, ...CUSTOM_EVENT_TYPES];
   }
 
   /**
@@ -72676,7 +72170,7 @@ class BehaviorsManager {
   }
 
   /**
-   * Get available images/assets (from scene assets)
+   * Get available images/assets
    */
   static getAvailableAssets() {
     const scene = AFRAME.scenes[0];
@@ -72694,50 +72188,6 @@ class BehaviorsManager {
       });
     }
     return assets;
-  }
-
-  /**
-   * Get all textures/images from the scene (including from textureModal)
-   * This includes assets and any images referenced in entities
-   */
-  static getAllTextures() {
-    const scene = AFRAME.scenes[0];
-    if (!scene) return [];
-    const textures = [];
-    const seen = new Set();
-
-    // Get from asset manager
-    const assetManager = scene.assetManager;
-    if (assetManager && assetManager.el) {
-      assetManager.el.querySelectorAll('img').forEach(img => {
-        if (img.id && !seen.has(img.id)) {
-          seen.add(img.id);
-          textures.push({
-            value: `#${img.id}`,
-            label: img.id,
-            type: 'asset'
-          });
-        }
-      });
-    }
-
-    // Get from entities with material src
-    scene.querySelectorAll('[material]').forEach(el => {
-      const material = el.getAttribute('material');
-      if (material && material.src) {
-        const src = material.src;
-        const id = typeof src === 'string' ? src.split('#')[1]?.split('?')[0] : null;
-        if (id && !seen.has(id)) {
-          seen.add(id);
-          textures.push({
-            value: `#${id}`,
-            label: id,
-            type: 'entity'
-          });
-        }
-      }
-    });
-    return textures;
   }
 
   /**
@@ -72798,10 +72248,10 @@ class BehaviorsManager {
       generate: params => `window.open('${params.url}', '${params.target}');`
     },
     'go-back': {
-      name: 'Go To Previous Scene',
+      name: 'Go Back',
       icon: 'fa-arrow-left',
       category: 'Navigation',
-      description: 'Go to previous scene in the scene list',
+      description: 'Go to previous page',
       params: [{
         name: 'event',
         type: 'select',
@@ -72809,13 +72259,13 @@ class BehaviorsManager {
         options: EVENT_TYPES,
         default: 'click'
       }],
-      generate: () => `var scenes = document.querySelectorAll('a-scene'); var current = this.el.sceneEl; var currentIndex = Array.from(scenes).indexOf(current); var prevIndex = currentIndex > 0 ? currentIndex - 1 : scenes.length - 1; scenes.forEach(function(s, i) { s.setAttribute('visible', i === prevIndex); });`
+      generate: () => 'if (history.length > 0) { history.back(); }'
     },
     'go-forward': {
-      name: 'Go To Next Scene',
+      name: 'Go Forward',
       icon: 'fa-arrow-right',
       category: 'Navigation',
-      description: 'Go to next scene in the scene list',
+      description: 'Go to next page',
       params: [{
         name: 'event',
         type: 'select',
@@ -72823,29 +72273,7 @@ class BehaviorsManager {
         options: EVENT_TYPES,
         default: 'click'
       }],
-      generate: () => `var scenes = document.querySelectorAll('a-scene'); var current = this.el.sceneEl; var currentIndex = Array.from(scenes).indexOf(current); var nextIndex = currentIndex < scenes.length - 1 ? currentIndex + 1 : 0; scenes.forEach(function(s, i) { s.setAttribute('visible', i === nextIndex); });`
-    },
-    'goto-scene': {
-      name: 'Go To Scene',
-      icon: 'fa-map-marker-alt',
-      category: 'Navigation',
-      description: 'Navigate to a scene entity',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Scene',
-        default: ''
-      }],
-      generate: params => {
-        const target = params.target || '';
-        return `var targetEl = document.querySelector('${target}'); if (targetEl && targetEl.components.camera) { var cam = targetEl; var rig = cam.object3D.parent; if (rig) { rig.object3D.position.copy(cam.object3D.getWorldPosition(new THREE.Vector3())); } }`;
-      }
+      generate: () => 'if (history.length > 0) { history.forward(); }'
     },
     'open-window': {
       name: 'Open Window',
@@ -72892,136 +72320,33 @@ class BehaviorsManager {
       generate: params => `window.open('${params.url}', '${params.name}', 'width=${params.width},height=${params.height},toolbar=${params.toolbar ? 'yes' : 'no'},scrollbars=${params.scrollbars ? 'yes' : 'no'}');`
     },
     // Interaction Behaviors
-    'play-media': {
-      name: 'Play Media',
+    'play-sound': {
+      name: 'Play Sound',
       icon: 'fa-play',
       category: 'Interaction',
-      description: 'Play audio or video',
+      description: 'Play audio on click',
       params: [{
         name: 'event',
         type: 'select',
         label: 'Event',
         options: EVENT_TYPES,
         default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'mediaType',
-        type: 'select',
-        label: 'Media Type',
-        options: ['sound', 'video'],
-        default: 'sound'
       }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const mediaType = params.mediaType || 'sound';
-        return `var el = ${target}; el.components['${mediaType}'] && el.components['${mediaType}'].play();`;
-      }
+      generate: () => `this.el.components.sound && this.el.components.sound.playSound();`
     },
-    'stop-media': {
-      name: 'Stop Media',
+    'stop-sound': {
+      name: 'Stop Sound',
       icon: 'fa-stop',
       category: 'Interaction',
-      description: 'Stop audio or video',
+      description: 'Stop audio',
       params: [{
         name: 'event',
         type: 'select',
         label: 'Event',
         options: EVENT_TYPES,
         default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'mediaType',
-        type: 'select',
-        label: 'Media Type',
-        options: ['sound', 'video'],
-        default: 'sound'
       }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const mediaType = params.mediaType || 'sound';
-        return `var el = ${target}; el.components['${mediaType}'] && el.components['${mediaType}'].stop();`;
-      }
-    },
-    'toggle-media': {
-      name: 'Toggle Media',
-      icon: 'fa-play-circle',
-      category: 'Interaction',
-      description: 'Toggle audio or video on/off',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'mediaType',
-        type: 'select',
-        label: 'Media Type',
-        options: ['sound', 'video'],
-        default: 'sound'
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const mediaType = params.mediaType || 'sound';
-        return `var el = ${target}; var media = el.components['${mediaType}']; if (media) { if (media.isPlaying) { media.stop(); } else { media.play(); } }`;
-      }
-    },
-    'show-element': {
-      name: 'Show Element',
-      icon: 'fa-eye',
-      category: 'Interaction',
-      description: 'Show element',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        return `var el = ${target}; el.setAttribute('visible', true);`;
-      }
-    },
-    'hide-element': {
-      name: 'Hide Element',
-      icon: 'fa-eye-slash',
-      category: 'Interaction',
-      description: 'Hide element',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        return `var el = ${target}; el.setAttribute('visible', false);`;
-      }
+      generate: () => `this.el.components.sound && this.el.components.sound.stopSound();`
     },
     'toggle-visibility': {
       name: 'Toggle Visibility',
@@ -73058,45 +72383,11 @@ class BehaviorsManager {
         }
       }
     },
-    'set-property': {
-      name: 'Set Property',
-      icon: 'fa-cog',
-      category: 'Interaction',
-      description: 'Set any property on an element',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'property',
-        type: 'text',
-        label: 'Property',
-        default: ''
-      }, {
-        name: 'value',
-        type: 'text',
-        label: 'Value',
-        default: ''
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const property = params.property || '';
-        const value = params.value || '';
-        return `var el = ${target}; el.setAttribute('${property}', '${value}');`;
-      }
-    },
     'swap-image': {
       name: 'Swap Image',
       icon: 'fa-images',
       category: 'Interaction',
-      description: 'Replace texture (with optional restore for rollover effect)',
+      description: 'Replace texture',
       params: [{
         name: 'event',
         type: 'select',
@@ -73110,32 +72401,13 @@ class BehaviorsManager {
         default: ''
       }, {
         name: 'newSrc',
-        type: 'texture',
+        type: 'asset',
         label: 'New Image',
         default: ''
-      }, {
-        name: 'restoreSrc',
-        type: 'texture',
-        label: 'Restore Image (on mouseout)',
-        default: ''
-      }, {
-        name: 'restoreEvent',
-        type: 'select',
-        label: 'Restore Event',
-        options: EVENT_TYPES,
-        default: 'mouseleave'
       }],
       generate: params => {
         const target = params.target || 'this.el';
-        const newSrc = params.newSrc || '';
-        const restoreSrc = params.restoreSrc || '';
-        const restoreEvent = params.restoreEvent || 'mouseleave';
-        if (restoreSrc) {
-          // Dreamweaver-style swap with restore (rollover)
-          return `var el = ${target}; var originalSrc = el.getAttribute('material') ? el.getAttribute('material').src : ''; el.addEventListener('${params.event}', function() { el.setAttribute('material', 'src', '${newSrc}'); }); el.addEventListener('${restoreEvent}', function() { el.setAttribute('material', 'src', originalSrc || '${restoreSrc}'); });`;
-        } else {
-          return `var el = ${target}; el.setAttribute('material', 'src', '${newSrc}');`;
-        }
+        return `var el = ${target}; el.setAttribute('material', 'src', '${params.newSrc}');`;
       }
     },
     // Messages Behaviors
@@ -73316,562 +72588,6 @@ class BehaviorsManager {
         default: 'click'
       }],
       generate: () => `this.el.sceneEl.exitVR();`
-    },
-    // Anime.js Animation Behaviors
-    'anime-pulse': {
-      name: 'Pulse',
-      icon: 'fa-heart',
-      category: 'Anime.js',
-      description: 'Pulse animation - scale up and down',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'scale',
-        type: 'text',
-        label: 'Scale (e.g., 1.2)',
-        default: '1.2'
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 500
-      }, {
-        name: 'easing',
-        type: 'select',
-        label: 'Easing',
-        options: ['easeInOutSine', 'easeInOutQuad', 'easeOutElastic', 'linear'],
-        default: 'easeInOutSine'
-      }, {
-        name: 'direction',
-        type: 'select',
-        label: 'Direction',
-        options: ['normal', 'alternate'],
-        default: 'alternate'
-      }, {
-        name: 'loop',
-        type: 'number',
-        label: 'Loop Count (0=forever)',
-        default: 0
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const scale = params.scale || '1.2';
-        const duration = params.duration || 500;
-        const easing = params.easing || 'easeInOutSine';
-        const direction = params.direction || 'alternate';
-        const loop = params.loop || 0;
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D, scale: ${scale}, duration: ${duration}, easing: '${easing}', direction: '${direction}', loop: ${loop === 0 ? 'true' : loop} }); }`;
-      }
-    },
-    'anime-rotate': {
-      name: 'Rotate',
-      icon: 'fa-sync',
-      category: 'Anime.js',
-      description: 'Rotate animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'axis',
-        type: 'select',
-        label: 'Axis',
-        options: ['x', 'y', 'z', 'xy', 'yz', 'xz', 'xyz'],
-        default: 'y'
-      }, {
-        name: 'angle',
-        type: 'number',
-        label: 'Angle (degrees)',
-        default: 360
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 2000
-      }, {
-        name: 'easing',
-        type: 'select',
-        label: 'Easing',
-        options: ['linear', 'easeInOutSine', 'easeInOutCubic'],
-        default: 'linear'
-      }, {
-        name: 'loop',
-        type: 'number',
-        label: 'Loop Count (0=forever)',
-        default: 0
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const axis = params.axis || 'y';
-        const angle = params.angle || 360;
-        const duration = params.duration || 2000;
-        const easing = params.easing || 'linear';
-        const loop = params.loop || 0;
-        const props = {};
-        if (axis.includes('x')) props.rotationX = angle;
-        if (axis.includes('y')) props.rotationY = angle;
-        if (axis.includes('z')) props.rotationZ = angle;
-        const propsStr = Object.keys(props).join(': ').replace(/,/g, ', ');
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D, ${propsStr}, duration: ${duration}, easing: '${easing}', loop: ${loop === 0 ? 'true' : loop} }); }`;
-      }
-    },
-    'anime-scale': {
-      name: 'Scale',
-      icon: 'fa-expand',
-      category: 'Anime.js',
-      description: 'Scale animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'scaleX',
-        type: 'number',
-        label: 'Scale X',
-        default: 1.5
-      }, {
-        name: 'scaleY',
-        type: 'number',
-        label: 'Scale Y',
-        default: 1.5
-      }, {
-        name: 'scaleZ',
-        type: 'number',
-        label: 'Scale Z',
-        default: 1.5
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 500
-      }, {
-        name: 'easing',
-        type: 'select',
-        label: 'Easing',
-        options: ['easeInOutBack', 'easeInOutQuad', 'easeOutElastic', 'spring'],
-        default: 'easeInOutBack'
-      }, {
-        name: 'direction',
-        type: 'select',
-        label: 'Direction',
-        options: ['normal', 'alternate'],
-        default: 'alternate'
-      }, {
-        name: 'loop',
-        type: 'number',
-        label: 'Loop Count (0=forever)',
-        default: 0
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const scaleX = params.scaleX || 1.5;
-        const scaleY = params.scaleY || 1.5;
-        const scaleZ = params.scaleZ || 1.5;
-        const duration = params.duration || 500;
-        const easing = params.easing || 'easeInOutBack';
-        const direction = params.direction || 'alternate';
-        const loop = params.loop || 0;
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D, scaleX: ${scaleX}, scaleY: ${scaleY}, scaleZ: ${scaleZ}, duration: ${duration}, easing: '${easing}', direction: '${direction}', loop: ${loop === 0 ? 'true' : loop} }); }`;
-      }
-    },
-    'anime-color': {
-      name: 'Color Change',
-      icon: 'fa-palette',
-      category: 'Anime.js',
-      description: 'Animate color change',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'color',
-        type: 'text',
-        label: 'Target Color (#hex)',
-        default: '#FF0000'
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 500
-      }, {
-        name: 'easing',
-        type: 'select',
-        label: 'Easing',
-        options: ['easeInOutSine', 'easeInOutQuad', 'linear'],
-        default: 'easeInOutSine'
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const color = params.color || '#FF0000';
-        const duration = params.duration || 500;
-        const easing = params.easing || 'easeInOutSine';
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.getAttribute('material') || {}, color: '${color}', duration: ${duration}, easing: '${easing}', update: function(anim) { el.setAttribute('material', 'color', anim.animations[0].value); } }); }`;
-      }
-    },
-    'anime-move': {
-      name: 'Move To',
-      icon: 'fa-arrows-alt',
-      category: 'Anime.js',
-      description: 'Move to position',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'positionX',
-        type: 'number',
-        label: 'Position X',
-        default: 0
-      }, {
-        name: 'positionY',
-        type: 'number',
-        label: 'Position Y',
-        default: 1
-      }, {
-        name: 'positionZ',
-        type: 'number',
-        label: 'Position Z',
-        default: -3
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 1000
-      }, {
-        name: 'easing',
-        type: 'select',
-        label: 'Easing',
-        options: ['easeInOutQuad', 'easeOutCubic', 'spring', 'easeOutElastic'],
-        default: 'easeInOutQuad'
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const x = params.positionX || 0;
-        const y = params.positionY || 1;
-        const z = params.positionZ || -3;
-        const duration = params.duration || 1000;
-        const easing = params.easing || 'easeInOutQuad';
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D.position, x: ${x}, y: ${y}, z: ${z}, duration: ${duration}, easing: '${easing}' }); }`;
-      }
-    },
-    'anime-wiggle': {
-      name: 'Wiggle',
-      icon: 'fa-random',
-      category: 'Anime.js',
-      description: 'Wiggle animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'amount',
-        type: 'number',
-        label: 'Wiggle Amount',
-        default: 10
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 300
-      }, {
-        name: 'loop',
-        type: 'number',
-        label: 'Loop Count (0=forever)',
-        default: 3
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const amount = params.amount || 10;
-        const duration = params.duration || 300;
-        const loop = params.loop || 3;
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D.rotation, x: anime(${amount} * (Math.PI / 180)), duration: ${duration}, direction: 'alternate', loop: ${loop}, easing: 'easeInOutSine' }); }`;
-      }
-    },
-    'anime-spin': {
-      name: 'Spin',
-      icon: 'fa-redo',
-      category: 'Anime.js',
-      description: 'Continuous spin animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'speed',
-        type: 'select',
-        label: 'Speed',
-        options: ['slow', 'normal', 'fast'],
-        default: 'normal'
-      }, {
-        name: 'direction',
-        type: 'select',
-        label: 'Direction',
-        options: ['clockwise', 'counterclockwise'],
-        default: 'clockwise'
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const speedMap = {
-          slow: 8000,
-          normal: 3000,
-          fast: 1000
-        };
-        const duration = speedMap[params.speed] || 3000;
-        const direction = params.direction === 'counterclockwise' ? -1 : 1;
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D.rotation, y: ${direction} * Math.PI * 2, duration: ${duration}, easing: 'linear', loop: true }); }`;
-      }
-    },
-    'anime-bounce': {
-      name: 'Bounce',
-      icon: 'fa-bounce',
-      category: 'Anime.js',
-      description: 'Bounce animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'height',
-        type: 'number',
-        label: 'Bounce Height',
-        default: 0.5
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 500
-      }, {
-        name: 'loop',
-        type: 'number',
-        label: 'Loop Count (0=forever)',
-        default: 3
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const height = params.height || 0.5;
-        const duration = params.duration || 500;
-        const loop = params.loop || 3;
-        return `var el = ${target}; if (typeof anime !== 'undefined') { var originalY = el.object3D.position.y; anime({ targets: el.object3D.position, y: originalY + ${height}, duration: ${duration}, direction: 'alternate', loop: ${loop}, easing: 'easeOutQuad' }); }`;
-      }
-    },
-    'anime-fade': {
-      name: 'Fade',
-      icon: 'fa-adjust',
-      category: 'Anime.js',
-      description: 'Fade in/out animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'mode',
-        type: 'select',
-        label: 'Mode',
-        options: ['fadeIn', 'fadeOut'],
-        default: 'fadeIn'
-      }, {
-        name: 'duration',
-        type: 'number',
-        label: 'Duration (ms)',
-        default: 500
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const mode = params.mode || 'fadeIn';
-        const duration = params.duration || 500;
-        if (mode === 'fadeIn') {
-          return `var el = ${target}; if (typeof anime !== 'undefined') { el.setAttribute('visible', true); anime({ targets: el.object3D.material, opacity: 1, duration: ${duration}, easing: 'linear' }); }`;
-        } else {
-          return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D.material, opacity: 0, duration: ${duration}, easing: 'linear', complete: function() { el.setAttribute('visible', false); } }); }`;
-        }
-      }
-    },
-    'anime-shake': {
-      name: 'Shake',
-      icon: 'fa-exclamation-triangle',
-      category: 'Anime.js',
-      description: 'Shake animation',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'intensity',
-        type: 'select',
-        label: 'Intensity',
-        options: ['light', 'normal', 'strong'],
-        default: 'normal'
-      }, {
-        name: 'loop',
-        type: 'number',
-        label: 'Loop Count',
-        default: 2
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const intensityMap = {
-          light: 5,
-          normal: 10,
-          strong: 20
-        };
-        const intensity = intensityMap[params.intensity] || 10;
-        const loop = params.loop || 2;
-        return `var el = ${target}; if (typeof anime !== 'undefined') { anime({ targets: el.object3D.position, x: [${intensity}, -${intensity}], duration: 50, loop: ${loop * 2}, direction: 'alternate', easing: 'linear' }); }`;
-      }
-    },
-    // Trigger Custom Event (for animation chaining)
-    'trigger-event': {
-      name: 'Trigger Custom Event',
-      icon: 'fa-bolt',
-      category: 'Anime.js',
-      description: 'Trigger a custom event for animation chaining',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Trigger Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'customEvent',
-        type: 'select',
-        label: 'Custom Event',
-        options: CUSTOM_EVENT_TYPES,
-        default: 'custom-click'
-      }, {
-        name: 'delay',
-        type: 'number',
-        label: 'Delay (ms)',
-        default: 0
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const customEvent = params.customEvent || 'custom-click';
-        const delay = params.delay || 0;
-        return `var el = ${target}; setTimeout(function() { el.emit('${customEvent}'); }, ${delay});`;
-      }
-    },
-    // Call JavaScript Function
-    'call-javascript': {
-      name: 'Call JavaScript',
-      icon: 'fa-code',
-      category: 'Advanced',
-      description: 'Execute custom JavaScript function',
-      params: [{
-        name: 'event',
-        type: 'select',
-        label: 'Event',
-        options: EVENT_TYPES,
-        default: 'click'
-      }, {
-        name: 'target',
-        type: 'entity',
-        label: 'Target Element',
-        default: ''
-      }, {
-        name: 'functionName',
-        type: 'text',
-        label: 'Function Name',
-        default: ''
-      }, {
-        name: 'parameters',
-        type: 'textarea',
-        label: 'Parameters (JSON)',
-        default: '{}'
-      }, {
-        name: 'useElement',
-        type: 'checkbox',
-        label: 'Pass element as parameter',
-        default: true
-      }],
-      generate: params => {
-        const target = params.target || 'this.el';
-        const funcName = params.functionName || '';
-        const params_ = params.parameters || '{}';
-        const useElement = params.useElement;
-        if (!funcName) {
-          return `// No function name specified`;
-        }
-
-        // Try to call the function with optional element and custom parameters
-        return `var el = ${target}; var func = window['${funcName}']; if (typeof func === 'function') { func(el, ${params_}); } else { console.warn('Function ${funcName} not found'); }`;
-      }
     }
   };
 
@@ -74069,19 +72785,6 @@ class BehaviorsManager {
   static getBehaviorParams(behaviorName) {
     const behavior = BehaviorsManager.BEHAVIORS[behaviorName];
     return behavior ? behavior.params : [];
-  }
-
-  /**
-   * Get help information for a behavior
-   * @param {string} behaviorName - The behavior key
-   * @returns {Object} Help object with description, examples, and generated code
-   */
-  static getBehaviorHelp(behaviorName) {
-    return BEHAVIOR_HELP[behaviorName] || {
-      description: 'No help available for this behavior.',
-      examples: [],
-      generatedCode: ''
-    };
   }
 
   /**

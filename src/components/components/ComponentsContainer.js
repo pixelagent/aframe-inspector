@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AddComponent from './AddComponent';
 import Component from './Component';
 import CommonComponents from './CommonComponents';
+import BehaviorsPanel from './BehaviorsPanel';
 import DEFAULT_COMPONENTS from './DefaultComponents';
 import Events from '../../lib/Events';
 
@@ -52,6 +53,7 @@ export default class ComponentsContainer extends React.Component {
         <CommonComponents entity={entity} />
         <AddComponent entity={entity} />
         {renderedComponents}
+        <BehaviorsPanel entity={entity} />
       </div>
     );
   }

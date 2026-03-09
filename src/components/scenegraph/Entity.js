@@ -7,11 +7,14 @@ import {
   faClone,
   faEye,
   faEyeSlash,
-  faTrashAlt
+  faTrashAlt,
+  faArrowUp,
+  faArrowDown,
+  faCodeBranch
 } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import clsx from 'clsx';
-import { removeEntity, cloneEntity } from '../../lib/entity';
+import { removeEntity, cloneEntity, moveEntityUp, moveEntityDown } from '../../lib/entity';
 import EntityRepresentation from '../EntityRepresentation';
 import Events from '../../lib/Events';
 
@@ -27,6 +30,10 @@ export default class Entity extends React.Component {
     toggleExpandedCollapsed: PropTypes.func
   };
 
+  state = {
+    showReparentMenu: false
+  };
+
   onClick = () => this.props.selectEntity(this.props.entity);
 
   onDoubleClick = () => Events.emit('objectfocus', this.props.entity.object3D);
@@ -37,36 +44,84 @@ export default class Entity extends React.Component {
     entity.setAttribute('visible', !visible);
   };
 
+  handleMoveUp = (e) => {
+    e.stopPropagation();
+    moveEntityUp(this.props.entity);
+  };
+
+  handleMoveDown = (e) => {
+    e.stopPropagation();
+    moveEntityDown(this.props.entity);
+  };
+
+  handleReparent = (e) => {
+    e.stopPropagation();
+    // This will emit an event to show a modal/dropdown to select new parent
+    Events.emit('entityreparent', this.props.entity);
+  };
+
   render() {
     const isFiltering = this.props.isFiltering;
     const isExpanded = this.props.isExpanded;
     const entity = this.props.entity;
     const tagName = entity.tagName.toLowerCase();
+    const isScene = tagName === 'a-scene';
 
     // Clone and remove buttons if not a-scene.
-    const cloneButton =
-      tagName === 'a-scene' ? null : (
-        <a
-          onClick={() => cloneEntity(entity)}
-          title="Clone entity"
-          className="button"
-        >
-          <AwesomeIcon icon={faClone} />
-        </a>
-      );
-    const removeButton =
-      tagName === 'a-scene' ? null : (
-        <a
-          onClick={(event) => {
-            event.stopPropagation();
-            removeEntity(entity);
-          }}
-          title="Remove entity"
-          className="button"
-        >
-          <AwesomeIcon icon={faTrashAlt} />
-        </a>
-      );
+    const cloneButton = isScene ? null : (
+      <a
+        onClick={() => cloneEntity(entity)}
+        title="Clone entity"
+        className="button"
+      >
+        <AwesomeIcon icon={faClone} />
+      </a>
+    );
+
+    const removeButton = isScene ? null : (
+      <a
+        onClick={(event) => {
+          event.stopPropagation();
+          removeEntity(entity);
+        }}
+        title="Remove entity"
+        className="button"
+      >
+        <AwesomeIcon icon={faTrashAlt} />
+      </a>
+    );
+
+    // Move up/down buttons
+    const moveUpButton = isScene ? null : (
+      <a
+        onClick={this.handleMoveUp}
+        title="Move up"
+        className="button entityMoveUp"
+      >
+        <AwesomeIcon icon={faArrowUp} />
+      </a>
+    );
+
+    const moveDownButton = isScene ? null : (
+      <a
+        onClick={this.handleMoveDown}
+        title="Move down"
+        className="button entityMoveDown"
+      >
+        <AwesomeIcon icon={faArrowDown} />
+      </a>
+    );
+
+    // Reparent button
+    const reparentButton = isScene ? null : (
+      <a
+        onClick={this.handleReparent}
+        title="Change parent"
+        className="button entityReparent"
+      >
+        <AwesomeIcon icon={faCodeBranch} />
+      </a>
+    );
 
     // Add spaces depending on depth.
     const pad = '&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(this.props.depth);
@@ -123,6 +178,9 @@ export default class Entity extends React.Component {
           />
         </span>
         <span className="entityActions">
+          {reparentButton}
+          {moveUpButton}
+          {moveDownButton}
           {cloneButton}
           {removeButton}
         </span>

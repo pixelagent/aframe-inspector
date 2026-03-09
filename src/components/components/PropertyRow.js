@@ -62,6 +62,27 @@ export default class PropertyRow extends React.Component {
         ? props.entity.getDOMAttribute(props.componentname)?.[props.name]
         : props.data;
 
+    // Ensure value is the correct type for each widget
+    if (type === 'color' && value !== null && value !== undefined) {
+      if (typeof value !== 'string') {
+        // Handle object format like {r: 1, g: 0, b: 0} or THREE.Color
+        if (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number') {
+          value = '#' +
+            ((1 << 24) + (Math.round(value.r * 255) << 16) + (Math.round(value.g * 255) << 8) + Math.round(value.b * 255)).toString(16).slice(1);
+        } else if (value.getHexString) {
+          // THREE.Color object
+          value = '#' + value.getHexString();
+        }
+      }
+    }
+
+    if (type === 'boolean' && value !== null && value !== undefined) {
+      // Handle number format (0 or 1) for booleans
+      if (typeof value === 'number') {
+        value = value !== 0;
+      }
+    }
+
     if (type === 'string' && value && typeof value !== 'string') {
       // Allow editing a custom type like event-set component schema
       value = props.schema.stringify(value);

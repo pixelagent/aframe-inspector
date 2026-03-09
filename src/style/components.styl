@@ -189,3 +189,445 @@
   input
     margin-left 0
     width 120px
+
+/* Behaviors Panel Styles */
+.behaviors-panel
+  background-color var(--color-base-200)
+  border-top 1px solid var(--color-base-100)
+  padding 10px
+
+  .panel-header
+    align-items center
+    display flex
+    justify-content space-between
+    margin-bottom 10px
+
+    .panel-header-title
+      align-items center
+      color var(--color-base-content)
+      display flex
+      font-size 14px
+      font-weight 600
+      gap 8px
+
+  .behaviors-list
+    .no-behaviors
+      text-align center
+      padding 20px 10px
+      color var(--color-base-content)
+      opacity 0.7
+
+      p
+        margin 0 0 15px
+
+    .entity-behavior
+      align-items center
+      background var(--color-base-300)
+      border-radius 4px
+      display flex
+      justify-content space-between
+      margin-bottom 8px
+      padding 8px 12px
+
+      .behavior-info
+        align-items center
+        display flex
+        gap 10px
+
+        .behavior-name
+          color var(--color-base-content)
+          font-size 13px
+
+      .behavior-remove
+        background transparent
+        border none
+        color var(--color-base-content)
+        cursor pointer
+        font-size 14px
+        padding 4px
+        opacity 0.6
+
+        &:hover
+          color var(--color-error)
+          opacity 1
+
+/* Entity Behavior - Enhanced */
+.entity-behavior
+  align-items center
+  background var(--color-base-300)
+  border-radius 4px
+  display flex
+  justify-content space-between
+  margin-bottom 8px
+  padding 10px 12px
+
+  .behavior-info
+    align-items center
+    display flex
+    gap 12px
+
+    .behavior-details
+      display flex
+      flex-direction column
+      gap 2px
+
+      .behavior-name
+        color var(--color-base-content)
+        font-size 13px
+        font-weight 500
+
+      .behavior-event
+        color var(--color-primary)
+        font-size 11px
+
+  .behavior-actions
+    align-items center
+    display flex
+    gap 4px
+
+    .behavior-edit,
+    .behavior-remove
+      background transparent
+      border none
+      color var(--color-base-content)
+      cursor pointer
+      font-size 12px
+      padding 6px
+      opacity 0.6
+      transition all 0.2s
+
+      &:hover
+        color var(--color-primary)
+        opacity 1
+
+    .behavior-remove:hover
+      color var(--color-error)
+
+/* Entity Behavior Selected */
+.entity-behavior:hover
+  background var(--color-base-lighter)
+
+/* Behavior Modal */
+.modal-overlay
+  background rgba(0, 0, 0, 0.7)
+  bottom 0
+  left 0
+  position fixed
+  right 0
+  top 0
+  z-index 10000
+
+.behavior-modal
+  background var(--color-base-200)
+  border-radius 8px
+  left 50%
+  max-height 80vh
+  max-width 600px
+  min-width 400px
+  overflow hidden
+  position fixed
+  top 50%
+  transform translate(-50%, -50%)
+  width 90%
+
+  .modal-title
+    align-items center
+    background var(--color-base-100)
+    color var(--color-base-content)
+    display flex
+    font-size 16px
+    font-weight 600
+    gap 10px
+    padding 15px 20px
+
+    .modal-close
+      background transparent
+      border none
+      color var(--color-base-content)
+      cursor pointer
+      font-size 24px
+      margin-left auto
+      opacity 0.7
+
+      &:hover
+        opacity 1
+
+  .behavior-categories
+    max-height 400px
+    overflow-y auto
+    padding 15px
+
+    .behavior-category
+      margin-bottom 20px
+
+      &:last-child
+        margin-bottom 0
+
+      .category-title
+        color var(--color-primary)
+        font-size 12px
+        font-weight 600
+        margin-bottom 10px
+        text-transform uppercase
+
+      .category-behaviors
+        display flex
+        flex-wrap wrap
+        gap 8px
+
+        .behavior-option
+          align-items center
+          background var(--color-base-300)
+          border 1px solid transparent
+          border-radius 4px
+          color var(--color-base-content)
+          cursor pointer
+          display flex
+          gap 8px
+          padding 8px 12px
+          font-size 13px
+          transition all 0.2s
+
+          &:hover
+            background var(--color-base-lighter)
+            border-color var(--color-primary)
+
+          &.selected
+            background var(--color-primary)
+            color var(--color-primary-content)
+
+  .behavior-params
+    background var(--color-base-300)
+    border-top 1px solid var(--color-base-100)
+    padding 15px 20px
+
+    .params-title
+      color var(--color-base-content)
+      font-size 14px
+      font-weight 600
+      margin-bottom 15px
+
+    .params-form
+      .param-input
+        margin-bottom 15px
+
+        &:last-child
+          margin-bottom 0
+
+        label
+          color var(--color-base-content)
+          display block
+          font-size 12px
+          margin-bottom 5px
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select
+          background var(--color-base-100)
+          border 1px solid var(--color-base-300)
+          border-radius 4px
+          color var(--color-base-content)
+          padding 8px 10px
+          width 100%
+          box-sizing border-box
+
+          &:focus
+            border-color var(--color-primary)
+            outline none
+
+        textarea
+          min-height 60px
+          resize vertical
+
+        &.checkbox
+          align-items center
+          display flex
+
+          label
+            align-items center
+            cursor pointer
+            display flex
+            gap 8px
+            margin-bottom 0
+
+  .modal-actions
+    align-items center
+    border-top 1px solid var(--color-base-100)
+    display flex
+    gap 10px
+    justify-content flex-end
+    padding 15px 20px
+
+    .btn
+      padding 8px 16px
+
+      &:disabled
+        opacity 0.5
+        cursor not-allowed
+
+/* Icon sizes for behaviors */
+.behaviors-panel .panel-header .icon,
+.behavior-option .icon,
+.entity-behavior .icon
+  font-size 14px
+  width 16px
+
+/* Behavior Modal - Centered */
+.behavior-modal-overlay
+  background rgba(0, 0, 0, 0.7)
+  bottom 0
+  display flex
+  align-items center
+  justify-content center
+  left 0
+  position fixed
+  right 0
+  top 0
+  z-index 10000
+
+.behavior-modal
+  background var(--color-base-200)
+  border-radius 8px
+  max-height 85vh
+  max-width 550px
+  min-width 400px
+  overflow hidden
+  width 90%
+  box-shadow 0 10px 40px rgba(0, 0, 0, 0.5)
+  display flex
+  flex-direction column
+
+  .behavior-modal-header
+    align-items center
+    background var(--color-base-100)
+    border-bottom 1px solid var(--color-base-300)
+    display flex
+    justify-content space-between
+    padding 15px 20px
+
+    .behavior-modal-title
+      align-items center
+      color var(--color-base-content)
+      display flex
+      font-size 16px
+      font-weight 600
+      gap 10px
+
+    .behavior-modal-close
+      background transparent
+      border none
+      color var(--color-base-content)
+      cursor pointer
+      font-size 28px
+      line-height 1
+      opacity 0.7
+      padding 0
+
+      &:hover
+        opacity 1
+
+  .behavior-modal-content
+    flex 1
+    overflow-y auto
+    padding 15px
+
+  .behavior-modal-footer
+    align-items center
+    border-top 1px solid var(--color-base-300)
+    display flex
+    gap 10px
+    justify-content space-between
+    padding 15px 20px
+
+    .btn
+      padding 8px 16px
+
+      &:disabled
+        opacity 0.5
+        cursor not-allowed
+
+// Help button
+.help-btn
+  align-items center
+  background var(--color-base-300)
+  border none
+  border-radius 4px
+  color var(--color-base-content)
+  cursor pointer
+  display flex
+  font-size 13px
+  gap 6px
+  padding 8px 12px
+  transition all 0.2s
+
+  &:hover
+    background var(--color-base-lighter)
+    color var(--color-primary)
+
+  &.active
+    background var(--color-primary)
+    color white
+
+// Help section
+.behavior-help
+  background var(--color-base-100)
+  border-radius 6px
+  max-height 350px
+  overflow-y auto
+  padding 15px
+
+  .help-section
+    margin-bottom 15px
+
+    &:last-child
+      margin-bottom 0
+
+    h4
+      color var(--color-primary)
+      font-size 13px
+      font-weight 600
+      letter-spacing 0.5px
+      margin-bottom 8px
+      text-transform uppercase
+
+    p
+      color var(--color-base-content)
+      font-size 13px
+      line-height 1.5
+
+    ul
+      list-style none
+      margin 0
+      padding 0
+
+    li
+      border-bottom 1px solid var(--color-base-300)
+      color var(--color-base-content)
+      font-size 12px
+      line-height 1.4
+      padding 6px 0
+
+      &:last-child
+        border-bottom none
+
+    pre
+      background var(--color-base-400)
+      border-radius 4px
+      color var(--color-base-content)
+      font-family 'Monaco', 'Menlo', 'Ubuntu Mono', monospace
+      font-size 11px
+      line-height 1.4
+      overflow-x auto
+      padding 12px
+      white-space pre-wrap
+      word-break break-all
+
+.footer-actions
+  display flex
+  gap 10px
+  margin-left auto
+
+.modal-title .icon
+  font-size 18px
+  width 20px

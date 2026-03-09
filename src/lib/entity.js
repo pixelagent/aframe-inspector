@@ -43,8 +43,8 @@ export function removeEntity(entity, force = false) {
       force === true ||
       confirm(
         'Do you really want to remove entity `' +
-          (entity.id || entity.tagName) +
-          '`?'
+        (entity.id || entity.tagName) +
+        '`?'
       )
     ) {
       var closest = findClosestEntity(entity);
@@ -560,4 +560,186 @@ export function createEntity(definition, cb) {
   AFRAME.scenes[0].appendChild(entity);
 
   return entity;
+}
+
+/**
+ * Move an entity up in the hierarchy (swap with previous sibling)
+ * @param {Element} entity - Entity to move up
+ */
+export function moveEntityUp(entity) {
+  if (!entity || !entity.parentNode) return;
+
+  const parent = entity.parentNode;
+  const previousSibling = entity.previousElementSibling;
+
+  // Check if previous sibling is a valid entity (not inspector UI)
+  if (!previousSibling || !previousSibling.isEntity || previousSibling.isInspector) {
+    return;
+  }
+
+  // Store references to maintain selection
+  const wasSelected = AFRAME.INSPECTOR.selectedEntity === entity;
+
+  // Insert the entity before the previous sibling (effectively swapping positions)
+  parent.insertBefore(entity, previousSibling);
+
+  // Re-select the entity if it was selected
+  if (wasSelected) {
+    AFRAME.INSPECTOR.selectEntity(entity);
+  }
+
+  // Emit event for history/undo
+  Events.emit('entitymove', { entity, direction: 'up' });
+}
+
+/**
+ * Move an entity down in the hierarchy (swap with next sibling)
+ * @param {Element} entity - Entity to move down
+ */
+export function moveEntityDown(entity) {
+  if (!entity || !entity.parentNode) return;
+
+  const parent = entity.parentNode;
+  const nextSibling = entity.nextElementSibling;
+
+  // Check if next sibling is a valid entity (not inspector UI)
+  if (!nextSibling || !nextSibling.isEntity || nextSibling.isInspector) {
+    return;
+  }
+
+  // Store references to maintain selection
+  const wasSelected = AFRAME.INSPECTOR.selectedEntity === entity;
+
+  // Insert the entity after the next sibling (effectively swapping positions)
+  const referenceNode = nextSibling.nextSibling;
+  parent.insertBefore(entity, referenceNode);
+
+  // Re-select the entity if it was selected
+  if (wasSelected) {
+    AFRAME.INSPECTOR.selectEntity(entity);
+  }
+
+  // Emit event for history/undo
+  Events.emit('entitymove', { entity, direction: 'down' });
+}
+
+/**
+ * Reparent an entity to a new parent
+ * @param {Element} entity - Entity to reparent
+ * @param {Element} newParent - New parent element (if null, uses scene)
+ */
+export function reparentEntity(entity, newParent) {
+  if (!entity) return;
+
+  // Default to scene if no parent specified
+  if (!newParent) {
+    newParent = AFRAME.scenes[0];
+  }
+
+  // Prevent reparenting to itself or to a child of itself
+  if (entity === newParent || entity.contains(newParent)) {
+    console.warn('Cannot reparent: invalid parent relationship');
+    return;
+  }
+
+  // Store old parent for potential undo
+  const oldParent = entity.parentNode;
+
+  // Store current world position/rotation/scale to maintain transform
+  const object3D = entity.object3D;
+  const worldPosition = new THREE.Vector3();
+  const worldRotation = new THREE.Quaternion();
+  const worldScale = new THREE.Vector3();
+
+  object3D.getWorldPosition(worldPosition);
+  object3D.getWorldQuaternion(worldRotation);
+  object3D.getWorldScale(worldScale);
+
+  // Store references to maintain selection
+  const wasSelected = AFRAME.INSPECTOR.selectedEntity === entity;
+
+  // Remove from old parent and add to new parent
+  if (entity.parentNode) {
+    entity.parentNode.removeChild(entity);
+  }
+  newParent.appendChild(entity);
+
+  // Calculate new local transform to maintain world transform
+  const newParentObject = newParent.object3D;
+
+  // Inverse the new parent's world matrix to calculate local transform
+  const inverseParentMatrix = new THREE.Matrix4();
+  inverseParentMatrix.copy(newParentObject.matrixWorld).invert();
+
+  // Apply world transform to local
+  const newLocalPosition = worldPosition.clone().applyMatrix4(inverseParentMatrix);
+  entity.setAttribute('position', {
+    x: newLocalPosition.x,
+    y: newLocalPosition.y,
+    z: newLocalPosition.z
+  });
+
+  // Apply world rotation
+  const newLocalRotation = new THREE.Quaternion();
+  newLocalRotation.copy(worldRotation).multiply(inverseParentMatrix.getQuaternion(new THREE.Quaternion()));
+  const euler = new THREE.Euler().setFromQuaternion(newLocalRotation);
+  entity.setAttribute('rotation', {
+    x: THREE.MathUtils.radToDeg(euler.x),
+    y: THREE.MathUtils.radToDeg(euler.y),
+    z: THREE.MathUtils.radToDeg(euler.z)
+  });
+
+  // Apply world scale
+  const newLocalScale = new THREE.Vector3();
+  newLocalScale.copy(worldScale);
+  const parentScale = new THREE.Vector3();
+  parentScale.setFromMatrixScale(newParentObject.matrixWorld);
+  newLocalScale.divide(parentScale);
+  entity.setAttribute('scale', {
+    x: newLocalScale.x,
+    y: newLocalScale.y,
+    z: newLocalScale.z
+  });
+
+  // Re-select the entity if it was selected
+  if (wasSelected) {
+    AFRAME.INSPECTOR.selectEntity(entity);
+  }
+
+  // Emit event for history/undo
+  Events.emit('entityreparented', { entity, oldParent, newParent });
+}
+
+/**
+ * Get all possible parent entities (entities that can receive children)
+ * @param {Element} excludeEntity - Entity to exclude from the list (and its children)
+ * @return {Array} Array of eligible parent entities
+ */
+export function getEligibleParents(excludeEntity) {
+  const eligible = [];
+  const scene = AFRAME.scenes[0];
+  if (!scene) return eligible;
+
+  const collectEntities = (element, depth = 0) => {
+    // Skip if this is the entity to exclude or an inspector element
+    if (element === excludeEntity) return;
+    if (element.dataset?.isInspector || element.isInspector) return;
+
+    // Only include entities (not primitives that can't have children in the usual sense)
+    if (element.isEntity && element.tagName !== 'A-SKY') {
+      eligible.push({
+        element: element,
+        depth: depth,
+        name: element.id || element.tagName.toLowerCase()
+      });
+    }
+
+    // Recurse into children
+    for (const child of element.children) {
+      collectEntities(child, depth + 1);
+    }
+  };
+
+  collectEntities(scene, 0);
+  return eligible;
 }

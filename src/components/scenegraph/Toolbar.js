@@ -4,13 +4,149 @@ import {
   faPause,
   faPlay,
   faFloppyDisk,
-  faQuestion
+  faQuestion,
+  faCaretDown,
+  faCube,
+  faGlobe,
+  faLightbulb,
+  faCamera,
+  faLayerGroup,
+  faBox,
+  faImage,
+  faFont,
+  faVideo,
+  faMusic,
+  faCrosshairs,
+  faGamepad,
+  faFlag,
+  faStopwatch,
+  faHeart,
+  faStar,
+  faTrophy,
+  faCoins,
+  faPlayCircle,
+  faMouse,
+  faRoute,
+  faRedo,
+  faBolt,
+  faWeightHanging,
+  faHandPaper,
+  faEye,
+  faExpandArrowsAlt,
+  faGhost,
+  faWalking,
+  faRunning,
+  faCouch
 } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import ThemeSelector from './ThemeSelector';
+import MixinsManager from './MixinsManager';
 import Events from '../../lib/Events';
 import { saveBlob } from '../../lib/utils';
 import GLTFIcon from '../../../assets/gltf.svg';
+
+// Grouped primitive types for new entities
+const PRIMITIVE_GROUPS = [
+  {
+    name: 'Basic Shapes',
+    icon: faBox,
+    items: [
+      { value: 'a-box', label: 'Box', icon: '▣' },
+      { value: 'a-sphere', label: 'Sphere', icon: '●' },
+      { value: 'a-cylinder', label: 'Cylinder', icon: '⬭' },
+      { value: 'a-plane', label: 'Plane', icon: '▭' },
+      { value: 'a-circle', label: 'Circle', icon: '◯' },
+      { value: 'a-cone', label: 'Cone', icon: '△' },
+    ]
+  },
+  {
+    name: 'Advanced Shapes',
+    icon: faCube,
+    items: [
+      { value: 'a-dodecahedron', label: 'Dodecahedron', icon: '⬡' },
+      { value: 'a-tetrahedron', label: 'Tetrahedron', icon: '🔺' },
+      { value: 'a-torus', label: 'Torus', icon: '◎' },
+      { value: 'a-torus-knot', label: 'Torus Knot', icon: '∞' },
+    ]
+  },
+  {
+    name: 'Environment',
+    icon: faGlobe,
+    items: [
+      { value: 'a-sky', label: 'Sky', icon: '🌌' },
+      { value: 'a-light', label: 'Light', icon: '💡' },
+    ]
+  },
+  {
+    name: 'Camera & Misc',
+    icon: faCamera,
+    items: [
+      { value: 'a-camera', label: 'Camera', icon: '📷' },
+      { value: 'a-entity', label: 'Empty Entity', icon: '◻' },
+    ]
+  },
+  {
+    name: 'Media',
+    icon: faPlayCircle,
+    items: [
+      { value: 'a-text', label: 'Text', icon: '📝', desc: 'Display text' },
+      { value: 'a-sound', label: 'Sound', icon: '🔊', desc: 'Audio playback' },
+      { value: 'a-video', label: 'Video', icon: '🎬', desc: 'Video player' },
+      { value: 'a-image', label: 'Image', icon: '🖼️', desc: '2D image' },
+      { value: 'a-gltf-model', label: '3D Model', icon: '🎮', desc: 'GLTF model' },
+    ]
+  },
+  {
+    name: 'Interaction',
+    icon: faMouse,
+    items: [
+      { value: 'a-cursor', label: 'Cursor', icon: '🎯', desc: 'Raycaster/cursor' },
+      { value: 'a-camera', label: 'Player Camera', icon: '👤', desc: 'First-person camera' },
+    ]
+  },
+  {
+    name: 'Behaviors',
+    icon: faBolt,
+    description: 'Common game behaviors (adds component)',
+    items: [
+      { value: 'behavior-click-animation', label: 'Click to Animate', icon: '▶️', desc: 'Play animation on click' },
+      { value: 'behavior-click-sound', label: 'Click to Sound', icon: '🔊', desc: 'Play sound on click' },
+      { value: 'behavior-click-hide', label: 'Click to Hide', icon: '👁️', desc: 'Hide on click' },
+      { value: 'behavior-click-destroy', label: 'Click to Destroy', icon: '💥', desc: 'Remove on click' },
+      { value: 'behavior-hover-scale', label: 'Hover Scale', icon: '🔍', desc: 'Scale on mouseover' },
+      { value: 'behavior-look-at', label: 'Look at Camera', icon: '👀', desc: 'Always face camera' },
+      { value: 'behavior-orbit', label: 'Orbit Rotate', icon: '🔄', desc: 'Auto-rotate around center' },
+      { value: 'behavior-bounce', label: 'Bounce', icon: '🏀', desc: 'Bouncing animation' },
+      { value: 'behavior-float', label: 'Float', icon: '🎈', desc: 'Gentle floating motion' },
+      { value: 'behavior-drag-drop', label: 'Drag to Move', icon: '✋', desc: 'Drag and drop' },
+      { value: 'behavior-spawner', label: 'Spawn on Click', icon: '✨', desc: 'Create new entity on click' },
+      { value: 'behavior-pickup', label: 'Pickup Collectible', icon: '🪙', desc: 'Collect on click' },
+    ]
+  },
+  {
+    name: 'Movement',
+    icon: faWalking,
+    description: 'Movement controls',
+    items: [
+      { value: 'wasd-controls', label: 'WASD Move', icon: '🚶', desc: 'Keyboard movement' },
+      { value: 'look-controls', label: 'Look Around', icon: '👁️', desc: 'Mouse look' },
+      { value: 'fly-controls', label: 'Fly Mode', icon: '🦅', desc: 'Free-fly camera' },
+      { value: 'checkpoint-controls', label: 'Checkpoints', icon: '📍', desc: 'Teleport between points' },
+    ]
+  },
+  {
+    name: 'Physics',
+    icon: faWeightHanging,
+    description: 'Physics simulation (requires physics system)',
+    items: [
+      { value: 'dynamic-body', label: 'Dynamic Body', icon: '🏋️', desc: 'Moves with gravity' },
+      { value: 'static-body', label: 'Static Body', icon: '🧱', desc: 'Solid wall/floor' },
+    ]
+  }
+];
+
+// Flat list for backward compatibility
+const PRIMITIVE_TYPES = PRIMITIVE_GROUPS.flatMap(group => group.items);
 
 function filterHelpers(scene, visible) {
   scene.traverse((o) => {
@@ -48,7 +184,34 @@ export default class Toolbar extends React.Component {
     super(props);
 
     this.state = {
-      isPlaying: false
+      isPlaying: false,
+      showPrimitiveMenu: false,
+      selectedPrimitive: 'a-box'
+    };
+
+    // Primitive type with default components
+    this.primitiveDefaults = {
+      'a-entity': {},
+      'a-box': { geometry: 'primitive: box' },
+      'a-sphere': { geometry: 'primitive: sphere' },
+      'a-cylinder': { geometry: 'primitive: cylinder' },
+      'a-plane': { geometry: 'primitive: plane' },
+      'a-circle': { geometry: 'primitive: circle' },
+      'a-cone': { geometry: 'primitive: cone' },
+      'a-dodecahedron': { geometry: 'primitive: dodecahedron' },
+      'a-tetrahedron': { geometry: 'primitive: tetrahedron' },
+      'a-torus': { geometry: 'primitive: torus' },
+      'a-torus-knot': { geometry: 'primitive: torusKnot' },
+      'a-sky': {},
+      'a-light': { light: 'type: ambient' },
+      'a-camera': {},
+      // Standard A-Frame elements
+      'a-text': { text: 'value: Hello World; color: #FFF' },
+      'a-sound': { sound: 'src: url(); autoplay: false; loop: false' },
+      'a-video': { video: 'src: #video-src' },
+      'a-cursor': { cursor: 'rayOrigin: mouse' },
+      'a-image': {},
+      'a-gltf-model': {},
     };
   }
 
@@ -70,9 +233,69 @@ export default class Toolbar extends React.Component {
     );
   }
 
-  addEntity() {
-    Events.emit('entitycreate', { element: 'a-entity', components: {} });
+  addEntity(primitiveType = 'a-entity') {
+    // Check if this is a behavior - add to selected entity instead
+    if (primitiveType.startsWith('behavior-')) {
+      // Emit event to add behavior to selected entity
+      Events.emit('addbehavior', { behavior: primitiveType });
+      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      return;
+    }
+
+    // Check if this is a camera control - add to selected entity or create new camera
+    if (['wasd-controls', 'look-controls', 'fly-controls', 'checkpoint-controls'].includes(primitiveType)) {
+      Events.emit('addbehavior', { behavior: primitiveType });
+      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      return;
+    }
+
+    // Check if this is a physics component
+    if (['dynamic-body', 'static-body'].includes(primitiveType)) {
+      Events.emit('addbehavior', { behavior: primitiveType });
+      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      return;
+    }
+
+    const components = this.primitiveDefaults[primitiveType] || {};
+    Events.emit('entitycreate', { element: primitiveType, components: {} });
+    this.setState({ showPrimitiveMenu: false, selectedPrimitive: primitiveType });
   }
+
+  togglePrimitiveMenu = (e) => {
+    e.stopPropagation();
+    this.setState({ showPrimitiveMenu: !this.state.showPrimitiveMenu });
+  };
+
+  handlePrimitiveSelect = (primitiveType) => {
+    this.addEntity(primitiveType);
+  };
+
+  componentDidMount() {
+    // Close menu when clicking outside
+    document.addEventListener('click', this.handleClickOutside);
+    // Close primitive menu on Escape
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (e) => {
+    // Escape: close primitive menu
+    if (e.keyCode === 27) {
+      if (this.state.showPrimitiveMenu) {
+        this.setState({ showPrimitiveMenu: false });
+      }
+    }
+  };
+
+  handleClickOutside = () => {
+    if (this.state.showPrimitiveMenu) {
+      this.setState({ showPrimitiveMenu: false });
+    }
+  };
 
   /**
    * Try to write changes with aframe-inspector-watcher.
@@ -112,13 +335,49 @@ export default class Toolbar extends React.Component {
     return (
       <div id="toolbar">
         <div className="toolbarActions">
-          <a
-            className="button"
-            title="Add a new entity"
-            onClick={this.addEntity}
-          >
-            <AwesomeIcon icon={faPlus} />
-          </a>
+          <div className="addEntityContainer">
+            <a
+              className="button"
+              title="Add a new entity"
+              onClick={() => this.addEntity(this.state.selectedPrimitive)}
+            >
+              <AwesomeIcon icon={faPlus} />
+            </a>
+            <a
+              className="button primitiveToggle"
+              title="Choose primitive type"
+              onClick={this.togglePrimitiveMenu}
+            >
+              <AwesomeIcon icon={faCaretDown} />
+            </a>
+            {this.state.showPrimitiveMenu && (
+              <div className="primitiveMenu">
+                <div className="primitiveMenuHeader">Add Element</div>
+                {PRIMITIVE_GROUPS.map((group) => (
+                  <div key={group.name} className="primitiveGroup">
+                    <div className="primitiveGroupHeader">
+                      <AwesomeIcon icon={group.icon} />
+                      <span>{group.name}</span>
+                    </div>
+                    {group.items.map((type) => (
+                      <a
+                        key={type.value}
+                        className={`primitiveMenuItem ${this.state.selectedPrimitive === type.value ? 'selected' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          this.handlePrimitiveSelect(type.value);
+                        }}
+                      >
+                        <span className="primitiveIcon">{type.icon}</span>
+                        <span className="primitiveLabel">{type.label}</span>
+                        <span className="primitiveTag">{type.value}</span>
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <a
             id="playPauseScene"
             className="button"
@@ -146,6 +405,7 @@ export default class Toolbar extends React.Component {
             <AwesomeIcon icon={faFloppyDisk} />
           </a>
           <ThemeSelector />
+          <MixinsManager />
           <a className="button" title="Help" onClick={this.openHelpModal}>
             <AwesomeIcon icon={faQuestion} />
           </a>

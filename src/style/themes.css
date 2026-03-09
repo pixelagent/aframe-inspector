@@ -743,3 +743,70 @@
   --depth: 1;
   --noise: 0;
 }
+/*! pixelagent Theme - Cyberpunk/Terminal Inspired Dark Theme */
+#aframeInspector[data-theme='pixelagent'] {
+  color-scheme: dark;
+  /* Base Colors - Deep dark background */
+  --color-base-100: oklch(10% 0.02 260);
+  --color-base-200: oklch(15% 0.015 260);
+  --color-base-300: oklch(20% 0.01 260);
+  --color-base-content: oklch(88% 0.02 240);
+  
+  /* Primary - Terminal Green (#00ff41) */
+  --color-primary: oklch(86% 0.28 140);
+  --color-primary-content: oklch(20% 0.02 140);
+  
+  /* Secondary - Neon Pink (#ff006e) */
+  --color-secondary: oklch(60% 0.28 330);
+  --color-secondary-content: oklch(95% 0.02 330);
+  
+  /* Accent - Cyan (#00d9ff) */
+  --color-accent: oklch(85% 0.22 190);
+  --color-accent-content: oklch(20% 0.02 190);
+  
+  /* Neutral - Dark slate */
+  --color-neutral: oklch(20% 0.01 260);
+  --color-neutral-content: oklch(88% 0.02 240);
+  
+  /* Info - Cyan */
+  --color-info: oklch(85% 0.22 190);
+  --color-info-content: oklch(20% 0.02 190);
+  
+  /* Success - Terminal Green */
+  --color-success: oklch(86% 0.28 140);
+  --color-success-content: oklch(20% 0.02 140);
+  
+  /* Warning - Yellow */
+  --color-warning: oklch(80% 0.2 90);
+  --color-warning-content: oklch(20% 0.02 90);
+  
+  /* Error - Neon Pink/Red */
+  --color-error: oklch(60% 0.28 330);
+  --color-error-content: oklch(95% 0.02 330);
+  
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+  
+  /* Additional pixelagent-specific variables */
+  --bg-darkest: #0f0f1b;
+  --bg-dark: #1a1a2e;
+  --bg-medium: #16213e;
+  --bg-light: #1e293b;
+  --accent-primary: #00ff41;
+  --accent-secondary: #ff006e;
+  --accent-tertiary: #00d9ff;
+  --text-primary: #e0e7ff;
+  --text-secondary: #94a3b8;
+  --border-color: #2d3748;
+  --border-glow: rgba(0, 255, 65, 0.3);
+  --header-height: 48px;
+  --icon-rail-width: 48px;
+  --tools-width: 320px;
+  --side-panel-width: 280px;
+}

@@ -199,6 +199,23 @@ Inspector.prototype = {
       });
     });
 
+    // Handle adding behaviors/components to selected entity
+    Events.on('addbehavior', (data) => {
+      const selectedEntity = this.selectedEntity;
+      if (!selectedEntity) {
+        console.warn('No entity selected to add behavior');
+        return;
+      }
+      // Extract component name from behavior type
+      // Handle both 'behavior-component' and 'component' formats
+      let componentName = data.behavior;
+      if (componentName.startsWith('behavior-')) {
+        componentName = componentName.replace('behavior-', '');
+      }
+      selectedEntity.setAttribute(componentName, '');
+      console.log(`Added ${componentName} to selected entity`);
+    });
+
     document.addEventListener('child-detached', (event) => {
       const entity = event.detail.el;
       AFRAME.INSPECTOR.removeObject(entity.object3D);

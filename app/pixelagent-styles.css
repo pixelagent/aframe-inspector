@@ -1,0 +1,1264 @@
+/* =============================================
+   PIXELAGENT STYLES FOR AFRAME-INSPECTOR
+   Cyberpunk/Terminal Inspired Dark Theme
+   ============================================= */
+
+/* =============================================
+   CSS VARIABLES (Theme System)
+   ============================================= */
+:root {
+    /* COLOR SYSTEM - Professional Dark Theme */
+    --bg-darkest: #0f0f1b;
+    /* Deep background */
+    --bg-dark: #1a1a2e;
+    /* Primary surface */
+    --bg-medium: #16213e;
+    /* Secondary surface */
+    --bg-light: #1e293b;
+    /* Tertiary surface */
+
+    /* ACCENT COLORS - Cyberpunk/Terminal Inspired */
+    --accent-primary: #00ff41;
+    /* Terminal Green */
+    --accent-secondary: #ff006e;
+    /* Neon Pink */
+    --accent-tertiary: #00d9ff;
+    /* Cyan */
+
+    /* TEXT & BORDERS */
+    --text-primary: #e0e7ff;
+    /* Primary text */
+    --text-secondary: #94a3b8;
+    /* Secondary text */
+    --border-color: #2d3748;
+    /* Border color */
+
+    /* LAYOUT DIMENSIONS */
+    --header-height: 48px;
+    --icon-rail-width: 48px;
+    --tools-width: 320px;
+    --side-panel-width: 280px;
+    --border-glow: rgba(0, 255, 65, 0.3);
+
+    --header-height: 50px;
+    --tools-width: 60px;
+    --right-panel-width: 280px;
+}
+
+/* =============================================
+   BASE STYLES
+   ============================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-darkest);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* =============================================
+   HEADER STYLES
+   ============================================= */
+header {
+    height: var(--header-height);
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    z-index: 10;
+    position: relative;
+}
+
+.logo-area {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.logo-area h1 {
+    font-family: 'Press Start 2P', 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: transparent;
+    background-image: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary), var(--accent-primary));
+    background-size: 200%;
+    background-position: 0% 50%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animate-background 2s infinite alternate linear;
+}
+
+/* Masked text background animation */
+@keyframes animate-background {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Subtle logo glow animation */
+@keyframes subtleGlow {
+    0% {
+        text-shadow: 0 0 8px var(--border-glow);
+        color: var(--accent-primary);
+    }
+
+    50% {
+        text-shadow: 0 0 12px rgba(0, 255, 65, 0.4);
+        color: rgba(0, 255, 65, 0.9);
+    }
+
+    100% {
+        text-shadow: 0 0 15px var(--border-glow);
+        color: var(--accent-primary);
+    }
+}
+
+.badge {
+    font-size: 10px;
+    background: var(--accent-secondary);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =============================================
+   BUTTON STYLES
+   ============================================= */
+.btn {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn:hover {
+    background: var(--bg-medium);
+    border-color: var(--text-secondary);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn.primary {
+    background: var(--accent-primary);
+    color: #000;
+    border: none;
+    font-weight: 600;
+}
+
+.btn.primary:hover {
+    opacity: 0.9;
+}
+
+/* AI Sparkle Button */
+.btn.ai-magic {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn.ai-magic:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+/* =============================================
+   MAIN LAYOUT STRUCTURE
+   ============================================= */
+.workspace {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - var(--header-height));
+}
+
+/* =============================================
+   LEFT TOOLBAR
+   ============================================= */
+.tools-panel {
+    width: var(--tools-width);
+    background: var(--bg-dark);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+.tool-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.tool-btn:hover {
+    background: var(--bg-light);
+    color: var(--text-primary);
+}
+
+.tool-btn.active {
+    background: rgba(0, 217, 255, 0.1);
+    color: var(--accent-tertiary);
+    border-color: rgba(0, 217, 255, 0.3);
+}
+
+/* Tool Button Variants */
+.tool-btn.ai-tool {
+    color: #a855f7;
+}
+
+.tool-btn.ai-tool:hover {
+    background: rgba(168, 85, 247, 0.1);
+    color: #d8b4fe;
+}
+
+.tool-btn.materials-tool {
+    color: #ff6b9d;
+}
+
+.tool-btn.materials-tool:hover {
+    background: rgba(255, 107, 157, 0.1);
+    color: #ff8fab;
+}
+
+/* Disabled state for tool buttons */
+.tool-btn.disabled,
+.tool-btn.disabled:hover {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: transparent !important;
+    color: var(--text-secondary) !important;
+    border-color: transparent !important;
+}
+
+.tool-divider {
+    width: 30px;
+    height: 1px;
+    background: var(--border-color);
+    margin: 4px 0;
+}
+
+/* =============================================
+   MAIN CANVAS AREA
+   ============================================= */
+.canvas-area {
+    flex: 1;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+/* Canvas Container */
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#gl-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Overlay Controls */
+.overlay-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    background: rgba(15, 15, 27, 0.8);
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+/* Transform Space Toggle */
+.transform-space-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-medium);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 8px;
+}
+
+.transform-space-toggle:hover {
+    background: var(--bg-light);
+    border-color: var(--text-secondary);
+}
+
+.transform-space-toggle .Checkbox {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+}
+
+.transform-space-toggle .toggle-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.transform-space-toggle .Checkbox:checked+.toggle-label {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+/* Zoom Control */
+.zoom-control {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 15, 27, 0.8);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.zoom-slider {
+    width: 200px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--bg-medium);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.zoom-slider::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+.zoom-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+}
+
+/* =============================================
+   RIGHT PANEL SYSTEM
+   ============================================= */
+.right-panel {
+    width: var(--right-panel-width);
+    background: var(--bg-dark);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    height: calc(100vh - var(--header-height));
+}
+
+/* Layers Container */
+.layers-container {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 100px;
+    max-height: 40vh;
+}
+
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+/* Scrollable properties panel */
+.props-scrollable {
+    overflow-y: auto;
+    max-height: calc(60vh - 100px);
+}
+
+/* Panel Controls */
+.panel-controls {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.minimize-panel-btn,
+.maximize-panel-btn {
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    transition: all 0.2s;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.minimize-panel-btn:hover,
+.maximize-panel-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-light);
+}
+
+.panel-minimized {
+    height: auto !important;
+    overflow: hidden;
+}
+
+.panel-maximized {
+    position: fixed;
+    top: var(--header-height);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - var(--tools-width)) !important;
+    z-index: 1000;
+    border-left: none;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Panel Header */
+.panel-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-dark);
+    flex-shrink: 0;
+    font-size: 0.8rem;
+}
+
+.folder-controls {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.folder-btn {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    font-size: 0.7rem;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.folder-btn:hover {
+    background: var(--bg-medium);
+    border-color: var(--text-secondary);
+}
+
+.folder-btn i {
+    font-size: 0.8rem;
+}
+
+.panel-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* =============================================
+   LAYERS SYSTEM
+   ============================================= */
+.layers-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px;
+    max-height: 40%;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-medium);
+}
+
+.layer-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    position: relative;
+}
+
+/* Drag and Drop Styles */
+.drag-handle {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    cursor: grab;
+    padding: 0 4px;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.layer-item.dragging {
+    opacity: 0.5;
+    background: var(--bg-medium);
+    border: 1px dashed var(--accent-primary);
+}
+
+.folder-header.drag-over,
+.layer-item.drag-over,
+.layers-container.drag-over,
+#layers-list.drag-over-root {
+    background: var(--bg-medium);
+    border-color: var(--accent-primary);
+}
+
+.folder-header {
+    position: relative;
+}
+
+/* Folder Styles */
+.folder-item {
+    margin-bottom: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.folder-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: var(--bg-medium);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.7rem;
+}
+
+.folder-header:hover {
+    background: var(--bg-light);
+}
+
+.folder-icon {
+    color: #a855f7;
+    font-size: 0.8rem;
+}
+
+.folder-name {
+    flex: 1;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+.folder-name:focus {
+    background: var(--bg-dark);
+    border-color: var(--border-color);
+    outline: none;
+}
+
+.folder-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.folder-item:hover .folder-actions {
+    opacity: 1;
+}
+
+.folder-btn {
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    padding: 2px;
+    background: transparent;
+    border: none;
+}
+
+.folder-btn:hover {
+    color: var(--text-primary);
+}
+
+.folder-toggle-btn {
+    color: var(--text-secondary);
+}
+
+.folder-delete-btn:hover {
+    color: var(--accent-secondary);
+}
+
+.folder-contents {
+    padding-left: 12px;
+    margin-top: 2px;
+}
+
+/* Folder selection dropdown */
+.folder-select-dropdown {
+    position: absolute;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px 0;
+    z-index: 1000;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 0.7rem;
+}
+
+.dropdown-header {
+    padding: 4px 8px;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-item {
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-light);
+    color: var(--text-primary);
+}
+
+.new-folder-item {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.layer-item:hover {
+    border-color: var(--text-secondary);
+}
+
+.layer-item.selected {
+    border-color: var(--accent-tertiary);
+    background: rgba(0, 217, 255, 0.05);
+    box-shadow: 0 0 8px rgba(0, 217, 255, 0.1);
+}
+
+/* A-Frame Entity Tree Styles */
+.layer-item.aframe-entity .expand-toggle {
+    cursor: pointer;
+    width: 16px;
+    text-align: center;
+    color: #888;
+    transition: transform 0.2s ease;
+    font-size: 10px;
+    margin-right: 4px;
+}
+
+.layer-item.aframe-entity .expand-toggle:hover {
+    color: #fff;
+}
+
+.layer-item.aframe-entity .expand-placeholder {
+    display: inline-block;
+    width: 16px;
+    margin-right: 4px;
+}
+
+.layer-item.aframe-entity.selected {
+    background: linear-gradient(90deg, rgba(76, 175, 80, 0.3) 0%, rgba(76, 175, 80, 0.1) 100%);
+    border-left: 3px solid #4CAF50;
+}
+
+.layer-icon {
+    color: var(--accent-tertiary);
+    font-size: 0.8rem;
+    width: 20px;
+    text-align: center;
+}
+
+.layer-name {
+    flex: 1;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    font-size: 0.7rem;
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+
+.layer-name:focus {
+    background: var(--bg-dark);
+    border-color: var(--border-color);
+    outline: none;
+}
+
+.layer-actions {
+    display: flex;
+    gap: 6px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.layer-item:hover .layer-actions {
+    opacity: 1;
+}
+
+.layer-btn {
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding: 2px;
+}
+
+.layer-btn:hover {
+    color: var(--text-primary);
+}
+
+.layer-btn.delete:hover {
+    color: var(--accent-secondary);
+}
+
+/* Unparent button style */
+.layer-btn.unparent-btn {
+    color: var(--accent-tertiary);
+}
+
+.layer-btn.unparent-btn:hover {
+    color: var(--accent-primary);
+}
+
+/* Drag over state for A-Frame entities (potential parent) */
+.layer-item.aframe-entity.drag-over {
+    background: rgba(0, 255, 65, 0.15) !important;
+    border-left: 3px solid var(--accent-primary) !important;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* Root drop zone highlight */
+#layers-list.drag-over-root {
+    background: rgba(0, 217, 255, 0.05);
+    outline: 2px dashed var(--accent-tertiary);
+    outline-offset: -5px;
+}
+
+/* Dragging state */
+.layer-item.dragging {
+    opacity: 0.5;
+    background: var(--bg-medium);
+    border: 1px dashed var(--accent-primary);
+}
+
+/* =============================================
+   PROPERTY GROUPS & INPUT STYLES
+   ============================================= */
+.property-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.property-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+}
+
+.input-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+
+.input-group span {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    width: 15px;
+}
+
+input[type="number"],
+input[type="text"] {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    width: 100%;
+    padding: 3px;
+    font-size: 0.75rem;
+    font-family: inherit;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+    outline: none;
+}
+
+input[type="color"] {
+    width: 100%;
+    height: 30px;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Material Info Buttons */
+.material-info-btn {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    cursor: help;
+    transition: all 0.2s;
+    margin-left: 4px;
+}
+
+.material-info-btn:hover {
+    color: var(--accent-primary);
+    transform: scale(1.1);
+}
+
+.empty-state {
+    padding: 15px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-style: italic;
+}
+
+/* =============================================
+   MODAL STYLES
+   ============================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    width: 400px;
+    max-width: calc(100% - 40px);
+    max-height: calc(100vh - 100px);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    margin: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-content-wrapper {
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 0px 20px 20px 20px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a855f7;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px 0px 20px 0px;
+}
+
+#modal-desc {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 16px;
+    padding: 0 20px;
+    line-height: 1.4;
+}
+
+.modal-scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 0 20px;
+}
+
+.modal header {
+    flex-shrink: 0;
+    padding: 20px 20px 40px 20px;
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.modal header>div {
+    width: 100%;
+}
+
+.modal footer {
+    flex-shrink: 0;
+    padding: 15px 0px 10px 15px;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    background: var(--bg-dark);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal section {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.modal textarea {
+    width: calc(100% - 40px);
+    height: 100px;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    border-radius: 4px;
+    resize: none;
+    margin: 0 auto 15px auto;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    display: block;
+}
+
+.modal textarea:focus {
+    outline: none;
+    border-color: #a855f7;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 20px 0 0;
+    margin-bottom: 10px;
+}
+
+.loading-spinner {
+    display: none;
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.loading-spinner.active {
+    display: block;
+}
+
+/* =============================================
+   TUTORIAL SYSTEM STYLES
+   ============================================= */
+#tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    display: none;
+    pointer-events: none;
+}
+
+#tutorial-container {
+    position: fixed;
+    z-index: 10001;
+    max-width: 300px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    color: var(--text-primary);
+    font-size: 13px;
+    display: none;
+    pointer-events: auto;
+}
+
+#tutorial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#tutorial-heading {
+    font-size: 14px;
+    color: var(--accent-primary);
+    margin: 0;
+    font-weight: bold;
+}
+
+#tutorial-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+#tutorial-content {
+    margin-bottom: 16px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+#tutorial-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.tutorial-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-medium);
+    color: var(--text-primary);
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.tutorial-btn:hover {
+    background: var(--bg-light);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.tutorial-btn.secondary {
+    border-style: dashed;
+    opacity: 0.8;
+}
+
+.tutorial-btn.secondary:hover {
+    opacity: 1;
+    border-color: var(--accent-tertiary);
+    color: var(--accent-tertiary);
+}
+
+#tutorial-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+#tutorial-progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.tutorial-progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color);
+    transition: all 0.3s;
+}
+
+.tutorial-progress-dot.active {
+    background: var(--accent-primary);
+    transform: scale(1.2);
+}
+
+/* Tutorial Directional Arrows */
+.tutorial-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 10002;
+}
+
+.tutorial-arrow.bottom {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0px 8px;
+    border-color: var(--accent-primary) transparent transparent transparent;
+}
+
+.tutorial-arrow.top {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0px 8px 8px 8px;
+    border-color: transparent transparent var(--accent-primary) transparent;
+}
+
+.tutorial-arrow.left {
+    top: 50%;
+    left: -8px;
+    transform: translateY(-50%);
+    border-width: 8px 8px 8px 0px;
+    border-color: transparent var(--accent-primary) transparent transparent;
+}
+
+.tutorial-arrow.right {
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    border-width: 8px 0px 8px 8px;
+    border-color: transparent transparent transparent var(--accent-primary);
+}
+
+/* =============================================
+   SCROLLBAR STYLING
+   ============================================= */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--bg-dark);
+}

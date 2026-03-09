@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars, react/no-danger */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import debounce from 'lodash.debounce';
 
 import Entity from './Entity';
 import Toolbar from './Toolbar';
 import Events from '../../lib/Events';
+import { reparentEntity, getEligibleParents } from '../../lib/entity';
 
 export default class SceneGraph extends React.Component {
   static propTypes = {
@@ -27,7 +28,11 @@ export default class SceneGraph extends React.Component {
       expandedElements: new WeakMap([[props.scene, true]]),
       filter: '',
       filteredEntities: [],
-      selectedIndex: -1
+      selectedIndex: -1,
+      showReparentModal: false,
+      reparentEntity: null,
+      eligibleParents: [],
+      selectedParent: null
     };
 
     this.rebuildEntityOptions = debounce(
@@ -57,6 +62,7 @@ export default class SceneGraph extends React.Component {
     this.rebuildEntityOptions();
     Events.on('entityidchange', this.rebuildEntityOptions);
     Events.on('entityupdate', this.onEntityUpdate);
+    Events.on('entityreparent', this.handleReparentRequest);
     document.addEventListener('child-attached', this.onChildAttachedDetached);
     document.addEventListener('child-detached', this.onChildAttachedDetached);
   }
@@ -64,6 +70,7 @@ export default class SceneGraph extends React.Component {
   componentWillUnmount() {
     Events.off('entityidchange', this.rebuildEntityOptions);
     Events.off('entityupdate', this.onEntityUpdate);
+    Events.off('entityreparent', this.handleReparentRequest);
     document.removeEventListener(
       'child-attached',
       this.onChildAttachedDetached
@@ -294,6 +301,99 @@ export default class SceneGraph extends React.Component {
     this.updateFilteredEntities('');
   };
 
+  // Handle reparent request from entity
+  handleReparentRequest = (entity) => {
+    const eligibleParents = getEligibleParents(entity);
+    this.setState({
+      showReparentModal: true,
+      reparentEntity: entity,
+      eligibleParents: eligibleParents,
+      selectedParent: null
+    });
+  };
+
+  // Close reparent modal
+  closeReparentModal = () => {
+    this.setState({
+      showReparentModal: false,
+      reparentEntity: null,
+      eligibleParents: [],
+      selectedParent: null
+    });
+  };
+
+  // Select a parent (highlight but don't apply)
+  selectParent = (parent) => {
+    this.setState({ selectedParent: parent });
+  };
+
+  // Apply reparent action
+  applyReparent = () => {
+    if (this.state.reparentEntity && this.state.selectedParent) {
+      reparentEntity(this.state.reparentEntity, this.state.selectedParent);
+    }
+    this.closeReparentModal();
+  };
+
+  // Render reparent modal
+  renderReparentModal() {
+    if (!this.state.showReparentModal) return null;
+
+    const entity = this.state.reparentEntity;
+    const entityName = entity?.id || entity?.tagName?.toLowerCase() || 'Entity';
+    const hasSelection = this.state.selectedParent !== null;
+
+    return (
+      <div className="reparent-modal-overlay" onClick={this.closeReparentModal}>
+        <div className="reparent-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="reparent-modal-header">
+            <h3><AwesomeIcon icon={faCodeBranch} /> Reparent "{entityName}"</h3>
+            <button className="close-btn" onClick={this.closeReparentModal}>&times;</button>
+          </div>
+          <div className="reparent-modal-content">
+            <p>Select a new parent for this entity:</p>
+            <div className="reparent-list">
+              {/* Option to reparent to scene root */}
+              <div
+                className={`reparent-option ${this.state.selectedParent === AFRAME.scenes[0] ? 'selected' : ''}`}
+                onClick={() => this.selectParent(AFRAME.scenes[0])}
+              >
+                <span className="reparent-icon">🌍</span>
+                <span className="reparent-name">Scene (root)</span>
+              </div>
+
+              {this.state.eligibleParents.map((parent, idx) => (
+                <div
+                  key={idx}
+                  className={`reparent-option ${this.state.selectedParent === parent.element ? 'selected' : ''}`}
+                  onClick={() => this.selectParent(parent.element)}
+                >
+                  <span className="reparent-icon">{'  '.repeat(parent.depth)}↳</span>
+                  <span className="reparent-name">{parent.name}</span>
+                </div>
+              ))}
+            </div>
+            <div className="reparent-modal-actions">
+              <button
+                className="btn-cancel"
+                onClick={this.closeReparentModal}
+              >
+                Cancel
+              </button>
+              <button
+                className={`btn-apply ${hasSelection ? 'active' : ''}`}
+                onClick={this.applyReparent}
+                disabled={!hasSelection}
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderEntities = () => {
     return this.state.filteredEntities.map((entityOption, idx) => {
       if (
@@ -352,6 +452,7 @@ export default class SceneGraph extends React.Component {
         >
           {this.renderEntities()}
         </div>
+        {this.renderReparentModal()}
       </div>
     );
   }
