@@ -307,6 +307,20 @@ export const componentHelp = {
     overview: 'The smiley component displays emoji faces in the scene. Use it to add emotional feedback, decorations, or interactive elements. Choose from various expressions to convey different emotions.'
   },
 
+  // Draw Smiley
+  'draw-smiley': {
+    beginner: ['color', 'size'],
+    descriptions: {
+      color: 'Color of the smiley face',
+      size: 'Size of the smiley face',
+      type: 'Type of face (happy, sad, angry, neutral)',
+      expression: 'Expression to display',
+      position: 'Position offset from draw point',
+      visible: 'Show or hide the smiley'
+    },
+    overview: 'The draw-smiley component adds emoji faces at draw points in VR. When users draw with the draw component, smiley faces can appear at the end of strokes or at specific points. Use it to add fun visual feedback to drawing interactions.'
+  },
+
   // Script
   script: {
     beginner: [],
@@ -467,6 +481,59 @@ export const componentHelp = {
     overview: 'The environment component quickly creates immersive 3D environments with sky, ground, fog, and lighting. Choose from presets like forest, city, studio, or sunset for instant atmosphere. Customize individual elements like sky color, ground type, and fog density for unique environments.'
   },
 
+  // Shadow
+  shadow: {
+    beginner: ['cast', 'receive'],
+    descriptions: {
+      cast: 'Object casts shadows onto other objects',
+      receive: 'Object can have shadows cast onto it',
+      autoUpdate: 'Automatically update shadow properties',
+      bias: 'Shadow bias for quality adjustment',
+      mapHeight: 'Shadow map height resolution',
+      mapWidth: 'Shadow map width resolution',
+      near: 'Near shadow camera distance',
+      far: 'Far shadow camera distance'
+    },
+    overview: 'The shadow component controls shadow rendering for an entity. Enable cast to make the object block light and create shadows on other objects. Enable receive to allow shadows from other objects to appear on this object. Shadows require a light source with castShadow enabled.'
+  },
+
+  // WASD Controls
+  'wasd-controls': {
+    beginner: ['acceleration', 'fly', 'wsAxis', 'adAxis'],
+    descriptions: {
+      acceleration: 'How fast you move (higher = faster)',
+      fly: 'Enable flying mode (move up/down with keys)',
+      wsAxis: 'Which axis for forward/backward (y = up/down)',
+      adAxis: 'Which axis for left/right (y = up/down)',
+      easing: 'Movement smoothing',
+      enabled: 'Whether controls are active',
+      flyEnabled: 'Enable flying mode',
+      adEnabled: 'Enable A/D keys',
+      wsEnabled: 'Enable W/S keys',
+      ease: 'Easing function for movement',
+      drag: 'Drag/settling time'
+    },
+    overview: 'The wasd-controls component enables keyboard navigation in 3D space. Use W/A/S/D keys to move forward, left, backward, and right. Set fly to true to enable vertical movement. This is the standard way to navigate desktop VR experiences.'
+  },
+
+  // Look Controls
+  'look-controls': {
+    beginner: ['enabled', 'pointerLockEnabled'],
+    descriptions: {
+      enabled: 'Whether look controls are active',
+      pointerLockEnabled: 'Lock mouse cursor to screen (for immersive experience)',
+      reverseMouseDrag: 'Reverse the mouse drag direction',
+      reverseTouchDrag: 'Reverse touch drag direction',
+      touchEnabled: 'Enable touch controls on mobile',
+      magicWindowTrackingEnabled: 'Enable VR magic window tracking',
+      hmdEnabled: 'Enable head-mounted display tracking',
+      sensitivity: 'Mouse/touch sensitivity',
+      decay: 'Rotation decay rate',
+      epsilon: 'Minimum angle threshold'
+    },
+    overview: 'The look-controls component enables camera rotation through mouse drag, touch swipe, or device orientation. On desktop, click and drag to look around. On mobile, swipe or tilt device. Enable pointerLock for immersive mouse-based looking.'
+  },
+
   // Voice
   voice: {
     beginner: [],
@@ -507,6 +574,17 @@ export const componentHelp = {
       onPermission: 'Event when permission is granted'
     },
     overview: 'The device-orientation component enables tracking of mobile device orientation for VR experiences. It requires user permission on iOS devices. Use for magic window style experiences on mobile.'
+  },
+
+  // Device Orientation Permission UI
+  'device-orientation-permission-ui': {
+    beginner: ['enabled'],
+    descriptions: {
+      enabled: 'Show device orientation permission button',
+      onPermission: 'Event when permission is granted',
+      onDeny: 'Event when permission is denied'
+    },
+    overview: 'The device-orientation-permission-ui component displays a button that requests permission to use device orientation sensors. Required on iOS devices before using device orientation for VR experiences.'
   },
 
   // Keyboard Shortcuts
@@ -969,6 +1047,22 @@ export const componentHelp = {
       buttonMapping: 'Custom button mapping'
     },
     overview: 'The generic-tracked-controls component provides a base for tracking any WebXR-compatible controller. It handles controller connection/disconnection and provides position/rotation tracking.'
+  },
+
+  // Generic Tracked Controller Controls
+  'generic-tracked-controller-controls': {
+    beginner: ['hand'],
+    descriptions: {
+      hand: 'Which hand (left or right)',
+      controller: 'Controller type to track',
+      model: 'Show controller model',
+      visible: 'Show or hide controller',
+      id: 'Controller ID',
+      armModel: 'Enable arm model for position',
+      buttonMapping: 'Custom button mapping',
+      haptic: 'Enable haptic feedback'
+    },
+    overview: 'The generic-tracked-controller-controls component provides generic controller tracking with support for various input sources. It handles controller connection/disconnection, position/rotation tracking, and button inputs for VR interactions.'
   },
 
   // Hide on Enter AR
