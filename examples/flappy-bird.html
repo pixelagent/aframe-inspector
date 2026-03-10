@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Flappy Bird 3D - Example Scene</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #game-ui {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            font-family: 'VT323', Arial, sans-serif;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        #score {
+            font-size: 48px;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+            margin: 0;
+        }
+
+        #instructions {
+            font-size: 18px;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px #000;
+            margin-top: 10px;
+        }
+
+        #game-over {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid #FFD700;
+        }
+
+        #game-over h1 {
+            color: #FF4444;
+            font-size: 48px;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        #game-over p {
+            color: white;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        #restart-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 20px;
+            pointer-events: auto;
+        }
+
+        #restart-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-ui">
+        <p id="score">Score: 0</p>
+        <p id="instructions">Click or Press SPACE to Flap! Arrow Keys or A/D to Move!</p>
+    </div>
+
+    <div id="game-over">
+        <h1>GAME OVER</h1>
+        <p>Final Score: <span id="final-score">0</span></p>
+        <button id="restart-btn" onclick="restartGame()">Play Again</button>
+    </div>
+
+    <a-scene background="color: #70c5ce" vr-mode-ui="enabled: false">
+        <!-- Game Assets -->
+        <a-assets>
+            <a-mixin id="pipe-vertical" geometry="primitive: box; width: 1.2; height: 8; depth: 1.2"
+                material="color: #228B22; metalness: 0.3; roughness: 0.8"></a-mixin>
+            <a-mixin id="bird" geometry="primitive: sphere; radius: 0.5"
+                material="color: #FFD700; metalness: 0.6; roughness: 0.3"
+                animation__rotate="property: rotation; to: 0 0 -30; dur: 100; startEvents: flap; dir: alternate; loop: 1">
+            </a-mixin>
+            <a-mixin id="ground-tile" geometry="primitive: box; width: 4; height: 0.5; depth: 10"
+                material="color: #8B4513; metalness: 0.1; roughness: 0.9"></a-mixin>
+        </a-assets>
+
+        <!-- Camera - Fixed position, bird stays in front -->
+        <a-entity id="camera-rig" position="0 0 8">
+            <a-camera id="camera" look-controls="enabled: false" wasd-controls="enabled: false">
+            </a-camera>
+        </a-entity>
+
+        <!-- Bird/Player - stays at fixed X position, only moves up/down -->
+        <a-entity id="bird" mixin="bird" position="0 0 5" class="clickable"
+            behavior-flap="event: flap; scale: 1.3; duration: 150; easing: easeOutQuad"
+            behavior-rotate="event: flap; axis: xyz; angle: -30; duration: 100; easing: easeOutQuad"
+            behavior-game-over="event: game-over; intensity: strong; loop: 3"
+            behavior-pulse="event: loaded; scale: 1.1; duration: 500; easing: easeInOutSine; direction: alternate; loop: 0"
+            game-bird>
+            <!-- Eye -->
+            <a-sphere position="0.25 0.15 -0.4" radius="0.12" color="black"></a-sphere>
+            <a-sphere position="-0.25 0.15 -0.4" radius="0.12" color="black"></a-sphere>
+            <!-- Wing -->
+            <a-sphere position="0 -0.1 -0.2" radius="0.25" color="#FFA500"></a-sphere>
+        </a-entity>
+
+        <!-- Moving Ground Tiles -->
+        <a-entity id="ground-container" behavior-ground="event: game-start; speed: 0.15">
+            <a-entity id="ground-1" mixin="ground-tile" position="0 -3 0"></a-entity>
+            <a-entity id="ground-2" mixin="ground-tile" position="0 -3 -20"></a-entity>
+        </a-entity>
+
+        <!-- Ceiling (visual) -->
+        <a-box position="0 8 0" width="50" height="1" depth="10" color="#5D9E5D"
+            behavior-pulse="event: loaded; scale: 1.02; duration: 800; easing: easeInOutSine; direction: alternate; loop: 0">
+        </a-box>
+
+        <!-- Pipes Container - pipes move towards the player -->
+        <a-entity id="pipes-container" behavior-spawn="event: spawn-pipe; gapSize: 3; speed: 0.12">
+        </a-entity>
+
+        <!-- Score Display in 3D -->
+        <a-text id="score-3d" value="0" position="0 4 3" color="white" align="center" width="15"
+            behavior-score="event: score-update; variableName: score; operation: add; amount: 1"
+            behavior-pulse="event: score-update; scale: 1.3; duration: 200; easing: easeOutQuad; direction: alternate; loop: 1">
+        </a-text>
+
+        <!-- Background clouds -->
+        <a-sphere id="cloud-1" position="-8 5 -10" radius="1.5" color="white" opacity="0.8"
+            animation="property: position; from: -8 5 -10; to: 15 5 -10; dur: 8000; loop: true; easing: linear">
+        </a-sphere>
+        <a-sphere id="cloud-2" position="-6 6 -15" radius="1" color="white" opacity="0.8"
+            animation="property: position; from: -6 6 -15; to: 15 6 -15; dur: 10000; loop: true; easing: linear">
+        </a-sphere>
+        <a-sphere id="cloud-3" position="-12 4 -12" radius="1.2" color="white" opacity="0.8"
+            animation="property: position; from: -12 4 -12; to: 15 4 -12; dur: 9000; loop: true; easing: linear">
+        </a-sphere>
+
+        <!-- Game state manager -->
+        <a-entity id="game-manager" behavior-game-state="event: game-start; initialLives: 1; initialScore: 0"
+            behavior-timer="event: tick; interval: 1000; variableName: gameTime; operation: add; amount: 1">
+        </a-entity>
+
+        <!-- Background -->
+        <a-sky color="#70c5ce"></a-sky>
+    </a-scene>
+
+    <!-- Inspector config - must be before inspector script -->
+    <script>
+        window.AFRAME_INSPECTOR_CONFIG = {
+            exampleMode: true
+        };
+    </script>
+    <script src="../dist/aframe-inspector.js"></script>
+
+    <script>
+        // ===========================================
+        // Custom A-Frame Components for Behaviors
+        // These components expose behaviors to the inspector
+        // ===========================================
+
+        // Flap behavior component
+        AFRAME.registerComponent('behavior-flap', {
+            schema: {
+                event: { type: 'string', default: 'click' },
+                scale: { type: 'number', default: 1.3 },
+                duration: { type: 'number', default: 150 },
+                easing: { type: 'string', default: 'easeOutQuad' }
+            },
+            init: function () {
+                const el = this.el;
+                const data = this.data;
+
+                el.addEventListener(data.event, () => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: el.object3D,
+                            scale: data.scale,
+                            duration: data.duration,
+                            easing: data.easing,
+                            direction: 'alternate',
+                            loop: 1
+                        });
+                    }
+                });
+            }
+        });
+
+        // Rotate behavior component
+        AFRAME.registerComponent('behavior-rotate', {
+            schema: {
+                event: { type: 'string', default: 'flap' },
+                axis: { type: 'string', default: 'xyz' },
+                angle: { type: 'number', default: -30 },
+                duration: { type: 'number', default: 100 },
+                easing: { type: 'string', default: 'easeOutQuad' }
+            },
+            init: function () {
+                const el = this.el;
+                const data = this.data;
+
+                el.addEventListener(data.event, () => {
+                    if (typeof anime !== 'undefined') {
+                        const props = {};
+                        if (data.axis.includes('x')) props.rotationX = data.angle * (Math.PI / 180);
+                        if (data.axis.includes('y')) props.rotationY = data.angle * (Math.PI / 180);
+                        if (data.axis.includes('z')) props.rotationZ = data.angle * (Math.PI / 180);
+
+                        anime({
+                            targets: el.object3D,
+                            ...props,
+                            duration: data.duration,
+                            easing: data.easing,
+                            direction: 'alternate',
+                            loop: 1
+                        });
+                    }
+                });
+            }
+        });
+
+        // Game over shake behavior
+        AFRAME.registerComponent('behavior-game-over', {
+            schema: {
+                event: { type: 'string', default: 'game-over' },
+                intensity: { type: 'string', default: 'strong' },
+                loop: { type: 'number', default: 3 }
+            },
+            init: function () {
+                const el = this.el;
+                const data = this.data;
+                const intensityMap = { light: 5, normal: 10, strong: 20 };
+                const intensity = intensityMap[data.intensity] || 10;
+
+                el.addEventListener(data.event, () => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: el.object3D.position,
+                            x: [intensity, -intensity],
+                            duration: 50,
+                            loop: data.loop * 2,
+                            direction: 'alternate',
+                            easing: 'linear'
+                        });
+                    }
+                });
+            }
+        });
+
+        // Pulse animation behavior
+        AFRAME.registerComponent('behavior-pulse', {
+            schema: {
+                event: { type: 'string', default: 'loaded' },
+                scale: { type: 'number', default: 1.1 },
+                duration: { type: 'number', default: 1500 },
+                easing: { type: 'string', default: 'easeInOutSine' },
+                direction: { type: 'string', default: 'alternate' },
+                loop: { type: 'number', default: 0 }
+            },
+            init: function () {
+                const el = this.el;
+                const data = this.data;
+
+                // Auto-start on scene load
+                setTimeout(() => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: el.object3D,
+                            scale: data.scale,
+                            duration: data.duration,
+                            easing: data.easing,
+                            direction: data.direction,
+                            loop: data.loop === 0 ? true : data.loop
+                        });
+                    }
+                }, 100);
+
+                // Also trigger on custom event
+                el.addEventListener(data.event, () => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: el.object3D,
+                            scale: data.scale,
+                            duration: data.duration,
+                            easing: data.easing,
+                            direction: data.direction,
+                            loop: data.loop === 0 ? true : data.loop
+                        });
+                    }
+                });
+            }
+        });
+
+        // Score update behavior
+        AFRAME.registerComponent('behavior-score', {
+            schema: {
+                event: { type: 'string', default: 'score-update' },
+                variableName: { type: 'string', default: 'score' },
+                operation: { type: 'string', default: 'add' },
+                amount: { type: 'number', default: 1 }
+            },
+            init: function () {
+                const el = this.el;
+                const data = this.data;
+
+                el.addEventListener(data.event, () => {
+                    window[data.variableName] = window[data.variableName] || 0;
+                    if (data.operation === 'add') {
+                        window[data.variableName] += data.amount;
+                    } else if (data.operation === 'subtract') {
+                        window[data.variableName] -= data.amount;
+                    }
+                    el.setAttribute('value', window[data.variableName].toString());
+                });
+            }
+        });
+
+        // Game state behavior
+        AFRAME.registerComponent('behavior-game-state', {
+            schema: {
+                event: { type: 'string', default: 'game-start' },
+                initialLives: { type: 'number', default: 3 },
+                initialScore: { type: 'number', default: 0 }
+            },
+            init: function () {
+                const data = this.data;
+
+                window.gameState = window.gameState || {};
+                window.gameState.lives = data.initialLives;
+                window.gameState.score = data.initialScore;
+
+                this.el.addEventListener(data.event, () => {
+                    window.gameState.lives = data.initialLives;
+                    window.gameState.score = data.initialScore;
+                });
+            }
+        });
+
+        // Timer behavior
+        AFRAME.registerComponent('behavior-timer', {
+            schema: {
+                event: { type: 'string', default: 'tick' },
+                interval: { type: 'number', default: 1000 },
+                variableName: { type: 'string', default: 'gameTime' },
+                operation: { type: 'string', default: 'add' },
+                amount: { type: 'number', default: 1 }
+            },
+            init: function () {
+                const data = this.data;
+                window[data.variableName] = 0;
+
+                setInterval(() => {
+                    if (window.gameState && window.gameState.isPlaying) {
+                        window[data.variableName] += data.amount;
+                    }
+                }, data.interval);
+            }
+        });
+
+        // Ground movement behavior component
+        AFRAME.registerComponent('behavior-ground', {
+            schema: {
+                event: { type: 'string', default: 'game-start' },
+                speed: { type: 'number', default: 0.15 }
+            },
+            init: function () {
+                this.ground1 = document.querySelector('#ground-1');
+                this.ground2 = document.querySelector('#ground-2');
+                this.speed = this.data.speed;
+                this.groundDistance = 20;
+
+                this.el.addEventListener(this.data.event, () => {
+                    window.gameState.isGroundMoving = true;
+                });
+            },
+            tick: function () {
+                if (!window.gameState || !window.gameState.isPlaying || !window.gameState.isGroundMoving) return;
+
+                const pos1 = this.ground1.getAttribute('position');
+                const pos2 = this.ground2.getAttribute('position');
+
+                pos1.z += this.speed;
+                pos2.z += this.speed;
+
+                if (pos1.z > this.groundDistance / 2) {
+                    pos1.z = pos2.z - this.groundDistance;
+                }
+                if (pos2.z > this.groundDistance / 2) {
+                    pos2.z = pos1.z - this.groundDistance;
+                }
+
+                this.ground1.setAttribute('position', pos1);
+                this.ground2.setAttribute('position', pos2);
+            }
+        });
+
+        // Spawn pipe behavior component
+        AFRAME.registerComponent('behavior-spawn', {
+            schema: {
+                event: { type: 'string', default: 'spawn-pipe' },
+                gapSize: { type: 'number', default: 3 },
+                speed: { type: 'number', default: 0.12 }
+            },
+            init: function () {
+                this.lastSpawn = 0;
+                this.spawnInterval = 1800;
+                this.speed = this.data.speed;
+                this.gapSize = this.data.gapSize;
+            },
+            tick: function () {
+                if (!window.gameState || !window.gameState.isPlaying) return;
+
+                const now = Date.now();
+                if (now - this.lastSpawn > this.spawnInterval) {
+                    this.spawnPipe();
+                    this.lastSpawn = now;
+                }
+
+                this.updatePipes();
+            },
+            spawnPipe: function () {
+                const container = document.querySelector('#pipes-container');
+                // Random gap Y position (between -1 and 2)
+                const gapY = (Math.random() * 3) - 1;
+                // Random X position for the pipe pair (between -2 and 2)
+                const pipeX = (Math.random() * 4) - 2;
+
+                // Top pipe (above gap)
+                const topPipe = document.createElement('a-entity');
+                topPipe.setAttribute('mixin', 'pipe-vertical');
+                topPipe.setAttribute('position', { x: pipeX, y: gapY + this.gapSize / 2 + 4, z: -20 });
+                topPipe.setAttribute('class', 'pipe');
+                topPipe.setAttribute('data-type', 'top');
+
+                // Bottom pipe (below gap)
+                const bottomPipe = document.createElement('a-entity');
+                bottomPipe.setAttribute('mixin', 'pipe-vertical');
+                bottomPipe.setAttribute('position', { x: pipeX, y: gapY - this.gapSize / 2 - 4, z: -20 });
+                bottomPipe.setAttribute('class', 'pipe');
+                bottomPipe.setAttribute('data-type', 'bottom');
+
+                container.appendChild(topPipe);
+                container.appendChild(bottomPipe);
+
+                window.gameState.pipes.push({
+                    top: topPipe,
+                    bottom: bottomPipe,
+                    x: pipeX,
+                    z: -20,
+                    gapY: gapY,
+                    passed: false
+                });
+
+                // Emit spawn-pipe event for behaviors
+                this.el.sceneEl.emit('spawn-pipe');
+            },
+            updatePipes: function () {
+                const pipes = window.gameState.pipes;
+
+                for (let i = pipes.length - 1; i >= 0; i--) {
+                    const pipe = pipes[i];
+                    pipe.z += this.speed;
+
+                    pipe.top.setAttribute('position', {
+                        x: pipe.x,
+                        y: pipe.gapY + this.gapSize / 2 + 4,
+                        z: pipe.z
+                    });
+                    pipe.bottom.setAttribute('position', {
+                        x: pipe.x,
+                        y: pipe.gapY - this.gapSize / 2 - 4,
+                        z: pipe.z
+                    });
+
+                    // Score when pipe passes player
+                    if (!pipe.passed && pipe.z > 5) {
+                        pipe.passed = true;
+                        window.gameState.score++;
+                        document.getElementById('score').textContent = 'Score: ' + window.gameState.score;
+                        document.querySelector('#score-3d').setAttribute('value', window.gameState.score.toString());
+                        document.querySelector('#score-3d').emit('score-update');
+                    }
+
+                    // Remove pipes that have gone past
+                    if (pipe.z > 15) {
+                        if (pipe.top.parentNode) pipe.top.parentNode.removeChild(pipe.top);
+                        if (pipe.bottom.parentNode) pipe.bottom.parentNode.removeChild(pipe.bottom);
+                        pipes.splice(i, 1);
+                    }
+                }
+            }
+        });
+
+        // ===========================================
+        // Game Logic
+        // ===========================================
+
+        // Game State
+        window.gameState = {
+            score: 0,
+            isPlaying: false,
+            isGameOver: false,
+            birdY: 0,
+            birdX: 0,
+            birdVelocity: 0,
+            gravity: -0.012,
+            flapStrength: 0.28,
+            pipes: [],
+            isGroundMoving: false,
+            gameSpeed: 0.12,
+            gapSize: 3
+        };
+
+        // Bird controller component
+        AFRAME.registerComponent('game-bird', {
+            init: function () {
+                this.bird = document.querySelector('#bird');
+
+                // Click/tap to flap
+                document.addEventListener('click', () => this.flap());
+                document.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space') {
+                        e.preventDefault();
+                        this.flap();
+                    }
+                    // Left/Right movement
+                    if (e.code === 'ArrowLeft' || e.key === 'a') {
+                        this.moveLeft();
+                    }
+                    if (e.code === 'ArrowRight' || e.key === 'd') {
+                        this.moveRight();
+                    }
+                });
+
+                // Touch support for mobile
+                document.addEventListener('touchstart', (e) => {
+                    const touchX = e.touches[0].clientX;
+                    const screenWidth = window.innerWidth;
+                    
+                    if (touchX < screenWidth / 3) {
+                        this.moveLeft();
+                    } else if (touchX > screenWidth * 2 / 3) {
+                        this.moveRight();
+                    } else {
+                        this.flap();
+                    }
+                });
+
+                // Start game on first interaction
+                this.el.sceneEl.addEventListener('click', () => {
+                    if (!window.gameState.isPlaying && !window.gameState.isGameOver) {
+                        this.startGame();
+                    }
+                });
+
+                // Game loop
+                this.el.sceneEl.addEventListener('tick', () => {
+                    if (window.gameState.isPlaying && !window.gameState.isGameOver) {
+                        this.update();
+                    }
+                });
+            },
+
+            moveLeft: function () {
+                if (!window.gameState.isPlaying || window.gameState.isGameOver) return;
+                window.gameState.birdX = Math.max(-2.5, window.gameState.birdX - 0.8);
+            },
+
+            moveRight: function () {
+                if (!window.gameState.isPlaying || window.gameState.isGameOver) return;
+                window.gameState.birdX = Math.min(2.5, window.gameState.birdX + 0.8);
+            },
+
+            flap: function () {
+                if (window.gameState.isGameOver) return;
+
+                if (!window.gameState.isPlaying) {
+                    this.startGame();
+                    return;
+                }
+
+                window.gameState.birdVelocity = window.gameState.flapStrength;
+
+                // Trigger flap animation event only (not click to avoid infinite loop)
+                this.bird.emit('flap');
+
+                // Play sound
+                this.playFlapSound();
+            },
+
+            playFlapSound: function () {
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+
+                    oscillator.frequency.value = 400;
+                    oscillator.type = 'sine';
+
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+                    oscillator.start(audioCtx.currentTime);
+                    oscillator.stop(audioCtx.currentTime + 0.1);
+                } catch (e) {
+                    console.log('Audio not available');
+                }
+            },
+
+            startGame: function () {
+                window.gameState.isPlaying = true;
+                window.gameState.score = 0;
+                window.gameState.birdY = 0;
+                window.gameState.birdX = 0;
+                window.gameState.birdVelocity = 0;
+                window.gameState.isGameOver = false;
+                window.gameState.isGroundMoving = true;
+                document.getElementById('instructions').textContent = 'SPACE to Flap, Arrow Keys/A-D to Dodge!';
+
+                // Emit game-start event for behaviors
+                this.el.sceneEl.emit('game-start');
+            },
+
+            update: function () {
+                // Apply gravity
+                window.gameState.birdVelocity += window.gameState.gravity;
+                window.gameState.birdY += window.gameState.birdVelocity;
+
+                // Update bird position
+                this.bird.setAttribute('position', {
+                    x: window.gameState.birdX,
+                    y: window.gameState.birdY,
+                    z: 5
+                });
+
+                // Rotate bird based on velocity
+                const rotation = Math.min(Math.max(window.gameState.birdVelocity * 80, -30), 60);
+                this.bird.setAttribute('rotation', { x: 0, y: 0, z: -rotation });
+
+                // Check bounds (ground and ceiling)
+                if (window.gameState.birdY < -2.5 || window.gameState.birdY > 6.5) {
+                    this.gameOver();
+                }
+
+                // Check pipe collisions
+                this.checkCollisions();
+            },
+
+            checkCollisions: function () {
+                const birdY = window.gameState.birdY;
+                const birdX = window.gameState.birdX;
+                const birdRadius = 0.5;
+                const pipeWidth = 0.6; // half width
+
+                for (const pipe of window.gameState.pipes) {
+                    // Check if pipe is at the bird's Z position (around z=5)
+                    if (Math.abs(pipe.z - 5) < 1.0) {
+                        // Check X position overlap (bird needs to be near pipe's X)
+                        const pipeX = pipe.x || 0;
+                        if (Math.abs(birdX - pipeX) < 1.0) {
+                            const topPipeBottom = pipe.gapY + window.gameState.gapSize / 2;
+                            const bottomPipeTop = pipe.gapY - window.gameState.gapSize / 2;
+
+                            // Check collision with top pipe
+                            if (birdY + birdRadius > topPipeBottom - 4) {
+                                this.gameOver();
+                                return;
+                            }
+
+                            // Check collision with bottom pipe
+                            if (birdY - birdRadius < bottomPipeTop + 4) {
+                                this.gameOver();
+                                return;
+                            }
+                        }
+                    }
+                }
+            },
+
+            gameOver: function () {
+                window.gameState.isGameOver = true;
+                window.gameState.isPlaying = false;
+                window.gameState.isGroundMoving = false;
+
+                // Emit game-over event for behaviors
+                this.bird.emit('game-over');
+
+                document.getElementById('game-over').style.display = 'block';
+                document.getElementById('final-score').textContent = window.gameState.score;
+            }
+        });
+
+        // Restart game function
+        window.restartGame = function () {
+            const container = document.querySelector('#pipes-container');
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+            window.gameState.score = 0;
+            window.gameState.isGameOver = false;
+            window.gameState.isPlaying = true;
+            window.gameState.birdY = 0;
+            window.gameState.birdX = 0;
+            window.gameState.birdVelocity = 0;
+            window.gameState.pipes = [];
+            window.gameState.isGroundMoving = true;
+            window.gameState.gapSize = 3;
+
+            const bird = document.querySelector('#bird');
+            bird.setAttribute('position', '0 0 5');
+            bird.setAttribute('rotation', '0 0 0');
+
+            document.getElementById('score').textContent = 'Score: 0';
+            document.querySelector('#score-3d').setAttribute('value', '0');
+            document.getElementById('game-over').style.display = 'none';
+            document.getElementById('instructions').textContent = 'SPACE to Flap, Arrow Keys/A-D to Dodge!';
+        };
+
+        // Initialize behaviors when scene is loaded
+        document.querySelector('a-scene').addEventListener('loaded', function () {
+            console.log('Flappy Bird 3D loaded with BehaviorsManager components!');
+
+            // Apply behaviors via BehaviorsManager if available
+            if (typeof behaviorsManager !== 'undefined') {
+                const bird = document.querySelector('#bird');
+                const scoreDisplay = document.querySelector('#score-3d');
+                const groundContainer = document.querySelector('#ground-container');
+
+                // Apply anime-pulse to clouds
+                const clouds = document.querySelectorAll('[id^="cloud-"]');
+                clouds.forEach((cloud, i) => {
+                    behaviorsManager.applyBehavior(cloud, 'anime-pulse', {
+                        event: 'loaded',
+                        target: '',
+                        scale: 1.1,
+                        duration: 1500 + (i * 200),
+                        easing: 'easeInOutSine',
+                        direction: 'alternate',
+                        loop: 0
+                    });
+                });
+
+                // Apply spin to score when updated
+                behaviorsManager.applyBehavior(scoreDisplay, 'anime-spin', {
+                    event: 'score-update',
+                    target: '',
+                    speed: 'fast',
+                    direction: 'clockwise'
+                });
+
+                console.log('Behaviors applied via BehaviorsManager!');
+            }
+        });
+    </script>
+</body>
+
+</html>

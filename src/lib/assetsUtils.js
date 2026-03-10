@@ -6,6 +6,70 @@ export function getUrlFromId(assetId) {
   );
 }
 
+export function isBlobUrl(url) {
+  return typeof url === 'string' && url.startsWith('blob:');
+}
+
+/**
+ * Convert a blob URL to a data URL that can be used as a regular asset
+ * @param {string} blobUrl - The blob URL to convert
+ * @returns {Promise<string>} - A data URL representing the blob content
+ */
+export function blobUrlToDataUrl(blobUrl) {
+  return new Promise((resolve, reject) => {
+    if (!isBlobUrl(blobUrl)) {
+      reject(new Error('Not a blob URL'));
+      return;
+    }
+
+    fetch(blobUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.onerror = () => {
+          reject(new Error('Failed to read blob'));
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+/**
+ * Convert a blob URL to a regular downloadable URL by fetching the blob
+ * @param {string} blobUrl - The blob URL to convert
+ * @returns {Promise<{url: string, filename: string}>} - Object with URL and suggested filename
+ */
+export async function blobUrlToDownloadableUrl(blobUrl) {
+  if (!isBlobUrl(blobUrl)) {
+    throw new Error('Not a blob URL');
+  }
+
+  const response = await fetch(blobUrl);
+  const blob = await response.blob();
+
+  // Determine filename from blob type
+  const mimeType = blob.type;
+  let extension = 'bin';
+  if (mimeType.startsWith('image/')) {
+    extension = mimeType.replace('image/', '') || 'png';
+  } else if (mimeType.startsWith('video/')) {
+    extension = mimeType.replace('video/', '') || 'mp4';
+  } else if (mimeType.startsWith('audio/')) {
+    extension = mimeType.replace('audio/', '') || 'mp3';
+  }
+
+  const filename = `blob-asset-${Date.now()}.${extension}`;
+  const url = URL.createObjectURL(blob);
+
+  return { url, filename };
+}
+
 export function getIdFromUrl(url) {
   return document.querySelector("a-assets > [src='" + url + "']")?.id;
 }

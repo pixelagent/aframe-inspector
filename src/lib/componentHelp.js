@@ -421,6 +421,31 @@ export const componentHelp = {
     }
   },
 
+  // Fog
+  fog: {
+    beginner: ['type', 'color', 'density', 'near', 'far'],
+    descriptions: {
+      type: 'Fog type: linear or exponential',
+      color: 'Fog color',
+      density: 'Fog density (for exponential fog)',
+      near: 'Start distance (for linear fog)',
+      far: 'End distance (for linear fog)'
+    },
+    overview: 'The fog component creates distance fog that fades objects into the distance. Use linear fog for a specific range or exponential fog for smooth, density-based fog. Great for creating atmosphere and depth in your scenes.'
+  },
+
+  // info-message
+  'info-message': {
+    beginner: ['htmlSrc', 'startOpened', 'width', 'height'],
+    descriptions: {
+      htmlSrc: 'HTML content to display in the info panel',
+      startOpened: 'Whether the info panel starts open',
+      width: 'Width of the info panel in pixels',
+      height: 'Height of the info panel in pixels'
+    },
+    overview: 'The info-message component displays an informational overlay in the scene. Users can click an info button to toggle the message panel. Great for tutorials, instructions, or contextual information in your experience.'
+  },
+
 
 
   // Sky

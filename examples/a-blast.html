@@ -2,20 +2,375 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>A-Blast - Example Scene</title>
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  <meta charset="utf-8">
+  <title>Duck Shooter - A-Blast Example</title>
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  <script>
+    // Game State
+    window.gameState = {
+      score: 0,
+      timeLeft: 30,
+      isPlaying: false,
+      timerInterval: null
+    };
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scoreDisplay = document.querySelector('#scoreDisplay');
+      if (scoreDisplay) {
+        scoreDisplay.setAttribute('text', 'value', 'Score: ' + window.gameState.score);
+      }
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+      const timerDisplay = document.querySelector('#timerDisplay');
+      if (timerDisplay) {
+        const color = window.gameState.timeLeft <= 5 ? '#FF0000' : '#FFFFFF';
+        timerDisplay.setAttribute('text', 'value', 'Time: ' + window.gameState.timeLeft);
+        timerDisplay.setAttribute('text', 'color', color);
+      }
+    }
+
+    // Show game over screen
+    function showGameOver() {
+      const gameOverScreen = document.querySelector('#gameOverScreen');
+      const finalScore = document.querySelector('#finalScore');
+
+      if (gameOverScreen) {
+        gameOverScreen.setAttribute('visible', true);
+      }
+      if (finalScore) {
+        finalScore.setAttribute('text', 'value', 'Final Score: ' + window.gameState.score);
+      }
+    }
+
+    // Start game
+    function startGame() {
+      window.gameState.score = 0;
+      window.gameState.timeLeft = 30;
+      window.gameState.isPlaying = true;
+
+      // Hide start screen
+      const startScreen = document.querySelector('#startScreen');
+      if (startScreen) {
+        startScreen.setAttribute('visible', false);
+      }
+
+      // Hide game over screen
+      const gameOverScreen = document.querySelector('#gameOverScreen');
+      if (gameOverScreen) {
+        gameOverScreen.setAttribute('visible', false);
+      }
+
+      updateScoreDisplay();
+      updateTimerDisplay();
+
+      // Start timer
+      window.gameState.timerInterval = setInterval(function () {
+        window.gameState.timeLeft--;
+        updateTimerDisplay();
+
+        if (window.gameState.timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+
+      // Show and animate targets
+      showTargets();
+    }
+
+    // End game
+    function endGame() {
+      window.gameState.isPlaying = false;
+      clearInterval(window.gameState.timerInterval);
+
+      // Hide targets
+      document.querySelectorAll('.target').forEach(function (target) {
+        target.setAttribute('visible', false);
+      });
+
+      showGameOver();
+    }
+
+    // Show targets continuously throughout the game
+    function showTargets() {
+      if (!window.gameState.isPlaying) return;
+
+      const allTargets = document.querySelectorAll('.target');
+      const availableTargets = [];
+
+      // Find all hidden targets that can be spawned
+      allTargets.forEach(function (target) {
+        if (!target.getAttribute('visible')) {
+          availableTargets.push(target);
+        }
+      });
+
+      // If no targets available, schedule another check soon
+      if (availableTargets.length === 0) {
+        if (window.gameState.isPlaying && window.gameState.timeLeft > 0) {
+          setTimeout(showTargets, 500);
+        }
+        return;
+      }
+
+      // Show up to 3 random available targets at a time
+      const targetsToShow = Math.min(3, availableTargets.length);
+      for (let i = 0; i < targetsToShow; i++) {
+        // Pick a random target from available ones
+        const randomIndex = Math.floor(Math.random() * availableTargets.length);
+        const target = availableTargets.splice(randomIndex, 1)[0];
+
+        // Random position
+        const xPos = (Math.random() - 0.5) * 8;
+        const yPos = 1.5 + Math.random() * 2;
+
+        target.setAttribute('visible', true);
+        target.setAttribute('material', 'color', '#FFD700');
+        target.setAttribute('position', { x: xPos, y: yPos, z: -15 });
+
+        // Animate in
+        target.setAttribute('animation__in', {
+          property: 'position.z',
+          to: -5,
+          dur: 800,
+          easing: 'easeOutQuad'
+        });
+
+        // Move out after delay
+        setTimeout(function () {
+          if (!window.gameState.isPlaying) return;
+
+          target.setAttribute('animation__out', {
+            property: 'position.z',
+            to: -15,
+            dur: 800,
+            easing: 'easeInQuad'
+          });
+
+          // Hide after animation
+          setTimeout(function () {
+            target.setAttribute('visible', false);
+          }, 800);
+        }, 1500 + Math.random() * 1000);
+      }
+
+      // Keep spawning targets until time runs out
+      if (window.gameState.isPlaying && window.gameState.timeLeft > 0) {
+        // Random interval between 1-3 seconds for next spawn
+        const nextSpawn = 1000 + Math.random() * 2000;
+        setTimeout(showTargets, nextSpawn);
+      }
+    }
+
+    // Target component
+    AFRAME.registerComponent('duck-target', {
+      schema: {
+        points: { type: 'number', default: 1 }
+      },
+      init: function () {
+        const el = this.el;
+        const points = this.data.points;
+
+        // Click to score
+        el.addEventListener('click', function () {
+          if (!window.gameState.isPlaying) return;
+          if (!el.getAttribute('visible')) return;
+
+          // Update score
+          window.gameState.score += points;
+          updateScoreDisplay();
+
+          // Visual feedback - flash yellow
+          el.setAttribute('material', 'color', '#FFFF00');
+
+          // Hide target after hit
+          setTimeout(function () {
+            el.setAttribute('visible', false);
+          }, 150);
+        });
+
+        // Hover effect
+        el.addEventListener('mouseenter', function () {
+          if (window.gameState.isPlaying && el.getAttribute('visible')) {
+            el.setAttribute('scale', '1.2 1.2 1.2');
+          }
+        });
+
+        el.addEventListener('mouseleave', function () {
+          el.setAttribute('scale', '1 1 1');
+        });
+      }
+    });
+
+    // Start game button component
+    AFRAME.registerComponent('start-button', {
+      init: function () {
+        const el = this.el;
+
+        el.addEventListener('click', function () {
+          startGame();
+        });
+
+        // Hover effect
+        el.addEventListener('mouseenter', function () {
+          el.setAttribute('material', 'color', '#5AD');
+        });
+
+        el.addEventListener('mouseleave', function () {
+          el.setAttribute('material', 'color', '#4CC3D9');
+        });
+      }
+    });
+  </script>
 </head>
 
 <body>
-    <a-scene>
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-        <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
-    <script src="../dist/aframe-inspector.js"></script>
+  <a-scene background="color: #87CEEB">
+    <!-- Sky gradient simulation -->
+    <a-sky color="#87CEEB"></a-sky>
+
+    <!-- Ground / Grass -->
+    <a-plane position="0 0 -10" rotation="-90 0 0" width="30" height="20" color="#228B22"></a-plane>
+
+    <!-- Shooting Gallery Backboard -->
+    <a-box position="0 3 -12" width="15" height="6" depth="0.5" color="#8B4513"></a-box>
+
+    <!-- Decorative elements -->
+    <a-cone position="-6 0 -8" radius-bottom="1" height="3" color="#006400"></a-cone>
+    <a-cone position="6 0 -8" radius-bottom="1" height="3" color="#006400"></a-cone>
+
+    <!-- Clouds (decorative spheres) -->
+    <a-sphere position="-5 6 -15" radius="1.5" color="#FFF" opacity="0.8"></a-sphere>
+    <a-sphere position="-3 7 -16" radius="1" color="#FFF" opacity="0.8"></a-sphere>
+    <a-sphere position="5 6.5 -14" radius="1.2" color="#FFF" opacity="0.8"></a-sphere>
+    <a-sphere position="3 7 -15" radius="0.8" color="#FFF" opacity="0.8"></a-sphere>
+
+    <!-- ==================== TARGETS ==================== -->
+
+    <!-- Target 1 - Bullseye (5 points) -->
+    <a-entity class="target" position="0 0 -15" visible="false" duck-target="points: 5">
+      <!-- Outer ring (red) -->
+      <a-cylinder radius="0.8" height="0.1" rotation="90 0 0" color="#FF0000" position="0 0 0"></a-cylinder>
+      <!-- Middle ring (white) -->
+      <a-cylinder radius="0.5" height="0.12" rotation="90 0 0" color="#FFFFFF" position="0 0 0.01"></a-cylinder>
+      <!-- Inner ring (red) -->
+      <a-cylinder radius="0.3" height="0.14" rotation="90 0 0" color="#FF0000" position="0 0 0.02"></a-cylinder>
+      <!-- Bullseye (yellow) -->
+      <a-cylinder radius="0.12" height="0.16" rotation="90 0 0" color="#FFD700" position="0 0 0.03"></a-cylinder>
+    </a-entity>
+
+    <!-- Target 2 - 2 points -->
+    <a-entity class="target" position="0 0 -15" visible="false" duck-target="points: 2">
+      <!-- Outer ring (blue) -->
+      <a-cylinder radius="0.8" height="0.1" rotation="90 0 0" color="#0000FF" position="0 0 0"></a-cylinder>
+      <!-- Middle ring (white) -->
+      <a-cylinder radius="0.5" height="0.12" rotation="90 0 0" color="#FFFFFF" position="0 0 0.01"></a-cylinder>
+      <!-- Inner ring (blue) -->
+      <a-cylinder radius="0.25" height="0.14" rotation="90 0 0" color="#0000FF" position="0 0 0.02"></a-cylinder>
+    </a-entity>
+
+    <!-- Target 3 - 1 point -->
+    <a-entity class="target" position="0 0 -15" visible="false" duck-target="points: 1">
+      <!-- Outer ring (green) -->
+      <a-cylinder radius="0.8" height="0.1" rotation="90 0 0" color="#00FF00" position="0 0 0"></a-cylinder>
+      <!-- Inner circle (yellow) -->
+      <a-cylinder radius="0.35" height="0.12" rotation="90 0 0" color="#FFFF00" position="0 0 0.01"></a-cylinder>
+    </a-entity>
+
+    <!-- Target 4 - Bullseye (5 points) -->
+    <a-entity class="target" position="0 0 -15" visible="false" duck-target="points: 5">
+      <a-cylinder radius="0.8" height="0.1" rotation="90 0 0" color="#FF0000" position="0 0 0"></a-cylinder>
+      <a-cylinder radius="0.5" height="0.12" rotation="90 0 0" color="#FFFFFF" position="0 0 0.01"></a-cylinder>
+      <a-cylinder radius="0.3" height="0.14" rotation="90 0 0" color="#FF0000" position="0 0 0.02"></a-cylinder>
+      <a-cylinder radius="0.12" height="0.16" rotation="90 0 0" color="#FFD700" position="0 0 0.03"></a-cylinder>
+    </a-entity>
+
+    <!-- Target 5 - 2 points -->
+    <a-entity class="target" position="0 0 -15" visible="false" duck-target="points: 2">
+      <a-cylinder radius="0.8" height="0.1" rotation="90 0 0" color="#0000FF" position="0 0 0"></a-cylinder>
+      <a-cylinder radius="0.5" height="0.12" rotation="90 0 0" color="#FFFFFF" position="0 0 0.01"></a-cylinder>
+      <a-cylinder radius="0.25" height="0.14" rotation="90 0 0" color="#0000FF" position="0 0 0.02"></a-cylinder>
+    </a-entity>
+
+    <!-- Target 6 - 1 point -->
+    <a-entity class="target" position="0 0 -15" visible="false" duck-target="points: 1">
+      <a-cylinder radius="0.8" height="0.1" rotation="90 0 0" color="#00FF00" position="0 0 0"></a-cylinder>
+      <a-cylinder radius="0.35" height="0.12" rotation="90 0 0" color="#FFFF00" position="0 0 0.01"></a-cylinder>
+    </a-entity>
+
+    <!-- ==================== UI ==================== -->
+
+    <!-- Score Display -->
+    <a-entity id="scoreDisplay" position="-3 4.5 -8"
+      text="value: Score: 0; color: #FFD700; align: center; width: 8"></a-entity>
+
+    <!-- Timer Display -->
+    <a-entity id="timerDisplay" position="3 4.5 -8"
+      text="value: Time: 30; color: #FFFFFF; align: center; width: 8"></a-entity>
+
+    <!-- Points Legend -->
+    <a-entity position="5 2 -8" rotation="0 -20 0">
+      <a-text value="Points:" color="#FFF" align="center" width="3"></a-text>
+      <a-text value="5 - Bullseye" color="#FFD700" position="0 -0.4 0" align="center" width="2"></a-text>
+      <a-text value="2 - Middle" color="#0000FF" position="0 -0.7 0" align="center" width="2"></a-text>
+      <a-text value="1 - Outer" color="#00FF00" position="0 -1 0" align="center" width="2"></a-text>
+    </a-entity>
+
+    <!-- ==================== START SCREEN ==================== -->
+
+    <a-entity id="startScreen" position="0 2 -3">
+      <a-plane width="5" height="3" color="#000" opacity="0.85"></a-plane>
+      <a-text value="DUCK SHOOTER" position="0 1 0.01" align="center" color="#FFD700" width="6"></a-text>
+      <a-text value="Hit the targets for points!" position="0 0.4 0.01" align="center" color="#FFF" width="4"></a-text>
+      <a-text value="Bullseye = 5 points" position="0 0 0.01" align="center" color="#FFD700" width="3"></a-text>
+      <a-text value="30 seconds - Go!" position="0 -0.4 0.01" align="center" color="#FFF" width="3"></a-text>
+      <a-entity id="startBtn" start-button position="0 -1 0.02" geometry="primitive: plane; width: 2; height: 0.5"
+        material="color: #4CC3D9" class="clickable">
+        <a-text value="START" align="center" color="#FFF" width="3"></a-text>
+      </a-entity>
+    </a-entity>
+
+    <!-- ==================== GAME OVER SCREEN ==================== -->
+
+    <a-entity id="gameOverScreen" position="0 2 -3" visible="false">
+      <a-plane width="5" height="2.5" color="#000" opacity="0.9"></a-plane>
+      <a-text value="GAME OVER!" position="0 0.8 0.01" align="center" color="#FF0000" width="6"></a-text>
+      <a-entity id="finalScore" position="0 0.2 0.01"
+        text="value: Final Score: 0; color: #FFD700; align: center; width: 5"></a-entity>
+      <a-text value="Click to play again" position="0 -0.6 0.01" align="center" color="#FFF" width="3"></a-text>
+      <a-entity id="startBtn2" start-button position="0 -1 0.02" geometry="primitive: plane; width: 2; height: 0.5"
+        material="color: #4CC3D9" class="clickable">
+        <a-text value="RETRY" align="center" color="#FFF" width="3"></a-text>
+      </a-entity>
+    </a-entity>
+
+    <!-- ==================== LIGHTING ==================== -->
+
+    <a-light type="ambient" color="#FFF" intensity="0.6"></a-light>
+    <a-light type="point" color="#FFD700" intensity="0.5" position="0 5 -5"></a-light>
+
+    <!-- ==================== CAMERA ==================== -->
+
+    <a-entity position="0 1.6 0">
+      <a-camera look-controls wasd-controls>
+        <!-- Cursor -->
+        <a-entity id="cursor" position="0 0 -1" geometry="primitive: ring; radiusOuter: 0.02; radiusInner: 0.01"
+          material="color: #FF0000; shader: flat; transparent: true; opacity: 0.9"
+          raycaster="objects: .clickable, .target">
+        </a-entity>
+      </a-camera>
+    </a-entity>
+
+  </a-scene>
+  <script>
+    // Configure the inspector to not auto-open on example/game pages
+    window.AFRAME_INSPECTOR_CONFIG = {
+      exampleMode: true
+    };
+  </script>
+  <script src="../dist/aframe-inspector.js"></script>
 </body>
 
 </html>

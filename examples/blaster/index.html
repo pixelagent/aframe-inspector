@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Neon Asteroids</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0a0a1a;
+        }
+
+        #game-ui {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            pointer-events: none;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        #score {
+            font-size: 32px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #level {
+            font-size: 24px;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #lives {
+            font-size: 24px;
+            color: #ff3366;
+            text-shadow: 0 0 10px #ff3366;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #game-over {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: radial-gradient(circle, rgba(10, 10, 30, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #game-over h1 {
+            font-size: 72px;
+            color: #ff3366;
+            text-shadow: 0 0 30px #ff3366, 0 0 60px #ff3366;
+            margin: 0 0 30px 0;
+            font-family: 'Orbitron', monospace;
+            animation: pulse-red 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-red {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        #game-over p {
+            font-size: 28px;
+            color: white;
+            margin: 15px 0;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #restart-btn {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 22px;
+            cursor: pointer;
+            border-radius: 50px;
+            margin-top: 40px;
+            pointer-events: auto;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+
+        #restart-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+        }
+
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: radial-gradient(circle at center, #1a1a3a 0%, #0a0a1a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #start-screen h1 {
+            font-size: 64px;
+            color: #00ffff;
+            text-shadow: 0 0 30px #00ffff, 0 0 60px #ff00ff;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 8px;
+            animation: title-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes title-glow {
+            from {
+                text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff;
+            }
+
+            to {
+                text-shadow: 0 0 40px #ff00ff, 0 0 80px #ff00ff, 0 0 100px #ff00ff;
+            }
+        }
+
+        #start-screen p {
+            font-size: 20px;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #instructions {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        #start-btn {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: all 0.3s;
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+            animation: btn-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes btn-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 60px rgba(0, 255, 255, 0.8), 0 0 80px rgba(0, 255, 255, 0.4);
+            }
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #crosshair {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 998;
+        }
+
+        #crosshair::before,
+        #crosshair::after {
+            content: '';
+            position: absolute;
+            background: #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        #crosshair::before {
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #crosshair::after {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #speed-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        #speed-indicator .stat-box {
+            padding: 10px 20px;
+        }
+
+        #speed {
+            font-size: 18px;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+            font-family: 'Orbitron', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="crosshair"></div>
+
+    <div id="start-screen">
+        <h1>NEON ASTEROIDS</h1>
+        <p>Destroy asteroids before they destroy you!</p>
+        <div id="instructions">Click to shoot • Mouse to aim • W to thrust</div>
+        <button id="start-btn" onclick="window.startGame()">START GAME</button>
+    </div>
+
+    <div id="game-ui">
+        <div class="stat-box">
+            <div id="score">SCORE: 0</div>
+        </div>
+        <div class="stat-box">
+            <div id="level">LEVEL: 1</div>
+        </div>
+        <div class="stat-box">
+            <div id="lives">▲▲▲</div>
+        </div>
+    </div>
+
+    <div id="speed-indicator">
+        <div class="stat-box">
+            <div id="speed">SPEED: 0</div>
+        </div>
+    </div>
+
+    <div id="game-over">
+        <h1>GAME OVER</h1>
+        <p>Final Score: <span id="final-score">0</span></p>
+        <p>Level Reached: <span id="final-level">1</span></p>
+        <button id="restart-btn" onclick="window.restartGame()">Play Again</button>
+    </div>
+
+    <a-scene background="color: #000000" vr-mode-ui="enabled: false" embedded cursor="rayOrigin: mouse">
+        <!-- Assets -->
+        <a-assets>
+            <a-mixin id="asteroid-large" geometry="primitive: dodecahedron; radius: 2"
+                material="color: #888888; emissive: #444444; emissiveIntensity: 0.3; metalness: 0.9; roughness: 0.8">
+            </a-mixin>
+            <a-mixin id="asteroid-medium" geometry="primitive: dodecahedron; radius: 1"
+                material="color: #777777; emissive: #333333; emissiveIntensity: 0.3; metalness: 0.9; roughness: 0.8">
+            </a-mixin>
+            <a-mixin id="asteroid-small" geometry="primitive: dodecahedron; radius: 0.5"
+                material="color: #666666; emissive: #222222; emissiveIntensity: 0.3; metalness: 0.9; roughness: 0.8">
+            </a-mixin>
+            <a-mixin id="bullet" geometry="primitive: sphere; radius: 0.1"
+                material="color: #00ffff; emissive: #00ffff; emissiveIntensity: 2">
+            </a-mixin>
+        </a-assets>
+
+        <!-- Camera Rig (Spaceship) -->
+        <a-entity id="camera-rig" position="0 0 0" spaceship-controls>
+            <a-camera id="camera" look-controls="enabled: false" wasd-controls="enabled: false">
+            </a-camera>
+
+            <!-- Ship model -->
+            <a-entity id="ship" position="0 0 0">
+                <!-- Main body -->
+                <a-cone position="0 0 -0.5" radius-bottom="0.3" radius-top="0" height="1" rotation="90 0 0" color="#333"
+                    material="emissive: #00ffff; emissiveIntensity: 0.2">
+                </a-cone>
+                <!-- Wings -->
+                <a-box position="-0.4 0 -0.2" width="0.3" height="0.05" depth="0.6" color="#222"
+                    material="emissive: #ff00ff; emissiveIntensity: 0.3">
+                </a-box>
+                <a-box position="0.4 0 -0.2" width="0.3" height="0.05" depth="0.6" color="#222"
+                    material="emissive: #ff00ff; emissiveIntensity: 0.3">
+                </a-box>
+                <!-- Engine glow -->
+                <a-sphere position="0 0 0.1" radius="0.15" color="#00ffff"
+                    material="emissive: #00ffff; emissiveIntensity: 2" opacity="0.8">
+                </a-sphere>
+            </a-entity>
+        </a-entity>
+
+        <!-- Asteroids Container -->
+        <a-entity id="asteroids-container"></a-entity>
+
+        <!-- Bullets Container -->
+        <a-entity id="bullets-container"></a-entity>
+
+        <!-- Particles Container -->
+        <a-entity id="particles-container"></a-entity>
+
+        <!-- Stars -->
+        <a-entity id="stars"></a-entity>
+
+        <!-- Ambient Light -->
+        <a-light type="ambient" color="#222244" intensity="0.3"></a-light>
+
+        <!-- Directional Light (simulating distant star) -->
+        <a-light type="directional" color="#ffffff" intensity="0.5" position="1 1 -1"></a-light>
+    </a-scene>
+
+    <!-- Inspector config -->
+    <script>
+        window.AFRAME_INSPECTOR_CONFIG = {
+            exampleMode: true
+        };
+    </script>
+    <script src="../../dist/aframe-inspector.js"></script>
+
+    <script>
+        // Game State
+        window.gameState = {
+            score: 0,
+            lives: 3,
+            level: 1,
+            isPlaying: false,
+            isGameOver: false,
+            asteroids: [],
+            bullets: [],
+            asteroidsPerLevel: 4,
+            asteroidsSpawned: 0,
+            asteroidsDestroyed: 0,
+            canShoot: true,
+            shootCooldown: 250,
+            thrust: false,
+            velocity: { x: 0, y: 0, z: 0 },
+            maxSpeed: 0.5,
+            acceleration: 0.01,
+            friction: 0.99
+        };
+
+        // Make game functions globally accessible
+        window.startGame = function () {
+            document.getElementById('start-screen').style.display = 'none';
+            createStars();
+            window.resetGame();
+        };
+
+        function createStars() {
+            const starsContainer = document.querySelector('#stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('a-sphere');
+                const x = (Math.random() - 0.5) * 200;
+                const y = (Math.random() - 0.5) * 200;
+                const z = (Math.random() - 0.5) * 200;
+                star.setAttribute('position', { x, y, z });
+                star.setAttribute('radius', Math.random() * 0.05 + 0.02);
+                star.setAttribute('material', 'color: #ffffff; emissive: #ffffff; emissiveIntensity: 1; shader: flat');
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Spaceship Controls Component
+        AFRAME.registerComponent('spaceship-controls', {
+            init: function () {
+                this.keys = { w: false, a: false, s: false, d: false };
+                this.camera = document.querySelector('#camera');
+                this.ship = document.querySelector('#ship');
+                this.aimX = 0;
+                this.aimY = 0;
+                this.velocity = { x: 0, y: 0, z: 0 };
+
+                // Keyboard events
+                document.addEventListener('keydown', (e) => {
+                    if (e.key.toLowerCase() === 'w') {
+                        this.keys.w = true;
+                    }
+                });
+
+                document.addEventListener('keyup', (e) => {
+                    if (e.key.toLowerCase() === 'w') {
+                        this.keys.w = false;
+                    }
+                });
+
+                // Mouse aim
+                document.addEventListener('mousemove', (e) => {
+                    if (!window.gameState.isPlaying) return;
+
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+
+                    this.aimX = (e.clientX - centerX) / centerX * 90;
+                    this.aimY = -((e.clientY - centerY) / centerY) * 90;
+
+                    if (this.camera) {
+                        this.camera.setAttribute('rotation', { x: this.aimY, y: this.aimX, z: 0 });
+                    }
+                });
+
+                // Click to shoot
+                document.addEventListener('click', () => {
+                    if (!window.gameState.isPlaying || window.gameState.isGameOver) return;
+                    this.shoot();
+                });
+
+                // Game loop
+                this.el.sceneEl.addEventListener('tick', () => {
+                    if (window.gameState.isPlaying && !window.gameState.isGameOver) {
+                        this.update();
+                    }
+                });
+            },
+
+            update: function () {
+                const rig = this.el;
+
+                // Get camera direction
+                const cameraDir = new THREE.Vector3(0, 0, -1);
+                cameraDir.applyQuaternion(this.camera.object3D.quaternion);
+
+                // Apply thrust
+                if (this.keys.w) {
+                    this.velocity.x += cameraDir.x * window.gameState.acceleration;
+                    this.velocity.y += cameraDir.y * window.gameState.acceleration;
+                    this.velocity.z += cameraDir.z * window.gameState.acceleration;
+                }
+
+                // Apply friction
+                this.velocity.x *= window.gameState.friction;
+                this.velocity.y *= window.gameState.friction;
+                this.velocity.z *= window.gameState.friction;
+
+                // Clamp speed
+                const speed = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2 + this.velocity.z ** 2);
+                if (speed > window.gameState.maxSpeed) {
+                    const scale = window.gameState.maxSpeed / speed;
+                    this.velocity.x *= scale;
+                    this.velocity.y *= scale;
+                    this.velocity.z *= scale;
+                }
+
+                // Update position
+                const pos = rig.getAttribute('position');
+                pos.x += this.velocity.x;
+                pos.y += this.velocity.y;
+                pos.z += this.velocity.z;
+
+                // Wrap around world (asteroids style)
+                const bounds = 50;
+                if (pos.x > bounds) pos.x = -bounds;
+                if (pos.x < -bounds) pos.x = bounds;
+                if (pos.y > bounds) pos.y = -bounds;
+                if (pos.y < -bounds) pos.y = bounds;
+                if (pos.z > bounds) pos.z = -bounds;
+                if (pos.z < -bounds) pos.z = bounds;
+
+                rig.setAttribute('position', pos);
+
+                // Update speed display
+                document.getElementById('speed').textContent = 'SPEED: ' + Math.round(speed * 100);
+
+                // Engine glow based on thrust
+                const engine = this.ship.querySelector('a-sphere');
+                if (engine) {
+                    engine.setAttribute('opacity', this.keys.w ? 1 : 0.5);
+                    engine.setAttribute('radius', this.keys.w ? 0.2 : 0.15);
+                }
+
+                // Update bullets
+                this.updateBullets();
+
+                // Spawn asteroids
+                this.spawnAsteroids();
+
+                // Update asteroids
+                this.updateAsteroids();
+
+                // Check collisions
+                this.checkCollisions();
+            },
+
+            shoot: function () {
+                if (!window.gameState.canShoot) return;
+
+                window.gameState.canShoot = false;
+                setTimeout(() => { window.gameState.canShoot = true; }, window.gameState.shootCooldown);
+
+                // Create bullet
+                const bullet = document.createElement('a-entity');
+                const cameraPos = this.camera.object3D.getWorldPosition(new THREE.Vector3());
+                const cameraDir = new THREE.Vector3(0, 0, -1);
+                cameraDir.applyQuaternion(this.camera.object3D.quaternion);
+
+                bullet.setAttribute('mixin', 'bullet');
+                bullet.setAttribute('position', {
+                    x: cameraPos.x + cameraDir.x * 1,
+                    y: cameraPos.y + cameraDir.y * 1,
+                    z: cameraPos.z + cameraDir.z * 1
+                });
+                bullet.setAttribute('data-velocity', JSON.stringify({
+                    x: cameraDir.x * 1.5,
+                    y: cameraDir.y * 1.5,
+                    z: cameraDir.z * 1.5
+                }));
+
+                document.querySelector('#bullets-container').appendChild(bullet);
+                window.gameState.bullets.push(bullet);
+
+                // Play sound
+                this.playShootSound();
+            },
+
+            playShootSound: function () {
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+
+                    oscillator.frequency.value = 660;
+                    oscillator.type = 'square';
+
+                    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+                    oscillator.start(audioCtx.currentTime);
+                    oscillator.stop(audioCtx.currentTime + 0.1);
+                } catch (e) { }
+            },
+
+            updateBullets: function () {
+                const bullets = window.gameState.bullets;
+
+                for (let i = bullets.length - 1; i >= 0; i--) {
+                    const bullet = bullets[i];
+                    const vel = JSON.parse(bullet.getAttribute('data-velocity'));
+                    const pos = bullet.getAttribute('position');
+
+                    pos.x += vel.x;
+                    pos.y += vel.y;
+                    pos.z += vel.z;
+
+                    bullet.setAttribute('position', pos);
+
+                    // Remove if too far
+                    if (Math.abs(pos.x) > 60 || Math.abs(pos.y) > 60 || Math.abs(pos.z) > 60) {
+                        if (bullet.parentNode) bullet.parentNode.removeChild(bullet);
+                        bullets.splice(i, 1);
+                    }
+                }
+            },
+
+            spawnAsteroids: function () {
+                if (window.gameState.asteroidsSpawned >= window.gameState.asteroidsPerLevel) return;
+
+                // Spawn delay between asteroids
+                const now = Date.now();
+                if (now - window.gameState.lastSpawnTime < 1500) return;
+
+                window.gameState.lastSpawnTime = now;
+                window.gameState.asteroidsSpawned++;
+
+                const asteroid = document.createElement('a-entity');
+
+                // Random position in front of player
+                const camera = this.camera;
+                const cameraPos = camera.object3D.getWorldPosition(new THREE.Vector3());
+                const cameraDir = new THREE.Vector3(0, 0, -1);
+                cameraDir.applyQuaternion(camera.object3D.quaternion);
+
+                // Spawn in a sphere around the player but in front
+                const angle = (Math.random() - 0.5) * Math.PI;
+                const distance = 20 + Math.random() * 15;
+                const x = cameraPos.x + Math.sin(angle) * distance;
+                const y = cameraPos.y + (Math.random() - 0.5) * 20;
+                const z = cameraPos.z + cameraDir.z * distance;
+
+                asteroid.setAttribute('mixin', 'asteroid-large');
+                asteroid.setAttribute('position', { x, y, z });
+                asteroid.setAttribute('data-size', 'large');
+                asteroid.setAttribute('data-speed', 0.02 + Math.random() * 0.02);
+
+                // Random rotation
+                const rotX = Math.random() * 360;
+                const rotY = Math.random() * 360;
+                const rotZ = Math.random() * 360;
+                asteroid.setAttribute('rotation', { x: rotX, y: rotY, z: rotZ });
+
+                // Rotation speed
+                asteroid.setAttribute('data-rot-speed', JSON.stringify({
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2,
+                    z: (Math.random() - 0.5) * 2
+                }));
+
+                document.querySelector('#asteroids-container').appendChild(asteroid);
+                window.gameState.asteroids.push(asteroid);
+            },
+
+            updateAsteroids: function () {
+                const asteroids = window.gameState.asteroids;
+                const playerPos = this.el.getAttribute('position');
+
+                for (let i = asteroids.length - 1; i >= 0; i--) {
+                    const asteroid = asteroids[i];
+                    const pos = asteroid.getAttribute('position');
+                    const speed = parseFloat(asteroid.getAttribute('data-speed'));
+                    const rotSpeed = JSON.parse(asteroid.getAttribute('data-rot-speed'));
+
+                    // Rotate
+                    const rot = asteroid.getAttribute('rotation');
+                    rot.x += rotSpeed.x;
+                    rot.y += rotSpeed.y;
+                    rot.z += rotSpeed.z;
+                    asteroid.setAttribute('rotation', rot);
+
+                    // Move in random direction
+                    pos.x += speed;
+                    pos.y += speed * 0.5;
+                    pos.z += speed * 0.3;
+
+                    // Wrap around
+                    const bounds = 50;
+                    if (pos.x > bounds) pos.x = -bounds;
+                    if (pos.x < -bounds) pos.x = bounds;
+                    if (pos.y > bounds) pos.y = -bounds;
+                    if (pos.y < -bounds) pos.y = bounds;
+                    if (pos.z > bounds) pos.z = -bounds;
+                    if (pos.z < -bounds) pos.z = bounds;
+
+                    asteroid.setAttribute('position', pos);
+                }
+
+                // Check level completion
+                if (window.gameState.asteroidsDestroyed >= window.gameState.asteroidsPerLevel
+                    && window.gameState.asteroidsSpawned >= window.gameState.asteroidsPerLevel) {
+                    this.levelComplete();
+                }
+            },
+
+            checkCollisions: function () {
+                const bullets = window.gameState.bullets;
+                const asteroids = window.gameState.asteroids;
+                const playerPos = this.el.getAttribute('position');
+
+                // Check bullet-asteroid collisions
+                for (let i = bullets.length - 1; i >= 0; i--) {
+                    const bullet = bullets[i];
+                    const bulletPos = bullet.getAttribute('position');
+
+                    for (let j = asteroids.length - 1; j >= 0; j--) {
+                        const asteroid = asteroids[j];
+                        const asteroidPos = asteroid.getAttribute('position');
+                        const size = asteroid.getAttribute('data-size');
+
+                        const dx = bulletPos.x - asteroidPos.x;
+                        const dy = bulletPos.y - asteroidPos.y;
+                        const dz = bulletPos.z - asteroidPos.z;
+                        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                        const hitRadius = size === 'large' ? 2 : (size === 'medium' ? 1 : 0.5);
+
+                        if (dist < hitRadius + 0.2) {
+                            // Hit!
+                            this.createExplosion(asteroidPos, size);
+
+                            // Split asteroid if large or medium
+                            if (size === 'large') {
+                                this.splitAsteroid(asteroidPos, 'medium');
+                            } else if (size === 'medium') {
+                                this.splitAsteroid(asteroidPos, 'small');
+                            }
+
+                            // Remove asteroid and bullet
+                            if (asteroid.parentNode) asteroid.parentNode.removeChild(asteroid);
+                            asteroids.splice(j, 1);
+                            if (bullet.parentNode) bullet.parentNode.removeChild(bullet);
+                            bullets.splice(i, 1);
+
+                            // Score
+                            const points = size === 'large' ? 20 : (size === 'medium' ? 50 : 100);
+                            this.addScore(points);
+                            window.gameState.asteroidsDestroyed++;
+                            break;
+                        }
+                    }
+                }
+
+                // Check player-asteroid collisions
+                for (let i = 0; i < asteroids.length; i++) {
+                    const asteroid = asteroids[i];
+                    const asteroidPos = asteroid.getAttribute('position');
+                    const size = asteroid.getAttribute('data-size');
+                    const hitRadius = size === 'large' ? 2 : (size === 'medium' ? 1 : 0.5);
+
+                    const dx = playerPos.x - asteroidPos.x;
+                    const dy = playerPos.y - asteroidPos.y;
+                    const dz = playerPos.z - asteroidPos.z;
+                    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (dist < hitRadius + 0.5) {
+                        this.loseLife();
+                        // Remove asteroid
+                        if (asteroid.parentNode) asteroid.parentNode.removeChild(asteroid);
+                        asteroids.splice(i, 1);
+                        break;
+                    }
+                }
+            },
+
+            splitAsteroid: function (pos, newSize) {
+                const asteroid = document.createElement('a-entity');
+                const mixin = newSize === 'medium' ? 'asteroid-medium' : 'asteroid-small';
+
+                asteroid.setAttribute('mixin', mixin);
+                asteroid.setAttribute('position', pos);
+                asteroid.setAttribute('data-size', newSize);
+                asteroid.setAttribute('data-speed', 0.03 + Math.random() * 0.03);
+
+                const rotX = Math.random() * 360;
+                const rotY = Math.random() * 360;
+                const rotZ = Math.random() * 360;
+                asteroid.setAttribute('rotation', { x: rotX, y: rotY, z: rotZ });
+
+                asteroid.setAttribute('data-rot-speed', JSON.stringify({
+                    x: (Math.random() - 0.5) * 3,
+                    y: (Math.random() - 0.5) * 3,
+                    z: (Math.random() - 0.5) * 3
+                }));
+
+                document.querySelector('#asteroids-container').appendChild(asteroid);
+                window.gameState.asteroids.push(asteroid);
+            },
+
+            createExplosion: function (pos, size) {
+                const particleCount = size === 'large' ? 15 : (size === 'medium' ? 10 : 5);
+
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('a-sphere');
+                    const radius = size === 'large' ? 0.3 : (size === 'medium' ? 0.2 : 0.1);
+                    particle.setAttribute('radius', radius);
+                    particle.setAttribute('material', 'color: #ff6600; emissive: #ff6600; emissiveIntensity: 1');
+                    particle.setAttribute('position', pos);
+
+                    const angle1 = Math.random() * Math.PI * 2;
+                    const angle2 = Math.random() * Math.PI - Math.PI / 2;
+                    const speed = 0.1 + Math.random() * 0.2;
+
+                    particle.setAttribute('data-velocity', JSON.stringify({
+                        x: Math.cos(angle1) * Math.cos(angle2) * speed,
+                        y: Math.sin(angle2) * speed,
+                        z: Math.sin(angle1) * Math.cos(angle2) * speed
+                    }));
+
+                    particle.setAttribute('data-life', 500);
+
+                    document.querySelector('#particles-container').appendChild(particle);
+
+                    // Animate particle
+                    const animate = () => {
+                        const vel = JSON.parse(particle.getAttribute('data-velocity'));
+                        const pPos = particle.getAttribute('position');
+                        pPos.x += vel.x;
+                        pPos.y += vel.y;
+                        pPos.z += vel.z;
+                        particle.setAttribute('position', pPos);
+
+                        let life = parseInt(particle.getAttribute('data-life'));
+                        life -= 16;
+                        particle.setAttribute('data-life', life);
+
+                        if (life > 0) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            if (particle.parentNode) particle.parentNode.removeChild(particle);
+                        }
+                    };
+                    requestAnimationFrame(animate);
+                }
+            },
+
+            addScore: function (points) {
+                window.gameState.score += points;
+                document.getElementById('score').textContent = 'SCORE: ' + window.gameState.score;
+            },
+
+            loseLife: function () {
+                window.gameState.lives--;
+                const hearts = '▲'.repeat(window.gameState.lives);
+                document.getElementById('lives').textContent = hearts;
+
+                if (window.gameState.lives <= 0) {
+                    this.gameOver();
+                }
+            },
+
+            levelComplete: function () {
+                window.gameState.level++;
+                document.getElementById('level').textContent = 'LEVEL: ' + window.gameState.level;
+
+                // Increase difficulty
+                window.gameState.asteroidsPerLevel = 4 + window.gameState.level * 2;
+                window.gameState.asteroidsSpawned = 0;
+                window.gameState.asteroidsDestroyed = 0;
+            },
+
+            gameOver: function () {
+                window.gameState.isGameOver = true;
+                window.gameState.isPlaying = false;
+
+                document.getElementById('final-score').textContent = window.gameState.score;
+                document.getElementById('final-level').textContent = window.gameState.level;
+                document.getElementById('game-over').style.display = 'block';
+            }
+        });
+
+        // Reset game function
+        window.resetGame = function () {
+            window.gameState.score = 0;
+            window.gameState.lives = 3;
+            window.gameState.level = 1;
+            window.gameState.isGameOver = false;
+            window.gameState.isPlaying = true;
+            window.gameState.asteroids = [];
+            window.gameState.bullets = [];
+            window.gameState.asteroidsSpawned = 0;
+            window.gameState.asteroidsDestroyed = 0;
+            window.gameState.asteroidsPerLevel = 4;
+            window.gameState.lastSpawnTime = 0;
+            window.gameState.canShoot = true;
+            window.gameState.velocity = { x: 0, y: 0, z: 0 };
+
+            // Clear asteroids and bullets
+            const asteroidsContainer = document.querySelector('#asteroids-container');
+            const bulletsContainer = document.querySelector('#bullets-container');
+            while (asteroidsContainer.firstChild) asteroidsContainer.removeChild(asteroidsContainer.firstChild);
+            while (bulletsContainer.firstChild) bulletsContainer.removeChild(bulletsContainer.firstChild);
+
+            // Reset UI
+            document.getElementById('score').textContent = 'SCORE: 0';
+            document.getElementById('level').textContent = 'LEVEL: 1';
+            document.getElementById('lives').textContent = '▲▲▲';
+            document.getElementById('speed').textContent = 'SPEED: 0';
+            document.getElementById('game-over').style.display = 'none';
+
+            // Reset player position
+            const cameraRig = document.querySelector('#camera-rig');
+            cameraRig.setAttribute('position', '0 0 0');
+        };
+
+        // Restart game function
+        window.restartGame = function () {
+            window.resetGame();
+        };
+    </script>
+</body>
+
+</html>

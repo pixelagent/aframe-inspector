@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Neon Coin Run</title>
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0a0a1a;
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+        }
+
+        #game-ui {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            pointer-events: none;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 12px 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
+        #coins {
+            font-size: 24px;
+            color: #ffd700;
+            text-shadow: 0 0 10px #ffd700;
+        }
+
+        #timer {
+            font-size: 24px;
+            color: #ff6600;
+            text-shadow: 0 0 10px #ff6600;
+        }
+
+        #lives {
+            font-size: 24px;
+            color: #ff3366;
+            text-shadow: 0 0 10px #ff3366;
+        }
+
+        #message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            color: #00ff88;
+            text-shadow: 0 0 20px #00ff88;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1000;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        #message.visible {
+            opacity: 1;
+        }
+
+        #game-over {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: radial-gradient(circle, rgba(30, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #game-over h1 {
+            font-size: 64px;
+            color: #ff3366;
+            text-shadow: 0 0 30px #ff3366;
+            margin: 0 0 30px 0;
+        }
+
+        #game-over p {
+            font-size: 28px;
+            color: white;
+            margin: 15px 0;
+        }
+
+        #restart-btn {
+            background: linear-gradient(45deg, #ff3366, #ff6600);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 30px;
+            margin-top: 30px;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #win-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: radial-gradient(circle, rgba(0, 50, 30, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        #win-screen h1 {
+            font-size: 72px;
+            color: #00ff88;
+            text-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88;
+            margin: 0 0 20px 0;
+            animation: pulse-green 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-green {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        #win-screen p {
+            font-size: 28px;
+            color: white;
+            margin: 15px 0;
+        }
+
+        #play-again-btn {
+            background: linear-gradient(45deg, #00ff88, #00ffff);
+            color: #0a0a1a;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 30px;
+            margin-top: 30px;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: radial-gradient(circle at center, #1a2a1a 0%, #0a1a0a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #start-screen h1 {
+            font-size: 56px;
+            color: #00ff88;
+            text-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88;
+            margin-bottom: 20px;
+            letter-spacing: 6px;
+        }
+
+        #start-screen p {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        #controls {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        #start-btn {
+            background: linear-gradient(45deg, #00ff88, #00ffff);
+            color: #0a0a1a;
+            border: none;
+            padding: 18px 50px;
+            font-size: 22px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.8);
+        }
+
+        #shortcut-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ff6600;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: #ff6600;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="start-screen">
+        <h1>NEON COIN RUN</h1>
+        <p>Collect coins and reach the finish!</p>
+        <div id="controls">WASD to move • Collect coins • Avoid spikes</div>
+        <button id="start-btn" onclick="startGame()">START</button>
+    </div>
+
+    <div id="game-ui">
+        <div class="stat-box">
+            <div id="coins">🪙 0</div>
+        </div>
+        <div class="stat-box">
+            <div id="timer">⏱️ 60s</div>
+        </div>
+        <div class="stat-box">
+            <div id="lives">❤️ 3</div>
+        </div>
+    </div>
+
+    <div id="message"></div>
+
+    <div id="shortcut-hint">💡 Spikes can be shortcuts! Hit them to take alternate routes.</div>
+
+    <div id="game-over">
+        <h1>GAME OVER</h1>
+        <p>Time's up!</p>
+        <p>Coins collected: <span id="final-coins">0</span></p>
+        <button id="restart-btn" onclick="restartGame()">Try Again</button>
+    </div>
+
+    <div id="win-screen">
+        <h1>🎉 YOU WIN! 🎉</h1>
+        <p>Time remaining: <span id="final-time">0</span>s</p>
+        <p>Coins: <span id="final-coins-win">0</span></p>
+        <button id="play-again-btn" onclick="restartGame()">Play Again</button>
+    </div>
+
+    <a-scene background="color: #050510" vr-mode-ui="enabled: false">
+        <!-- Assets -->
+        <a-assets>
+            <a-mixin id="coin" geometry="primitive: torus; radius: 0.4; radiusTubular: 0.1"
+                material="color: #ffd700; emissive: #ffd700; emissiveIntensity: 0.5; metalness: 0.9; roughness: 0.1">
+            </a-mixin>
+            <a-mixin id="spike" geometry="primitive: cone; radiusBottom: 0.5; radiusTop: 0; height: 1"
+                material="color: #ff3366; emissive: #ff3366; emissiveIntensity: 0.5">
+            </a-mixin>
+            <a-mixin id="wall" geometry="primitive: box"
+                material="color: #1a1a3a; emissive: #4444ff; emissiveIntensity: 0.2; metalness: 0.8; roughness: 0.3">
+            </a-mixin>
+        </a-assets>
+
+        <!-- Camera Rig -->
+        <a-entity id="camera-rig" position="0 3 10" player-runner>
+            <a-camera id="camera" position="0 1.5 0" look-controls="enabled: false" wasd-controls="enabled: false">
+            </a-camera>
+        </a-entity>
+
+        <!-- Ground Plane -->
+        <a-plane position="0 -0.5 0" rotation="-90 0 0" width="80" height="80"
+            material="color: #1a1a2a; emissive: #001122; emissiveIntensity: 0.5; metalness: 0.7; roughness: 0.4">
+        </a-plane>
+
+        <!-- Grid lines on ground -->
+        <a-entity id="ground-grid">
+            <!-- Horizontal lines -->
+            <a-box position="0 -0.45 -20" width="80" height="0.02" depth="0.05" color="#00ff88" opacity="0.5"></a-box>
+            <a-box position="0 -0.45 -10" width="80" height="0.02" depth="0.05" color="#00ff88" opacity="0.5"></a-box>
+            <a-box position="0 -0.45 0" width="80" height="0.02" depth="0.05" color="#00ff88" opacity="0.5"></a-box>
+            <a-box position="0 -0.45 10" width="80" height="0.02" depth="0.05" color="#00ff88" opacity="0.5"></a-box>
+            <a-box position="0 -0.45 20" width="80" height="0.02" depth="0.05" color="#00ff88" opacity="0.5"></a-box>
+            <!-- Vertical lines -->
+            <a-box position="-20 -0.45 0" width="0.05" height="0.02" depth="80" color="#ff00ff" opacity="0.5"></a-box>
+            <a-box position="-10 -0.45 0" width="0.05" height="0.02" depth="80" color="#ff00ff" opacity="0.5"></a-box>
+            <a-box position="0 -0.45 0" width="0.05" height="0.02" depth="80" color="#ff00ff" opacity="0.5"></a-box>
+            <a-box position="10 -0.45 0" width="0.05" height="0.02" depth="80" color="#ff00ff" opacity="0.5"></a-box>
+            <a-box position="20 -0.45 0" width="0.05" height="0.02" depth="80" color="#ff00ff" opacity="0.5"></a-box>
+        </a-entity>
+
+        <!-- Outer Walls -->
+        <a-entity id="walls">
+            <a-entity mixin="wall" position="-25 1 0" width="1" height="3" depth="80"></a-entity>
+            <a-entity mixin="wall" position="25 1 0" width="1" height="3" depth="80"></a-entity>
+            <a-entity mixin="wall" position="0 1 -40" width="51" height="3" depth="1"></a-entity>
+            <a-entity mixin="wall" position="0 1 40" width="51" height="3" depth="1"></a-entity>
+        </a-entity>
+
+        <!-- Coins Container -->
+        <a-entity id="coins-container"></a-entity>
+
+        <!-- Spikes Container -->
+        <a-entity id="spikes-container"></a-entity>
+
+        <!-- Finish Line -->
+        <a-entity id="finish" position="0 0.5 30">
+            <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="2"
+                material="color: #00ff88; emissive: #00ff88; emissiveIntensity: 0.5; opacity: 0.7">
+            </a-plane>
+            <a-text value="FINISH" position="0 2 0" align="center" color="#00ff88" width="20"
+                animation="property: position; from: 0 2 0; to: 0 2.5 0; dur: 1000; dir: alternate; loop: true">
+            </a-text>
+            <!-- Finish glow -->
+            <a-box position="0 0.5 0" width="20" height="2" depth="1" color="#00ff88"
+                material="emissive: #00ff88; emissiveIntensity: 1; opacity: 0.3"
+                animation="property: scale; from: 1 1 1; to: 1.1 1.1 1.1; dur: 500; dir: alternate; loop: true">
+            </a-box>
+        </a-entity>
+
+        <!-- Start/Spawn Point -->
+        <a-entity position="0 0 0">
+            <a-ring radius-inner="1" radius-outer="1.5" color="#00ffff" rotation="-90 0 0"
+                animation="property: rotation; from: -90 0 0; to: -90 360 0; dur: 3000; loop: true">
+            </a-ring>
+            <a-text value="START" position="0 1 0" align="center" color="#00ffff" width="10"
+                animation="property: position; from: 0 1 0; to: 0 1.5 0; dur: 1000; dir: alternate; loop: true">
+            </a-text>
+        </a-entity>
+
+        <!-- Obstacles/Mazes -->
+        <a-entity id="obstacles">
+            <!-- Maze walls section 1 -->
+            <a-entity mixin="wall" position="-8 1 10" width="1" height="2" depth="15"></a-entity>
+            <a-entity mixin="wall" position="8 1 15" width="1" height="2" depth="20"></a-entity>
+
+            <!-- Middle section -->
+            <a-entity mixin="wall" position="-5 1 0" width="8" height="2" depth="1"></a-entity>
+            <a-entity mixin="wall" position="5 1 -5" width="8" height="2" depth="1"></a-entity>
+        </a-entity>
+
+        <!-- Lighting - Brighter -->
+        <a-light type="ambient" color="#666688" intensity="0.8"></a-light>
+        <a-light type="point" color="#00ff88" intensity="2" position="0 5 0" distance="40"></a-light>
+        <a-light type="point" color="#ff00ff" intensity="1" position="-10 5 10" distance="30"></a-light>
+        <a-light type="point" color="#00ffff" intensity="1" position="10 5 -10" distance="30"></a-light>
+        <a-light type="point" color="#ffd700" intensity="1.5" position="0 5 30" distance="35"></a-light>
+
+        <!-- Sky -->
+        <a-sky color="#050510"></a-sky>
+    </a-scene>
+
+    <!-- Inspector config -->
+    <script>
+        window.AFRAME_INSPECTOR_CONFIG = {
+            exampleMode: true
+        };
+    </script>
+    <script src="../dist/aframe-inspector.js"></script>
+
+    <script>
+        // Game State
+        window.gameState = {
+            coins: 0,
+            maxCoins: 15,
+            lives: 3,
+            timeLimit: 60,
+            timeRemaining: 60,
+            isPlaying: false,
+            isGameOver: false,
+            isWin: false,
+            moveSpeed: 0.2,
+            spawnPoint: { x: 0, y: 0.5, z: 0 },
+            coinsCollected: [],
+            spikePenalty: 2
+        };
+
+        // Generate coins
+        function generateCoins() {
+            const container = document.querySelector('#coins-container');
+            const coinPositions = [
+                { x: -5, z: 8 }, { x: 5, z: 12 }, { x: -10, z: 15 }, { x: 10, z: 18 },
+                { x: 0, z: 5 }, { x: -8, z: -5 }, { x: 8, z: -10 }, { x: 0, z: -15 },
+                { x: -12, z: 25 }, { x: 12, z: 22 }, { x: 5, z: 28 }, { x: -5, z: 20 },
+                { x: -15, z: 0 }, { x: 15, z: 5 }, { x: -3, z: -20 }
+            ];
+
+            coinPositions.forEach((pos, i) => {
+                const coin = document.createElement('a-entity');
+                coin.setAttribute('mixin', 'coin');
+                coin.setAttribute('position', { x: pos.x, y: 1, z: pos.z });
+                coin.setAttribute('rotation', '90 0 0');
+                coin.setAttribute('data-id', i);
+                coin.setAttribute('class', 'coin');
+                coin.setAttribute('animation', 'property: rotation; from: 90 0 0; to: 90 360 0; dur: 2000; loop: true; easing: linear');
+                container.appendChild(coin);
+            });
+        }
+
+        // Generate spikes
+        function generateSpikes() {
+            const container = document.querySelector('#spikes-container');
+            const spikePositions = [
+                // Spike field in middle (shortcut through but costs coins)
+                { x: 0, z: 10 }, { x: 2, z: 10 }, { x: -2, z: 10 },
+                { x: 0, z: 8 }, { x: 2, z: 8 }, { x: -2, z: 8 },
+
+                // Another spike field
+                { x: 5, z: -5 }, { x: 7, z: -5 }, { x: 3, z: -5 },
+
+                // Spikes blocking direct path (use as shortcut)
+                { x: -3, z: 20 }, { x: 3, z: 20 },
+
+                // Near finish
+                { x: -8, z: 28 }, { x: 8, z: 28 }
+            ];
+
+            spikePositions.forEach((pos, i) => {
+                const spike = document.createElement('a-entity');
+                spike.setAttribute('mixin', 'spike');
+                spike.setAttribute('position', { x: pos.x, y: 0.5, z: pos.z });
+                spike.setAttribute('data-id', i);
+                spike.setAttribute('class', 'spike');
+                spike.setAttribute('animation', 'property: position; from: ' + pos.x + ' 0.5 ' + pos.z + '; to: ' + pos.x + ' 0.7 ' + pos.z + '; dur: 1000; dir: alternate; loop: true');
+                container.appendChild(spike);
+            });
+        }
+
+        // Player Controller Component
+        AFRAME.registerComponent('player-runner', {
+            init: function () {
+                this.keys = { w: false, a: false, s: false, d: false };
+                this.player = document.querySelector('#camera-rig');
+
+                // Keyboard events
+                document.addEventListener('keydown', (e) => {
+                    if (e.key.toLowerCase() in this.keys) {
+                        this.keys[e.key.toLowerCase()] = true;
+                    }
+                });
+
+                document.addEventListener('keyup', (e) => {
+                    if (e.key.toLowerCase() in this.keys) {
+                        this.keys[e.key.toLowerCase()] = false;
+                    }
+                });
+
+                // Game loop
+                this.el.sceneEl.addEventListener('tick', () => {
+                    if (window.gameState.isPlaying && !window.gameState.isGameOver && !window.gameState.isWin) {
+                        this.update();
+                    }
+                });
+            },
+
+            update: function () {
+                const pos = this.player.getAttribute('position');
+
+                // Movement
+                let dx = 0, dz = 0;
+                if (this.keys.w) dz -= window.gameState.moveSpeed;
+                if (this.keys.s) dz += window.gameState.moveSpeed;
+                if (this.keys.a) dx -= window.gameState.moveSpeed;
+                if (this.keys.d) dx += window.gameState.moveSpeed;
+
+                // Boundary check
+                const newX = pos.x + dx;
+                const newZ = pos.z + dz;
+
+                if (newX > -24 && newX < 24) pos.x = newX;
+                if (newZ > -39 && newZ < 39) pos.z = newZ;
+
+                this.player.setAttribute('position', pos);
+
+                // Update timer
+                window.gameState.timeRemaining = window.gameState.timeLimit - Math.floor((Date.now() - window.gameState.startTime) / 1000);
+                document.getElementById('timer').textContent = '⏱️ ' + window.gameState.timeRemaining + 's';
+
+                if (window.gameState.timeRemaining <= 0) {
+                    this.gameOver();
+                    return;
+                }
+
+                // Check coin collection
+                this.checkCoinCollection(pos);
+
+                // Check spike collision
+                this.checkSpikeCollision(pos);
+
+                // Check finish
+                this.checkFinish(pos);
+            },
+
+            checkCoinCollection: function (pos) {
+                const coins = document.querySelectorAll('.coin');
+                coins.forEach(coin => {
+                    if (!coin.getAttribute('visible')) return;
+
+                    const coinPos = coin.getAttribute('position');
+                    const dx = pos.x - coinPos.x;
+                    const dz = pos.z - coinPos.z;
+                    const dist = Math.sqrt(dx * dx + dz * dz);
+
+                    if (dist < 1.2) {
+                        const coinId = coin.getAttribute('data-id');
+                        if (!window.gameState.coinsCollected.includes(coinId)) {
+                            window.gameState.coinsCollected.push(coinId);
+                            window.gameState.coins++;
+
+                            document.getElementById('coins').textContent = '🪙 ' + window.gameState.coins;
+                            coin.setAttribute('visible', false);
+
+                            this.showMessage('+1 🪙', '#ffd700');
+                        }
+                    }
+                });
+            },
+
+            checkSpikeCollision: function (pos) {
+                const spikes = document.querySelectorAll('.spike');
+                spikes.forEach(spike => {
+                    const spikePos = spike.getAttribute('position');
+                    const dx = pos.x - spikePos.x;
+                    const dz = pos.z - spikePos.z;
+                    const dist = Math.sqrt(dx * dx + dz * dz);
+
+                    if (dist < 1.0) {
+                        this.hitSpike();
+                    }
+                });
+            },
+
+            hitSpike: function () {
+                // Check if player has enough coins
+                if (window.gameState.coins >= window.gameState.spikePenalty) {
+                    // Lose coins
+                    window.gameState.coins -= window.gameState.spikePenalty;
+
+                    // Remove collected coins visually
+                    const collectedIds = window.gameState.coinsCollected.slice(-window.gameState.spikePenalty);
+                    collectedIds.forEach(id => {
+                        const coin = document.querySelector('.coin[data-id="' + id + '"]');
+                        if (coin) {
+                            coin.setAttribute('visible', true);
+                            window.gameState.coinsCollected = window.gameState.coinsCollected.filter(c => c !== id);
+                        }
+                    });
+
+                    document.getElementById('coins').textContent = '🪙 ' + window.gameState.coins;
+                    this.showMessage('-2 🪙 (shortcut!)', '#ff6600');
+
+                    // Push player back slightly
+                    const pos = this.player.getAttribute('position');
+                    pos.z -= 2;
+                    this.player.setAttribute('position', pos);
+                } else {
+                    // Not enough coins - lose a life
+                    window.gameState.lives--;
+                    document.getElementById('lives').textContent = '❤️'.repeat(window.gameState.lives);
+
+                    this.showMessage('❤️ -1 LIFE!', '#ff3366');
+
+                    // Respawn
+                    this.respawnPlayer();
+
+                    if (window.gameState.lives <= 0) {
+                        this.gameOver();
+                    }
+                }
+            },
+
+            respawnPlayer: function () {
+                const spawn = window.gameState.spawnPoint;
+                this.player.setAttribute('position', spawn);
+            },
+
+            checkFinish: function (pos) {
+                if (pos.z > 28 && pos.z < 32 && Math.abs(pos.x) < 10) {
+                    this.winGame();
+                }
+            },
+
+            showMessage: function (text, color) {
+                const msg = document.getElementById('message');
+                msg.textContent = text;
+                msg.style.color = color;
+                msg.style.textShadow = '0 0 20px ' + color;
+                msg.classList.add('visible');
+
+                setTimeout(() => {
+                    msg.classList.remove('visible');
+                }, 1000);
+            },
+
+            gameOver: function () {
+                window.gameState.isGameOver = true;
+                window.gameState.isPlaying = false;
+
+                document.getElementById('final-coins').textContent = window.gameState.coins;
+                document.getElementById('game-over').style.display = 'block';
+            },
+
+            winGame: function () {
+                window.gameState.isWin = true;
+                window.gameState.isPlaying = false;
+
+                document.getElementById('final-time').textContent = window.gameState.timeRemaining;
+                document.getElementById('final-coins-win').textContent = window.gameState.coins;
+                document.getElementById('win-screen').style.display = 'block';
+            }
+        });
+
+        // Game control functions
+        window.startGame = function () {
+            document.getElementById('start-screen').style.display = 'none';
+
+            // Generate level
+            generateCoins();
+            generateSpikes();
+
+            window.resetGame();
+        };
+
+        window.resetGame = function () {
+            window.gameState.coins = 0;
+            window.gameState.lives = 3;
+            window.gameState.timeRemaining = window.gameState.timeLimit;
+            window.gameState.startTime = Date.now();
+            window.gameState.isGameOver = false;
+            window.gameState.isWin = false;
+            window.gameState.isPlaying = true;
+            window.gameState.coinsCollected = [];
+
+            // Reset UI
+            document.getElementById('coins').textContent = '🪙 0';
+            document.getElementById('timer').textContent = '⏱️ ' + window.gameState.timeLimit + 's';
+            document.getElementById('lives').textContent = '❤️❤️❤️';
+            document.getElementById('game-over').style.display = 'none';
+            document.getElementById('win-screen').style.display = 'none';
+
+            // Reset player position
+            const player = document.querySelector('#camera-rig');
+            player.setAttribute('position', window.gameState.spawnPoint);
+
+            // Reset coins visibility
+            document.querySelectorAll('.coin').forEach(coin => {
+                coin.setAttribute('visible', true);
+            });
+        };
+
+        window.restartGame = function () {
+            // Clear and regenerate
+            const coinsContainer = document.querySelector('#coins-container');
+            while (coinsContainer.firstChild) coinsContainer.removeChild(coinsContainer.firstChild);
+
+            const spikesContainer = document.querySelector('#spikes-container');
+            while (spikesContainer.firstChild) spikesContainer.removeChild(spikesContainer.firstChild);
+
+            generateCoins();
+            generateSpikes();
+
+            document.getElementById('game-over').style.display = 'none';
+            document.getElementById('win-screen').style.display = 'none';
+            window.resetGame();
+        };
+    </script>
+</body>
+
+</html>

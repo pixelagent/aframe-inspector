@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Blaster - Example Game</title>
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  <script>
+    // Initialize game state
+    window.gameState = {
+      score: 0,
+      targets: [],
+      isPlaying: false,
+      spawnInterval: null
+    };
+
+    // Shoot behavior - click on target to score points
+    AFRAME.registerComponent('shoot-target', {
+      schema: {
+        points: { type: 'number', default: 10 }
+      },
+      init: function () {
+        const el = this.el;
+        const points = this.data.points;
+
+        // Add click listener for shooting
+        el.addEventListener('click', function () {
+          // Increase score
+          window.gameState.score = (window.gameState.score || 0) + points;
+
+          // Update score display
+          const scoreDisplay = document.querySelector('#scoreText');
+          if (scoreDisplay) {
+            scoreDisplay.setAttribute('text', 'value', 'Score: ' + window.gameState.score);
+          }
+
+          // Play hit animation
+          el.emit('hit');
+
+          // Play sound effect (visual feedback with color change)
+          const material = el.getAttribute('material');
+          el.setAttribute('material', 'color', '#FF0000');
+
+          // Respawn target after delay
+          setTimeout(() => {
+            respawnTarget(el);
+          }, 500);
+        });
+
+        // Hover effects
+        el.addEventListener('mouseenter', function () {
+          el.setAttribute('scale', '1.2 1.2 1.2');
+        });
+
+        el.addEventListener('mouseleave', function () {
+          el.setAttribute('scale', '1 1 1');
+        });
+      }
+    });
+
+    // Respawn target at random position
+    function respawnTarget(el) {
+      const x = (Math.random() - 0.5) * 20;
+      const y = Math.random() * 5 + 1;
+      const z = -5 - Math.random() * 10;
+
+      el.setAttribute('position', { x: x, y: y, z: z });
+      el.setAttribute('material', 'color', '#EF2D5E');
+      el.setAttribute('visible', true);
+    }
+
+    // Moving target animation
+    AFRAME.registerComponent('float-animation', {
+      schema: {
+        speed: { type: 'number', default: 1 },
+        amplitude: { type: 'number', default: 0.5 }
+      },
+      init: function () {
+        this.startY = this.el.object3D.position.y;
+        this.time = Math.random() * Math.PI * 2;
+      },
+      tick: function (time, delta) {
+        this.time += delta * 0.001 * this.data.speed;
+        const newY = this.startY + Math.sin(this.time) * this.data.amplitude;
+        this.el.object3D.position.y = newY;
+      }
+    });
+
+    // Start game button behavior
+    AFRAME.registerComponent('start-game', {
+      init: function () {
+        const el = this.el;
+
+        el.addEventListener('click', function () {
+          // Hide start screen
+          document.querySelector('#startScreen').setAttribute('visible', false);
+
+          // Initialize score
+          window.gameState.score = 0;
+          window.gameState.isPlaying = true;
+
+          // Update score display
+          const scoreDisplay = document.querySelector('#scoreText');
+          if (scoreDisplay) {
+            scoreDisplay.setAttribute('text', 'value', 'Score: 0');
+          }
+
+          // Show game targets
+          document.querySelectorAll('.target').forEach(function (target) {
+            target.setAttribute('visible', true);
+          });
+        });
+      }
+    });
+
+    // Spawner - creates new targets periodically
+    AFRAME.registerComponent('target-spawner', {
+      schema: {
+        interval: { type: 'number', default: 3000 }
+      },
+      init: function () {
+        this.spawnTarget();
+        this.intervalId = setInterval(() => this.spawnTarget(), this.data.interval);
+      },
+      spawnTarget: function () {
+        const scene = this.el.sceneEl;
+        const targets = scene.querySelectorAll('.target');
+
+        // Find hidden target to respawn
+        for (let target of targets) {
+          if (!target.getAttribute('visible')) {
+            respawnTarget(target);
+            break;
+          }
+        }
+      },
+      remove: function () {
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+        }
+      }
+    });
+
+    // Raycaster cursor for shooting
+    AFRAME.registerComponent('shooter-cursor', {
+      init: function () {
+        this.el.addEventListener('click', function (evt) {
+          // Visual feedback for shot
+          const cursor = document.querySelector('#cursor');
+          if (cursor) {
+            cursor.setAttribute('material', 'color', '#FFFF00');
+            setTimeout(() => {
+              cursor.setAttribute('material', 'color', '#FF9');
+            }, 100);
+          }
+        });
+      }
+    });
+
+    // Player movement with WASD
+    AFRAME.registerComponent('player-mover', {
+      init: function () {
+        this.keys = {};
+
+        window.addEventListener('keydown', (e) => {
+          this.keys[e.key.toLowerCase()] = true;
+        });
+
+        window.addEventListener('keyup', (e) => {
+          this.keys[e.key.toLowerCase()] = false;
+        });
+      },
+      tick: function (time, delta) {
+        if (!window.gameState.isPlaying) return;
+
+        const speed = 0.05;
+        const el = this.el;
+        const position = el.getAttribute('position');
+
+        if (this.keys['a'] || this.keys['arrowleft']) {
+          position.x = Math.max(position.x - speed, -10);
+        }
+        if (this.keys['d'] || this.keys['arrowright']) {
+          position.x = Math.min(position.x + speed, 10);
+        }
+        if (this.keys['w'] || this.keys['arrowup']) {
+          position.y = Math.min(position.y + speed, 8);
+        }
+        if (this.keys['s'] || this.keys['arrowdown']) {
+          position.y = Math.max(position.y - speed, 0.5);
+        }
+
+        el.setAttribute('position', position);
+      }
+    });
+
+    // Laser beam effect
+    AFRAME.registerComponent('laser-shooter', {
+      init: function () {
+        this.el.addEventListener('click', function () {
+          const scene = document.querySelector('a-scene');
+          const camera = document.querySelector('#camera');
+
+          // Create laser beam
+          const laser = document.createElement('a-entity');
+          const camPos = camera.object3D.getWorldPosition(new THREE.Vector3());
+          const camDir = new THREE.Vector3(0, 0, -1);
+          camDir.applyQuaternion(camera.object3D.quaternion);
+
+          laser.setAttribute('geometry', 'primitive: cylinder; radius: 0.02; height: 20');
+          laser.setAttribute('material', 'color: #00FF00; emissive: #00FF00; shader: flat');
+          laser.setAttribute('position', {
+            x: camPos.x + camDir.x * 10,
+            y: camPos.y + camDir.y * 10,
+            z: camPos.z + camDir.z * 10
+          });
+          laser.setAttribute('rotation', {
+            x: camera.getAttribute('rotation').x,
+            y: camera.getAttribute('rotation').y,
+            z: camera.getAttribute('rotation').z
+          });
+
+          scene.appendChild(laser);
+
+          // Remove laser after short delay
+          setTimeout(() => {
+            scene.removeChild(laser);
+          }, 100);
+        });
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <a-scene background="color: #1a1a2e">
+    <!-- Assets -->
+    <a-assets>
+      <a-mixin id="target" geometry="primitive: sphere; radius: 0.5"
+        material="color: #EF2D5E; metalness: 0.5; roughness: 0.3" class="target" visible="false"
+        shoot-target="points: 10" float-animation="speed: 1; amplitude: 0.3"></a-mixin>
+    </a-assets>
+
+    <!-- Environment -->
+    <a-sky color="#0f0f23"></a-sky>
+
+    <!-- Ground -->
+    <a-plane position="0 0 -10" rotation="-90 0 0" width="30" height="30"
+      material="color: #16213e; metalness: 0.2; roughness: 0.8" shadow="receive: true"></a-plane>
+
+    <!-- Grid floor effect -->
+    <a-entity id="grid" Floor position="0 0.01 -10">
+      <a-plane rotation="-90 0 0" width="30" height="30" material="src: https://aframe.io/sample-assets/assets/images/grid.png; 
+                        repeat: 15 15; transparent: true; opacity: 0.3; color: #4cc3d9"></a-plane>
+    </a-entity>
+
+    <!-- Stars background -->
+    <a-entity id="stars" position="0 0 -20">
+      <a-sphere position="-8 6 -5" radius="0.05" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="7 8 -3" radius="0.08" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="-5 10 -8" radius="0.06" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="10 5 -6" radius="0.07" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="-3 12 -10" radius="0.05" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="4 9 -12" radius="0.09" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="-10 7 -4" radius="0.06" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+      <a-sphere position="8 11 -9" radius="0.05" material="color: #FFF; emissive: #FFF; shader: flat"></a-sphere>
+    </a-entity>
+
+    <!-- Score Display -->
+    <a-entity id="scoreText" position="0 4 -5"
+      text="value: Score: 0; color: #00FF00; align: center; width: 10"></a-entity>
+
+    <!-- Instructions -->
+    <a-entity id="instructions" position="0 3.5 -5"
+      text="value: Click targets to shoot! WASD to move; color: #AAAAAA; align: center; width: 6"></a-entity>
+
+    <!-- Start Screen -->
+    <a-entity id="startScreen" position="0 2 -3" visible="true">
+      <a-plane width="4" height="2" color="#000" opacity="0.8"></a-plane>
+      <a-text value="BLASTER" position="0 0.5 0.01" align="center" color="#00FF00" width="8"></a-text>
+      <a-text value="Click to Start" position="0 -0.2 0.01" align="center" color="#FFFFFF" width="4"></a-text>
+      <a-entity id="startButton" start-game position="0 -0.2 0.02" geometry="primitive: plane; width: 2; height: 0.5"
+        material="color: #4CC3D9" class="clickable"></a-entity>
+    </a-entity>
+
+    <!-- Targets -->
+    <a-entity mixin="target" position="-3 2 -6" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="2 3 -7" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="-1 4 -8" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="4 2.5 -9" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="-5 3 -10" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="0 5 -12" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="3 4 -11" class="target" visible="false"></a-entity>
+    <a-entity mixin="target" position="-2 6 -14" class="target" visible="false"></a-entity>
+
+    <!-- Target Spawner -->
+    <a-entity target-spawner="interval: 4000"></a-entity>
+
+    <!-- Player Gun Model -->
+    <a-entity id="playerGun" position="0.3 -0.3 -0.5" rotation="0 0 0">
+      <a-box width="0.1" height="0.1" depth="0.3" color="#333"></a-box>
+      <a-box width="0.08" height="0.08" depth="0.2" color="#666" position="0 0 -0.15"></a-box>
+      <a-cylinder radius="0.03" height="0.15" color="#222" position="0 0.08 0" rotation="0 0 0"></a-cylinder>
+    </a-entity>
+
+    <!-- Lighting -->
+    <a-light type="ambient" color="#404060" intensity="0.5"></a-light>
+    <a-light type="point" color="#4CC3D9" intensity="0.8" position="0 5 0"></a-light>
+    <a-light type="point" color="#EF2D5E" intensity="0.5" position="-5 3 -5"></a-light>
+    <a-light type="point" color="#00FF00" intensity="0.3" position="5 3 -5"></a-light>
+
+    <!-- Camera Rig -->
+    <a-entity id="cameraRig" position="0 1.6 0" player-mover>
+      <a-entity id="camera" camera look-controls="pointerLockEnabled: false" wasd-controls="enabled: false">
+        <!-- Cursor -->
+        <a-entity id="cursor" position="0 0 -2" geometry="primitive: ring; radiusOuter: 0.02; radiusInner: 0.01"
+          material="color: #FF9; shader: flat; transparent: true; opacity: 0.8" raycaster="objects: .target, .clickable"
+          shooter-cursor>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+  </a-scene>
+  <script>
+    // Configure the inspector to not auto-open on example/game pages
+    window.AFRAME_INSPECTOR_CONFIG = {
+      exampleMode: true
+    };
+  </script>
+  <script src="../../dist/aframe-inspector.js"></script>
+</body>
+
+</html>

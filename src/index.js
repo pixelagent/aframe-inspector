@@ -89,7 +89,11 @@ Inspector.prototype = {
     });
 
     this.scene.add(this.sceneHelpers);
-    this.open();
+    // Only auto-open the inspector if not in example mode
+    // Examples should run without the inspector interfering
+    if (!this.config.exampleMode) {
+      this.open();
+    }
   },
 
   removeObject: function (object) {

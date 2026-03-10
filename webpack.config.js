@@ -2,9 +2,9 @@ var path = require('path');
 
 module.exports = {
   devServer: {
-    hot: true,
-    liveReload: false,
-    port: 3333,
+    hot: false,
+    liveReload: true,
+    port: 5555,
     static: {
       directory: '.'
     }

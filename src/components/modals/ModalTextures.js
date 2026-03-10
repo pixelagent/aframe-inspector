@@ -8,7 +8,9 @@ import {
   getFilename,
   getIdFromUrl,
   insertNewAsset,
-  isValidId
+  isValidId,
+  isBlobUrl,
+  blobUrlToDownloadableUrl
 } from '../../lib/assetsUtils';
 
 export default class ModalTextures extends React.Component {
@@ -27,7 +29,7 @@ export default class ModalTextures extends React.Component {
       registryImages: [],
       addNewDialogOpened: false,
       newUrl: '',
-      activeTab: 'textures', // 'textures', 'classes', 'models', or 'assets'
+      activeTab: 'textures', // 'textures', 'classes', 'models', 'assets', or 'javascript'
       preview: {
         width: 0,
         height: 0,
@@ -129,6 +131,64 @@ export default class ModalTextures extends React.Component {
         });
         image.src = asset.src;
       });
+
+    // Also check for blob URLs in the scene elements
+    const scene = AFRAME.INSPECTOR.sceneEl;
+    if (scene) {
+      // Find all elements with texture/src attributes that might be blob URLs
+      const elementsWithSrc = scene.querySelectorAll('[src], [material]');
+      elementsWithSrc.forEach((el) => {
+        const src = el.getAttribute('src');
+        if (src && isBlobUrl(src)) {
+          // Try to load blob URL for preview
+          const img = new Image();
+          img.addEventListener('load', () => {
+            // Check if we already have this blob URL in the list
+            const existingIndex = self.state.assetsImages.findIndex(a => a.src === src);
+            if (existingIndex === -1) {
+              self.state.assetsImages.push({
+                id: 'blob-' + Date.now(),
+                src: img.src, // This will be the blob URL
+                width: img.width,
+                height: img.height,
+                name: 'Blob Asset',
+                type: 'blob',
+                value: src
+              });
+              self.setState({ assetsImages: self.state.assetsImages.slice() });
+            }
+          });
+          img.src = src;
+        }
+
+        // Check material component for textures
+        const material = el.getAttribute('material');
+        if (material && typeof material === 'object') {
+          Object.keys(material).forEach(key => {
+            const value = material[key];
+            if (typeof value === 'string' && isBlobUrl(value)) {
+              const img = new Image();
+              img.addEventListener('load', () => {
+                const existingIndex = self.state.assetsImages.findIndex(a => a.src === value);
+                if (existingIndex === -1) {
+                  self.state.assetsImages.push({
+                    id: 'blob-' + Date.now(),
+                    src: img.src,
+                    width: img.width,
+                    height: img.height,
+                    name: 'Blob Texture',
+                    type: 'blob',
+                    value: value
+                  });
+                  self.setState({ assetsImages: self.state.assetsImages.slice() });
+                }
+              });
+              img.src = value;
+            }
+          });
+        }
+      });
+    }
   };
 
   onNewUrl = (event) => {
@@ -137,6 +197,47 @@ export default class ModalTextures extends React.Component {
     }
 
     var self = this;
+    var inputUrl = event.target.value;
+
+    // Check if it's a blob URL and handle it specially
+    if (isBlobUrl(inputUrl)) {
+      blobUrlToDownloadableUrl(inputUrl)
+        .then(({ url, filename }) => {
+          // Use the converted URL
+          self.preview.current.addEventListener('load', function onImageLoaded() {
+            self.preview.current.removeEventListener('load', onImageLoaded);
+            var src = self.preview.current.src;
+            var name = getFilename(src, true);
+            var existingAssetId = getIdFromUrl(src);
+            if (existingAssetId) {
+              name = existingAssetId;
+            }
+            self.setState({
+              preview: {
+                width: self.preview.current.naturalWidth,
+                height: self.preview.current.naturalHeight,
+                src: src,
+                id: '',
+                name: name,
+                filename: filename,
+                type: existingAssetId ? 'asset' : 'new',
+                loaded: true,
+                value: 'url(' + src + ')',
+                isBlob: true,
+                originalBlobUrl: inputUrl
+              }
+            });
+            self.imageName.current.focus();
+          });
+          self.preview.current.src = url;
+        })
+        .catch(error => {
+          console.error('Error converting blob URL:', error);
+          alert('Could not load blob URL. The URL may be invalid or inaccessible.');
+        });
+      return;
+    }
+
     function onImageLoaded(img) {
       var src = self.preview.current.src;
       var name = getFilename(src, true);
@@ -217,6 +318,46 @@ export default class ModalTextures extends React.Component {
       return;
     }
 
+    // If this is a converted blob, we need to handle it specially
+    if (this.state.preview.isBlob && this.state.preview.originalBlobUrl) {
+      // Convert blob to data URL and save as asset
+      blobUrlToDownloadableUrl(this.state.preview.originalBlobUrl)
+        .then(({ url }) => {
+          // Create an image element to get the data
+          const img = new Image();
+          img.onload = () => {
+            // Create a canvas to convert to data URL
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            // Convert to data URL
+            const dataUrl = canvas.toDataURL('image/png');
+
+            // Insert as new asset with data URL
+            insertNewAsset(
+              'img',
+              this.state.preview.name,
+              dataUrl,
+              () => {
+                this.generateFromAssets();
+                this.setState({ addNewDialogOpened: false });
+                this.clear();
+                alert(`Texture "${this.state.preview.name}" has been added to the gallery!`);
+              }
+            );
+          };
+          img.src = url;
+        })
+        .catch(error => {
+          console.error('Error saving blob texture:', error);
+          alert('Could not save texture. The blob may be invalid.');
+        });
+      return;
+    }
+
     insertNewAsset(
       'img',
       this.state.preview.name,
@@ -269,6 +410,13 @@ export default class ModalTextures extends React.Component {
           <AwesomeIcon icon={faFile} />
           Assets
         </button>
+        <button
+          className={`settings-tab ${this.state.activeTab === 'javascript' ? 'active' : ''}`}
+          onClick={() => this.setActiveTab('javascript')}
+        >
+          <AwesomeIcon icon={faCode} />
+          JavaScript
+        </button>
       </div>
     );
   }
@@ -314,13 +462,13 @@ export default class ModalTextures extends React.Component {
           <h3>CSS Classes in Scene</h3>
           <p>Add, edit, or remove CSS classes for your elements.</p>
         </div>
-        
+
         <div className="classes-actions">
           <button className="add-class-btn" onClick={this.addNewClass}>
             <AwesomeIcon icon={faPlus} /> Add Class
           </button>
         </div>
-        
+
         <div className="classes-list">
           {allClasses.length === 0 ? (
             <p className="no-classes">No classes found. Click "Add Class" to create one.</p>
@@ -333,15 +481,15 @@ export default class ModalTextures extends React.Component {
                     ({customClassList.includes(className) ? 'custom' : `${this.getClassUsageCount(className)} elements`})
                   </span>
                   <div className="class-item-actions">
-                    <button 
-                      className="class-edit" 
+                    <button
+                      className="class-edit"
                       onClick={() => this.editClass(className)}
                       title="Edit CSS properties"
                     >
                       <AwesomeIcon icon={faEdit} />
                     </button>
-                    <button 
-                      className="class-delete" 
+                    <button
+                      className="class-delete"
                       onClick={() => this.deleteClass(className)}
                       title="Delete class from all elements"
                     >
@@ -377,14 +525,14 @@ export default class ModalTextures extends React.Component {
   addNewClass = () => {
     const className = prompt('Enter new CSS class name:');
     if (!className) return;
-    
+
     // Validate class name
     const validClassName = /^[a-zA-Z][a-zA-Z0-9_-]*$/;
     if (!validClassName.test(className)) {
       alert('Invalid class name. Must start with a letter and contain only letters, numbers, hyphens, and underscores.');
       return;
     }
-    
+
     // Create a style element for this class if it doesn't exist
     let styleEl = document.getElementById('custom-css-styles');
     if (!styleEl) {
@@ -392,11 +540,11 @@ export default class ModalTextures extends React.Component {
       styleEl.id = 'custom-css-styles';
       document.head.appendChild(styleEl);
     }
-    
+
     // Add empty CSS rule for this class
     const currentStyles = styleEl.textContent || '';
     styleEl.textContent = currentStyles + `\n.${className} { }`;
-    
+
     // Refresh the classes list
     this.setState({});
   };
@@ -406,7 +554,7 @@ export default class ModalTextures extends React.Component {
     // Get current CSS properties for this class
     let styleEl = document.getElementById('custom-css-styles');
     let currentProps = '';
-    
+
     if (styleEl) {
       // Try to extract existing properties
       const match = styleEl.textContent.match(new RegExp(`\\.${className}\\s*\\{([^}]*)\\}`));
@@ -414,35 +562,35 @@ export default class ModalTextures extends React.Component {
         currentProps = match[1].trim();
       }
     }
-    
+
     // Prompt for new CSS properties
     const newProps = prompt(`Edit CSS properties for .${className}:\n\nEnter in format: property: value;\nExample: background-color: red; color: white;`, currentProps);
-    
+
     if (newProps === null) return; // Cancelled
-    
+
     // Validate the CSS properties format
     if (newProps && !newProps.includes(':')) {
       alert('Invalid format. Use: property: value;');
       return;
     }
-    
+
     // Update or create the style element
     if (!styleEl) {
       styleEl = document.createElement('style');
       styleEl.id = 'custom-css-styles';
       document.head.appendChild(styleEl);
     }
-    
+
     let currentStyles = styleEl.textContent || '';
-    
+
     // Remove existing rule for this class
     currentStyles = currentStyles.replace(new RegExp(`\\.${className}\\s*\\{[^}]*\\}`, 'g'), '');
-    
+
     // Add new rule
     if (newProps.trim()) {
       currentStyles = currentStyles.trim() + `\n.${className} { ${newProps} }`;
     }
-    
+
     styleEl.textContent = currentStyles;
     this.setState({});
   };
@@ -450,7 +598,7 @@ export default class ModalTextures extends React.Component {
   // Delete a CSS class (removes from all elements and from style element)
   deleteClass = (className) => {
     if (!confirm(`Are you sure you want to delete the class "${className}"?`)) return;
-    
+
     // First, remove from all elements in the scene
     const scene = AFRAME.INSPECTOR.sceneEl;
     if (scene) {
@@ -466,7 +614,7 @@ export default class ModalTextures extends React.Component {
         }
       });
     }
-    
+
     // Also remove the CSS rule from the style element if it exists
     const styleEl = document.getElementById('custom-css-styles');
     if (styleEl && styleEl.textContent) {
@@ -475,7 +623,7 @@ export default class ModalTextures extends React.Component {
       currentStyles = currentStyles.replace(new RegExp(`\\.?${className}\\s*\\{[^}]*\\}`, 'g'), '');
       styleEl.textContent = currentStyles;
     }
-    
+
     this.setState({});
   };
 
@@ -499,7 +647,7 @@ export default class ModalTextures extends React.Component {
   // Download a model file
   downloadModel = async (model) => {
     let url = model.src;
-    
+
     // If it's an asset reference, try to get the actual URL from the asset
     if (url.startsWith('#')) {
       const assetId = url.substring(1);
@@ -516,10 +664,10 @@ export default class ModalTextures extends React.Component {
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch model');
-      
+
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
-      
+
       const a = document.createElement('a');
       a.href = blobUrl;
       a.download = this.getModelName(url) + '.' + (url.split('.').pop() || 'glb');
@@ -537,12 +685,12 @@ export default class ModalTextures extends React.Component {
   addNewModel = () => {
     const id = prompt('Enter ID for new model asset:');
     if (!id) return;
-    
+
     if (!isValidId(id)) {
       alert('Invalid ID. IDs must start with a letter and contain only letters, numbers, and hyphens.');
       return;
     }
-    
+
     if (document.getElementById(id)) {
       alert('An element with this ID already exists.');
       return;
@@ -562,14 +710,14 @@ export default class ModalTextures extends React.Component {
     newAsset.setAttribute('id', id);
     newAsset.setAttribute('src', src);
     assets.appendChild(newAsset);
-    
+
     this.setState({});
   };
 
   // Delete a model from a-assets
   deleteModelAsset = (modelName) => {
     if (!confirm(`Are you sure you want to delete the model "${modelName}"?`)) return;
-    
+
     const scene = AFRAME.INSPECTOR.sceneEl;
     const asset = scene.querySelector(`a-assets > #${modelName}`);
     if (asset) {
@@ -592,11 +740,11 @@ export default class ModalTextures extends React.Component {
             const name = modelData.name || modelData.src || `model-${idx + 1}`;
             const src = modelData.src || '';
             if (src && !models.find(m => m.src === src && m.name === name)) {
-              models.push({ 
-                type: 'modal-array', 
-                src: src, 
+              models.push({
+                type: 'modal-array',
+                src: src,
                 name: name,
-                element: el.tagName 
+                element: el.tagName
               });
             }
           });
@@ -665,13 +813,13 @@ export default class ModalTextures extends React.Component {
           <h3>3D Models in Scene</h3>
           <p>These models are used by elements in your scene.</p>
         </div>
-        
+
         <div className="models-actions">
           <button className="add-model-btn" onClick={this.addNewModel}>
             <AwesomeIcon icon={faPlus} /> Add Model
           </button>
         </div>
-        
+
         <div className="models-list">
           {models.length === 0 ? (
             <p className="no-models">No models found in the scene.</p>
@@ -688,16 +836,16 @@ export default class ModalTextures extends React.Component {
                     <span className="model-type">{model.type} ({model.element})</span>
                   </div>
                   <div className="model-actions">
-                    <button 
-                      className="model-download" 
+                    <button
+                      className="model-download"
                       onClick={() => this.downloadModel(model)}
                       title="Download model"
                     >
                       <AwesomeIcon icon={faDownload} />
                     </button>
                     {model.type === 'asset' && (
-                      <button 
-                        className="model-delete" 
+                      <button
+                        className="model-delete"
                         onClick={() => this.deleteModelAsset(model.name)}
                         title="Delete model asset"
                       >
@@ -734,12 +882,12 @@ export default class ModalTextures extends React.Component {
   addNewAsset = (assetType) => {
     const id = prompt(`Enter ID for new ${assetType} asset:`);
     if (!id) return;
-    
+
     if (!isValidId(id)) {
       alert('Invalid ID. IDs must start with a letter and contain only letters, numbers, and hyphens.');
       return;
     }
-    
+
     if (document.getElementById(id)) {
       alert('An element with this ID already exists.');
       return;
@@ -810,7 +958,7 @@ export default class ModalTextures extends React.Component {
 
     // Get current outerHTML as a starting point
     const currentHtml = asset.outerHTML;
-    
+
     // Show a prompt with the current HTML and allow editing
     const newHtml = prompt(
       `Edit asset "${assetId}".\n\n` +
@@ -818,19 +966,19 @@ export default class ModalTextures extends React.Component {
       `Enter new HTML for this asset (or press Cancel to keep current):`,
       currentHtml
     );
-    
+
     if (newHtml && newHtml !== currentHtml) {
       try {
         // Create a temporary container to parse the new HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = newHtml;
         const newAsset = tempDiv.firstChild;
-        
+
         if (!newAsset || newAsset.id !== assetId) {
           alert('Error: The ID in the new HTML must remain "' + assetId + '".');
           return;
         }
-        
+
         // Replace the old asset with the new one
         asset.parentNode.replaceChild(newAsset, asset);
         this.setState({});
@@ -845,7 +993,7 @@ export default class ModalTextures extends React.Component {
     // Get all assets from a-assets
     const assets = [];
     const scene = AFRAME.INSPECTOR.sceneEl;
-    
+
     if (scene) {
       const assetsContainer = scene.querySelector('a-assets');
       if (assetsContainer) {
@@ -853,7 +1001,7 @@ export default class ModalTextures extends React.Component {
           const tagName = asset.tagName.toLowerCase();
           let type = 'other';
           let icon = faFile;
-          
+
           if (tagName === 'img') {
             type = 'img';
             icon = faImage;
@@ -870,7 +1018,7 @@ export default class ModalTextures extends React.Component {
             type = 'mixin';
             icon = faCopy;
           }
-          
+
           assets.push({
             id: asset.id,
             type: type,
@@ -887,7 +1035,7 @@ export default class ModalTextures extends React.Component {
           <h3>a-assets Elements</h3>
           <p>Manage assets defined in your scene's &lt;a-assets&gt; element.</p>
         </div>
-        
+
         <div className="assets-actions">
           <button className="add-asset-btn" onClick={() => this.addNewAsset('img')}>
             <AwesomeIcon icon={faPlus} /> Add Image
@@ -922,15 +1070,15 @@ export default class ModalTextures extends React.Component {
                     <span className="asset-src" title={asset.src}>{asset.src}</span>
                   </div>
                   <div className="asset-actions">
-                    <button 
-                      className="asset-edit" 
+                    <button
+                      className="asset-edit"
                       onClick={() => this.editAsset(asset.id, asset.type)}
                       title="Edit asset"
                     >
                       <AwesomeIcon icon={faEdit} />
                     </button>
-                    <button 
-                      className="asset-delete" 
+                    <button
+                      className="asset-delete"
                       onClick={() => this.deleteAsset(asset.id)}
                       title="Delete asset"
                     >
@@ -942,10 +1090,158 @@ export default class ModalTextures extends React.Component {
             </ul>
           )}
         </div>
-        
+
         <div className="assets-help">
           <p>Assets defined here can be referenced using the #id syntax in your scene elements.</p>
           <p>Click the edit button to modify the full HTML of an asset (src, loop, crossorigin, playsinline, etc.).</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Get all script tags from the document
+  getScriptTags() {
+    const scripts = [];
+    document.querySelectorAll('head > script, body > script').forEach((script) => {
+      scripts.push({
+        id: script.id || '',
+        src: script.getAttribute('src') || '',
+        content: script.textContent || '',
+        isInline: !script.getAttribute('src'),
+        type: script.getAttribute('type') || 'text/javascript',
+        element: script
+      });
+    });
+    return scripts;
+  }
+
+  // Add a new script tag
+  addNewScript = () => {
+    const isInline = confirm('Click OK to add an inline script, or Cancel to add an external script.');
+
+    if (isInline) {
+      // Add inline script
+      const id = prompt('Enter ID for the script (optional):');
+      const content = prompt('Enter JavaScript code:');
+      if (content === null) return;
+
+      const script = document.createElement('script');
+      script.id = id || '';
+      script.type = 'text/javascript';
+      script.textContent = content;
+      document.body.appendChild(script);
+    } else {
+      // Add external script
+      const id = prompt('Enter ID for the script (optional):');
+      const src = prompt('Enter URL for the script:');
+      if (!src) return;
+
+      const script = document.createElement('script');
+      script.id = id || '';
+      script.type = 'text/javascript';
+      script.src = src;
+      document.body.appendChild(script);
+    }
+
+    this.setState({});
+  };
+
+  // Edit a script tag
+  editScript = (scriptIndex) => {
+    const scripts = this.getScriptTags();
+    const script = scripts[scriptIndex];
+    if (!script) return;
+
+    if (script.isInline) {
+      // Edit inline script content
+      const newContent = prompt('Edit JavaScript code:', script.content);
+      if (newContent === null) return;
+      script.element.textContent = newContent;
+    } else {
+      // Edit external script (src only)
+      const newSrc = prompt('Edit script URL:', script.src);
+      if (newSrc === null) return;
+      script.element.setAttribute('src', newSrc);
+    }
+
+    this.setState({});
+  };
+
+  // Delete a script tag
+  deleteScript = (scriptIndex) => {
+    const scripts = this.getScriptTags();
+    const script = scripts[scriptIndex];
+    if (!script) return;
+
+    if (!confirm(`Are you sure you want to delete this script?`)) return;
+
+    script.element.remove();
+    this.setState({});
+  };
+
+  renderJavaScriptTab() {
+    const scripts = this.getScriptTags();
+
+    return (
+      <div className="javascript-tab">
+        <div className="javascript-header">
+          <h3>JavaScript in Page</h3>
+          <p>Manage script tags in your HTML. View inline scripts and external JS files.</p>
+        </div>
+
+        <div className="javascript-actions">
+          <button className="add-script-btn" onClick={this.addNewScript}>
+            <AwesomeIcon icon={faPlus} /> Add Script
+          </button>
+        </div>
+
+        <div className="javascript-list">
+          {scripts.length === 0 ? (
+            <p className="no-scripts">No scripts found. Click "Add Script" to add one.</p>
+          ) : (
+            <ul>
+              {scripts.map((script, index) => (
+                <li key={index} className="script-item">
+                  <div className="script-icon">
+                    <AwesomeIcon icon={faCode} />
+                  </div>
+                  <div className="script-info">
+                    <span className="script-name">
+                      {script.id || (script.isInline ? `inline-script-${index + 1}` : `script-${index + 1}`)}
+                    </span>
+                    <span className="script-type">{script.isInline ? 'inline' : 'external'}</span>
+                    {script.isInline ? (
+                      <span className="script-preview" title={script.content}>
+                        {script.content.substring(0, 50)}...
+                      </span>
+                    ) : (
+                      <span className="script-src">{script.src}</span>
+                    )}
+                  </div>
+                  <div className="script-actions">
+                    <button
+                      className="script-edit"
+                      onClick={() => this.editScript(index)}
+                      title="Edit script"
+                    >
+                      <AwesomeIcon icon={faEdit} />
+                    </button>
+                    <button
+                      className="script-delete"
+                      onClick={() => this.deleteScript(index)}
+                      title="Delete script"
+                    >
+                      <AwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="javascript-help">
+          <p>Inline scripts show a preview of their content. External scripts show their URL.</p>
+          <p>Note: The aframe-inspector script is not shown in this list.</p>
         </div>
       </div>
     );
@@ -1133,7 +1429,8 @@ export default class ModalTextures extends React.Component {
                       function (image) {
                         let textureClick = this.selectTexture.bind(this, image);
                         var selectedClass =
-                          this.props.selectedTexture === '#' + image.id
+                          this.props.selectedTexture === '#' + image.id ||
+                            (image.type === 'blob' && this.props.selectedTexture === image.value)
                             ? 'selected'
                             : '';
                         return (
@@ -1161,6 +1458,7 @@ export default class ModalTextures extends React.Component {
           {this.state.activeTab === 'classes' && this.renderClassesTab()}
           {this.state.activeTab === 'models' && this.renderModelsTab()}
           {this.state.activeTab === 'assets' && this.renderAssetsTab()}
+          {this.state.activeTab === 'javascript' && this.renderJavaScriptTab()}
         </div>
       </Modal>
     );

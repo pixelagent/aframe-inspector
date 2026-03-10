@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Events from '../../lib/Events';
-import { getUrlFromId } from '../../lib/assetsUtils';
+import { getUrlFromId, isBlobUrl } from '../../lib/assetsUtils';
 
 export default class TextureWidget extends React.Component {
   static propTypes = {
@@ -38,7 +38,7 @@ export default class TextureWidget extends React.Component {
     var context = canvas.getContext('2d');
 
     function paintPreviewWithImage(image) {
-      var filename = image.src.replace(/^.*[\\/]/, '');
+      var filename = image.src.replace(/^.*[\/]/, '');
       if (image !== undefined && image.width > 0) {
         canvas.title = filename;
         var scale = canvas.width / image.width;
@@ -77,6 +77,8 @@ export default class TextureWidget extends React.Component {
     var isAssetVideo = value instanceof HTMLVideoElement;
     var isAssetCanvas = value instanceof HTMLCanvasElement;
     var isAssetElement = isAssetImg || isAssetVideo || isAssetCanvas;
+    // Check if value is a blob URL
+    var isBlob = isBlobUrl(value);
 
     if (isAssetCanvas) {
       url = null;
@@ -84,13 +86,16 @@ export default class TextureWidget extends React.Component {
       url = value.src;
     } else if (isAssetHash) {
       url = getUrlFromId(value);
+    } else if (isBlob) {
+      // For blob URLs, use the URL directly
+      url = value;
     } else {
       url = AFRAME.utils.srcLoader.parseUrl(value);
     }
 
     var texture = getTextureFromSrc(value);
     var valueType = null;
-    valueType = isAssetElement || isAssetHash ? 'asset' : 'url';
+    valueType = isAssetElement || isAssetHash ? 'asset' : (isBlob ? 'blob' : 'url');
     if (!isAssetVideo && texture) {
       texture.then(paintPreview);
     } else if (!isAssetVideo && url) {
@@ -148,6 +153,14 @@ export default class TextureWidget extends React.Component {
     });
   };
 
+  // Handle click on canvas to convert blob URL to asset
+  onCanvasClick = (e) => {
+    // If this is a blob URL, trigger the conversion flow
+    if (this.state.valueType === 'blob') {
+      this.openDialog();
+    }
+  };
+
   render() {
     let hint = '';
     if (this.state.value) {
@@ -156,6 +169,8 @@ export default class TextureWidget extends React.Component {
         if (this.state.url !== null) {
           hint += '\nURL: ' + this.state.url;
         }
+      } else if (this.state.valueType === 'blob') {
+        hint = 'Blob URL: ' + this.state.value + '\nClick to convert to editable asset';
       } else {
         hint = 'URL: ' + this.state.value;
       }
@@ -176,7 +191,7 @@ export default class TextureWidget extends React.Component {
           width="32"
           height="16"
           title={hint}
-          onClick={this.openDialog}
+          onClick={this.onCanvasClick}
         />
       </span>
     );
