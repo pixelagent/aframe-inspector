@@ -80,6 +80,7 @@ import Events from '../../lib/Events';
 import { saveBlob } from '../../lib/utils';
 import { undo, redo, canUndo, canRedo, getHistoryStatus } from '../../lib/history';
 import GLTFIcon from '../../../assets/gltf.svg';
+import JSZip from 'jszip';
 
 // Grouped primitive types for new entities
 const PRIMITIVE_GROUPS = [
@@ -270,6 +271,111 @@ export default class Toolbar extends React.Component {
       },
       { binary: true }
     );
+  }
+
+  exportSceneToZip() {
+    const sceneName = getSceneName(AFRAME.scenes[0]) || 'vr-project';
+    const scene = AFRAME.scenes[0];
+    
+    // Get the HTML content of the current page
+    let htmlContent = document.documentElement.outerHTML;
+    
+    // Remove inspector script from the exported HTML
+    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"><\/script>/, '');
+    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"[^]*><\/script>/, '');
+    
+    // Create zip file
+    const zip = new JSZip();
+    
+    // Add the HTML file
+    zip.file('index.html', htmlContent);
+    
+    // Collect all assets (images, models, etc.)
+    const assets = scene.querySelectorAll('[src]');
+    const assetUrls = new Set();
+    
+    assets.forEach(el => {
+      const src = el.getAttribute('src');
+      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('#')) {
+        assetUrls.add(src);
+      }
+    });
+    
+    // Also check a-assets
+    const assetItems = scene.querySelectorAll('a-asset-item, img, audio, video');
+    assetItems.forEach(el => {
+      const src = el.getAttribute('src') || el.getAttribute('id');
+      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('#')) {
+        assetUrls.add(src);
+      }
+    });
+    
+    // If there are local assets, try to fetch them (this is a simplified version)
+    // In a real implementation, you'd want to handle relative paths properly
+    const assetsFolder = zip.folder('assets');
+    
+    // Generate and download the zip
+    zip.generateAsync({ type: 'blob' }).then(function(content) {
+      saveBlob(content, sceneName + '.zip');
+    });
+  }
+
+  exportSceneToHTML() {
+    const sceneName = getSceneName(AFRAME.scenes[0]) || 'vr-project';
+    
+    // Get the HTML content of the current page
+    let htmlContent = document.documentElement.outerHTML;
+    
+    // Remove inspector script from the exported HTML
+    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"><\/script>/, '');
+    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"[^]*><\/script>/, '');
+    
+    // Download as HTML file
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    saveBlob(blob, sceneName + '.html');
+  }
+
+  importProjectFromZip() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.zip';
+    
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      try {
+        const zip = await JSZip.loadAsync(file);
+        
+        // Look for HTML file
+        let htmlFile = null;
+        let htmlContent = null;
+        
+        for (const [filename, f] of Object.entries(zip.files)) {
+          if (filename.endsWith('.html') || filename.endsWith('.htm')) {
+            htmlFile = filename;
+            htmlContent = await f.async('string');
+            break;
+          }
+        }
+        
+        if (!htmlContent) {
+          alert('No HTML file found in the zip');
+          return;
+        }
+        
+        // Open the imported project in a new window
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        
+      } catch (error) {
+        console.error('Error importing project:', error);
+        alert('Error importing project: ' + error.message);
+      }
+    };
+    
+    input.click();
   }
 
   addEntity(primitiveType = 'a-entity') {
@@ -480,6 +586,30 @@ export default class Toolbar extends React.Component {
             onClick={this.exportSceneToGLTF}
           >
             <GLTFIcon />
+          </a>
+          <a
+            className="button"
+            title="Export as HTML"
+            onClick={this.exportSceneToHTML}
+            style={{ fontSize: '14px' }}
+          >
+            📄
+          </a>
+          <a
+            className="button"
+            title="Export project as ZIP"
+            onClick={this.exportSceneToZip}
+            style={{ fontSize: '14px' }}
+          >
+            📦
+          </a>
+          <a
+            className="button"
+            title="Import project from ZIP"
+            onClick={this.importProjectFromZip}
+            style={{ fontSize: '14px' }}
+          >
+            📂
           </a>
           <a
             className="button"

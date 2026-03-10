@@ -28,8 +28,7 @@ export const componentHelp = {
       ambientOcclusionMapIntensity: 'Strength of ambient occlusion',
       displacementMap: 'Texture that actually moves vertices',
       displacementScale: 'How much vertices are displaced',
-      envMap: 'Reflection from environment texture',
-      fog: 'Whether material is affected by fog'
+      envMap: 'Reflection from environment texture'
     },
     overview: 'The material component defines how an object looks - its color, texture, transparency, and how it responds to light. Use shaders like "flat" for simple colors or "standard" for realistic lighting with metalness and roughness.'
   },
@@ -206,8 +205,7 @@ export const componentHelp = {
       linearDamping: 'How quickly velocity slows down',
       angularDamping: 'How quickly rotation slows down',
       friction: 'Surface friction',
-      restitution: 'Bounciness (0 = no bounce)',
-      shape: 'Collision geometry type'
+      restitution: 'Bounciness (0 = no bounce)'
     }
   },
 
@@ -238,7 +236,6 @@ export const componentHelp = {
       refDistance: 'Distance where sound is full volume',
       rolloffFactor: 'How fast sound fades',
       distanceModel: 'How distance affects volume',
-      loop: 'Repeat when finished',
       on: 'Event that triggers sound'
     }
   },
@@ -1315,7 +1312,7 @@ export function getComponentFullHelp(componentName) {
   const baseName = componentName.split('__')[0];
   const help = componentHelp[baseName];
   if (!help) return null;
-  
+
   return {
     title: baseName,
     overview: help.overview || `The ${baseName} component adds functionality to entities in your scene.`,

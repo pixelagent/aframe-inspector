@@ -2,7 +2,574 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=examples/">
+    <title>A-Frame Inspector</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        min-height: 100vh;
+        color: #fff;
+        padding: 40px 20px;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #ef4444, #f97316);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .subtitle {
+        text-align: center;
+        color: #94a3b8;
+        margin-bottom: 40px;
+        font-size: 1.1rem;
+      }
+      
+      .actions {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+      }
+      
+      .action-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 200px;
+      }
+      
+      .action-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+        border-color: #ef4444;
+      }
+      
+      .action-card .icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+      
+      .action-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+      
+      .action-card p {
+        color: #94a3b8;
+        font-size: 0.9rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #e2e8f0;
+        border-bottom: 2px solid #ef4444;
+        padding-bottom: 10px;
+        display: inline-block;
+      }
+      
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 50px;
+      }
+      
+      .example-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+      }
+      
+      .example-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #ef4444;
+        transform: translateY(-3px);
+      }
+      
+      .example-card h4 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        color: #f97316;
+      }
+      
+      .example-card p {
+        color: #94a3b8;
+        font-size: 0.85rem;
+      }
+      
+      .saved-projects {
+        margin-bottom: 50px;
+      }
+      
+      .projects-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .project-item {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .project-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      
+      .project-item a {
+        color: #ef4444;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      
+      .project-item a:hover {
+        text-decoration: underline;
+      }
+      
+      .project-item .delete-btn {
+        background: none;
+        border: none;
+        color: #ef4444;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+      
+      .project-item .delete-btn:hover {
+        background: rgba(239, 68, 68, 0.2);
+      }
+      
+      .no-projects {
+        color: #64748b;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .hidden {
+        display: none !important;
+      }
+      
+      #import-input {
+        display: none;
+      }
+      
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #22c55e;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: 500;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+      }
+      
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .toast.error {
+        background: #ef4444;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <h1>A-Frame Inspector</h1>
+      <p class="subtitle">Visual editor for A-Frame VR scenes</p>
+      
+      <div class="actions">
+        <div class="action-card" onclick="createNewProject()">
+          <div class="icon">✨</div>
+          <h3>New Project</h3>
+          <p>Create a new VR project from scratch</p>
+        </div>
+        
+        <div class="action-card" onclick="document.getElementById('import-input').click()">
+          <div class="icon">📁</div>
+          <h3>Import Project</h3>
+          <p>Open a .zip VR project file</p>
+        </div>
+        <input type="file" id="import-input" accept=".zip" onchange="importProject(event)">
+      </div>
+      
+      <div class="saved-projects" id="saved-projects-section">
+        <h2 class="section-title">Saved Projects</h2>
+        <div class="projects-list" id="projects-list">
+          <p class="no-projects">No saved projects yet. Create a new project to get started!</p>
+        </div>
+      </div>
+      
+      <h2 class="section-title">Example Scenes</h2>
+      <div class="examples-grid">
+        <div class="example-card">
+          <h4>Main Demo</h4>
+          <p>Complete demo with environment, models, animations, and controllers</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/index.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/index.html', 'main-demo')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>Empty Scene</h4>
+          <p>Minimal blank scene to start from scratch</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/empty.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/empty.html', 'empty-scene')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>Colors</h4>
+          <p>Basic scene demonstrating color variations</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/colors.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/colors.html', 'colors')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>360 Video</h4>
+          <p>Panoramic video player example</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/360video.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/360video.html', '360-video')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>Controllers</h4>
+          <p>VR controller interaction demo</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/controllers.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/controllers.html', 'controllers')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>Embedded</h4>
+          <p>Embedded A-Frame scene example</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/embedded.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/embedded.html', 'embedded')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>Embedded Zoom</h4>
+          <p>Embedded scene with zoom controls</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/embedded-zoom.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/embedded-zoom.html', 'embedded-zoom')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+        
+        <div class="example-card">
+          <h4>Supercraft</h4>
+          <p>Supercraft template example</p>
+          <div style="margin-top: 10px;">
+            <a href="examples/supercraft.html" style="color: #ef4444; text-decoration: none;">Open</a>
+            <a href="#" onclick="exportExample('examples/supercraft.html', 'supercraft')" style="color: #ef4444; text-decoration: none; margin-left: 15px;">Export</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="toast" class="toast"></div>
+    
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js"></script>
+    <script src="dist/aframe-inspector.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+      const STORAGE_KEY = 'aframe-inspector-projects';
+      
+      // Initialize - redirect to empty example if coming from inspector
+      document.addEventListener('DOMContentLoaded', function() {
+        loadSavedProjects();
+      });
+      
+      function createNewProject() {
+        const name = prompt('Enter project name:', 'My VR Project');
+        if (!name) return;
+        
+        const project = {
+          id: Date.now().toString(),
+          name: name,
+          date: new Date().toISOString(),
+          scene: getEmptySceneHTML(name)
+        };
+        
+        saveProject(project);
+        showToast('Project created: ' + name);
+        
+        // Open the new project in a new window
+        const blob = new Blob([project.scene], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        
+        loadSavedProjects();
+      }
+      
+      function getEmptySceneHTML(name) {
+        var sc = String.fromCharCode(60);
+        var sl = String.fromCharCode(60) + '/';
+        var scriptOpen = sc + 'script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js">';
+        var scriptClose = sl + 'script>';
+        var inspectorScript = sc + 'script src="../dist/aframe-inspector.js">';
+        var html = '<!DOCTYPE html>\n' +
+          '<html>\n' +
+          '  <head>\n' +
+          '    <meta charset="utf-8">\n' +
+          '    <title>' + name + '</title>\n' +
+          '    ' + scriptOpen + scriptClose + '\n' +
+          '  </head>\n' +
+          '  <body>\n' +
+          '    <a-scene>\n' +
+          '      <a-sky color="#ECECEC"></a-sky>\n' +
+          '      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>\n' +
+          '      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>\n' +
+          '      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>\n' +
+          '      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>\n' +
+          '      <a-entity position="0 1.6 0">\n' +
+          '        <a-camera>\n' +
+          '          <a-cursor></a-cursor>\n' +
+          '        </a-camera>\n' +
+          '      </a-entity>\n' +
+          '    </a-scene>\n' +
+          '    ' + inspectorScript + scriptClose + '\n' +
+          '  </body>\n' +
+          '</html>';
+        return html;
+      }
+      
+      function saveProject(project) {
+        // Escape script tags to prevent execution issues when loading from localStorage
+        var SCR = String.fromCharCode(60) + '/script>';
+        var temp = String.fromCharCode(60) + 'SCRIPT_ESCAPE_END';
+        var escapedScene = project.scene.split(SCR).join(temp);
+        var escapedProject = {
+          id: project.id,
+          name: project.name,
+          date: project.date,
+          scene: escapedScene
+        };
+        var projects = getProjects();
+        projects.push(escapedProject);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+      }
+      
+      function getProjects() {
+        try {
+          var data = localStorage.getItem(STORAGE_KEY);
+          return data ? JSON.parse(data) : [];
+        } catch (e) {
+          console.error('Error loading projects from localStorage:', e);
+          localStorage.removeItem(STORAGE_KEY);
+          return [];
+        }
+      }
+      
+      function getProjectScene(project) {
+        // Unescape script tags when loading
+        var SCR = String.fromCharCode(60) + '/script>';
+        var temp = String.fromCharCode(60) + 'SCRIPT_ESCAPE_END';
+        return project.scene.split(temp).join(SCR);
+      }
+      
+      function loadSavedProjects() {
+        const projects = getProjects();
+        const container = document.getElementById('projects-list');
+        
+        if (projects.length === 0) {
+          container.innerHTML = '<p class="no-projects">No saved projects yet. Create a new project to get started!</p>';
+          return;
+        }
+        
+        container.innerHTML = projects.map(p => `
+          <div class="project-item">
+            <span>${p.name} <small style="color: #64748b">(${new Date(p.date).toLocaleDateString()})</small></span>
+            <div>
+              <a href="#" onclick="openProject('${p.id}')">Open</a>
+              <a href="#" onclick="exportProject('${p.id}')" style="margin-left: 10px;">Export</a>
+              <button class="delete-btn" onclick="deleteProject('${p.id}')">Delete</button>
+            </div>
+          </div>
+        `).join('');
+      }
+      
+      function openProject(id) {
+        var projects = getProjects();
+        var project = projects.find(function(p) { return p.id === id; });
+        if (!project) return;
+        
+        var blob = new Blob([getProjectScene(project)], { type: 'text/html' });
+        var url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      }
+      
+      function deleteProject(id) {
+        if (!confirm('Delete this project?')) return;
+        
+        const projects = getProjects().filter(p => p.id !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+        loadSavedProjects();
+        showToast('Project deleted');
+      }
+      
+      async function importProject(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        try {
+          const zip = await JSZip.loadAsync(file);
+          
+          // Look for HTML file in the zip
+          let htmlFile = null;
+          let htmlContent = null;
+          
+          for (const [filename, file] of Object.entries(zip.files)) {
+            if (filename.endsWith('.html') || filename.endsWith('.htm')) {
+              htmlFile = filename;
+              htmlContent = await file.async('string');
+              break;
+            }
+          }
+          
+          if (!htmlContent) {
+            throw new Error('No HTML file found in the zip');
+          }
+          
+          // Extract project name from HTML or filename
+          const titleMatch = htmlContent.match(/<title>([^<]+)<\/title>/i);
+          const projectName = titleMatch ? titleMatch[1] : file.name.replace('.zip', '');
+          
+          // Save imported project
+          const project = {
+            id: Date.now().toString(),
+            name: projectName,
+            date: new Date().toISOString(),
+            scene: htmlContent
+          };
+          
+          saveProject(project);
+          loadSavedProjects();
+          showToast('Project imported: ' + projectName);
+          
+          // Open the imported project
+          const blob = new Blob([htmlContent], { type: 'text/html' });
+          const url = URL.createObjectURL(blob);
+          window.open(url, '_blank');
+          
+        } catch (error) {
+          showToast('Error importing project: ' + error.message, true);
+        }
+        
+        // Reset file input
+        event.target.value = '';
+      }
+      
+      async function exportCurrentProject() {
+        // This function is called from within the inspector
+        // It will be handled by the inspector's export functionality
+        showToast('Use the inspector toolbar to export your project');
+      }
+      
+      async function exportProject(id) {
+        var projects = getProjects();
+        var project = projects.find(function(p) { return p.id === id; });
+        if (!project) return;
+        
+        try {
+          var zip = new JSZip();
+          zip.file('index.html', getProjectScene(project));
+          
+          var content = await zip.generateAsync({ type: 'blob' });
+          var blob = new Blob([content], { type: 'application/zip' });
+          var url = URL.createObjectURL(blob);
+          
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = project.name + '.zip';
+          a.click();
+          
+          URL.revokeObjectURL(url);
+          showToast('Project exported: ' + project.name + '.zip');
+        } catch (error) {
+          showToast('Error exporting project: ' + error.message, true);
+        }
+      }
+      
+      async function exportExample(url, name) {
+        try {
+          const response = await fetch(url);
+          const htmlContent = await response.text();
+          
+          const zip = new JSZip();
+          zip.file('index.html', htmlContent);
+          
+          const content = await zip.generateAsync({ type: 'blob' });
+          const blob = new Blob([content], { type: 'application/zip' });
+          const blobUrl = URL.createObjectURL(blob);
+          
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = name + '.zip';
+          a.click();
+          
+          URL.revokeObjectURL(blobUrl);
+          showToast('Example exported: ' + name + '.zip');
+        } catch (error) {
+          showToast('Error exporting example: ' + error.message, true);
+        }
+      }
+      
+      function showToast(message, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = 'toast' + (isError ? ' error' : '');
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+    </script>
+  </body>
 </html>

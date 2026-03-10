@@ -4,10 +4,13 @@ import {
   faTrashAlt,
   faPencilAlt,
   faTimes,
-  faTag
+  faTag,
+  faCheck,
+  faUndo
 } from '@fortawesome/free-solid-svg-icons';
 import { AwesomeIcon } from '../AwesomeIcon';
 import Events from '../../lib/Events';
+import Collapsible from '../Collapsible';
 
 /**
  * ClassManager - Panel for viewing CSS classes in the scene
@@ -21,7 +24,9 @@ export default class ClassManager extends React.Component {
       isOpen: false,
       classes: [],
       selectedClass: null,
-      classEntities: []
+      classEntities: [],
+      editingClassName: '',
+      isEditing: false
     };
   }
 
@@ -79,12 +84,62 @@ export default class ClassManager extends React.Component {
   selectClass = (classItem) => {
     this.setState({
       selectedClass: classItem,
-      classEntities: classItem.elements
+      classEntities: classItem.elements,
+      editingClassName: classItem.name,
+      isEditing: false
     });
   };
 
   clearSelection = () => {
-    this.setState({ selectedClass: null, classEntities: [] });
+    this.setState({ selectedClass: null, classEntities: [], isEditing: false });
+  };
+
+  startEditing = (e) => {
+    e.stopPropagation();
+    this.setState({ isEditing: true });
+  };
+
+  cancelEditing = (e) => {
+    e.stopPropagation();
+    this.setState({
+      isEditing: false,
+      editingClassName: this.state.selectedClass?.name || ''
+    });
+  };
+
+  handleClassNameChange = (e) => {
+    this.setState({ editingClassName: e.target.value });
+  };
+
+  saveClassName = () => {
+    const { selectedClass, editingClassName, classEntities } = this.state;
+    if (!selectedClass || !editingClassName.trim()) return;
+
+    const oldClassName = selectedClass.name;
+    const newClassName = editingClassName.trim();
+
+    if (oldClassName === newClassName) {
+      this.setState({ isEditing: false });
+      return;
+    }
+
+    // Update all entities with the new class name
+    classEntities.forEach(el => {
+      if (el.classList) {
+        el.classList.remove(oldClassName);
+        el.classList.add(newClassName);
+      }
+    });
+
+    // Update selected class with new name
+    const updatedClass = { ...selectedClass, name: newClassName };
+    this.setState({
+      selectedClass: updatedClass,
+      isEditing: false
+    });
+
+    // Refresh the class list
+    this.loadClasses();
   };
 
   togglePanel = () => {
@@ -159,46 +214,97 @@ export default class ClassManager extends React.Component {
   }
 
   renderClassDetail() {
-    const { selectedClass, classEntities } = this.state;
+    const { selectedClass, classEntities, editingClassName, isEditing } = this.state;
 
     if (!selectedClass) return null;
 
+    const accordionHeader = (
+      <div className="class-detail-header">
+        {isEditing ? (
+          <div className="class-name-edit">
+            <input
+              type="text"
+              value={editingClassName}
+              onChange={this.handleClassNameChange}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') this.saveClassName();
+                if (e.key === 'Escape') this.cancelEditing(e);
+              }}
+              autoFocus
+              className="class-name-input"
+            />
+            <button
+              className="btn icon-only save-btn"
+              onClick={this.saveClassName}
+              title="Save"
+            >
+              <AwesomeIcon icon={faCheck} />
+            </button>
+            <button
+              className="btn icon-only cancel-btn"
+              onClick={this.cancelEditing}
+              title="Cancel"
+            >
+              <AwesomeIcon icon={faUndo} />
+            </button>
+          </div>
+        ) : (
+          <>
+            <h4>
+              <span className="label">Class:</span>
+              <span className="value">{selectedClass.name}</span>
+              <span className="count">({selectedClass.count} entity(s))</span>
+            </h4>
+            <div className="header-actions">
+              <button className="btn icon-only" onClick={this.startEditing} title="Edit class name">
+                <AwesomeIcon icon={faPencilAlt} />
+              </button>
+              <button className="btn icon-only" onClick={this.clearSelection} title="Close">
+                <AwesomeIcon icon={faTimes} />
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    );
+
+    const accordionContent = (
+      <div className="class-entities">
+        {classEntities.map((el, idx) => {
+          const components = this.getEntityComponents(el);
+          const entityName = el.getAttribute('id') || el.tagName.toLowerCase();
+          return (
+            <div key={idx} className="class-entity-item">
+              <div
+                className="class-entity-header"
+                onClick={() => this.selectEntity(el)}
+                title="Click to select entity"
+              >
+                <span className="entity-name">{entityName}</span>
+                <span className="entity-tag">{el.tagName.toLowerCase()}</span>
+              </div>
+              {components.length > 0 && (
+                <div className="entity-components">
+                  {components.map((comp, compIdx) => (
+                    <div key={compIdx} className="component-item">
+                      <span className="comp-name">{comp.name}</span>
+                      <span className="comp-value">{comp.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+
     return (
       <div className="class-detail">
-        <div className="class-detail-header">
-          <h4>Class: {selectedClass.name}</h4>
-          <button className="btn icon-only" onClick={this.clearSelection} title="Close">
-            <AwesomeIcon icon={faTimes} />
-          </button>
-        </div>
-        <div className="class-entities">
-          {classEntities.map((el, idx) => {
-            const components = this.getEntityComponents(el);
-            const entityName = el.getAttribute('id') || el.tagName.toLowerCase();
-            return (
-              <div key={idx} className="class-entity-item">
-                <div
-                  className="class-entity-header"
-                  onClick={() => this.selectEntity(el)}
-                  title="Click to select entity"
-                >
-                  <span className="entity-name">{entityName}</span>
-                  <span className="entity-tag">{el.tagName.toLowerCase()}</span>
-                </div>
-                {components.length > 0 && (
-                  <div className="entity-components">
-                    {components.map((comp, compIdx) => (
-                      <div key={compIdx} className="component-item">
-                        <span className="comp-name">{comp.name}</span>
-                        <span className="comp-value">{comp.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <Collapsible collapsed={false}>
+          {accordionHeader}
+          {accordionContent}
+        </Collapsible>
       </div>
     );
   }

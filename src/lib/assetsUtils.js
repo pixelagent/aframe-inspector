@@ -46,6 +46,32 @@ export function insertNewAsset(type, id, src, onLoadedCallback = undefined) {
         element.crossOrigin = 'anonymous';
       }
       break;
+    case 'video':
+      {
+        element = document.createElement('video');
+        element.id = id;
+        element.src = src;
+        element.crossOrigin = 'anonymous';
+        element.loop = '';
+        element.muted = '';
+        element.playsinline = '';
+      }
+      break;
+    case 'audio':
+      {
+        element = document.createElement('audio');
+        element.id = id;
+        element.src = src;
+        element.crossOrigin = 'anonymous';
+      }
+      break;
+    case 'model':
+      {
+        element = document.createElement('a-asset-item');
+        element.id = id;
+        element.src = src;
+      }
+      break;
   }
 
   if (element) {

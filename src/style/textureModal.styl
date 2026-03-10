@@ -286,6 +286,29 @@
       margin 0
       opacity 0.8
 
+  .classes-actions
+    display flex
+    flex-wrap wrap
+    gap 10px
+    margin-bottom 20px
+
+    .add-class-btn
+      background var(--color-base-300)
+      border none
+      border-radius 4px
+      color var(--color-base-content)
+      cursor pointer
+      display flex
+      align-items center
+      gap 6px
+      padding 8px 12px
+      font-size 12px
+      transition all 0.2s
+
+      &:hover
+        background var(--color-primary)
+        color var(--color-primary-content)
+
   .classes-list
     max-height 400px
     overflow-y auto
@@ -320,6 +343,35 @@
         color var(--color-base-content)
         font-size 12px
         opacity 0.7
+        margin-left 10px
+
+      .class-item-actions
+        display flex
+        gap 8px
+        flex-shrink 0
+
+      .class-edit,
+      .class-delete
+        background transparent
+        border none
+        border-radius 4px
+        color var(--color-base-content)
+        cursor pointer
+        padding 6px 8px
+        transition all 0.2s
+
+        &:hover
+          background var(--color-base-100)
+
+      .class-edit
+        &:hover
+          background var(--color-primary)
+          color var(--color-primary-content)
+
+      .class-delete
+        &:hover
+          background var(--color-error)
+          color white
 
   .classes-help
     margin-top 20px
@@ -348,6 +400,29 @@
       font-size 13px
       margin 0
       opacity 0.8
+
+  .models-actions
+    display flex
+    flex-wrap wrap
+    gap 10px
+    margin-bottom 20px
+
+    .add-model-btn
+      background var(--color-base-300)
+      border none
+      border-radius 4px
+      color var(--color-base-content)
+      cursor pointer
+      display flex
+      align-items center
+      gap 6px
+      padding 8px 12px
+      font-size 12px
+      transition all 0.2s
+
+      &:hover
+        background var(--color-primary)
+        color var(--color-primary-content)
 
   .models-list
     max-height 400px
@@ -398,7 +473,161 @@
           font-size 11px
           opacity 0.7
 
+      .model-actions
+        display flex
+        gap 8px
+        flex-shrink 0
+
+        .model-download,
+        .model-delete
+          background transparent
+          border none
+          border-radius 4px
+          color var(--color-base-content)
+          cursor pointer
+          padding 6px 8px
+          transition all 0.2s
+
+          &:hover
+            background var(--color-base-100)
+
+        .model-delete
+          &:hover
+            background var(--color-error)
+            color white
+
   .models-help
+    margin-top 20px
+    padding 15px
+    background var(--color-base-100)
+    border-radius 4px
+
+    p
+      color var(--color-base-content)
+      font-size 12px
+      margin 0
+      opacity 0.8
+
+/* Assets Tab */
+.assets-tab
+  .assets-header
+    margin-bottom 20px
+
+    h3
+      color var(--color-primary)
+      font-size 16px
+      margin 0 0 8px
+
+    p
+      color var(--color-base-content)
+      font-size 13px
+      margin 0
+      opacity 0.8
+
+  .assets-actions
+    display flex
+    flex-wrap wrap
+    gap 10px
+    margin-bottom 20px
+
+    .add-asset-btn
+      background var(--color-base-300)
+      border none
+      border-radius 4px
+      color var(--color-base-content)
+      cursor pointer
+      display flex
+      align-items center
+      gap 6px
+      padding 8px 12px
+      font-size 12px
+      transition all 0.2s
+
+      &:hover
+        background var(--color-primary)
+        color var(--color-primary-content)
+
+  .assets-list
+    max-height 400px
+    overflow-y auto
+
+    .no-assets
+      color var(--color-base-content)
+      font-style italic
+      opacity 0.6
+      padding 20px
+      text-align center
+
+    ul
+      list-style none
+      margin 0
+      padding 0
+
+    .asset-item
+      align-items center
+      background var(--color-base-300)
+      border-radius 4px
+      display flex
+      gap 12px
+      margin-bottom 8px
+      padding 12px 15px
+
+      .asset-icon
+        color var(--color-primary)
+        font-size 18px
+        flex-shrink 0
+
+      .asset-info
+        display flex
+        flex-direction column
+        gap 4px
+        min-width 0
+        flex 1
+
+        .asset-id
+          color var(--color-primary)
+          font-family 'Monaco', 'Menlo', monospace
+          font-size 13px
+          font-weight 600
+
+        .asset-type
+          color var(--color-base-content)
+          font-size 11px
+          opacity 0.7
+          text-transform uppercase
+
+        .asset-src
+          color var(--color-primary)
+          font-family 'Monaco', 'Menlo', monospace
+          font-size 11px
+          overflow hidden
+          text-overflow ellipsis
+          white-space nowrap
+
+      .asset-actions
+        display flex
+        gap 8px
+        flex-shrink 0
+
+        .asset-edit,
+        .asset-delete
+          background transparent
+          border none
+          border-radius 4px
+          color var(--color-base-content)
+          cursor pointer
+          padding 6px 8px
+          transition all 0.2s
+
+          &:hover
+            background var(--color-base-100)
+
+        .asset-delete
+          &:hover
+            background var(--color-error)
+            color white
+
+  .assets-help
     margin-top 20px
     padding 15px
     background var(--color-base-100)
