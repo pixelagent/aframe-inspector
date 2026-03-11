@@ -74264,41 +74264,61 @@ class Toolbar extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
   }
   exportSceneToZip() {
     const sceneName = getSceneName(AFRAME.scenes[0]) || 'vr-project';
-    const scene = AFRAME.scenes[0];
+    const sceneEl = AFRAME.INSPECTOR.sceneEl;
 
-    // Get the HTML content of the current page
-    let htmlContent = document.documentElement.outerHTML;
+    // Get A-Frame version dynamically
+    const aframeVersion = typeof AFRAME !== 'undefined' && AFRAME.version ? AFRAME.version : '1.7.1';
 
-    // Remove inspector script from the exported HTML
-    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"><\/script>/, '');
-    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"[^]*><\/script>/, '');
+    // Flush any pending DOM changes from A-Frame
+    sceneEl.flushToDOM();
 
-    // Add PWA meta tags and manifest link if not already present
-    if (!htmlContent.includes('theme-color')) {
-      htmlContent = htmlContent.replace('<head>', '<head>\n  <meta name="theme-color" content="#ff6b6b">');
+    // Get the scene content by cloning and cleaning it
+    const sceneClone = sceneEl.cloneNode(true);
+
+    // Remove any inspector-injected elements
+    const inspectorElements = sceneClone.querySelectorAll('[aframe-injected], [data-aframe-inspector]');
+    inspectorElements.forEach(el => el.remove());
+    const sceneContent = sceneClone.outerHTML;
+
+    // Build the HTML template with PWA elements
+    // Use absolute path for inspector to work from any folder location
+    let htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>${sceneName}</title>
+  <meta name="theme-color" content="#ff6b6b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://aframe.io/releases/${aframeVersion}/aframe.min.js"></script>
+</head>
+<body>
+  ${sceneContent}
+  <script>
+    // Config to make inspector NOT auto-open (so scene runs normally)
+    window.AFRAME_INSPECTOR_CONFIG = {
+      exampleMode: true
+    };
+  </script>
+  <script src="../dist/aframe-inspector.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch(error => {
+            console.log('SW registration failed:', error);
+          });
+      });
     }
-    if (!htmlContent.includes('apple-mobile-web-app-capable')) {
-      htmlContent = htmlContent.replace('<head>', '<head>\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">');
-    }
-    if (!htmlContent.includes('manifest.json')) {
-      htmlContent = htmlContent.replace('<head>', '<head>\n  <link rel="manifest" href="manifest.json">');
-    }
-
-    // Add service worker registration before closing body tag
-    const swRegistration = `<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(registration => {
-          console.log('SW registered:', registration.scope);
-        })
-        .catch(error => {
-          console.log('SW registration failed:', error);
-        });
-    });
-  }
-</script>`;
-    htmlContent = htmlContent.replace('</body>', swRegistration + '\n</body>');
+  </script>
+</body>
+</html>`;
 
     // Create zip file
     const zip = new (jszip__WEBPACK_IMPORTED_MODULE_9___default())();
@@ -74444,13 +74464,42 @@ self.addEventListener('fetch', event => {
   }
   exportSceneToHTML() {
     const sceneName = getSceneName(AFRAME.scenes[0]) || 'vr-project';
+    const sceneEl = AFRAME.INSPECTOR.sceneEl;
 
-    // Get the HTML content of the current page
-    let htmlContent = document.documentElement.outerHTML;
+    // Get A-Frame version dynamically
+    const aframeVersion = typeof AFRAME !== 'undefined' && AFRAME.version ? AFRAME.version : '1.7.1';
 
-    // Remove inspector script from the exported HTML
-    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"><\/script>/, '');
-    htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"[^]*><\/script>/, '');
+    // Flush any pending DOM changes from A-Frame
+    sceneEl.flushToDOM();
+
+    // Get the scene content by cloning and cleaning it
+    const sceneClone = sceneEl.cloneNode(true);
+
+    // Remove any inspector-injected elements
+    const inspectorElements = sceneClone.querySelectorAll('[aframe-injected], [data-aframe-inspector]');
+    inspectorElements.forEach(el => el.remove());
+    const sceneContent = sceneClone.outerHTML;
+
+    // Build the HTML template
+    // Use absolute path for inspector to work from any folder location
+    const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${sceneName}</title>
+  <script src="https://aframe.io/releases/${aframeVersion}/aframe.min.js"></script>
+</head>
+<body>
+  ${sceneContent}
+  <script>
+    // Config to make inspector NOT auto-open (so scene runs normally)
+    window.AFRAME_INSPECTOR_CONFIG = {
+      exampleMode: true
+    };
+  </script>
+  <script src="../dist/aframe-inspector.js"></script>
+</body>
+</html>`;
 
     // Download as HTML file
     const blob = new Blob([htmlContent], {

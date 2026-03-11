@@ -11,7 +11,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="AF Inspector">
+  <!-- TODO: When deploying to GitHub Pages, add your repo folder name to the path (e.g., /your-repo-name/manifest.json) -->
   <link rel="manifest" href="/manifest.json">
+  <!-- TODO: When deploying to GitHub Pages, add your repo folder name to the path (e.g., /your-repo-name/app/apple-touch-icon.png) -->
   <link rel="apple-touch-icon" href="/app/apple-touch-icon.png">
   <style>
     * {
@@ -315,6 +317,7 @@
     <div class="saved-projects" id="saved-projects-section">
       <h2 class="section-title">Saved Projects</h2>
       <div class="projects-list" id="projects-list">
+        <!-- TODO: When deploying to GitHub Pages, update project links to include repo folder name -->
         <p class="no-projects">No saved projects yet. Create a new project to get started!</p>
       </div>
     </div>
@@ -322,6 +325,7 @@
     <h2 class="section-title">Example Scenes</h2>
     <div class="examples-grid">
       <!-- Basic Examples -->
+      <!-- TODO: When deploying to GitHub Pages, add your repo folder name to example paths (e.g., /your-repo-name/examples/empty.html) -->
       <a href="examples/empty.html" class="example-card">
         <div class="example-icon">📦</div>
         <h4>Empty Scene</h4>
@@ -487,12 +491,14 @@
   <div id="toast" class="toast"></div>
 
   <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js"></script>
+  <!-- TODO: When deploying to GitHub Pages, add your repo folder name to the path (e.g., /your-repo-name/dist/aframe-inspector.js) -->
   <script src="dist/aframe-inspector.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
     // Register service worker for PWA support
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
+        // TODO: When deploying to GitHub Pages, update the path (e.g., '/your-repo-name/sw.js')
         navigator.serviceWorker.register('/sw.js')
           .then(function(registration) {
             console.log('ServiceWorker registration successful:', registration.scope);

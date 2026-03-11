@@ -1,4 +1,5 @@
 const CACHE_NAME = 'aframe-inspector-v1';
+// TODO: When deploying to GitHub Pages, add your repo folder name to the paths (e.g., '/your-repo-name/')
 const urlsToCache = [
   '/',
   '/index.html',
