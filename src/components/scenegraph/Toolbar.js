@@ -288,11 +288,150 @@ export default class Toolbar extends React.Component {
     htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"><\/script>/, '');
     htmlContent = htmlContent.replace(/<script src="[^]*aframe-inspector[^]*"[^]*><\/script>/, '');
 
+    // Add PWA meta tags and manifest link if not already present
+    if (!htmlContent.includes('theme-color')) {
+      htmlContent = htmlContent.replace('<head>', '<head>\n  <meta name="theme-color" content="#ff6b6b">');
+    }
+    if (!htmlContent.includes('apple-mobile-web-app-capable')) {
+      htmlContent = htmlContent.replace('<head>', '<head>\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">');
+    }
+    if (!htmlContent.includes('manifest.json')) {
+      htmlContent = htmlContent.replace('<head>', '<head>\n  <link rel="manifest" href="manifest.json">');
+    }
+
+    // Add service worker registration before closing body tag
+    const swRegistration = `<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(registration => {
+          console.log('SW registered:', registration.scope);
+        })
+        .catch(error => {
+          console.log('SW registration failed:', error);
+        });
+    });
+  }
+</script>`;
+    htmlContent = htmlContent.replace('</body>', swRegistration + '\n</body>');
+
     // Create zip file
     const zip = new JSZip();
 
     // Add the HTML file
     zip.file('index.html', htmlContent);
+
+    // Create PWA manifest
+    const manifest = {
+      name: sceneName + ' - VR Experience',
+      short_name: sceneName,
+      description: 'A-Frame VR experience exported from Inspector',
+      start_url: './index.html',
+      display: 'standalone',
+      background_color: '#212121',
+      theme_color: '#ff6b6b',
+      orientation: 'any',
+      icons: [
+        {
+          src: 'assets/icon-192.svg',
+          sizes: '192x192',
+          type: 'image/svg+xml',
+          purpose: 'any'
+        },
+        {
+          src: 'assets/icon-512.svg',
+          sizes: '512x512',
+          type: 'image/svg+xml',
+          purpose: 'any'
+        },
+        {
+          src: 'assets/icon-192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'any maskable'
+        }
+      ],
+      categories: ['entertainment', 'games'],
+      lang: 'en',
+      scope: './',
+      prefer_related_applications: false
+    };
+    zip.file('manifest.json', JSON.stringify(manifest, null, 2));
+
+    // Add icon assets to the zip
+    const icon192Svg = `<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#ff6b6b" rx="24"/>
+  <text x="96" y="130" font-family="Arial, sans-serif" font-size="100" text-anchor="middle" fill="white">${sceneName.charAt(0).toUpperCase()}</text>
+</svg>`;
+    
+    const icon512Svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#ff6b6b" rx="64"/>
+  <text x="256" y="350" font-family="Arial, sans-serif" font-size="280" text-anchor="middle" fill="white">${sceneName.charAt(0).toUpperCase()}</text>
+</svg>`;
+    
+    zip.file('assets/icon-192.svg', icon192Svg);
+    zip.file('assets/icon-512.svg', icon512Svg);
+
+    // Create service worker
+    const serviceWorker = `// Service Worker for ${sceneName} VR Experience
+const CACHE_NAME = '${sceneName.toLowerCase().replace(/\s+/g, '-')}-v1';
+const urlsToCache = [
+  './',
+  './index.html',
+  './manifest.json'
+];
+
+// Install event - cache resources
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+      .catch(err => {
+        console.log('Cache install failed:', err);
+      })
+  );
+});
+
+// Activate event - clean up old caches
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
+// Fetch event - serve from cache, fallback to network
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Return cached version or fetch from network
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+      .catch(() => {
+        // If both fail, return offline page for navigation requests
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
+      })
+  );
+});
+`;
+    zip.file('sw.js', serviceWorker);
 
     // Collect all assets (images, models, etc.)
     const assets = scene.querySelectorAll('[src]');
