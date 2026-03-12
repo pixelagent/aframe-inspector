@@ -82,7 +82,13 @@ import ThemeSelector from './ThemeSelector';
 import MixinsManager from './MixinsManager';
 import Events from '../../lib/Events';
 import { saveBlob } from '../../lib/utils';
-import { undo, redo, canUndo, canRedo, getHistoryStatus } from '../../lib/history';
+import {
+  undo,
+  redo,
+  canUndo,
+  canRedo,
+  getHistoryStatus
+} from '../../lib/history';
 import GLTFIcon from '../../../assets/gltf.svg';
 import JSZip from 'jszip';
 
@@ -97,7 +103,7 @@ const PRIMITIVE_GROUPS = [
       { value: 'a-cylinder', label: 'Cylinder', icon: faDatabase },
       { value: 'a-plane', label: 'Plane', icon: faSquare },
       { value: 'a-circle', label: 'Circle', icon: faCircle },
-      { value: 'a-cone', label: 'Cone', icon: faCaretUp },
+      { value: 'a-cone', label: 'Cone', icon: faCaretUp }
     ]
   },
   {
@@ -107,7 +113,7 @@ const PRIMITIVE_GROUPS = [
       { value: 'a-dodecahedron', label: 'Dodecahedron', icon: faGem },
       { value: 'a-tetrahedron', label: 'Tetrahedron', icon: faCaretUp },
       { value: 'a-torus', label: 'Torus', icon: faRing },
-      { value: 'a-torus-knot', label: 'Torus Knot', icon: faLink },
+      { value: 'a-torus-knot', label: 'Torus Knot', icon: faLink }
     ]
   },
   {
@@ -115,7 +121,7 @@ const PRIMITIVE_GROUPS = [
     icon: faGlobe,
     items: [
       { value: 'a-sky', label: 'Sky', icon: faCloud },
-      { value: 'a-light', label: 'Light', icon: faLightbulb },
+      { value: 'a-light', label: 'Light', icon: faLightbulb }
     ]
   },
   {
@@ -124,7 +130,12 @@ const PRIMITIVE_GROUPS = [
     items: [
       { value: 'a-camera', label: 'Camera', icon: faCamera },
       { value: 'a-entity', label: 'Empty Entity', icon: faSquare },
-      { value: 'a-scene', label: 'Scene', icon: faLayerGroup, desc: 'New scene container' },
+      {
+        value: 'a-scene',
+        label: 'Scene',
+        icon: faLayerGroup,
+        desc: 'New scene container'
+      }
     ]
   },
   {
@@ -132,18 +143,38 @@ const PRIMITIVE_GROUPS = [
     icon: faPlayCircle,
     items: [
       { value: 'a-text', label: 'Text', icon: faFont, desc: 'Display text' },
-      { value: 'a-sound', label: 'Sound', icon: faVolumeUp, desc: 'Audio playback' },
+      {
+        value: 'a-sound',
+        label: 'Sound',
+        icon: faVolumeUp,
+        desc: 'Audio playback'
+      },
       { value: 'a-video', label: 'Video', icon: faVideo, desc: 'Video player' },
       { value: 'a-image', label: 'Image', icon: faImage, desc: '2D image' },
-      { value: 'a-gltf-model', label: '3D Model', icon: faCube, desc: 'GLTF model' },
+      {
+        value: 'a-gltf-model',
+        label: '3D Model',
+        icon: faCube,
+        desc: 'GLTF model'
+      }
     ]
   },
   {
     name: 'Interaction',
     icon: faMouse,
     items: [
-      { value: 'a-cursor', label: 'Cursor', icon: faCrosshairs, desc: 'Raycaster/cursor' },
-      { value: 'a-camera', label: 'Player Camera', icon: faUser, desc: 'First-person camera' },
+      {
+        value: 'a-cursor',
+        label: 'Cursor',
+        icon: faCrosshairs,
+        desc: 'Raycaster/cursor'
+      },
+      {
+        value: 'a-camera',
+        label: 'Player Camera',
+        icon: faUser,
+        desc: 'First-person camera'
+      }
     ]
   },
   {
@@ -151,18 +182,78 @@ const PRIMITIVE_GROUPS = [
     icon: faBolt,
     description: 'Common game behaviors (adds component)',
     items: [
-      { value: 'behavior-click-animation', label: 'Click to Animate', icon: faPlay, desc: 'Play animation on click' },
-      { value: 'behavior-click-sound', label: 'Click to Sound', icon: faVolumeUp, desc: 'Play sound on click' },
-      { value: 'behavior-click-hide', label: 'Click to Hide', icon: faEyeSlash, desc: 'Hide on click' },
-      { value: 'behavior-click-destroy', label: 'Click to Destroy', icon: faTrashAlt, desc: 'Remove on click' },
-      { value: 'behavior-hover-scale', label: 'Hover Scale', icon: faSearchPlus, desc: 'Scale on mouseover' },
-      { value: 'behavior-look-at', label: 'Look at Camera', icon: faEye, desc: 'Always face camera' },
-      { value: 'behavior-orbit', label: 'Orbit Rotate', icon: faSync, desc: 'Auto-rotate around center' },
-      { value: 'behavior-bounce', label: 'Bounce', icon: faCompressArrowsAlt, desc: 'Bouncing animation' },
-      { value: 'behavior-float', label: 'Float', icon: faArrowUp, desc: 'Gentle floating motion' },
-      { value: 'behavior-drag-drop', label: 'Drag to Move', icon: faHandRock, desc: 'Drag and drop' },
-      { value: 'behavior-spawner', label: 'Spawn on Click', icon: faPlus, desc: 'Create new entity on click' },
-      { value: 'behavior-pickup', label: 'Pickup Collectible', icon: faStar, desc: 'Collect on click' },
+      {
+        value: 'behavior-click-animation',
+        label: 'Click to Animate',
+        icon: faPlay,
+        desc: 'Play animation on click'
+      },
+      {
+        value: 'behavior-click-sound',
+        label: 'Click to Sound',
+        icon: faVolumeUp,
+        desc: 'Play sound on click'
+      },
+      {
+        value: 'behavior-click-hide',
+        label: 'Click to Hide',
+        icon: faEyeSlash,
+        desc: 'Hide on click'
+      },
+      {
+        value: 'behavior-click-destroy',
+        label: 'Click to Destroy',
+        icon: faTrashAlt,
+        desc: 'Remove on click'
+      },
+      {
+        value: 'behavior-hover-scale',
+        label: 'Hover Scale',
+        icon: faSearchPlus,
+        desc: 'Scale on mouseover'
+      },
+      {
+        value: 'behavior-look-at',
+        label: 'Look at Camera',
+        icon: faEye,
+        desc: 'Always face camera'
+      },
+      {
+        value: 'behavior-orbit',
+        label: 'Orbit Rotate',
+        icon: faSync,
+        desc: 'Auto-rotate around center'
+      },
+      {
+        value: 'behavior-bounce',
+        label: 'Bounce',
+        icon: faCompressArrowsAlt,
+        desc: 'Bouncing animation'
+      },
+      {
+        value: 'behavior-float',
+        label: 'Float',
+        icon: faArrowUp,
+        desc: 'Gentle floating motion'
+      },
+      {
+        value: 'behavior-drag-drop',
+        label: 'Drag to Move',
+        icon: faHandRock,
+        desc: 'Drag and drop'
+      },
+      {
+        value: 'behavior-spawner',
+        label: 'Spawn on Click',
+        icon: faPlus,
+        desc: 'Create new entity on click'
+      },
+      {
+        value: 'behavior-pickup',
+        label: 'Pickup Collectible',
+        icon: faStar,
+        desc: 'Collect on click'
+      }
     ]
   },
   {
@@ -170,10 +261,30 @@ const PRIMITIVE_GROUPS = [
     icon: faWalking,
     description: 'Movement controls',
     items: [
-      { value: 'wasd-controls', label: 'WASD Move', icon: faWalking, desc: 'Keyboard movement' },
-      { value: 'look-controls', label: 'Look Around', icon: faEye, desc: 'Mouse look' },
-      { value: 'fly-controls', label: 'Fly Mode', icon: faPaperPlane, desc: 'Free-fly camera' },
-      { value: 'checkpoint-controls', label: 'Checkpoints', icon: faMapMarkerAlt, desc: 'Teleport between points' },
+      {
+        value: 'wasd-controls',
+        label: 'WASD Move',
+        icon: faWalking,
+        desc: 'Keyboard movement'
+      },
+      {
+        value: 'look-controls',
+        label: 'Look Around',
+        icon: faEye,
+        desc: 'Mouse look'
+      },
+      {
+        value: 'fly-controls',
+        label: 'Fly Mode',
+        icon: faPaperPlane,
+        desc: 'Free-fly camera'
+      },
+      {
+        value: 'checkpoint-controls',
+        label: 'Checkpoints',
+        icon: faMapMarkerAlt,
+        desc: 'Teleport between points'
+      }
     ]
   },
   {
@@ -181,14 +292,24 @@ const PRIMITIVE_GROUPS = [
     icon: faWeightHanging,
     description: 'Physics simulation (requires physics system)',
     items: [
-      { value: 'dynamic-body', label: 'Dynamic Body', icon: faWeightHanging, desc: 'Moves with gravity' },
-      { value: 'static-body', label: 'Static Body', icon: faLayerGroup, desc: 'Solid wall/floor' },
+      {
+        value: 'dynamic-body',
+        label: 'Dynamic Body',
+        icon: faWeightHanging,
+        desc: 'Moves with gravity'
+      },
+      {
+        value: 'static-body',
+        label: 'Static Body',
+        icon: faLayerGroup,
+        desc: 'Solid wall/floor'
+      }
     ]
   }
 ];
 
 // Flat list for backward compatibility
-const PRIMITIVE_TYPES = PRIMITIVE_GROUPS.flatMap(group => group.items);
+const PRIMITIVE_TYPES = PRIMITIVE_GROUPS.flatMap((group) => group.items);
 
 function filterHelpers(scene, visible) {
   scene.traverse((o) => {
@@ -255,7 +376,7 @@ export default class Toolbar extends React.Component {
       'a-video': { video: 'src: #video-src' },
       'a-cursor': { cursor: 'rayOrigin: mouse' },
       'a-image': {},
-      'a-gltf-model': {},
+      'a-gltf-model': {}
     };
   }
 
@@ -282,19 +403,40 @@ export default class Toolbar extends React.Component {
     const sceneEl = AFRAME.INSPECTOR.sceneEl;
 
     // Get A-Frame version dynamically
-    const aframeVersion = typeof AFRAME !== 'undefined' && AFRAME.version ? AFRAME.version : '1.7.1';
+    const aframeVersion =
+      typeof AFRAME !== 'undefined' && AFRAME.version
+        ? AFRAME.version
+        : '1.7.1';
 
     // Flush any pending DOM changes from A-Frame
     sceneEl.flushToDOM();
 
     // Get the scene content by cloning and cleaning it
+    // We need to include a-assets for mixins to work
+    let sceneContent = '';
+
+    // Find and include a-assets if present
+    const sceneAssets = sceneEl.querySelector('a-assets');
+    if (sceneAssets) {
+      const assetsClone = sceneAssets.cloneNode(true);
+      // Clean up a-assets
+      const inspectorElements = assetsClone.querySelectorAll(
+        '[aframe-injected], [data-aframe-inspector]'
+      );
+      inspectorElements.forEach((el) => el.remove());
+      sceneContent += assetsClone.outerHTML + '\n';
+    }
+
+    // Clone the scene content
     const sceneClone = sceneEl.cloneNode(true);
 
-    // Remove any inspector-injected elements
-    const inspectorElements = sceneClone.querySelectorAll('[aframe-injected], [data-aframe-inspector]');
-    inspectorElements.forEach(el => el.remove());
+    // Remove any inspector-injected elements from the scene
+    const inspectorElements = sceneClone.querySelectorAll(
+      '[aframe-injected], [data-aframe-inspector]'
+    );
+    inspectorElements.forEach((el) => el.remove());
 
-    const sceneContent = sceneClone.outerHTML;
+    sceneContent += sceneClone.outerHTML;
 
     // Build the HTML template with PWA elements
     // Use absolute path for inspector to work from any folder location
@@ -310,29 +452,10 @@ export default class Toolbar extends React.Component {
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="manifest.json">
   <script src="https://aframe.io/releases/${aframeVersion}/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
 </head>
 <body>
   ${sceneContent}
-  <script>
-    // Config to make inspector NOT auto-open (so scene runs normally)
-    window.AFRAME_INSPECTOR_CONFIG = {
-      exampleMode: true
-    };
-  </script>
-  <script src="../dist/aframe-inspector.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(registration => {
-            console.log('SW registered:', registration.scope);
-          })
-          .catch(error => {
-            console.log('SW registration failed:', error);
-          });
-      });
-    }
-  </script>
 </body>
 </html>`;
 
@@ -342,7 +465,7 @@ export default class Toolbar extends React.Component {
     // Add the HTML file
     zip.file('index.html', htmlContent);
 
-    // Create PWA manifest
+    // Create PWA manifest - include all available icons
     const manifest = {
       name: sceneName + ' - VR Experience',
       short_name: sceneName,
@@ -357,13 +480,13 @@ export default class Toolbar extends React.Component {
           src: 'assets/icon-192.svg',
           sizes: '192x192',
           type: 'image/svg+xml',
-          purpose: 'any'
+          purpose: 'any maskable'
         },
         {
           src: 'assets/icon-512.svg',
           sizes: '512x512',
           type: 'image/svg+xml',
-          purpose: 'any'
+          purpose: 'any maskable'
         },
         {
           src: 'assets/icon-192.png',
@@ -379,19 +502,40 @@ export default class Toolbar extends React.Component {
     };
     zip.file('manifest.json', JSON.stringify(manifest, null, 2));
 
-    // Add icon assets to the zip
+    // Add SVG icon assets to the zip
     const icon192Svg = `<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
   <rect width="192" height="192" fill="#ff6b6b" rx="24"/>
   <text x="96" y="130" font-family="Arial, sans-serif" font-size="100" text-anchor="middle" fill="white">${sceneName.charAt(0).toUpperCase()}</text>
 </svg>`;
-    
+
     const icon512Svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <rect width="512" height="512" fill="#ff6b6b" rx="64"/>
   <text x="256" y="350" font-family="Arial, sans-serif" font-size="280" text-anchor="middle" fill="white">${sceneName.charAt(0).toUpperCase()}</text>
 </svg>`;
-    
+
     zip.file('assets/icon-192.svg', icon192Svg);
     zip.file('assets/icon-512.svg', icon512Svg);
+
+    // Fetch and add existing assets (icon-192.png and favicon.ico)
+    const fetchAsset = (url, filename) => {
+      return fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.blob().then((blob) => {
+              return blob.arrayBuffer().then((buffer) => {
+                zip.file(filename, Buffer.from(buffer));
+              });
+            });
+          }
+        })
+        .catch((e) => console.warn('Could not fetch asset:', url, e));
+    };
+
+    // Fetch icon-192.png and favicon.ico in parallel
+    Promise.all([
+      fetchAsset('/assets/icon-192.png', 'assets/icon-192.png'),
+      fetchAsset('/favicon.ico', 'favicon.ico')
+    ]).catch((e) => {});
 
     // Create service worker
     const serviceWorker = `// Service Worker for ${sceneName} VR Experience
@@ -455,28 +599,60 @@ self.addEventListener('fetch', event => {
     zip.file('sw.js', serviceWorker);
 
     // Collect all assets (images, models, etc.)
-    const assets = scene.querySelectorAll('[src]');
+    const assets = sceneEl.querySelectorAll('[src]');
     const assetUrls = new Set();
 
-    assets.forEach(el => {
+    assets.forEach((el) => {
       const src = el.getAttribute('src');
-      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('#')) {
+      if (
+        src &&
+        !src.startsWith('http') &&
+        !src.startsWith('data:') &&
+        !src.startsWith('#')
+      ) {
         assetUrls.add(src);
       }
     });
 
     // Also check a-assets
-    const assetItems = scene.querySelectorAll('a-asset-item, img, audio, video');
-    assetItems.forEach(el => {
+    const assetItems = sceneEl.querySelectorAll(
+      'a-asset-item, img, audio, video'
+    );
+    assetItems.forEach((el) => {
       const src = el.getAttribute('src') || el.getAttribute('id');
-      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('#')) {
+      if (
+        src &&
+        !src.startsWith('http') &&
+        !src.startsWith('data:') &&
+        !src.startsWith('#')
+      ) {
         assetUrls.add(src);
       }
     });
 
-    // If there are local assets, try to fetch them (this is a simplified version)
-    // In a real implementation, you'd want to handle relative paths properly
-    const assetsFolder = zip.folder('assets');
+    // Fetch and add local assets to the zip
+    const fetchPageAsset = (url) => {
+      return fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.blob().then((blob) => {
+              return blob.arrayBuffer().then((buffer) => {
+                // Determine the folder and filename
+                const filename = url.startsWith('./') ? url.slice(2) : url;
+                zip.file('assets/' + filename, Buffer.from(buffer));
+              });
+            });
+          }
+        })
+        .catch((e) => console.warn('Could not fetch asset:', url, e));
+    };
+
+    // Fetch all collected assets in parallel
+    if (assetUrls.size > 0) {
+      Promise.all(
+        Array.from(assetUrls).map((url) => fetchPageAsset(url))
+      ).catch(() => {});
+    }
 
     // Generate and download the zip
     zip.generateAsync({ type: 'blob' }).then(function (content) {
@@ -489,19 +665,40 @@ self.addEventListener('fetch', event => {
     const sceneEl = AFRAME.INSPECTOR.sceneEl;
 
     // Get A-Frame version dynamically
-    const aframeVersion = typeof AFRAME !== 'undefined' && AFRAME.version ? AFRAME.version : '1.7.1';
+    const aframeVersion =
+      typeof AFRAME !== 'undefined' && AFRAME.version
+        ? AFRAME.version
+        : '1.7.1';
 
     // Flush any pending DOM changes from A-Frame
     sceneEl.flushToDOM();
 
     // Get the scene content by cloning and cleaning it
+    // We need to include a-assets for mixins to work
+    let sceneContent = '';
+
+    // Find and include a-assets if present
+    const sceneAssets = sceneEl.querySelector('a-assets');
+    if (sceneAssets) {
+      const assetsClone = sceneAssets.cloneNode(true);
+      // Clean up a-assets
+      const inspectorElements = assetsClone.querySelectorAll(
+        '[aframe-injected], [data-aframe-inspector]'
+      );
+      inspectorElements.forEach((el) => el.remove());
+      sceneContent += assetsClone.outerHTML + '\n';
+    }
+
+    // Clone the scene content
     const sceneClone = sceneEl.cloneNode(true);
 
-    // Remove any inspector-injected elements
-    const inspectorElements = sceneClone.querySelectorAll('[aframe-injected], [data-aframe-inspector]');
-    inspectorElements.forEach(el => el.remove());
+    // Remove any inspector-injected elements from the scene
+    const inspectorElements = sceneClone.querySelectorAll(
+      '[aframe-injected], [data-aframe-inspector]'
+    );
+    inspectorElements.forEach((el) => el.remove());
 
-    const sceneContent = sceneClone.outerHTML;
+    sceneContent += sceneClone.outerHTML;
 
     // Build the HTML template
     // Use absolute path for inspector to work from any folder location
@@ -511,16 +708,10 @@ self.addEventListener('fetch', event => {
   <meta charset="utf-8">
   <title>${sceneName}</title>
   <script src="https://aframe.io/releases/${aframeVersion}/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
 </head>
 <body>
   ${sceneContent}
-  <script>
-    // Config to make inspector NOT auto-open (so scene runs normally)
-    window.AFRAME_INSPECTOR_CONFIG = {
-      exampleMode: true
-    };
-  </script>
-  <script src="../dist/aframe-inspector.js"></script>
 </body>
 </html>`;
 
@@ -562,7 +753,6 @@ self.addEventListener('fetch', event => {
         const blob = new Blob([htmlContent], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         window.open(url, '_blank');
-
       } catch (error) {
         console.error('Error importing project:', error);
         alert('Error importing project: ' + error.message);
@@ -577,34 +767,56 @@ self.addEventListener('fetch', event => {
     if (primitiveType.startsWith('behavior-')) {
       // Emit event to add behavior to selected entity
       Events.emit('addbehavior', { behavior: primitiveType });
-      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      this.setState({
+        showPrimitiveMenu: false,
+        selectedPrimitive: 'a-entity'
+      });
       return;
     }
 
     // Check if this is a camera control - add to selected entity or create new camera
-    if (['wasd-controls', 'look-controls', 'fly-controls', 'checkpoint-controls'].includes(primitiveType)) {
+    if (
+      [
+        'wasd-controls',
+        'look-controls',
+        'fly-controls',
+        'checkpoint-controls'
+      ].includes(primitiveType)
+    ) {
       Events.emit('addbehavior', { behavior: primitiveType });
-      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      this.setState({
+        showPrimitiveMenu: false,
+        selectedPrimitive: 'a-entity'
+      });
       return;
     }
 
     // Check if this is a physics component
     if (['dynamic-body', 'static-body'].includes(primitiveType)) {
       Events.emit('addbehavior', { behavior: primitiveType });
-      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      this.setState({
+        showPrimitiveMenu: false,
+        selectedPrimitive: 'a-entity'
+      });
       return;
     }
 
     // Handle a-scene specially - it creates a new scene container
     if (primitiveType === 'a-scene') {
       Events.emit('scenecreate', { element: 'a-scene' });
-      this.setState({ showPrimitiveMenu: false, selectedPrimitive: 'a-entity' });
+      this.setState({
+        showPrimitiveMenu: false,
+        selectedPrimitive: 'a-entity'
+      });
       return;
     }
 
     const components = this.primitiveDefaults[primitiveType] || {};
     Events.emit('entitycreate', { element: primitiveType, components: {} });
-    this.setState({ showPrimitiveMenu: false, selectedPrimitive: primitiveType });
+    this.setState({
+      showPrimitiveMenu: false,
+      selectedPrimitive: primitiveType
+    });
   }
 
   togglePrimitiveMenu = (e) => {
@@ -752,7 +964,9 @@ self.addEventListener('fetch', event => {
                           this.handlePrimitiveSelect(type.value);
                         }}
                       >
-                        <span className="primitiveIcon"><AwesomeIcon icon={type.icon} /></span>
+                        <span className="primitiveIcon">
+                          <AwesomeIcon icon={type.icon} />
+                        </span>
                         <span className="primitiveLabel">{type.label}</span>
                         <span className="primitiveTag">{type.value}</span>
                       </a>
@@ -814,7 +1028,11 @@ self.addEventListener('fetch', event => {
           <a className="button" title="Help" onClick={this.openHelpModal}>
             <AwesomeIcon icon={faQuestion} />
           </a>
-          <a className="button" title="Settings" onClick={this.openTexturesModal}>
+          <a
+            className="button"
+            title="Settings"
+            onClick={this.openTexturesModal}
+          >
             <AwesomeIcon icon={faGear} />
           </a>
         </div>

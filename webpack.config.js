@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
   devServer: {
     hot: false,
-    liveReload: true,
+    liveReload: false,
     port: 5555,
     static: {
       directory: '.'

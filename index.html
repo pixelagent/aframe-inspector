@@ -491,24 +491,11 @@
   <div id="toast" class="toast"></div>
 
   <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   <!-- TODO: When deploying to GitHub Pages, add your repo folder name to the path (e.g., /your-repo-name/dist/aframe-inspector.js) -->
   <script src="dist/aframe-inspector.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
-    // Register service worker for PWA support
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        // TODO: When deploying to GitHub Pages, update the path (e.g., '/your-repo-name/sw.js')
-        navigator.serviceWorker.register('/sw.js')
-          .then(function(registration) {
-            console.log('ServiceWorker registration successful:', registration.scope);
-          })
-          .catch(function(error) {
-            console.log('ServiceWorker registration failed:', error);
-          });
-      });
-    }
-
     const STORAGE_KEY = 'aframe-inspector-projects';
     const MAX_PROJECTS = 10;
     const PROJECT_FOLDERS = [
